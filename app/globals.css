@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* TODO: */
 /* body:before {
   filter: url(#grainy);
 } */
@@ -58,3 +59,19 @@ body {
   }
 }
 
+.containerFooter {
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  gap: 2rem; /* Adjust as needed */
+  width: 100%; /* Ensure container takes full width */
+}
+
+@media (max-width: 768px) {
+  .containerFooter {
+    grid-template-columns: 50% 50%;
+  }
+  
+  .columnFooter:nth-child(3) {
+    grid-column: 1 / -1; /* Make 3rd column take full width */
+  }
+}

@@ -1,7 +1,8 @@
 "use client";
 import Lenis from "lenis";
-import Image from "next/image";
 import { useEffect } from "react";
+import ActionCall from "../components/ActionCall";
+import TextFadeGradient from "../components/TextFadeGradient";
 export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -18,7 +19,7 @@ export default function Home() {
   // TODO: use section-padding for all sections
 
   return (
-    <div>
+    <main>
       {/* TODO: add grainy noise background as ::before on body */}
       <section className="justify-center flex items-center bg-white h-screen">
         <div className="flex flex-col tracking-tight font-semibold leading-tight text-[5vw] text-center text-black uppercase">
@@ -28,6 +29,8 @@ export default function Home() {
           <span>Based in Paris</span>
         </div>
       </section>
-    </div>
+      <TextFadeGradient />
+      <ActionCall />
+    </main>
   );
 }
