@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const DURATION = 0.35;
+const DURATION = 0.45;
 const STAGGER = 0.025;
 
 export default function FlipLink({ children, href }) {

@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body:before {
+/* body:before {
   filter: url(#grainy);
+} */
+
+body {
+  margin: 0;
 }
 
 .borderr {
@@ -29,4 +33,27 @@ body:before {
 .headerLink:hover::after {
   transform: scaleX(1); /* Scale to full width on hover */
   transform-origin: left; /* Ensure the line grows from left to right */
+}
+
+/* Reusable padding class */
+.section-padding {
+  padding: 8px; /* Small screens (default) */
+}
+
+@media (min-width: 600px) {
+  .section-padding {
+    padding: 16px; /* Medium screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 24px; /* Large screens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 32px; /* Extra-large screens */
+  }
 }
