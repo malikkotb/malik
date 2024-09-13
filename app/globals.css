@@ -13,22 +13,16 @@ body:before {
 .headerLink {
   cursor: pointer;
   position: relative;
-  text-decoration: none;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 400;
-  border: 1px solid orange;
-  line-height: 1.2rem; /* Increase line-height to create space */
 }
 .headerLink::after {
   content: "";
   height: 1px;
   background-color: black;
   left: 0;
-  bottom: 0px;
+  bottom: -4px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */
   position: absolute;
-  transform: scaleX(0);
+  transform: scaleX(0); /* Initially scale the width to 0 */
   transform-origin: left; /* The animation starts from the left */
   transition: transform 0.5s ease-in-out;
 }

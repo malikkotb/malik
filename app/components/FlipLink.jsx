@@ -7,13 +7,13 @@ const STAGGER = 0.025;
 
 export default function FlipLink({ children, href }) {
   return (
-    <Link href={href}>
+    <Link href={href} className="headerLink">
       <motion.div
         initial="initial"
         whileHover="hovered"
         // style={{ lineHeight: "0.8" }}
         // inline-flex allows the container to only take up the width of the content, not the full width of the parent.
-        className="relative headerLink overflow-hidden whitespace-nowrap text-xs"
+        className="relative overflow-hidden whitespace-nowrap text-xs"
       >
         <div className="">
           {children.split("").map((l, i) => {
