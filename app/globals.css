@@ -38,7 +38,7 @@ body {
 
 /* Reusable padding class */
 .section-padding {
-  padding: 8px; /* Small screens (default) */
+  padding: 16px; /* Small screens (default) */
 }
 
 @media (min-width: 600px) {
@@ -62,7 +62,6 @@ body {
 .containerFooter {
   display: grid;
   grid-template-columns: 50% 25% 25%;
-  gap: 2rem; /* Adjust as needed */
   width: 100%; /* Ensure container takes full width */
 }
 

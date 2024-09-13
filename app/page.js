@@ -31,6 +31,7 @@ export default function Home() {
       </section>
       <TextFadeGradient />
       <ActionCall />
+      <section className="h-[40vh] bg-cyan-400"></section>
     </main>
   );
 }
