@@ -13,7 +13,7 @@ export default function FlipLink({ children, href }) {
         whileHover="hovered"
         // style={{ lineHeight: "0.8" }}
         // inline-flex allows the container to only take up the width of the content, not the full width of the parent.
-        className="relative overflow-hidden whitespace-nowrap text-xs"
+        className="relative headerLink overflow-hidden whitespace-nowrap text-xs"
       >
         <div className="">
           {children.split("").map((l, i) => {
