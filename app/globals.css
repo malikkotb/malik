@@ -62,7 +62,6 @@ body {
 .containerFooter {
   display: grid;
   grid-template-columns: 50% 25% 25%;
-  width: 100%; /* Ensure container takes full width */
 }
 
 @media (max-width: 768px) {

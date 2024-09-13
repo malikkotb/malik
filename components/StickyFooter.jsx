@@ -1,23 +1,29 @@
-import React from "react";
+"use client";
+import Clock from "react-live-clock";
 import FlipLink from "./FlipLink";
+import ScrollTopButton from "./ScrollTopButton";
 
 export default function StickyFooter() {
-  return (
-    <div
-      className="section-padding text-sm relative h-[200px]"
-      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
-    >
-      {/* <div
+  {
+    /* <div
         className="relative h-[800px]"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         <div className="fixed bottom-0 h-[800px] w-full">
           <Content />
         </div>
-      </div> */}
-      <div className="containerFooter fixed bottom-0 h-[200px] w-full">
+      </div> */
+  }
+
+  return (
+    <div
+      className="relative h-[45vh] md:h-[35vh]"
+      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+    >
+      {/* height of parent div and child div needs to be the same */}
+      <div className="text-white bg-black containerFooter section-padding borderr fixed text-sm bottom-0 md:h-[35vh] h-[45vh] w-full">
         <div className="columnFooter mr-4">
-          <h1 className="w-full border-b pb-1 ">Menu</h1>
+          <h1 className="w-full border-b pb-1 font-bold">Menu</h1>
           <ul className="mt-2 space-y-1">
             {["Home", "Projects", "About", "Contact", "GitHub"].map((link) => (
               <li key={link} className="flex h-fit w-fit">
@@ -27,7 +33,7 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className="columnFooter mr-0 md:mr-4">
-          <h1 className="w-full border-b pb-1 ">Socials</h1>
+          <h1 className="w-full border-b pb-1 font-bold">Socials</h1>
           <ul className="mt-2 space-y-1">
             {["LinkedIn", "Instagram", "TikTok", "YouTube", "GitHub"].map(
               (link) => (
@@ -39,7 +45,7 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className="columnFooter mt-4 md:mt-0">
-          <h1 className="w-full border-b pb-1 ">Resources</h1>
+          <h1 className="w-full border-b pb-1 font-bold">Resources</h1>
           <ul className="mt-2 space-y-1">
             {["Blog", "Figma Templates", "GitHub"].map((link) => (
               <li key={link} className="flex h-fit w-fit">
@@ -48,11 +54,22 @@ export default function StickyFooter() {
             ))}
           </ul>
         </div>
+        {/* TODO: .roboto-mono {
+            font-family: 'Roboto Mono', monospace;
+      } */}
+        <h1 className="items-end flex font-bold uppercase">Malik Kotb</h1>
+        <h1 className="items-end flex justify-end md:justify-start pr-4 md:pr-0 text-left cursor-default">
+          <div className="flex flex-col">
+            <span className="font-bold ">LOCAL TIME</span>
+            <span>
+              <Clock format={"h:mm:ss A"} ticking={true} />, PAR
+            </span>
+          </div>
+        </h1>
+        <h1 className="items-end hidden md:flex justify-end">
+          <ScrollTopButton />
+        </h1>
       </div>
-      {/* <div className="flex justify-between">
-        <h1 className="text-3xl">Malik Kotb</h1>
-        <h2>All rights reserved. ©</h2>
-      </div> */}
     </div>
   );
 }

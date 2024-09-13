@@ -29,9 +29,9 @@ export default function Home() {
           <span>Based in Paris</span>
         </div>
       </section>
+      <section className="h-[30vh] bg-red-200"></section>
       <TextFadeGradient />
       <ActionCall />
-      <section className="h-[40vh] bg-cyan-400"></section>
     </main>
   );
 }
