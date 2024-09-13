@@ -1,0 +1,18 @@
+.paragraph {
+  display: flex;
+  line-height: 1;
+  color: black;
+  flex-wrap: wrap;
+}
+
+.paragraph .word {
+  position: relative;
+  /* This control spacing between differnet words */
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.paragraph .word .shadow {
+  position: absolute;
+  opacity: 20%;
+}

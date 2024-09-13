@@ -62,7 +62,8 @@ export default function StickyFooter() {
           <div className="flex flex-col">
             <span className="font-bold ">LOCAL TIME</span>
             <span>
-              <Clock format={"h:mm:ss A"} ticking={true} />, PAR
+              {/* TODO: fix hydration error */}
+              {/* <Clock format={"h:mm:ss A"} ticking={true} />, PAR */}
             </span>
           </div>
         </h1>

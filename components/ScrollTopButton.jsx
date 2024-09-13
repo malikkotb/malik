@@ -3,6 +3,8 @@ const ScrollToTopButton = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  //   TODO: make the button magnetic and come up from bottom like the zoop links
+
   return (
     <button
       onClick={handleScrollToTop}
