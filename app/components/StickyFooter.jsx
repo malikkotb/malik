@@ -3,14 +3,10 @@ import FlipLink from "./FlipLink";
 
 export default function StickyFooter() {
   return (
-    <div className="flex flex-col section-padding w-full text-sm">
-      <div className="w-full flex gap-2">
-        <div className="w-[50%] border-b border-black">Menu</div>
-        <div className="w-[25%] border-b border-black">Socials</div>
-        <div className="w-[25%] border-b border-black">Resources</div>
-      </div>
-      <div className="w-full flex gap-2">
-        <div className="w-[50%]">
+    <div className="section-padding">
+      <div className="w-full container text-sm">
+        <div className="column">
+          <h1 className="w-full border-b pb-1 border-black">Menu</h1>
           <ul className="mt-2 space-y-1">
             {["Home", "Projects", "About", "Contact", "GitHub"].map((link) => (
               <li key={link} className="flex h-fit w-fit">
@@ -19,7 +15,8 @@ export default function StickyFooter() {
             ))}
           </ul>
         </div>
-        <div className="w-[50%] lg:w-[25%]">
+        <div className="column">
+          <h1 className="w-full border-b pb-1 border-black">Socials</h1>
           <ul className="mt-2 space-y-1">
             {["LinkedIn", "Instagram", "TikTok", "YouTube", "GitHub"].map(
               (link) => (
@@ -30,7 +27,8 @@ export default function StickyFooter() {
             )}
           </ul>
         </div>
-        <div className="w-full lg:w-[25%]">
+        <div className="column">
+          <h1 className="w-full border-b pb-1 border-black">Resources</h1>
           <ul className="mt-2 space-y-1">
             {["Blog", "Figma Templates", "GitHub"].map((link) => (
               <li key={link} className="flex h-fit w-fit">

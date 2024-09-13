@@ -6,10 +6,18 @@ export default function Header() {
     <div className="borderr flex text-xs justify-between w-full fixed p-4">
       <h1>MALIK KOTB</h1>
       <nav className="flex gap-2">
-        <FlipLink href="/blog">BLOG</FlipLink>
-        <FlipLink href="/blog">SERVICES</FlipLink>
-        <FlipLink href="/blog">WORKS</FlipLink>
-        <FlipLink href="/blog">CONTACT</FlipLink>
+        <div className="headerLink">
+          <FlipLink href="/blog">BLOG</FlipLink>
+        </div>
+        <div className="headerLink">
+          <FlipLink href="/blog">SERVICES</FlipLink>
+        </div>
+        <div className="headerLink">
+          <FlipLink href="/blog">WORKS</FlipLink>
+        </div>
+        <div className="headerLink">
+          <FlipLink href="/blog">CONTACT</FlipLink>
+        </div>
       </nav>
     </div>
   );
