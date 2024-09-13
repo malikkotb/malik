@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import { useEffect } from "react";
 import ActionCall from "../components/ActionCall";
 import TextFadeGradient from "../components/TextFadeGradient/TextFadeGradient";
+import Projects from "../components/Projects/Projects";
 export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -17,6 +18,7 @@ export default function Home() {
   }, []);
 
   // TODO: use section-padding for all sections
+  // TODO: take care of all todos
 
   return (
     <main>
@@ -35,6 +37,7 @@ export default function Home() {
           "I am a frontend developer based in Paris and working globally. With a passion for creating seamless, engaging web experiences, I focus on ensuring every project leaves users with a feel-good sensation through attention to detail and a user-centric design approach."
         }
       />
+      <Projects />
       <ActionCall />
     </main>
   );
