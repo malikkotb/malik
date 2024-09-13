@@ -28,7 +28,6 @@ export default function Home() {
           <span>Based in Paris</span>
         </div>
       </section>
-      <CallToAction />
     </div>
   );
 }
