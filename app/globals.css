@@ -5,3 +5,7 @@
 body:before {
   filter: url(#grainy);
 }
+
+.borderr {
+  border: 1px solid red;
+}
