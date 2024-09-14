@@ -11,6 +11,19 @@ body {
   margin: 0;
 }
 
+
+/* TODO: maybe remove: */
+/* .glass {
+  z-index: 100;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+} */
+
 .borderr {
   border: 1px solid red;
 }
@@ -68,7 +81,7 @@ body {
   .containerFooter {
     grid-template-columns: 50% 50%;
   }
-  
+
   .columnFooter:nth-child(3) {
     grid-column: 1 / -1; /* Make 3rd column take full width */
   }

@@ -1,4 +1,4 @@
-export const projects = [
+const projects = [
   {
     title: "The Agents",
     description: "Details about what I did here with Esmes model agencies",
@@ -23,3 +23,5 @@ export const projects = [
     color: "#C2491D",
   },
 ];
+
+export default projects;

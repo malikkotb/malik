@@ -3,7 +3,7 @@ import Lenis from "lenis";
 import { useEffect } from "react";
 import ActionCall from "../components/ActionCall";
 import TextFadeGradient from "../components/TextFadeGradient/TextFadeGradient";
-import Projects from "../components/Projects/Projects";
+import Projects from "../components/ProjectsSection/Projects";
 export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
