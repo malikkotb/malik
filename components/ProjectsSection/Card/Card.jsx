@@ -44,10 +44,10 @@ const Card = ({
             Visit Site <ArrowTopRightIcon />
           </a>
 
-          <div className="relative w-40 borderr h-40">
+          <div className="flex gap-4">
             {images.map((src, i) => {
               return (
-                <div key={`img_${i}`} className="w-full h-full">
+                <div key={`img_${i}`} className="relative w-80 borderr h-80">
                   <Image
                     fill
                     src={`/${src}`}
