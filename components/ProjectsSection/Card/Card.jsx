@@ -2,16 +2,20 @@
 import Image from "next/image";
 import styles from "./style.module.scss";
 
-const Card = ({ title, description, src, url, color, i }) => {
+const Card = ({ projectTitle, client, year, description, tags, link, images, src, url, i }) => {
+  // TODO: make responive !!
+  // TODO: only show project and year columns on smaller screens
   return (
     <div className={styles.cardContainer}>
-      <div
-        className={styles.card}
-        style={{ backgroundColor: color, top: `calc(-5vh + ${i * 25}px)` }}
-      >
+      {/* TODO: change the top to show a little more */}
+      <div className={styles.card} style={{ top: `calc(-5vh + ${i * 25}px)` }}>
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
-        <h2>{title}</h2>
+
+        <div className="borderr w-full flex justify-between">
+          <p>00{i + 1}</p>
+          <p>{projectTitle}</p>
+        </div>
         <div className={styles.body}>
           <div className={styles.description}>
             <p>{description}</p>

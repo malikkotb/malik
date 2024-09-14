@@ -1,6 +1,5 @@
 .cardContainer{
   height: 100vh;
-  border: 1px solid green;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,11 +8,16 @@
   .card{
     display: flex;
     flex-direction: column;
+    border-top: 1px solid;
+    border-style: dashed;
     position: relative;
+    // color: white;
+    // background-color: black;
+    background-color: white;
     height: 500px;
-    width: 1000px;
-    border-radius: 25px;
-    padding:50px;
+    height: 60vh;
+    width: 95%;
+    padding: 50px;
     transform-origin: top;
     h2{
       text-align: center;

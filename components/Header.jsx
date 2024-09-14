@@ -3,7 +3,7 @@ import FlipLink from "./FlipLink";
 
 export default function Header() {
   return (
-    <div className="glass flex text-xs justify-between w-full fixed p-4">
+    <div className="z-50 flex text-xs justify-between w-full fixed p-4">
       <h1>MALIK KOTB</h1>
       <nav className="flex gap-2">
         <div className="headerLink">

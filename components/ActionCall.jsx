@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ActionCall() {
   return (
-    <div>
-      <div className="flex w-full items-center justify-center borderr text-5xl">LET'S MAKE IT HAPPEN</div>
-    </div>
+    <a href="mailto:hello@malik.com">
+      <div className="flex w-full cursor-pointer items-center justify-center text-5xl py-[10vh]">GET IN TOUCH</div>
+    </a>
   );
 }
