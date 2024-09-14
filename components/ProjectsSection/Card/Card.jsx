@@ -9,6 +9,8 @@ const Card = ({ title, description, src, url, color, i }) => {
         className={styles.card}
         style={{ backgroundColor: color, top: `calc(-5vh + ${i * 25}px)` }}
       >
+        {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
+         And that's how the color of each card is set. */}
         <h2>{title}</h2>
         <div className={styles.body}>
           <div className={styles.description}>
@@ -34,7 +36,7 @@ const Card = ({ title, description, src, url, color, i }) => {
 
           <div className={styles.imageContainer}>
             <div className={styles.inner}>
-              <Image fill src={`/images/${src}`} alt="image" />
+              <Image fill src={`/${src}`} alt="image" />
             </div>
           </div>
         </div>
