@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   position: sticky;
-  background-color: transparent;
   top: 0px;
   .card{
     display: flex;
@@ -20,49 +19,27 @@
     width: 95%;
     padding-top: 10px;
     transform-origin: top;
-    h2{
-      text-align: center;
-      margin: 0px;
-      font-size: 28px;
-    }
     .body{
       display: flex;
+      flex-direction: column;
       height: 100%;
       margin-top: 50px;
-      gap: 50px;
+      border: 1px solid greenyellow;
 
-      .description{
-        width: 40%;
-        position: relative;
-        top: 10%;
-        span{
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          a{
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            text-transform: uppercase;
-            cursor: pointer;
-          }
-        }
-      }
-
-      .imageContainer{
-        position: relative;
-        width: 60%;
-        height: 100%;
-        border-radius: 25px;
-        overflow: hidden;
-        .inner{
-          width: 100%;
-          height: 100%;
-        }
-        img{
-          object-fit: cover;
-        }
-      }
+      // .imageContainer{
+      //   position: relative;
+      //   width: 60%;
+      //   height: 100%;
+      //   border-radius: 25px;
+      //   overflow: hidden;
+      //   .inner{
+      //     width: 100%;
+      //     height: 100%;
+      //   }
+      //   img{
+      //     object-fit: cover;
+      //   }
+      // }
     }
   }
 }
