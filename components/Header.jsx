@@ -7,10 +7,10 @@ export default function Header() {
       <h1>MALIK KOTB</h1>
       <nav className="flex gap-2">
         <div className="headerLink">
-          <FlipLink href="/blog">BLOG</FlipLink>
+          <FlipLink href="#about">ABOUT</FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="/blog">SERVICES</FlipLink>
+          <FlipLink href="/blog">BLOG</FlipLink>
         </div>
         <div className="headerLink">
           <FlipLink href="/blog">WORKS</FlipLink>

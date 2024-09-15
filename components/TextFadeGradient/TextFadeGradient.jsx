@@ -12,7 +12,7 @@ export default function TextFadeGradient({ paragraph }) {
 
   const words = paragraph.split(" ");
   return (
-    <div className="h-screen sticky borderr flex justify-center section-padding items-center">
+    <div className="h-screen sticky flex justify-center section-padding items-center">
       <div className="w-[80%] borderr text-5xl text-center">
         <p ref={container} className={styles.paragraph}>
           {words.map((word, i) => {

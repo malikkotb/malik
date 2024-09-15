@@ -15,7 +15,7 @@ const Card = ({
   i,
 }) => {
   // TODO: make responive !!
-  // TODO: only show project and year columns on smaller screens
+  // TODO: don't show the horizontal infinty scroll on small screens
   return (
     <div className={styles.cardContainer}>
       <div
