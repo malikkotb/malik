@@ -10,13 +10,13 @@ export default function Header() {
           <FlipLink href="#about">ABOUT</FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="/blog">BLOG</FlipLink>
+          <FlipLink href="#blog">BLOG</FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="/blog">WORKS</FlipLink>
+          <FlipLink href="#projects">WORKS</FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="/blog">CONTACT</FlipLink>
+          <FlipLink href="#contact">CONTACT</FlipLink>
         </div>
       </nav>
     </div>

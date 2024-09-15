@@ -4,6 +4,7 @@ import Card from "./Card/Card";
 export default function Projects() {
   return (
     <div className="borderr">
+      <div className="borderr" style={{zIndex: "1000"}}>HELLO</div>
       {projects.map((project, i) => {
         return <Card key={`p_${i}`} {...project} i={i} />;
       })}
