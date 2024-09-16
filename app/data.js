@@ -8,7 +8,7 @@ const projects = [
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
     link: "www.theagentsmodelmanagement.com",
-    images: ["1.jpg", "2.jpg", "3.jpg"],
+    images: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"],
   },
   {
     projectTitle: "Prudentos",

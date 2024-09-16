@@ -1,9 +1,12 @@
 "use client";
-import Image from "next/image";
+import { motion } from "framer-motion";
 import styles from "./style.module.scss";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import FlipLink from "../../FlipLink";
-
+import HorizontalImageCard from "../HorizontalImageCard/HorizontalImageCard";
+import { animate, useMotionValue } from "framer-motion";
+import { useMeasure } from "@uidotdev/usehooks";
+import { useEffect } from "react";
+import CustomCursor from "../../CustomCursor";
 const Card = ({
   projectTitle,
   category,
@@ -17,6 +20,25 @@ const Card = ({
 }) => {
   // TODO: make responive !!
   // TODO: don't show the horizontal infinty scroll on small screens
+  // and show images in vertical column instead
+
+  let [ref, { width }] = useMeasure();
+
+  const xTranslation = useMotionValue(0);
+
+  useEffect(() => {
+    let controls;
+    let finalPosition = -width / 2 - 8; // -8 (because of the gap-4 between images)
+
+    controls = animate(xTranslation, [0, finalPosition], {
+      repeat: Infinity,
+      duration: 10,
+      ease: "linear",
+      repeatType: "loop",
+      repeatDelay: 0,
+    });
+  }, [xTranslation, width]);
+
   return (
     <div className={styles.cardContainer}>
       <div
@@ -26,7 +48,7 @@ const Card = ({
         }}
       >
         {i === 0 && (
-          <div className="absolute -top-7 items-center text-sm w-full grid grid-cols-2 md:grid-cols-4">
+          <div className="absolute uppercase -top-7 items-center text-[#b1b1b1] text-xs w-full grid grid-cols-2 md:grid-cols-4">
             <span>Project</span>
             <span className="hidden md:block">Category</span>
             <span className="hidden md:block text-left ml-12">Client</span>
@@ -43,13 +65,14 @@ const Card = ({
           <span className="md:text-right">{year}</span>
         </div>
         <div className={styles.body}>
-          <p className=" md:w-[80%] borderr text-xl">
+          <p className="w-full md:w-[80%] text-xl">
             {description} Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
             veniam ratione libero quis in, neque dolore ipsum, aperiam fuga
             doloribus, aliquam corporis quaerat similique?
           </p>
 
+          {/* TODO: instead of having this, just use the hover over image carousel */}
           <a
             href={link}
             target="_blank"
@@ -61,24 +84,28 @@ const Card = ({
 
           <div>
             {tags.map((tag) => {
-              return <div className="">{tag}</div>;
-            })}
-          </div>
-
-          <div className="flex gap-4">
-            {images.map((src, i) => {
               return (
-                <div key={`img_${i}`} className="relative w-80 borderr h-80">
-                  <Image
-                    fill
-                    src={`/${src}`}
-                    alt="image"
-                    className="object-cover"
-                  />
+                <div key={tag} className="">
+                  {tag}
                 </div>
               );
             })}
           </div>
+
+        <CustomCursor />
+
+
+          {/* TODO: when hovering over this div -> add text to cursor: "VISIT SITE ↗" */}
+          <motion.div
+            style={{ x: xTranslation }}
+            className="flex gap-4 cursor-pointer"
+            ref={ref}
+          >
+            {/* creates a copy of images, that will update and then seem like its scrolling infintely */}
+            {[...images, ...images].map((src, i) => {
+              return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
+            })}
+          </motion.div>
         </div>
       </div>
     </div>

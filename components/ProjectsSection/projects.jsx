@@ -1,5 +1,5 @@
 "use client";
-import projects from "../../app/projects";
+import projects from "../../app/data";
 import Card from "./Card/Card";
 export default function Projects() {
   return (
