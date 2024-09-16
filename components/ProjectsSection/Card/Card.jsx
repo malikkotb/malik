@@ -24,13 +24,21 @@ const Card = ({
           top: `calc(-5vh + ${i * 3}em)`,
         }}
       >
+        {i === 0 && (
+          <div className="absolute -top-7 items-center text-sm w-full grid grid-cols-2 md:grid-cols-4">
+            <span>Project</span>
+            <span className="">Category</span>
+            <span className="hidden md:block text-left ml-12">Category</span>
+            <span className="hidden md:block text-right">Year</span>
+          </div>
+        )}
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
         <div className="text-sm w-full grid grid-cols-2 md:grid-cols-4">
-          <p className="font-bold">00{i + 1}</p>
-          <p className="">{projectTitle}</p>
-          <p className="hidden md:block text-right">{category}</p>
-          <p className="hidden md:block text-right">{year}</p>
+          <span className="font-bold">00{i + 1}</span>
+          <span className="">{projectTitle}</span>
+          <span className="hidden md:block text-left ml-12">{category}</span>
+          <span className="hidden md:block text-right">{year}</span>
         </div>
         <div className={styles.body}>
           <p>{description}</p>
@@ -40,7 +48,11 @@ const Card = ({
               return <div className="">{tag}</div>;
             })}
           </div>
-          <a href={link} target="_blank" className="flex items-center uppercase text-xs">
+          <a
+            href={link}
+            target="_blank"
+            className="flex items-center uppercase text-xs"
+          >
             Visit Site <ArrowTopRightIcon />
           </a>
 
