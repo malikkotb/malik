@@ -27,18 +27,19 @@ const Card = ({
         {i === 0 && (
           <div className="absolute -top-7 items-center text-sm w-full grid grid-cols-2 md:grid-cols-4">
             <span>Project</span>
-            <span className="">Category</span>
-            <span className="hidden md:block text-left ml-12">Category</span>
-            <span className="hidden md:block text-right">Year</span>
+            <span className="hidden md:block">Category</span>
+            <span className="hidden md:block text-left ml-12">Client</span>
+            <span className="md:text-right">Year</span>
           </div>
         )}
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
         <div className="text-sm w-full grid grid-cols-2 md:grid-cols-4">
-          <span className="font-bold">00{i + 1}</span>
+          {/* <span className="font-bold">00{i + 1}</span> */}
           <span className="">{projectTitle}</span>
-          <span className="hidden md:block text-left ml-12">{category}</span>
-          <span className="hidden md:block text-right">{year}</span>
+          <span className="hidden md:block text-left">{category}</span>
+          <span className="hidden md:block text-left ml-12">{client}</span>
+          <span className="md:text-right">{year}</span>
         </div>
         <div className={styles.body}>
           <p>{description}</p>
