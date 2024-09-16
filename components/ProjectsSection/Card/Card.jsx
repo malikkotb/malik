@@ -2,6 +2,7 @@
 import Image from "next/image";
 import styles from "./style.module.scss";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import FlipLink from "../../FlipLink";
 
 const Card = ({
   projectTitle,
@@ -21,7 +22,7 @@ const Card = ({
       <div
         className={styles.card}
         style={{
-          top: `calc(-5vh + ${i * 3}em)`,
+          top: `calc(-5vh + ${i * 2.5}em)`,
         }}
       >
         {i === 0 && (
@@ -42,20 +43,26 @@ const Card = ({
           <span className="md:text-right">{year}</span>
         </div>
         <div className={styles.body}>
-          <p>{description}</p>
+          <p className=" md:w-[80%] borderr text-xl">
+            {description} Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
+            veniam ratione libero quis in, neque dolore ipsum, aperiam fuga
+            doloribus, aliquam corporis quaerat similique?
+          </p>
+
+          <a
+            href={link}
+            target="_blank"
+            className="flex bg-black text-white w-fit items-center uppercase text-xs"
+          >
+            <FlipLink href={link}>Visit Site</FlipLink><ArrowTopRightIcon />
+          </a>
 
           <div>
             {tags.map((tag) => {
               return <div className="">{tag}</div>;
             })}
           </div>
-          <a
-            href={link}
-            target="_blank"
-            className="flex items-center uppercase text-xs"
-          >
-            Visit Site <ArrowTopRightIcon />
-          </a>
 
           <div className="flex gap-4">
             {images.map((src, i) => {

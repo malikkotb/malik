@@ -1,30 +1,32 @@
 .cardContainer{
   height: 100vh;
   display: flex;
-  // flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: sticky;
   top: 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 0px;
   .card{
     display: flex;
     flex-direction: column;
     border-top: 1px solid;
     border-style: dashed;
     position: relative;
+    width: 100%;
     // color: white;
     // background-color: black;
     background-color: white;
     height: 500px;
     height: 60vh;
-    width: 95%;
     padding-top: 10px;
     transform-origin: top;
     .body{
       display: flex;
       flex-direction: column;
-      height: 100%;
-      margin-top: 20px;
+      gap: 10px;
+      height: auto;
+      margin-top: 28px;
       border: 1px solid greenyellow;
 
       // .imageContainer{
