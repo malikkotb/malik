@@ -55,7 +55,8 @@ const Card = ({
             target="_blank"
             className="flex bg-black text-white w-fit items-center uppercase text-xs"
           >
-            <FlipLink href={link}>Visit Site</FlipLink><ArrowTopRightIcon />
+            Visit Site
+            <ArrowTopRightIcon />
           </a>
 
           <div>
