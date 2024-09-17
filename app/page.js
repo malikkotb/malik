@@ -23,7 +23,7 @@ export default function Home() {
   // TODO: add animations for all text on landing page (also scroll button)
 
   return (
-    <main>
+    <main className="">
       {/* TODO: add grainy noise background as ::before on body */}
       {/* TODO: make landing page section sticky and fade out on scroll downs */}
       <section className="justify-center relative flex items-center bg-white h-screen">

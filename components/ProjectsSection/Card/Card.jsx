@@ -39,9 +39,9 @@ const Card = ({
   }, [xTranslation, width]);
 
   return (
-    <div className={styles.cardContainer}>
+    <div className={`${styles.cardContainer}`}>
       <div
-        className={styles.card}
+        className={`${styles.card} dark:bg-black bg-white dark:text-white`}
         style={{
           top: `calc(-5vh + ${i * 2.5}em)`,
         }}
