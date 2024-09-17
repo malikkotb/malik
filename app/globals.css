@@ -17,18 +17,25 @@ body {
 
 .custom-cursor {
   position: absolute;
-  transform: translate(20%, -100%); 
+  transform: translate(20%, -100%);
 
   font-size: 12px;
   display: flex;
-  width: fit-content;
+  width: 0; /* Start with 0 width */
+  overflow: hidden; /* Hide the content when width is less than content */
+  white-space: nowrap; /* Ensure text doesn’t wrap */
   gap: 4px;
   text-transform: uppercase;
   background-color: black;
   align-items: center;
   color: white;
   z-index: 9999;
+
+  /* animation: reveal 1s forwards;  */
+  /* Add reveal animation */
 }
+
+
 
 /* TODO: maybe remove: */
 /* .glass {

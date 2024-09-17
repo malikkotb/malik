@@ -1,6 +1,6 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect, useRef } from "react";
-import { useHover } from "@uidotdev/usehooks";
+import { AnimatePresence, motion } from "framer-motion";
 
 const CustomCursor = ({ children, link }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -16,7 +16,7 @@ const CustomCursor = ({ children, link }) => {
     });
   };
 
-  // TODO: fix scroll issue
+  // TODO: maybe fix scroll issue
 
   // const handleScroll = () => {
   //   setScrolling(true);
@@ -25,6 +25,13 @@ const CustomCursor = ({ children, link }) => {
   //     setScrolling(false);
   //   }, 0); // Adjust the timeout duration as needed
   // };
+
+  // useEffect(() => {
+  //   if (!scrolling && hovering) {
+  //     // Force re-render to show the custom cursor immediately after scrolling stops
+  //     setPosition((prevPosition) => ({ ...prevPosition }));
+  //   }
+  // }, [scrolling, hovering]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -37,13 +44,6 @@ const CustomCursor = ({ children, link }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (!scrolling && hovering) {
-  //     // Force re-render to show the custom cursor immediately after scrolling stops
-  //     setPosition((prevPosition) => ({ ...prevPosition }));
-  //   }
-  // }, [scrolling, hovering]);
-
   return (
     <a
       href={`${link}`}
@@ -53,14 +53,21 @@ const CustomCursor = ({ children, link }) => {
       onMouseLeave={() => setHovered(false)}
       className="custom-cursor-container"
     >
-      {hovering && !scrolling && (
-        <div
-          className={`custom-cursor`}
-          style={{ left: `${position.x}px`, top: `${position.y}px` }}
-        >
-          Visit Site <ArrowTopRightIcon />
-        </div>
-      )}
+      <AnimatePresence>
+        {hovering && !scrolling && (
+          <motion.div
+            // initial={{ opacity: 0 }} // Start with 0 width (hide)
+            animate={{ width: "80px" }} // Animate to full width
+            // animate={{ opacity: 1 }}
+            exit={{ width: 0 }} // Animate back to 0 width on exit
+            transition={{ duration: 0.5 }}
+            className={`custom-cursor`}
+            style={{ left: `${position.x}px`, top: `${position.y}px` }}
+          >
+            Visit Site <ArrowTopRightIcon />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {children}
     </a>
   );
