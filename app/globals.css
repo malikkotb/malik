@@ -11,10 +11,15 @@ body {
   margin: 0px;
 }
 
+.custom-cursor-container {
+  position: relative;
+}
+
 .custom-cursor {
-  position: fixed;
-  /* transform: translate(-50%, -50%); Centers the text on the cursor */
-  transform: translate(30%, -100%); 
+  position: absolute;
+  /* transform: translate(30%, -100%);  */
+  transform: translate(10px, 0%); /* Adjust the offset to align with the cursor */
+
   font-size: 12px;
   display: flex;
   width: fit-content;

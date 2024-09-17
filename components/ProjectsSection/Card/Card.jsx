@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import styles from "./style.module.scss";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import HorizontalImageCard from "../HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
 import { useMeasure } from "@uidotdev/usehooks";
@@ -72,8 +71,6 @@ const Card = ({
             doloribus, aliquam corporis quaerat similique?
           </p>
 
-          <CustomCursor href={link} />
-
           <div>
             {tags.map((tag) => {
               return (
@@ -85,17 +82,18 @@ const Card = ({
           </div>
 
           {/* TODO: when hovering over this div -> add text to cursor: "VISIT SITE ↗" */}
-          <motion.div
-            style={{ x: xTranslation }}
-            className="flex gap-4 cursor-pointer"
-            ref={ref}
-          >
-            {/* creates a copy of images, that will update and then seem like its scrolling infintely */}
-            {[...images, ...images].map((src, i) => {
-              return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
-            })}
-          </motion.div>
-
+          <CustomCursor>
+            <motion.div
+              // style={{ x: xTranslation }}
+              className="flex gap-4 cursor-pointer"
+              ref={ref}
+            >
+              {/* creates a copy of images, that will update and then seem like its scrolling infintely */}
+              {[...images, ...images].map((src, i) => {
+                return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
+              })}
+            </motion.div>
+          </CustomCursor>
         </div>
       </div>
     </div>

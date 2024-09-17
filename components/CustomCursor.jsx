@@ -1,40 +1,52 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
+import { useHover } from "@uidotdev/usehooks";
 
-const CustomCursor = ({ href }) => {
+//   document.addEventListener("DOMContentLoaded", () => {
+//     const container = document.querySelector(".custom-cursor-container");
+//     const customCursor = document.querySelector(".custom-cursor");
+
+//     container.addEventListener("mousemove", (e) => {
+//       const rect = container.getBoundingClientRect();
+//       customCursor.style.left = `${e.clientX - rect.left}px`;
+//       customCursor.style.top = `${e.clientY - rect.top}px`;
+//     });
+//   });
+
+const CustomCursor = ({ children }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  // TODO: fix
-  // Update cursor position on mouse move
+  const [ref, hovering] = useHover();
   const handleMouseMove = (e) => {
+    const container = e.currentTarget.getBoundingClientRect();
+
     setPosition({
-      x: e.clientX,
-      y: e.clientY,
+      x: e.clientX - container.left,
+      y: e.clientY - container.top,
     });
   };
 
-  // Add the event listener for mouse movement
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
+    const container = document.querySelector(".custom-cursor-container");
+    console.log(position);
+    console.log(hovering);
+    container.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [hovering]);
 
   return (
-    <>
-      <a
-        className="custom-cursor"
-        href={href}
-        target="_blank"
-        style={{
-          top: `${position.y}px`,
-          left: `${position.x}px`,
-        }}
-      >
-        Visit Site <ArrowTopRightIcon />
-      </a>
-    </>
+    <div ref={ref} className="custom-cursor-container">
+      {hovering && (
+        <div
+          className={`custom-cursor`}
+          style={{ left: `${position.x}px`, top: `${position.y}px` }}
+        >
+          Visit Site <ArrowTopRightIcon />
+        </div>
+      )}
+      {children}
+    </div>
   );
 };
 
