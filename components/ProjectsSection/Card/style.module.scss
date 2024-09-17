@@ -1,19 +1,22 @@
-.cardContainer{
+.cardContainer {
   height: 100vh;
   display: flex;
   align-items: center;
   position: sticky;
   top: 0px;
-  padding-left: 16px;
-  padding-right: 16px;
+  overflow: hidden;
   margin: 0px;
-  .card{
+
+  .card {
     display: flex;
     flex-direction: column;
     border-top: 1px solid;
     border-style: dashed;
     position: relative;
+    padding-left: 16px;
+    padding-right: 16px;
     width: 100%;
+    background-color: white;
     // color: white;
     // background-color: black;
     background-color: white;
@@ -21,7 +24,8 @@
     height: 60vh;
     padding-top: 10px;
     transform-origin: top;
-    .body{
+
+    .body {
       display: flex;
       flex-direction: column;
       gap: 10px;

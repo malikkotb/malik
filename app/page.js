@@ -1,7 +1,7 @@
 "use client";
 import Lenis from "lenis";
 import { useEffect } from "react";
-import ActionCall from "../components/ActionCall";
+import ActionCall from "../components/ActionCall/ActionCall";
 import TextFadeGradient from "../components/TextFadeGradient/TextFadeGradient";
 import Projects from "../components/ProjectsSection/Projects";
 import { ArrowDownIcon } from "@radix-ui/react-icons";

@@ -1,8 +1,10 @@
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 
-const CustomCursor = () => {
+const CustomCursor = ({ href }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  // TODO: fix
   // Update cursor position on mouse move
   const handleMouseMove = (e) => {
     setPosition({
@@ -21,15 +23,17 @@ const CustomCursor = () => {
 
   return (
     <>
-      <div
-        className="custom-cursor fixed pointer-events-none"
+      <a
+        className="custom-cursor"
+        href={href}
+        target="_blank"
         style={{
           top: `${position.y}px`,
           left: `${position.x}px`,
         }}
       >
-        Hello!
-      </div>
+        Visit Site <ArrowTopRightIcon />
+      </a>
     </>
   );
 };
