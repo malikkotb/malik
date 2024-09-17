@@ -1,12 +1,15 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const CustomCursor = ({ children, link }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
   const [hovering, setHovered] = useState(false);
   const [scrolling, setScrolling] = useState(false);
+  const size = useWindowSize();
+
   const handleMouseMove = (e) => {
     const container = containerRef.current.getBoundingClientRect();
 
@@ -53,21 +56,23 @@ const CustomCursor = ({ children, link }) => {
       onMouseLeave={() => setHovered(false)}
       className="custom-cursor-container"
     >
-      <AnimatePresence>
-        {hovering && !scrolling && (
-          <motion.div
-            // initial={{ opacity: 0 }} // Start with 0 width (hide)
-            animate={{ width: "80px" }} // Animate to full width
-            // animate={{ opacity: 1 }}
-            exit={{ width: 0 }} // Animate back to 0 width on exit
-            transition={{ duration: 0.5 }}
-            className={`custom-cursor`}
-            style={{ left: `${position.x}px`, top: `${position.y}px` }}
-          >
-            Visit Site <ArrowTopRightIcon />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {size.width > 768 && (
+        <AnimatePresence>
+          {hovering && !scrolling && (
+            <motion.div
+              initial={{ width: 0 }} // Start with 0 width (hide)
+              animate={{ width: "85px" }} // Animate to full width
+              // animate={{ opacity: 1 }}
+              exit={{ width: 0 }} // Animate back to 0 width on exit
+              transition={{ duration: 0.5 }}
+              className={`custom-cursor`}
+              style={{ left: `${position.x}px`, top: `${position.y}px` }}
+            >
+              Visit Site <ArrowTopRightIcon />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
       {children}
     </a>
   );

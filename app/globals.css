@@ -31,13 +31,10 @@ body {
   color: white;
   z-index: 9999;
 
-  /* animation: reveal 1s forwards;  */
-  /* Add reveal animation */
 }
 
 
 
-/* TODO: maybe remove: */
 /* .glass {
   z-index: 100;
   background: linear-gradient(
