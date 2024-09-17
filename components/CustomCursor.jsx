@@ -1,23 +1,13 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHover } from "@uidotdev/usehooks";
 
-//   document.addEventListener("DOMContentLoaded", () => {
-//     const container = document.querySelector(".custom-cursor-container");
-//     const customCursor = document.querySelector(".custom-cursor");
-
-//     container.addEventListener("mousemove", (e) => {
-//       const rect = container.getBoundingClientRect();
-//       customCursor.style.left = `${e.clientX - rect.left}px`;
-//       customCursor.style.top = `${e.clientY - rect.top}px`;
-//     });
-//   });
-
-const CustomCursor = ({ children }) => {
+const CustomCursor = ({ children, link }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [ref, hovering] = useHover();
+  const containerRef = useRef(null);
+  const [hovering, setHovered] = useState(false);
   const handleMouseMove = (e) => {
-    const container = e.currentTarget.getBoundingClientRect();
+    const container = containerRef.current.getBoundingClientRect();
 
     setPosition({
       x: e.clientX - container.left,
@@ -26,17 +16,23 @@ const CustomCursor = ({ children }) => {
   };
 
   useEffect(() => {
-    const container = document.querySelector(".custom-cursor-container");
-    console.log(position);
-    console.log(hovering);
+    const container = containerRef.current;
+
     container.addEventListener("mousemove", handleMouseMove);
     return () => {
       container.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [hovering]);
+  }, []);
 
   return (
-    <div ref={ref} className="custom-cursor-container">
+    <a
+      href={`${link}`}
+      target="_blank"
+      ref={containerRef}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="custom-cursor-container"
+    >
       {hovering && (
         <div
           className={`custom-cursor`}
@@ -46,7 +42,7 @@ const CustomCursor = ({ children }) => {
         </div>
       )}
       {children}
-    </div>
+    </a>
   );
 };
 

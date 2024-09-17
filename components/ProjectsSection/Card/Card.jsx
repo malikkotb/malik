@@ -81,11 +81,10 @@ const Card = ({
             })}
           </div>
 
-          {/* TODO: when hovering over this div -> add text to cursor: "VISIT SITE ↗" */}
-          <CustomCursor>
+          <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
-              className="flex gap-4 cursor-pointer"
+              className="flex gap-4"
               ref={ref}
             >
               {/* creates a copy of images, that will update and then seem like its scrolling infintely */}

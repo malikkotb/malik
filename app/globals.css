@@ -17,8 +17,7 @@ body {
 
 .custom-cursor {
   position: absolute;
-  /* transform: translate(30%, -100%);  */
-  transform: translate(10px, 0%); /* Adjust the offset to align with the cursor */
+  transform: translate(20%, -100%); 
 
   font-size: 12px;
   display: flex;
