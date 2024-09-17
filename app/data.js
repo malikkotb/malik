@@ -27,7 +27,7 @@ const projects = [
     year: "2024",
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "https://www.theagentsmodelmanagement.com",
+    link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
     images: ["1.jpg", "4.jpg", "3.jpg"],
   },
   {

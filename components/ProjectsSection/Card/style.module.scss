@@ -3,8 +3,11 @@
   display: flex;
   align-items: center;
   position: sticky;
+  border: 1px solid red;
   top: 0px;
   overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
   margin: 0px;
 
   .card {

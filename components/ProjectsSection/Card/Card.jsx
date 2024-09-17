@@ -27,7 +27,7 @@ const Card = ({
 
   useEffect(() => {
     let controls;
-    let finalPosition = -width / 2 - 18; // -8 (because of the gap-4 between images)
+    let finalPosition = -width / 2 - 16; // -8 (because of the gap-4 between images)
 
     controls = animate(xTranslation, [0, finalPosition], {
       repeat: Infinity,
@@ -81,18 +81,18 @@ const Card = ({
             })}
           </div>
 
-          <CustomCursor link={link}>
+          {/* <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
               className="flex gap-4"
               ref={ref}
+              // creates a copy of images, that will update and then seem like its scrolling infintely
             >
-              {/* creates a copy of images, that will update and then seem like its scrolling infintely */}
               {[...images, ...images].map((src, i) => {
                 return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
               })}
             </motion.div>
-          </CustomCursor>
+          </CustomCursor> */}
         </div>
       </div>
     </div>
