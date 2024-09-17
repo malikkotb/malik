@@ -1,15 +1,8 @@
 .main {
   position: relative;
   display: flex;
-  border: 1px solid red;
-  height: 100vh;
   overflow: hidden;
-}
-
-.sliderContainer {
-  border: 1px solid red;
-  position: absolute;
-  top: calc(100vh - 350px);
+  cursor: pointer;
 }
 
 .slider {

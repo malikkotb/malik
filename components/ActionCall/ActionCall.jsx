@@ -1,4 +1,3 @@
-
 // export default function ActionCall() {
 //   return (
 //     <a href="mailto:hello@malik.com">
@@ -33,17 +32,19 @@ export default function ActionCall() {
     gsap.set(firstText.current, { xPercent: xPercent });
     gsap.set(secondText.current, { xPercent: xPercent });
     requestAnimationFrame(animate);
-    xPercent += 0.1;
+    xPercent += 0.05;
   };
 
   return (
-    <main className={styles.main}>
-      <div className={styles.sliderContainer}>
-        <div ref={slider} className={styles.slider}>
-          <p ref={firstText}>Freelance Developer -</p>
-          <p ref={secondText}>Freelance Developer -</p>
-        </div>
+    <a href="mailto:malikkotb@icloud.com" className={styles.main}>
+      <div ref={slider} className={styles.slider}>
+        <p ref={firstText}>Get In Touch -</p>
+        <p ref={secondText}>Get In Touch -</p>
       </div>
-    </main>
+      {/* <div ref={slider} className={styles.slider}>
+        <p ref={firstText}>Freelance Developer -</p>
+        <p ref={secondText}>Freelance Developer -</p>
+      </div> */}
+    </a>
   );
 }
