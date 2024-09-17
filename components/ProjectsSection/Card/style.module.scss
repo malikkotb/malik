@@ -5,9 +5,9 @@
   position: sticky;
   top: 0px;
   overflow: hidden;
+  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
-  margin: 0px;
 
   .card {
     display: flex;
@@ -15,8 +15,7 @@
     border-top: 1px solid;
     border-style: dashed;
     position: relative;
-    padding-left: 16px;
-    padding-right: 16px;
+
     width: 100%;
     // color: white;
     // background-color: black;
@@ -29,6 +28,7 @@
     .body {
       display: flex;
       flex-direction: column;
+      overflow: hidden;
       gap: 10px;
       height: auto;
       margin-top: 28px;
@@ -49,4 +49,6 @@
       // }
     }
   }
+
+
 }
