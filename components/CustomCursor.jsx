@@ -6,6 +6,7 @@ const CustomCursor = ({ children, link }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
   const [hovering, setHovered] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
   const handleMouseMove = (e) => {
     const container = containerRef.current.getBoundingClientRect();
 
@@ -15,14 +16,33 @@ const CustomCursor = ({ children, link }) => {
     });
   };
 
+  // TODO: fix scroll issue
+
+  // const handleScroll = () => {
+  //   setScrolling(true);
+  //   clearTimeout(window.scrollTimeout);
+  //   window.scrollTimeout = setTimeout(() => {
+  //     setScrolling(false);
+  //   }, 0); // Adjust the timeout duration as needed
+  // };
+
   useEffect(() => {
     const container = containerRef.current;
-
     container.addEventListener("mousemove", handleMouseMove);
+    // window.addEventListener("scroll", handleScroll);
+
     return () => {
       container.removeEventListener("mousemove", handleMouseMove);
+      // window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // useEffect(() => {
+  //   if (!scrolling && hovering) {
+  //     // Force re-render to show the custom cursor immediately after scrolling stops
+  //     setPosition((prevPosition) => ({ ...prevPosition }));
+  //   }
+  // }, [scrolling, hovering]);
 
   return (
     <a
@@ -33,7 +53,7 @@ const CustomCursor = ({ children, link }) => {
       onMouseLeave={() => setHovered(false)}
       className="custom-cursor-container"
     >
-      {hovering && (
+      {hovering && !scrolling && (
         <div
           className={`custom-cursor`}
           style={{ left: `${position.x}px`, top: `${position.y}px` }}

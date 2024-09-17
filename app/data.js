@@ -7,7 +7,7 @@ const projects = [
     year: "2024",
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "www.theagentsmodelmanagement.com",
+    link: "https://www.theagentsmodelmanagement.com",
     images: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"],
   },
   {
@@ -17,7 +17,7 @@ const projects = [
     year: "2024",
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "www.theagentsmodelmanagement.com",
+    link: "https://www.theagentsmodelmanagement.com",
     images: ["2.jpg", "1.jpg", "4.jpg"],
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     year: "2024",
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "www.theagentsmodelmanagement.com",
+    link: "https://www.theagentsmodelmanagement.com",
     images: ["1.jpg", "4.jpg", "3.jpg"],
   },
   {
@@ -37,7 +37,7 @@ const projects = [
     year: "2024",
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "www.theagentsmodelmanagement.com",
+    link: "https://www.theagentsmodelmanagement.com",
     images: ["5.jpg", "2.jpg", "3.jpg"],
   },
 ];
