@@ -81,7 +81,7 @@ const Card = ({
             })}
           </div>
 
-          {/* <CustomCursor link={link}>
+          <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
               className="flex gap-4"
@@ -92,7 +92,7 @@ const Card = ({
                 return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
               })}
             </motion.div>
-          </CustomCursor> */}
+          </CustomCursor>
         </div>
       </div>
     </div>
