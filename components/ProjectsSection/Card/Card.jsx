@@ -39,7 +39,7 @@ const Card = ({
   }, [xTranslation, width]);
 
   return (
-    <div className={`${styles.cardContainer}`}>
+    <div className={`${styles.cardContainer} dark`}>
       <div
         className={`${styles.card} dark:bg-black bg-white dark:text-white`}
         style={{
