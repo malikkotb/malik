@@ -15,6 +15,7 @@ const Card = ({
   tags,
   link,
   images,
+  style,
   i,
 }) => {
   // TODO: make responive !!
@@ -39,15 +40,15 @@ const Card = ({
   }, [xTranslation, width]);
 
   return (
-    <div className={`${styles.cardContainer} dark`}>
+    <div className={`${styles.cardContainer} bg-transparent`} style={style}>
       <div
-        className={`${styles.card} dark:bg-black bg-white dark:text-white`}
+        className={`${styles.card} bg-black dark:bg-black text-white dark:text-white`}
         style={{
           top: `calc(-5vh + ${i * 2.5}em)`,
         }}
       >
         {i === 0 && (
-          <div className="absolute uppercase -top-7 items-center text-[#b1b1b1] text-xs w-full grid grid-cols-2 md:grid-cols-4">
+          <div className="absolute uppercase -top-7 items-center text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
             <span>Project</span>
             <span className="hidden md:block">Category</span>
             <span className="hidden md:block text-left ml-12">Client</span>

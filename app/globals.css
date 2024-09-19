@@ -9,6 +9,7 @@
 
 body {
   margin: 0px;
+  background-color: black;
 }
 
 .custom-cursor-container {
@@ -58,7 +59,7 @@ body {
 .headerLink::after {
   content: "";
   height: 1px;
-  background-color: black;
+  background-color: white;
   left: 0;
   bottom: -4px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */

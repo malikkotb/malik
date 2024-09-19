@@ -2,11 +2,17 @@
 import projects from "../../app/data";
 import Card from "./Card/Card";
 export default function Projects() {
+  const bgColor = "bg-black";
+
   return (
-    <div className="">
+    <div>
       {/* <div className="borderr" style={{zIndex: "1000"}}>HELLO</div> */}
       {projects.map((project, i) => {
-        return <Card key={`p_${i}`} {...project} i={i} />;
+        return (
+          // <div key={`p_${i}`} className={bgColor}>
+          <Card key={`p_${i}`} {...project} className={bgColor} i={i} />
+          // </div>
+        );
       })}
     </div>
   );
