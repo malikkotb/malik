@@ -1,13 +1,20 @@
 "use client";
 import { motion } from "framer-motion";
 import styles from "./style.module.scss";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import HorizontalImageCard from "../HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
 import { useMeasure, useWindowSize } from "@uidotdev/usehooks";
 import { useEffect, useState, useRef } from "react";
 import CustomCursor from "../../CustomCursor";
 import Image from "next/image";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 const Card = ({
   projectTitle,
   category,
@@ -44,7 +51,6 @@ const Card = ({
   const [count, setCount] = useState(0);
 
   const carouselRef = useRef(null);
-
 
   const [carouselWidth, setCarouselWidth] = useState(0);
   useEffect(() => {
@@ -108,6 +114,10 @@ const Card = ({
             veniam.
           </p>
 
+          <p className="flex items-center mt-4">
+            Visit Site <ArrowTopRightIcon />
+          </p>
+
           <div className="flex gap-2 my-5">
             {tags.map((tag) => {
               return (
@@ -124,35 +134,35 @@ const Card = ({
           {/* <div>
                 <HorizontalImageCard src={images[0]} i={i} />
               </div> */}
-          <CustomCursor link={link}>
-            {size.width <= 768 ? (
-              <Carousel setApi={setApi} ref={carouselRef} className="w-full">
-                <CarouselContent>
-                  {images.map((img, index) => (
-                    <CarouselItem key={index}>
-                      <div
-                        style={{ aspectRatio: "9/12" }}
-                        className="relative w-full flex flex-col transition-opacity duration-200"
-                      >
-                        <Image
-                          className="object-cover"
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                          src={`/${img}`}
-                          alt="Product Image"
-                        />
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="flex  transition-all duration-500">
-                  <CarouselPrevious />
-                </div>
-                <div className="flex transition-all duration-500">
-                  <CarouselNext />
-                </div>
-              </Carousel>
-            ) : (
+          {size.width <= 768 ? (
+            <Carousel setApi={setApi} ref={carouselRef} className="w-full">
+              <CarouselContent>
+                {images.map((img, index) => (
+                  <CarouselItem key={index}>
+                    <div
+                      style={{ aspectRatio: "9/12" }}
+                      className="relative w-full flex flex-col transition-opacity duration-200"
+                    >
+                      <Image
+                        className="object-cover"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                        src={`/${img}`}
+                        alt="Product Image"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex  transition-all duration-500">
+                <CarouselPrevious />
+              </div>
+              <div className="flex transition-all duration-500">
+                <CarouselNext />
+              </div>
+            </Carousel>
+          ) : (
+            <CustomCursor link={link}>
               <motion.div
                 // style={{ x: xTranslation }}
                 className="mt-5 flex w-full flex-col md:flex-row gap-4"
@@ -166,8 +176,8 @@ const Card = ({
                   );
                 })}
               </motion.div>
-            )}
-          </CustomCursor>
+            </CustomCursor>
+          )}
         </div>
       </div>
     </div>
