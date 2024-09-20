@@ -85,11 +85,12 @@ const Card = ({
           <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
-              className="flex gap-4"
+              className="flex w-full gap-4 borderr"
               ref={ref}
               // creates a copy of images, that will update and then seem like its scrolling infintely
+              // [...images, ...images]
             >
-              {[...images, ...images].map((src, i) => {
+              {[...images].map((src, i) => {
                 return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
               })}
             </motion.div>
