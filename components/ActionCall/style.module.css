@@ -3,6 +3,8 @@
   display: flex;
   overflow: hidden;
   cursor: pointer;
+  color: white;
+  border-bottom: 1px solid;
 }
 
 .slider {
@@ -16,6 +18,14 @@
   font-size: 230px;
   font-weight: 500;
   padding-right: 50px;
+}
+
+/* Responsive design for screens smaller than 768px */
+@media (max-width: 768px) {
+  .slider p {
+    font-size: 100px; /* Adjust the font size as needed */
+    padding-right: 20px; /* Adjust the padding as needed */
+  }
 }
 
 .slider p:nth-of-type(2) {

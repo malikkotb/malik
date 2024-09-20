@@ -57,7 +57,7 @@ const Card = ({
         )}
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
-        <div className="text-sm w-full grid grid-cols-2 md:grid-cols-4">
+        <div className="text-sm font-medium w-full grid grid-cols-2 md:grid-cols-4">
           {/* <span className="font-bold">00{i + 1}</span> */}
           <span className="">{projectTitle}</span>
           <span className="hidden md:block text-left">{category}</span>
@@ -85,7 +85,7 @@ const Card = ({
           <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
-              className="flex w-full gap-4 borderr"
+              className="flex w-full flex-col md:flex-row gap-4 borderr"
               ref={ref}
               // creates a copy of images, that will update and then seem like its scrolling infintely
               // [...images, ...images]
