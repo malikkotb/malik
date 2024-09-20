@@ -28,7 +28,7 @@ export default function Home() {
       {/* TODO: make landing page section sticky and fade out on scroll downs */}
       <section className="justify-center relative flex items-center bg-black text-white h-screen">
         <div className="flex flex-col gap-2 text-left tracking-tight font-semibold leading-tight uppercase">
-          <span className="text-[8vw]">Malik Kotb</span>
+          <span className="text-[15vw] md:text-[8vw]">Malik Kotb</span>
           <div className="flex flex-col">
             <span>Web Developer</span>
             <span>Based in Paris</span>

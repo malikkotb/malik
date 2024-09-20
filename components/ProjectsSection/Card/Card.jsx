@@ -57,7 +57,7 @@ const Card = ({
         )}
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
-        <div className="text-sm font-medium w-full grid grid-cols-2 md:grid-cols-4">
+        <div className="text-sm font-semibold w-full grid grid-cols-2 md:grid-cols-4">
           {/* <span className="font-bold">00{i + 1}</span> */}
           <span className="">{projectTitle}</span>
           <span className="hidden md:block text-left">{category}</span>
@@ -65,17 +65,16 @@ const Card = ({
           <span className="md:text-right">{year}</span>
         </div>
         <div className={styles.body}>
-          <p className="w-full md:w-[80%] text-xl">
+          <p className="w-full md:w-[80%] text-base md:text-xl">
             {description} Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
-            veniam ratione libero quis in, neque dolore ipsum, aperiam fuga
-            doloribus, aliquam corporis quaerat similique?
+            veniam.
           </p>
 
-          <div>
+          <div className="flex gap-2">
             {tags.map((tag) => {
               return (
-                <div key={tag} className="">
+                <div key={tag} className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1">
                   {tag}
                 </div>
               );

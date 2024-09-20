@@ -1,7 +1,7 @@
 const projects = [
   // title, cateory, client,year, description,tags, link,images
   {
-    projectTitle: "The Agents Model Management",
+    projectTitle: "Model Agency",
     category: "Web Design, Development",
     client: "The Agents - Amsterdam",
     year: "2024",
@@ -31,7 +31,7 @@ const projects = [
     images: ["1.jpg", "4.jpg", "3.jpg"],
   },
   {
-    projectTitle: "Transportation Design Portfolio",
+    projectTitle: "Design Portfolio",
     category: "Web Development",
     client: "Matteo Just",
     year: "2024",
