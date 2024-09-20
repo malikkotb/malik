@@ -13,12 +13,10 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid;
-    // border-style: dashed;
     position: relative;
     width: 100%;
     // color: white;
-    height: 500px;
-    height: 60vh;
+    height: 70vh;
     padding-top: 10px;
     transform-origin: top;
 
@@ -26,26 +24,16 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      gap: 10px;
-      height: auto;
-      margin-top: 28px;
-
-      // .imageContainer{
-      //   position: relative;
-      //   width: 60%;
-      //   height: 100%;
-      //   border-radius: 25px;
-      //   overflow: hidden;
-      //   .inner{
-      //     width: 100%;
-      //     height: 100%;
-      //   }
-      //   img{
-      //     object-fit: cover;
-      //   }
-      // }
+      height: 100%;
+      justify-content: space-between;
     }
   }
 
+  @media (min-width: 768px) {
+    .card {
+      height: 60vh;
+
+    }
+  }
 
 }

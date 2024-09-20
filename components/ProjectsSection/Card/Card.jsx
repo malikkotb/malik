@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import styles from "./style.module.scss";
 import HorizontalImageCard from "../HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
-import { useMeasure } from "@uidotdev/usehooks";
+import { useMeasure, useWindowSize } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 import CustomCursor from "../../CustomCursor";
 const Card = ({
@@ -18,11 +18,9 @@ const Card = ({
   style,
   i,
 }) => {
-  // TODO: make responive !!
-  // TODO: don't show the horizontal infinty scroll on small screens
-  // and show images in vertical column instead
-
   let [ref, { width }] = useMeasure();
+
+  const size = useWindowSize();
 
   const xTranslation = useMotionValue(0);
 
@@ -65,16 +63,19 @@ const Card = ({
           <span className="md:text-right">{year}</span>
         </div>
         <div className={styles.body}>
-          <p className="w-full md:w-[80%] text-base md:text-xl">
+          <p className="w-full mt-7 md:w-[80%] text-base font-medium md:text-xl">
             {description} Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
-            veniam.
+            veniam. 
           </p>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 my-5">
             {tags.map((tag) => {
               return (
-                <div key={tag} className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1">
+                <div
+                  key={tag}
+                  className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1"
+                >
                   {tag}
                 </div>
               );
@@ -82,17 +83,25 @@ const Card = ({
           </div>
 
           <CustomCursor link={link}>
-            <motion.div
-              // style={{ x: xTranslation }}
-              className="flex w-full flex-col md:flex-row gap-4 borderr"
-              ref={ref}
-              // creates a copy of images, that will update and then seem like its scrolling infintely
-              // [...images, ...images]
-            >
-              {[...images].map((src, i) => {
-                return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
-              })}
-            </motion.div>
+            {size.width <= 768 ? (
+              <div>
+                <HorizontalImageCard src={images[0]} i={i} />
+              </div>
+            ) : (
+              <motion.div
+                // style={{ x: xTranslation }}
+                className="mt-5 flex w-full flex-col md:flex-row gap-4"
+                ref={ref}
+                // creates a copy of images, that will update and then seem like its scrolling infintely
+                // [...images, ...images]
+              >
+                {[...images].map((src, i) => {
+                  return (
+                    <HorizontalImageCard src={src} key={`img_${i}`} i={i} />
+                  );
+                })}
+              </motion.div>
+            )}
           </CustomCursor>
         </div>
       </div>
