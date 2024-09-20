@@ -23,24 +23,32 @@ export default function Home() {
 
   // animation refs
   const nav = useRef(null);
-  const letterWrapper = useRef(null);
   const itemCopyWrapper = useRef(null);
+
+  const letterWrapperRefs = useRef([]);
+
+  const addToRefs = (refsArray) => (el) => {
+    if (el && !refsArray.current.includes(el)) {
+      refsArray.current.push(el);
+    }
+  };
+
+  const addToLetterWrapperRefs = addToRefs(letterWrapperRefs);
 
   useGSAP(() => {
     gsap.set(nav.current, { y: -100 });
-    gsap.set(letterWrapper.current, { y: 400 }) // letter wrapper needs overflow hidden
-    gsap.set(itemCopyWrapper.current, { y: 50 }) // letter wrapper needs overflow hidden
-
+    gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
+    // gsap.set(itemCopyWrapper.current, { y: 50 }); // letter wrapper needs overflow hidden
 
     gsap.defaults({ duration: 1, ease: "power3.out" });
 
     // "paused" might be "pause"
     const tl = gsap.timeline({ paused: true, delay: 0.5 });
 
-    tl.to(letterWrapper.current, {
+    tl.to(letterWrapperRefs.current, {
       y: 0,
-      stagger: 0.1
-    })
+      stagger: 0.1,
+    });
   });
 
   return (
@@ -68,9 +76,87 @@ export default function Home() {
           </div>
         </nav>
       </nav>
-      <section className="justify-center relative flex items-center bg-black text-white h-screen">
+      {/* landing page section */}
+      <div className="container">
+        <div className="items">
+          <div className="items-col">
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img src="./1.jpg" alt="Image description" />
+              </div>
+            </div>
+            <div className="item item-side"></div>
+            <div className="item item-side"></div>
+          </div>
+        </div>
+      </div>
+
+        <div className="header">
+          <div className="header-item header-item-1">
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                M
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                A
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                L
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                I
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                K
+              </div>
+            </div>
+          </div>
+
+          <div className="header-item header-item-2">
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                K
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                O
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                T
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                B
+              </div>
+            </div>
+          </div>
+        </div>
+      {/* <section className="justify-center relative flex items-center bg-black text-white h-screen">
+
         <div className="flex flex-col gap-2 text-left tracking-tight font-semibold leading-tight uppercase">
-          <span className="text-[15vw] uppercase md:text-[8vw]">Malik Kotb</span>
+          <span className="text-[15vw] uppercase md:text-[8vw]">
+            Malik Kotb
+          </span>
           <div className="flex flex-col">
             <span>Web Developer</span>
             <span>Based in Paris</span>
@@ -80,7 +166,7 @@ export default function Home() {
         <div className="absolute bottom-3 flex gap-1 items-center">
           SCROLL <ArrowDownIcon />
         </div>
-      </section>
+      </section> */}
       <Projects />
       {/* <TextFadeGradient
         paragraph={

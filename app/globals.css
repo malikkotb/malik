@@ -13,6 +13,33 @@ html, body {
   font-family: "PP Neue Montreal";
 }
 
+.header {
+  position: absolute;
+  bottom: 35%;
+  transform-origin: center center;
+  width: 100%;
+  display: flex;
+}
+
+.header-item {
+  border: 1px solid red;
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  transform: scale(0.25);
+}
+
+.header-item-1 {
+  left: 18vw;
+
+}
+
+.header-item-2 {
+  right: 18vw;
+}
+
+
 .letter {
   flex: 1;
   font-size: 17vw;
@@ -20,7 +47,13 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
+
+.letter-wrapper {
+  
+}
+
 
 .custom-cursor-container {
   position: relative;
