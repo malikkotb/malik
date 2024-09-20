@@ -1,11 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import styles from "./style.module.scss";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import HorizontalImageCard from "../HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
 import { useMeasure, useWindowSize } from "@uidotdev/usehooks";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import CustomCursor from "../../CustomCursor";
+import Image from "next/image";
 const Card = ({
   projectTitle,
   category,
@@ -37,6 +39,43 @@ const Card = ({
     });
   }, [xTranslation, width]);
 
+  const [api, setApi] = useState();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  const carouselRef = useRef(null);
+
+
+  const [carouselWidth, setCarouselWidth] = useState(0);
+  useEffect(() => {
+    // Assuming you have a way to get the carousel width
+    const updateCarouselWidth = () => {
+      const carouselWidth = carouselRef.current?.offsetWidth;
+      setCarouselWidth(carouselWidth);
+    };
+
+    window.addEventListener("resize", updateCarouselWidth);
+    updateCarouselWidth();
+
+    return () => window.removeEventListener("resize", updateCarouselWidth);
+  }, []);
+
+  const itemWidth = carouselWidth ? carouselWidth / images.length : 0;
+  const leftPosition = current * itemWidth;
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
     <div className={`${styles.cardContainer} bg-transparent`} style={style}>
       <div
@@ -66,7 +105,7 @@ const Card = ({
           <p className="w-full mt-7 md:w-[80%] text-base font-medium md:text-xl">
             {description} Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
-            veniam. 
+            veniam.
           </p>
 
           <div className="flex gap-2 my-5">
@@ -82,11 +121,37 @@ const Card = ({
             })}
           </div>
 
+          {/* <div>
+                <HorizontalImageCard src={images[0]} i={i} />
+              </div> */}
           <CustomCursor link={link}>
             {size.width <= 768 ? (
-              <div>
-                <HorizontalImageCard src={images[0]} i={i} />
-              </div>
+              <Carousel setApi={setApi} ref={carouselRef} className="w-full">
+                <CarouselContent>
+                  {images.map((img, index) => (
+                    <CarouselItem key={index}>
+                      <div
+                        style={{ aspectRatio: "9/12" }}
+                        className="relative w-full flex flex-col transition-opacity duration-200"
+                      >
+                        <Image
+                          className="object-cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                          src={`/${img}`}
+                          alt="Product Image"
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex  transition-all duration-500">
+                  <CarouselPrevious />
+                </div>
+                <div className="flex transition-all duration-500">
+                  <CarouselNext />
+                </div>
+              </Carousel>
             ) : (
               <motion.div
                 // style={{ x: xTranslation }}
