@@ -90,67 +90,175 @@ export default function Home() {
                 </div>
               </div>
               <div className="item-img">
-                <img src="./1.jpg" alt="Image description" />
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
               </div>
             </div>
-            <div className="item item-side"></div>
-            <div className="item item-side"></div>
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="items-col">
+            <div className="item item-main">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem Main</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem Main</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="items-col">
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
+            <div className="item item-side">
+              <div className="item-copy">
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+                <div className="item-copy-wrapper">
+                  <p>Lorem ipsum</p>
+                </div>
+              </div>
+              <div className="item-img">
+                <img
+                  className="landingImage"
+                  src="./1.jpg"
+                  alt="Image description"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-        <div className="header">
-          <div className="header-item header-item-1">
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                M
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                A
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                L
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                I
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                K
-              </div>
+      <div className="header">
+        <div className="header-item header-item-1">
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              M
             </div>
           </div>
-
-          <div className="header-item header-item-2">
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                K
-              </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              A
             </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                O
-              </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              L
             </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                T
-              </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              I
             </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                B
-              </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              K
             </div>
           </div>
         </div>
+
+        <div className="header-item header-item-2">
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              K
+            </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              O
+            </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              T
+            </div>
+          </div>
+          <div className="letter">
+            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+              B
+            </div>
+          </div>
+        </div>
+      </div>
       {/* <section className="justify-center relative flex items-center bg-black text-white h-screen">
 
         <div className="flex flex-col gap-2 text-left tracking-tight font-semibold leading-tight uppercase">

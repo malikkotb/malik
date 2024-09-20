@@ -10,6 +10,8 @@ export default function TextFadeGradient({ paragraph }) {
     marker: true,
   });
 
+  // INSPIRED BY: https://www.rayraylab.com/
+
   const words = paragraph.split(" ");
   return (
     <div className="h-screen sticky flex justify-center section-padding items-center">
