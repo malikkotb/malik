@@ -77,130 +77,46 @@ export default function Home() {
         </nav>
       </nav>
       {/* landing page section */}
-      <div className="container">
+      <div className="containeR">
         <div className="items">
           <div className="items-col">
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
           </div>
           <div className="items-col">
             <div className="item item-main">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem Main</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem Main</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
           </div>
           <div className="items-col">
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
             <div className="item item-side">
-              <div className="item-copy">
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-                <div className="item-copy-wrapper">
-                  <p>Lorem ipsum</p>
-                </div>
-              </div>
               <div className="item-img">
-                <img
-                  className="landingImage"
-                  src="./1.jpg"
-                  alt="Image description"
-                />
+                <img className="" src="./1.jpg" alt="Image description" />
               </div>
             </div>
           </div>
