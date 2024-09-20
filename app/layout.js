@@ -1,6 +1,5 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "../components/Header";
 import StickyFooter from "../components/StickyFooter";
 import { Inter } from "next/font/google";
 
@@ -29,7 +28,6 @@ export default function RootLayout({ children }) {
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${inter.className} antialiased`}
       >
-        <Header />
         {children}
         <StickyFooter />
       </body>
