@@ -39,7 +39,7 @@ body {
 .items .item-main {
   overflow: hidden;
   position: fixed;
-  /* TODO: adjust this to move image down or up */
+  /* adjust the top to move image down or up */
   /* top: 20vh; */
   width: 30vw;
   max-width: 350px;

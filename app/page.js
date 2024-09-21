@@ -3,7 +3,7 @@ import FlipLink from "@/components/FlipLink";
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
-import { Projects } from "../components/ProjectsSection/Projects";
+import Projects from "../components/ProjectsSection/Projects";
 import { ArrowBottomRightIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -57,9 +57,6 @@ export default function Home() {
     gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
 
     gsap.defaults({ duration: 1, ease: "power3.out" });
-
-    // TODO: onScroll decrease opacity of text and image
-    // and scale it down like by Huy's website
 
     // "paused" might be "pause"
     const tl = gsap.timeline({ delay: 0.5 });
@@ -140,7 +137,6 @@ export default function Home() {
   return (
     <main className="">
       {/* TODO: add grainy noise background as ::before on body */}
-      {/* TODO: make landing page section sticky and fade out on scroll downs */}
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
