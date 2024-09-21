@@ -19,7 +19,7 @@ body {
   height: 100vh;
   overflow: hidden;
   color: white;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .containeR img {
@@ -39,12 +39,11 @@ body {
 
 .items .item-main {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  position: absolute;
   /* TODO: adjust this to move image down or up */
   /* top: 20vh; */
-  width: 250px;
+  border: 1px solid red;
+  width: 200px;
   height: auto;
   /* height: 350px; */
   overflow: hidden;

@@ -103,9 +103,10 @@ export default function Home() {
         "<"
       )
       .to(
-        itemMainImg.current,
+        // move the image container down
+        ".items .item-main",
         {
-          bottom: 0,
+          bottom: "2em",
         },
         "<"
       )
