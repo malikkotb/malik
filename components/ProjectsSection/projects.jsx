@@ -5,7 +5,7 @@ export default function Projects() {
   const bgColor = "bg-black";
 
   return (
-    <div>
+    <div className="">
       {/* <div className="borderr" style={{zIndex: "1000"}}>HELLO</div> */}
       {projects.map((project, i) => {
         return (
