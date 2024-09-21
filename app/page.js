@@ -8,6 +8,8 @@ import Projects from "../components/ProjectsSection/Projects";
 import { ArrowDownIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -23,7 +25,10 @@ export default function Home() {
 
   // animation refs
   const nav = useRef(null);
-  const itemCopyWrapper = useRef(null);
+  const headerItem1 = useRef(null);
+  const headerItem2 = useRef(null);
+  const itemMainImg = useRef(null);
+  const nameHeaderRef = useRef(null);
 
   const letterWrapperRefs = useRef([]);
 
@@ -36,19 +41,81 @@ export default function Home() {
   const addToLetterWrapperRefs = addToRefs(letterWrapperRefs);
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     gsap.set(nav.current, { y: -100 });
     gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
-    // gsap.set(itemCopyWrapper.current, { y: 50 }); // letter wrapper needs overflow hidden
 
     gsap.defaults({ duration: 1, ease: "power3.out" });
 
+    // TODO: onScroll decrease opacity of text and image
+    // and scale it down like by Huy's website
+
     // "paused" might be "pause"
-    const tl = gsap.timeline({ paused: true, delay: 0.5 });
+    const tl = gsap.timeline({ delay: 0.5 });
 
     tl.to(letterWrapperRefs.current, {
       y: 0,
       stagger: 0.1,
-    });
+    })
+      .to(headerItem1.current, {
+        left: "6vw",
+      })
+      .to(
+        headerItem2.current,
+        {
+          right: "8vw",
+        },
+        "<"
+      )
+      .to(
+        // ".item-main .item-img img",
+        itemMainImg.current,
+        {
+          clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
+        },
+        "<"
+      )
+      .to(headerItem1.current, {
+        left: 0,
+        scale: 0.95,
+      })
+      .to(
+        headerItem2.current,
+        {
+          right: 0,
+          scale: 0.95,
+        },
+        "<"
+      )
+      .to(
+        itemMainImg.current,
+        {
+          scale: 1,
+        },
+        "<"
+      )
+      .to(
+        nameHeaderRef.current,
+        {
+          // bottom: "-2em",
+          top: "15%",
+        },
+        "<"
+      )
+      .to(
+        itemMainImg.current,
+        {
+          bottom: 0,
+        },
+        "<"
+      )
+      .to(
+        nav.current,
+        {
+          y: 0,
+        },
+        "<"
+      );
   });
 
   return (
@@ -79,52 +146,21 @@ export default function Home() {
       {/* landing page section */}
       <div className="containeR">
         <div className="items">
-          <div className="items-col">
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-          </div>
-          <div className="items-col">
-            <div className="item item-main">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-          </div>
-          <div className="items-col">
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
-            </div>
-            <div className="item item-side">
-              <div className="item-img">
-                <img className="" src="./1.jpg" alt="Image description" />
-              </div>
+          <div className="item item-main">
+            <div className="item-img">
+              <img
+                ref={itemMainImg}
+                className=""
+                src="./profile.jpeg"
+                alt="Image description"
+              />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="header">
-        <div className="header-item header-item-1">
+      <div ref={nameHeaderRef} className="header">
+        <div ref={headerItem1} className="header-item header-item-1">
           <div className="letter">
             <div ref={addToLetterWrapperRefs} className="letter-wrapper">
               M
@@ -152,7 +188,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="header-item header-item-2">
+        <div ref={headerItem2} className="header-item header-item-2">
           <div className="letter">
             <div ref={addToLetterWrapperRefs} className="letter-wrapper">
               K

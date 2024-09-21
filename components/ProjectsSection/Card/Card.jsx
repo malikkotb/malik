@@ -102,10 +102,14 @@ const Card = ({
          And that's how the color of each card is set. */}
         <div className="text-sm font-semibold w-full grid grid-cols-2 md:grid-cols-4">
           {/* <span className="font-bold">00{i + 1}</span> */}
-          <span className="">{projectTitle}</span>
-          <span className="hidden md:block text-left">{category}</span>
-          <span className="hidden md:block text-left ml-12">{client}</span>
-          <span className="md:text-right">{year}</span>
+          <span className="text-nowrap">{projectTitle}</span>
+          <span className="hidden md:block text-nowrap text-left">
+            {category}
+          </span>
+          <span className="hidden md:block text-nowrap text-left ml-12">
+            {client}
+          </span>
+          <span className="md:text-right text-nowrap">{year}</span>
         </div>
         <div className={styles.body}>
           <p className="w-full mt-7 md:w-[80%] text-base font-medium md:text-xl">
@@ -114,9 +118,11 @@ const Card = ({
             veniam.
           </p>
 
-          <p className="flex items-center mt-4">
-            Visit Site <ArrowTopRightIcon />
-          </p>
+          {size.width <= 768 && (
+            <p className="flex items-center mt-4">
+              Visit Site <ArrowTopRightIcon />
+            </p>
+          )}
 
           <div className="flex gap-2 my-5">
             {tags.map((tag) => {
