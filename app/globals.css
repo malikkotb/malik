@@ -34,7 +34,6 @@ body {
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
 }
 
 .items .item-main {
@@ -42,8 +41,8 @@ body {
   position: absolute;
   /* TODO: adjust this to move image down or up */
   /* top: 20vh; */
-  border: 1px solid red;
-  width: 200px;
+  width: 30vw;
+  max-width: 350px;
   height: auto;
   /* height: 350px; */
   overflow: hidden;
