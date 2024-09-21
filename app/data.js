@@ -8,7 +8,11 @@ const projects = [
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
     link: "https://www.theagentsmodelmanagement.com",
-    images: ["1.jpg", "2.jpg", "5.jpg"],
+    images: [
+      "esme/theagents1.png",
+      "esme/theagents2.png",
+      "esme/theagents3.png",
+    ],
   },
   {
     projectTitle: "Prudentos",
@@ -28,18 +32,18 @@ const projects = [
     description: "Details about what I did here with Esmes model agencies",
     tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
     link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
-    images: ["1.jpg", "4.jpg", "3.jpg"],
+    images: ["alba/alba1.png", "alba/alba2.png", "alba/alba3.png"],
   },
-  {
-    projectTitle: "Design Portfolio",
-    category: "Web Development",
-    client: "Matteo Just",
-    year: "2024",
-    description: "Details about what I did here with Esmes model agencies",
-    tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-    link: "https://www.theagentsmodelmanagement.com",
-    images: ["5.jpg", "2.jpg", "3.jpg"],
-  },
+  // {
+  //   projectTitle: "Design Portfolio",
+  //   category: "Web Development",
+  //   client: "Matteo Just",
+  //   year: "2024",
+  //   description: "Details about what I did here with Esmes model agencies",
+  //   tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
+  //   link: "https://www.theagentsmodelmanagement.com",
+  //   images: ["5.jpg", "2.jpg", "3.jpg"],
+  // },
 ];
 
 export default projects;
