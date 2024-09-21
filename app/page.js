@@ -1,5 +1,6 @@
 "use client";
 import FlipLink from "@/components/FlipLink";
+import Header from "@/components/Header";
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
@@ -10,6 +11,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CornerDownRight } from "lucide-react";
 import { useScroll, useTransform, motion } from "framer-motion";
+import MagenticButton from "@/components/MagneticButton";
 gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
@@ -137,18 +139,25 @@ export default function Home() {
   return (
     <main className="">
       {/* TODO: add grainy noise background as ::before on body */}
+      {/* <nav ref={nav}>
+        <Header />
+      </nav> */}
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
         className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5"
       >
-        <h1>MALIK KOTB</h1>
-        <nav className="flex gap-2">
+        <MagenticButton>
+          <h1>MALIK KOTB</h1>
+        </MagenticButton>
+        <div className="flex gap-2">
           <div className="headerLink">
             <FlipLink href="#about">ABOUT</FlipLink>
           </div>
           <div className="headerLink">
-            <FlipLink href="#blog">BLOG</FlipLink>
+            <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
+              BLOG
+            </FlipLink>
           </div>
           <div className="headerLink">
             <FlipLink href="#projects">WORKS</FlipLink>
@@ -156,7 +165,7 @@ export default function Home() {
           <div className="headerLink">
             <FlipLink href="#contact">CONTACT</FlipLink>
           </div>
-        </nav>
+        </div>
       </nav>
       {/* landing page section */}
       <motion.div
