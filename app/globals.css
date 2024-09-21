@@ -80,6 +80,19 @@ body {
   transform: scale(0.25);
 }
 
+@media (max-width: 768px) {
+  .header-item {
+    transform: scale(0.5);
+  }
+  .header-item-1 {
+    left: 50vw;
+  }
+  
+  .header-item-2 {
+    right: 50vw;
+  }
+}
+
 .header-item-1 {
   left: 18vw;
 }
@@ -91,7 +104,7 @@ body {
 /* TODO: make the letters stick together more */
 .letter {
   flex: 1;
-  font-size: 16vw;
+  font-size: 15vw;
   font-weight: 500;
   display: flex;
   justify-content: center;
