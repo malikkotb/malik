@@ -85,13 +85,13 @@ const Card = ({
   return (
     <div className={`${styles.cardContainer} bg-transparent`} style={style}>
       <div
-        className={`${styles.card} bg-black dark:bg-black text-white dark:text-white`}
+        className={`${styles.card}  text-white`}
         style={{
           top: `calc(-5vh + ${i * 2.5}em)`,
         }}
       >
         {i === 0 && (
-          <div className="absolute uppercase -top-7 items-center border-white py-[5px] bg-black text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
+          <div className="absolute uppercase -top-7 items-center border-white py-[5px] text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
             <span>Project</span>
             <span className="hidden md:block">Category</span>
             <span className="hidden md:block text-left ml-12">Client</span>
@@ -124,18 +124,19 @@ const Card = ({
             </p>
           )}
 
-          <div className="flex gap-2 my-5">
+          <ul className="flex gap-2 my-5">
             {tags.map((tag) => {
               return (
-                <div
+                <li
                   key={tag}
-                  className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1"
+                  className=" list-disc list-inside text-xs md:text-sm font-medium text-white py-1"
+                  // className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1"
                 >
                   {tag}
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
 
           {/* <div>
                 <HorizontalImageCard src={images[0]} i={i} />

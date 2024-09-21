@@ -11,6 +11,10 @@
 
   .card {
     display: flex;
+    background-attachment: fixed;
+    background-color: black;
+    background-image: url("/noise-light.png");
+
     flex-direction: column;
     border-top: 1px solid;
     position: relative;

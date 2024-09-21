@@ -10,7 +10,9 @@
 html,
 body {
   margin: 0px;
+  background-image: url("/noise-light.png");
   background-color: black;
+  background-attachment: fixed; /* This ensures the background stays in place */
 }
 
 .containeR {
@@ -87,7 +89,7 @@ body {
   .header-item-1 {
     left: 50vw;
   }
-  
+
   .header-item-2 {
     right: 50vw;
   }
