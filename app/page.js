@@ -5,10 +5,12 @@ import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
 import TextFadeGradient from "../components/TextFadeGradient/TextFadeGradient";
 import Projects from "../components/ProjectsSection/Projects";
-import { ArrowDownIcon } from "@radix-ui/react-icons";
+import { ArrowBottomRightIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CornerDownRight } from "lucide-react";
+import { useScroll, useTransform, motion } from "framer-motion";
 gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
@@ -29,9 +31,18 @@ export default function Home() {
   const headerItem2 = useRef(null);
   const itemMainImg = useRef(null);
   const nameHeaderRef = useRef(null);
+  const servicesRef = useRef(null);
+  const scrollContainer = useRef(null); // use for scroll interaction: scale and opacity down
+  const { scrollYProgress } = useScroll({
+    target: scrollContainer,
+    offset: ["start start", "end start"],
+  });
+
+  const scaleTransform = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
+  const opacityTransform = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const translateYTransform = useTransform(scrollYProgress, [0, 1], [0, -100]); // Move up as it scales
 
   const letterWrapperRefs = useRef([]);
-
   const addToRefs = (refsArray) => (el) => {
     if (el && !refsArray.current.includes(el)) {
       refsArray.current.push(el);
@@ -43,6 +54,7 @@ export default function Home() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     gsap.set(nav.current, { y: -100 });
+    gsap.set(servicesRef.current, { y: -100 });
     gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
 
     gsap.defaults({ duration: 1, ease: "power3.out" });
@@ -55,7 +67,7 @@ export default function Home() {
 
     tl.to(letterWrapperRefs.current, {
       y: 0,
-      stagger: 0.1,
+      stagger: 0.05,
     })
       .to(headerItem1.current, {
         left: "6vw",
@@ -116,6 +128,13 @@ export default function Home() {
           y: 0,
         },
         "<"
+      )
+      .to(
+        servicesRef.current,
+        {
+          y: 0,
+        },
+        "<"
       );
   });
 
@@ -145,8 +164,19 @@ export default function Home() {
         </nav>
       </nav>
       {/* landing page section */}
-      <div className="containeR">
-        <div className="items">
+      <motion.div
+        // style={{
+        //   scale: scaleTransform,
+        //   opacity: opacityTransform,
+        //   // transformOrigin: "center bottom",
+        // }}
+        ref={scrollContainer}
+        className="containeR borderr"
+      >
+        <motion.div
+          style={{ scale: scaleTransform, opacity: opacityTransform }}
+          className="items"
+        >
           <div className="item item-main">
             <div className="item-img">
               <img
@@ -157,63 +187,80 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+        {/* header name: Malik Kotb */}
+        <div
+          // style={{ scale: scaleTransform, opacity: opacityTransform }}
+          ref={nameHeaderRef}
+          className="header"
+        >
+          <div ref={headerItem1} className="header-item header-item-1">
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                M
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                A
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                L
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                I
+              </div>
+            </div>
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                K
+              </div>
+            </div>
+          </div>
 
-      <div ref={nameHeaderRef} className="header">
-        <div ref={headerItem1} className="header-item header-item-1">
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              M
+          <div ref={headerItem2} className="header-item header-item-2">
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                K
+              </div>
             </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              A
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                O
+              </div>
             </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              L
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                T
+              </div>
             </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              I
-            </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              K
+            <div className="letter">
+              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
+                B
+              </div>
             </div>
           </div>
         </div>
+        {/* description / services */}
+        <div className="text-sm fixed overflow-hidden text-white font-bold bottom-[30%] left-[15%]">
+          <div ref={servicesRef} className="flex gap-2">
+            <span className="items-center flex">
+              <CornerDownRight />
+            </span>
+            <div className="uppercase flex flex-col">
+              <span>UXUI Design</span>
+              <span>Web Development</span>
+              <span>Interaction</span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-        <div ref={headerItem2} className="header-item header-item-2">
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              K
-            </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              O
-            </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              T
-            </div>
-          </div>
-          <div className="letter">
-            <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-              B
-            </div>
-          </div>
-        </div>
-      </div>
       {/* <section className="justify-center relative flex items-center bg-black text-white h-screen">
-
         <div className="flex flex-col gap-2 text-left tracking-tight font-semibold leading-tight uppercase">
           <span className="text-[15vw] uppercase md:text-[8vw]">
             Malik Kotb

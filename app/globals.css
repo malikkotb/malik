@@ -19,7 +19,6 @@ body {
   height: 100vh;
   overflow: hidden;
   color: white;
-  /* border: 1px solid red; */
 }
 
 .containeR img {
@@ -38,7 +37,7 @@ body {
 
 .items .item-main {
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   /* TODO: adjust this to move image down or up */
   /* top: 20vh; */
   width: 30vw;
@@ -46,6 +45,12 @@ body {
   height: auto;
   /* height: 350px; */
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .items .item-main {
+    width: 65vw;
+  }
 }
 
 .item-main .item-img {
@@ -58,7 +63,7 @@ body {
 }
 
 .header {
-  position: absolute;
+  position: fixed;
   bottom: 35%;
   transform-origin: center center;
   width: 100%;
