@@ -1,10 +1,10 @@
 "use client";
 import FlipLink from "@/components/FlipLink";
-import Header from "@/components/Header";
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
 import Projects from "../components/ProjectsSection/Projects";
+import TextDipserse from "../components/TextDisperse";
 import { ArrowBottomRightIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -43,103 +43,13 @@ export default function Home() {
   const opacityTransform = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const yTranslate = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
-  const letterWrapperRefs = useRef([]);
-  const addToRefs = (refsArray) => (el) => {
-    if (el && !refsArray.current.includes(el)) {
-      refsArray.current.push(el);
-    }
+  const background = useRef(null);
+  const setBackground = (isActive) => {
+    gsap.to(background.current, { opacity: isActive ? 0.8 : 0 });
   };
-  const addToLetterWrapperRefs = addToRefs(letterWrapperRefs);
-  // useGSAP(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-  //   gsap.set(nav.current, { y: -100 });
-  //   gsap.set(servicesRef.current, { y: -100 });
-  //   gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
-
-  //   gsap.defaults({ duration: 1, ease: "power3.out" });
-
-  //   // "paused" might be "pause"
-  //   const tl = gsap.timeline({ delay: 0.5 });
-
-  //   tl.to(letterWrapperRefs.current, {
-  //     y: 0,
-  //     stagger: 0.05,
-  //   })
-  //     .to(headerItem1.current, {
-  //       left: "6vw",
-  //     })
-  //     .to(
-  //       headerItem2.current,
-  //       {
-  //         right: "8vw",
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       // ".item-main .item-img img",
-  //       itemMainImg.current,
-  //       {
-  //         clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
-  //       },
-  //       "<"
-  //     )
-  //     .to(headerItem1.current, {
-  //       left: 0,
-  //       scale: 0.95,
-  //     })
-  //     .to(
-  //       headerItem2.current,
-  //       {
-  //         right: 0,
-  //         scale: 0.95,
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       itemMainImg.current,
-  //       {
-  //         scale: 1,
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       nameHeaderRef.current,
-  //       {
-  //         // bottom: "-2em",
-  //         top: "15%",
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       // move the image container down
-  //       ".items .item-main",
-  //       {
-  //         bottom: "2em",
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       nav.current,
-  //       {
-  //         y: 0,
-  //       },
-  //       "<"
-  //     )
-  //     .to(
-  //       servicesRef.current,
-  //       {
-  //         y: 0,
-  //       },
-  //       "<"
-  //     );
-  // });
 
   return (
     <main className="">
-      {/* TODO: add grainy noise background as ::before on body */}
-      {/* <nav ref={nav}>
-        <Header />
-      </nav> */}
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
@@ -171,12 +81,11 @@ export default function Home() {
           scale: scaleTransform,
           opacity: opacityTransform,
           y: yTranslate,
+          position: "fixed",
         }}
+        className="h-screen w-screen flex items-center justify-center text-white"
         ref={scrollContainer}
       >
-        {/* TODO: put contents of landing page inside here */}
-      </motion.div>
-      <section className="h-screen flex items-center justify-center">
         <div className="w-[50vw] text-white">
           <div className="introLine">
             <p>Nathan</p>
@@ -196,19 +105,19 @@ export default function Home() {
             <p>Direction</p>
           </div>
 
-          <div className="introLine">
+          <TextDipserse>
             <p>+447533063596</p>
-          </div>
+          </TextDipserse>
 
-          <div className="introLine">
+          <TextDipserse>
             <p>→Email</p>
-          </div>
+          </TextDipserse>
 
-          <div className="introLine">
+          <TextDipserse>
             <p>→Insta</p>
-          </div>
+          </TextDipserse>
         </div>
-      </section>
+      </motion.div>
 
       {/* landing page section (archived) */}
       {/* <motion.div
@@ -301,6 +210,7 @@ export default function Home() {
       </motion.div> */}
 
       {/* to make space for scrolling */}
+      <div className="h-screen"></div>
 
       <Projects />
       {/* <TextFadeGradient
