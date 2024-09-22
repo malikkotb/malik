@@ -44,6 +44,10 @@ export default function Home() {
 
     const elapsed = timestamp - start;
 
+    const newCurve = easeOutQuad(elapsed, initialCurve, -200, duration);
+
+    setPath(newCurve);
+
     loader.current.style.top =
       easeOutQuad(elapsed, 0, -loaderHeight(), duration) + "px";
 
