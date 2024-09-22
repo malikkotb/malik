@@ -173,8 +173,44 @@ export default function Home() {
           y: yTranslate,
         }}
         ref={scrollContainer}
-      ></motion.div>
-     {/* landing page section (archived) */}
+      >
+        {/* TODO: put contents of landing page inside here */}
+      </motion.div>
+      <section className="h-screen flex items-center justify-center">
+        <div className="w-[50vw] text-white">
+          <div className="introLine">
+            <p>Nathan</p>
+
+            <p>Smith</p>
+          </div>
+
+          <div className="introLine">
+            <p>Design</p>
+
+            <p>&</p>
+          </div>
+
+          <div className="introLine">
+            <p>Art</p>
+
+            <p>Direction</p>
+          </div>
+
+          <div className="introLine">
+            <p>+447533063596</p>
+          </div>
+
+          <div className="introLine">
+            <p>→Email</p>
+          </div>
+
+          <div className="introLine">
+            <p>→Insta</p>
+          </div>
+        </div>
+      </section>
+
+      {/* landing page section (archived) */}
       {/* <motion.div
         style={{
           scale: scaleTransform,
@@ -265,7 +301,6 @@ export default function Home() {
       </motion.div> */}
 
       {/* to make space for scrolling */}
-      <div className="h-screen"></div>
 
       <Projects />
       {/* <TextFadeGradient
