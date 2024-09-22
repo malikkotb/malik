@@ -1,5 +1,6 @@
 "use client";
 import FlipLink from "@/components/FlipLink";
+import Clock from "react-live-clock";
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
@@ -68,9 +69,7 @@ export default function Home() {
 
   const setPath = (curve) => {
     const width = window.innerWidth;
-    console.log(width);
     const height = loaderHeight();
-    console.log("heihgt;", height);
     path.current.setAttributeNS(
       null,
       "d",
@@ -95,7 +94,7 @@ export default function Home() {
 
   const background = useRef(null);
   const setBackground = (isActive) => {
-    gsap.to(background.current, { opacity: isActive ? 0.8 : 0 });
+    gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
   return (
@@ -105,14 +104,18 @@ export default function Home() {
           <path ref={path}></path>
         </svg>
       </div>
+      {/* header */}
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
         className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5"
       >
-        <MagenticButton>
-          <h1 className="cursor-pointer">MALIK KOTB</h1>
-        </MagenticButton>
+        <div className="flex gap-3">
+          <MagenticButton>
+            <h1 className="cursor-pointer">MALIK KOTB</h1>
+          </MagenticButton>
+          <Clock format={"h:mm A"} />
+        </div>
         <div className="flex gap-2">
           <div className="headerLink">
             <FlipLink href="#about">ABOUT</FlipLink>
@@ -143,35 +146,37 @@ export default function Home() {
             position: "fixed",
           }}
         >
-          <div className="body">
-            <div className="introLine">
-              <p>Malik</p>
-              <p>Kotb</p>
+          <div className="maiN">
+            <div className="body">
+              <div className="introLine">
+                <p>Malik</p>
+                <p>Kotb</p>
+              </div>
+
+              <div className="introLine">
+                <p>Design</p>
+                <p>&</p>
+              </div>
+
+              <div className="introLine">
+                <p>Web</p>
+                <p>Creation</p>
+              </div>
+
+              <TextDipserse setBackground={setBackground}>
+                <p>BOOK A CALL</p>
+              </TextDipserse>
+
+              <TextDipserse setBackground={setBackground}>
+                <p>→Email</p>
+              </TextDipserse>
+
+              <TextDipserse setBackground={setBackground}>
+                <p>→Insta</p>
+              </TextDipserse>
             </div>
-
-            <div className="introLine">
-              <p>Design</p>
-              <p>&</p>
-            </div>
-
-            <div className="introLine">
-              <p>Web</p>
-              <p>Creation</p>
-            </div>
-
-            <TextDipserse setBackground={setBackground}>
-              <p>BOOK A CALL</p>
-            </TextDipserse>
-
-            <TextDipserse setBackground={setBackground}>
-              <p>→Email</p>
-            </TextDipserse>
-
-            <TextDipserse setBackground={setBackground}>
-              <p>→Insta</p>
-            </TextDipserse>
+            <div ref={background} className="background"></div>
           </div>
-          <div ref={background} className="background"></div>
         </motion.div>
       </div>
 

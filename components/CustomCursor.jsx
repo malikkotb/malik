@@ -19,7 +19,7 @@ const CustomCursor = ({ children, link }) => {
     });
   };
 
-  // TODO: maybe fix scroll issue
+  // TODO: fix scroll issue
 
   // const handleScroll = () => {
   //   setScrolling(true);
