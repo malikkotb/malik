@@ -88,25 +88,22 @@ export default function Home() {
       >
         <div className="w-[50vw] text-white">
           <div className="introLine">
-            <p>Nathan</p>
-
-            <p>Smith</p>
+            <p>Malik</p>
+            <p>Kotb</p>
           </div>
 
           <div className="introLine">
             <p>Design</p>
-
             <p>&</p>
           </div>
 
           <div className="introLine">
-            <p>Art</p>
-
-            <p>Direction</p>
+            <p>Web</p>
+            <p>Creation</p>
           </div>
 
           <TextDipserse setBackground={setBackground}>
-            <p>+447533063596</p>
+            <p>BOOK  A  CALL</p>
           </TextDipserse>
 
           <TextDipserse setBackground={setBackground}>
@@ -117,6 +114,7 @@ export default function Home() {
             <p>→Insta</p>
           </TextDipserse>
         </div>
+        <div ref={background} className="background"></div>
       </motion.div>
 
       {/* to make space for scrolling */}
