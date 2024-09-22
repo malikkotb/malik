@@ -105,109 +105,19 @@ export default function Home() {
             <p>Direction</p>
           </div>
 
-          <TextDipserse>
+          <TextDipserse setBackground={setBackground}>
             <p>+447533063596</p>
           </TextDipserse>
 
-          <TextDipserse>
+          <TextDipserse setBackground={setBackground}>
             <p>→Email</p>
           </TextDipserse>
 
-          <TextDipserse>
+          <TextDipserse setBackground={setBackground}>
             <p>→Insta</p>
           </TextDipserse>
         </div>
       </motion.div>
-
-      {/* landing page section (archived) */}
-      {/* <motion.div
-        style={{
-          scale: scaleTransform,
-          opacity: opacityTransform,
-          y: yTranslate,
-        }}
-        ref={scrollContainer}
-        className="containeR"
-      >
-        <div className="items">
-          <div className="item item-main">
-            <div className="item-img">
-              <img
-                ref={itemMainImg}
-                className=""
-                src="./profile.jpeg"
-                alt="Image description"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="text-sm fixed overflow-hidden text-white font-bold bottom-[30%] left-[15%]">
-          <div ref={servicesRef} className="flex gap-2">
-            <span className="items-center flex">
-              <CornerDownRight />
-            </span>
-            <div className="uppercase flex flex-col">
-              <span>UXUI Design</span>
-              <span>Web Development</span>
-              <span>Interaction</span>
-            </div>
-          </div>
-        </div>
-
-        <div ƒ ref={nameHeaderRef} className="header">
-          <div ref={headerItem1} className="header-item header-item-1">
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                M
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                A
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                L
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                I
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                K
-              </div>
-            </div>
-          </div>
-
-          <div ref={headerItem2} className="header-item header-item-2">
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                K
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                O
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                T
-              </div>
-            </div>
-            <div className="letter">
-              <div ref={addToLetterWrapperRefs} className="letter-wrapper">
-                B
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div> */}
 
       {/* to make space for scrolling */}
       <div className="h-screen"></div>

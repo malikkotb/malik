@@ -6,7 +6,6 @@ export default function Projects() {
 
   return (
     <div className="">
-      {/* <div className="borderr" style={{zIndex: "1000"}}>HELLO</div> */}
       {projects.map((project, i) => {
         return (
           // <div key={`p_${i}`} className={bgColor}>
