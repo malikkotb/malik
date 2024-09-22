@@ -69,6 +69,7 @@ body {
 .loader {
   height: calc(100vh + 200px);
   width: 100%;
+  /* z-index: 9999; */
   position: fixed;
 }
 
@@ -78,7 +79,8 @@ body {
 }
 
 .loader svg path {
-  stroke: black;
+  stroke: white;
+  fill: white;
   stroke-width: 1px;
 }
 

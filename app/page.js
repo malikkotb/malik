@@ -5,11 +5,8 @@ import { useEffect, useRef } from "react";
 import ActionCall from "../components/ActionCall/ActionCall";
 import Projects from "../components/ProjectsSection/Projects";
 import TextDipserse from "../components/TextDisperse";
-import { ArrowBottomRightIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CornerDownRight } from "lucide-react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import MagenticButton from "@/components/MagneticButton";
 gsap.registerPlugin(useGSAP);
@@ -26,13 +23,62 @@ export default function Home() {
     requestAnimationFrame(raf);
   }, []);
 
-  // animation refs
+  const loader = useRef(null);
+  const path = useRef(null);
+  const initialCurve = 200;
+
+  const duration = 600;
+  let start;
+
+  useEffect(() => {
+    setPath(initialCurve);
+    setTimeout(() => {
+      requestAnimationFrame(animate);
+    }, 500);
+  }, []);
+
+  const animate = (timestamp) => {
+    if (start === undefined) {
+      start = timestamp;
+    }
+
+    const elapsed = timestamp - start;
+
+    loader.current.style.top =
+      easeOutQuad(elapsed, 0, -loaderHeight(), duration) + "px";
+
+    if (elapsed < duration) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  const easeOutQuad = (time, start, end, duration) => {
+    return -end * (time /= duration) * (time - 2) + start;
+  };
+
+  const loaderHeight = () => {
+    const loaderBounds = loader.current.getBoundingClientRect();
+
+    return loaderBounds.height;
+  };
+
+  const setPath = (curve) => {
+    const width = window.innerWidth;
+    console.log(width);
+    const height = loaderHeight();
+    console.log("heihgt;", height);
+    path.current.setAttributeNS(
+      null,
+      "d",
+      `M0 0
+      L${width} 0
+      L${width} ${height}
+      Q${width / 2} ${height - curve} 0 ${height}
+      L0 0`
+    );
+  };
+
   const nav = useRef(null);
-  const headerItem1 = useRef(null);
-  const headerItem2 = useRef(null);
-  const itemMainImg = useRef(null);
-  const nameHeaderRef = useRef(null);
-  const servicesRef = useRef(null);
   const scrollContainer = useRef(null); // use for scroll interaction: scale and opacity down
   const { scrollYProgress } = useScroll({
     target: scrollContainer,
@@ -76,49 +122,57 @@ export default function Home() {
         </div>
       </nav>
       {/* landing page section */}
-      <motion.div
-        style={{
-          scale: scaleTransform,
-          opacity: opacityTransform,
-          y: yTranslate,
-          position: "fixed",
-        }}
-        className="h-screen w-screen flex items-center justify-center text-white"
+      <div
+        className="h-screen w-full flex items-center justify-center text-white"
         ref={scrollContainer}
       >
-        <div className="body">
-          <div className="introLine">
-            <p>Malik</p>
-            <p>Kotb</p>
-          </div>
-
-          <div className="introLine">
-            <p>Design</p>
-            <p>&</p>
-          </div>
-
-          <div className="introLine">
-            <p>Web</p>
-            <p>Creation</p>
-          </div>
-
-          <TextDipserse setBackground={setBackground}>
-            <p>BOOK  A  CALL</p>
-          </TextDipserse>
-
-          <TextDipserse setBackground={setBackground}>
-            <p>→Email</p>
-          </TextDipserse>
-
-          <TextDipserse setBackground={setBackground}>
-            <p>→Insta</p>
-          </TextDipserse>
+        <div ref={loader} className="loader">
+          <svg>
+            <path ref={path}></path>
+          </svg>
         </div>
+        <motion.div
+          style={{
+            scale: scaleTransform,
+            opacity: opacityTransform,
+            y: yTranslate,
+            position: "fixed",
+          }}
+        >
+          <div className="body">
+            <div className="introLine">
+              <p>Malik</p>
+              <p>Kotb</p>
+            </div>
+
+            <div className="introLine">
+              <p>Design</p>
+              <p>&</p>
+            </div>
+
+            <div className="introLine">
+              <p>Web</p>
+              <p>Creation</p>
+            </div>
+
+            <TextDipserse setBackground={setBackground}>
+              <p>BOOK A CALL</p>
+            </TextDipserse>
+
+            <TextDipserse setBackground={setBackground}>
+              <p>→Email</p>
+            </TextDipserse>
+
+            <TextDipserse setBackground={setBackground}>
+              <p>→Insta</p>
+            </TextDipserse>
+          </div>
+        </motion.div>
         <div ref={background} className="background"></div>
-      </motion.div>
+      </div>
 
       {/* to make space for scrolling */}
-      <div className="h-screen"></div>
+      {/* <div className="h-screen"></div> */}
 
       <Projects />
       {/* <TextFadeGradient
