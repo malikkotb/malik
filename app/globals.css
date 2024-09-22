@@ -25,11 +25,27 @@ body {
   opacity: 0;
 }
 
+.body {
+  color: whitesmoke;
+  color: white;
+  width: 50vw;
+}
+
 .introLine {
   display: flex;
   font-size: 6vw;
   justify-content: space-between;
   text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .introLine {
+    font-size: 9vw;
+  }
+
+  .body {
+    width: 80vw;
+  }
 }
 
 .introLine p {
@@ -48,6 +64,22 @@ body {
 
 .introLine p {
   margin: 0px;
+}
+
+.loader {
+  height: calc(100vh + 200px);
+  width: 100%;
+  position: fixed;
+}
+
+.loader svg {
+  height: 100%;
+  width: 100%;
+}
+
+.loader svg path {
+  stroke: black;
+  stroke-width: 1px;
 }
 
 /* .containeR {

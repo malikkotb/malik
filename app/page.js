@@ -86,7 +86,7 @@ export default function Home() {
         className="h-screen w-screen flex items-center justify-center text-white"
         ref={scrollContainer}
       >
-        <div className="w-[50vw] text-white">
+        <div className="body">
           <div className="introLine">
             <p>Malik</p>
             <p>Kotb</p>
