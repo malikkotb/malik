@@ -171,8 +171,8 @@ export default function Home() {
               <p>→Insta</p>
             </TextDipserse>
           </div>
+          <div ref={background} className="background"></div>
         </motion.div>
-        <div ref={background} className="background"></div>
       </div>
 
       {/* to make space for scrolling */}
