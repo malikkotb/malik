@@ -112,7 +112,7 @@ const Card = ({
           <span className="md:text-right text-nowrap">{year}</span>
         </div>
         <div className={styles.body}>
-          <p className="w-full mt-7 md:w-[80%] text-base font-medium md:text-xl">
+          <p className="w-full mt-7 md:w-[80%] text-base font-semibold md:text-2xl lg:text-3xl">
             {description} Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
             veniam.
@@ -124,12 +124,12 @@ const Card = ({
             </p>
           )}
 
-          <ul className="flex gap-2 my-5">
+          <ul className="flex md:flex-col gap-2 my-5">
             {tags.map((tag) => {
               return (
                 <li
                   key={tag}
-                  className=" list-disc list-inside text-xs md:text-sm font-medium text-white py-1"
+                  className=" list-disc list-inside text-xs md:text-base font-semibold text-white py-1"
                   // className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1"
                 >
                   {tag}
