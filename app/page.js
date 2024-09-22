@@ -49,92 +49,90 @@ export default function Home() {
       refsArray.current.push(el);
     }
   };
-
   const addToLetterWrapperRefs = addToRefs(letterWrapperRefs);
+  // useGSAP(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+  //   gsap.set(nav.current, { y: -100 });
+  //   gsap.set(servicesRef.current, { y: -100 });
+  //   gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.set(nav.current, { y: -100 });
-    gsap.set(servicesRef.current, { y: -100 });
-    gsap.set(letterWrapperRefs.current, { y: 400 }); // letter wrapper needs overflow hidden
+  //   gsap.defaults({ duration: 1, ease: "power3.out" });
 
-    gsap.defaults({ duration: 1, ease: "power3.out" });
+  //   // "paused" might be "pause"
+  //   const tl = gsap.timeline({ delay: 0.5 });
 
-    // "paused" might be "pause"
-    const tl = gsap.timeline({ delay: 0.5 });
-
-    tl.to(letterWrapperRefs.current, {
-      y: 0,
-      stagger: 0.05,
-    })
-      .to(headerItem1.current, {
-        left: "6vw",
-      })
-      .to(
-        headerItem2.current,
-        {
-          right: "8vw",
-        },
-        "<"
-      )
-      .to(
-        // ".item-main .item-img img",
-        itemMainImg.current,
-        {
-          clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
-        },
-        "<"
-      )
-      .to(headerItem1.current, {
-        left: 0,
-        scale: 0.95,
-      })
-      .to(
-        headerItem2.current,
-        {
-          right: 0,
-          scale: 0.95,
-        },
-        "<"
-      )
-      .to(
-        itemMainImg.current,
-        {
-          scale: 1,
-        },
-        "<"
-      )
-      .to(
-        nameHeaderRef.current,
-        {
-          // bottom: "-2em",
-          top: "15%",
-        },
-        "<"
-      )
-      .to(
-        // move the image container down
-        ".items .item-main",
-        {
-          bottom: "2em",
-        },
-        "<"
-      )
-      .to(
-        nav.current,
-        {
-          y: 0,
-        },
-        "<"
-      )
-      .to(
-        servicesRef.current,
-        {
-          y: 0,
-        },
-        "<"
-      );
-  });
+  //   tl.to(letterWrapperRefs.current, {
+  //     y: 0,
+  //     stagger: 0.05,
+  //   })
+  //     .to(headerItem1.current, {
+  //       left: "6vw",
+  //     })
+  //     .to(
+  //       headerItem2.current,
+  //       {
+  //         right: "8vw",
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       // ".item-main .item-img img",
+  //       itemMainImg.current,
+  //       {
+  //         clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
+  //       },
+  //       "<"
+  //     )
+  //     .to(headerItem1.current, {
+  //       left: 0,
+  //       scale: 0.95,
+  //     })
+  //     .to(
+  //       headerItem2.current,
+  //       {
+  //         right: 0,
+  //         scale: 0.95,
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       itemMainImg.current,
+  //       {
+  //         scale: 1,
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       nameHeaderRef.current,
+  //       {
+  //         // bottom: "-2em",
+  //         top: "15%",
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       // move the image container down
+  //       ".items .item-main",
+  //       {
+  //         bottom: "2em",
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       nav.current,
+  //       {
+  //         y: 0,
+  //       },
+  //       "<"
+  //     )
+  //     .to(
+  //       servicesRef.current,
+  //       {
+  //         y: 0,
+  //       },
+  //       "<"
+  //     );
+  // });
 
   return (
     <main className="">
@@ -148,7 +146,7 @@ export default function Home() {
         className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5"
       >
         <MagenticButton>
-          <h1>MALIK KOTB</h1>
+          <h1 className="cursor-pointer">MALIK KOTB</h1>
         </MagenticButton>
         <div className="flex gap-2">
           <div className="headerLink">
@@ -175,17 +173,19 @@ export default function Home() {
           y: yTranslate,
         }}
         ref={scrollContainer}
+      ></motion.div>
+     {/* landing page section (archived) */}
+      {/* <motion.div
+        style={{
+          scale: scaleTransform,
+          opacity: opacityTransform,
+          y: yTranslate,
+        }}
+        ref={scrollContainer}
         className="containeR"
       >
         <div className="items">
-          <motion.div
-            // style={{
-            //   scale: scaleTransform,
-            //   opacity: opacityTransform,
-            //   y: yTranslate,
-            // }}
-            className="item item-main"
-          >
+          <div className="item item-main">
             <div className="item-img">
               <img
                 ref={itemMainImg}
@@ -194,18 +194,10 @@ export default function Home() {
                 alt="Image description"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* services/description */}
-        <motion.div
-          // style={{
-          //   scale: scaleTransform,
-          //   opacity: opacityTransform,
-          //   y: yTranslate,
-          // }}
-          className="text-sm fixed overflow-hidden text-white font-bold bottom-[30%] left-[15%]"
-        >
+        <div className="text-sm fixed overflow-hidden text-white font-bold bottom-[30%] left-[15%]">
           <div ref={servicesRef} className="flex gap-2">
             <span className="items-center flex">
               <CornerDownRight />
@@ -216,18 +208,9 @@ export default function Home() {
               <span>Interaction</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* nameHeader */}
-        <motion.div
-          // style={{
-          //   scale: scaleTransform,
-          //   opacity: opacityTransform,
-          //   y: yTranslate,
-          // }}
-          ref={nameHeaderRef}
-          className="header"
-        >
+        <div ƒ ref={nameHeaderRef} className="header">
           <div ref={headerItem1} className="header-item header-item-1">
             <div className="letter">
               <div ref={addToLetterWrapperRefs} className="letter-wrapper">
@@ -278,8 +261,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </motion.div> */}
 
       {/* to make space for scrolling */}
       <div className="h-screen"></div>
