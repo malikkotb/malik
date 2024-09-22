@@ -34,6 +34,13 @@ body {
   width: 50vw;
 }
 
+.body a {
+  display: inline; /* Make the <a> tag inline */
+  text-decoration: none; /* Remove underline if needed */
+  margin: 0; /* Remove any extra margin */
+  padding: 0; /* Remove any extra padding */
+}
+
 .introLine {
   display: flex;
   font-size: 6vw;

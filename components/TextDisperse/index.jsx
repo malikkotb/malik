@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { disperse } from "./animation";
 
-export default function TextDipserse({ children, setBackground }) {
+export default function TextDipserse({ children, setBackground, link }) {
   const [isAnimated, setIsAnimated] = useState(false);
 
   const getChars = (element) => {
@@ -33,8 +33,11 @@ export default function TextDipserse({ children, setBackground }) {
     setIsAnimated(false);
   };
 
+  const handleClick = () => {};
+
   return (
     <div
+      onClick={() => window.open(link, "_blank")}
       style={{ cursor: "pointer" }}
       onMouseEnter={() => {
         manageMouseEnter();

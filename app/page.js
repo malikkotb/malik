@@ -164,14 +164,21 @@ export default function Home() {
               </div>
 
               <TextDipserse setBackground={setBackground}>
+                {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
                 <p>BOOK A CALL</p>
               </TextDipserse>
 
-              <TextDipserse setBackground={setBackground}>
+              <TextDipserse
+                link={"mailto:malikkotb@icloud.com"}
+                setBackground={setBackground}
+              >
                 <p>→Email</p>
               </TextDipserse>
 
-              <TextDipserse setBackground={setBackground}>
+              <TextDipserse
+                link={"https://instagram.com/malikhavemercy"}
+                setBackground={setBackground}
+              >
                 <p>→Insta</p>
               </TextDipserse>
             </div>
