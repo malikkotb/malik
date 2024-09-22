@@ -100,6 +100,11 @@ export default function Home() {
 
   return (
     <main className="">
+      <div ref={loader} className="loader">
+        <svg>
+          <path ref={path}></path>
+        </svg>
+      </div>
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
@@ -130,11 +135,6 @@ export default function Home() {
         className="h-screen w-full flex items-center justify-center text-white"
         ref={scrollContainer}
       >
-        <div ref={loader} className="loader">
-          <svg>
-            <path ref={path}></path>
-          </svg>
-        </div>
         <motion.div
           style={{
             scale: scaleTransform,

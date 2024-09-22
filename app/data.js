@@ -25,6 +25,20 @@ const projects = [
     images: ["2.jpg", "1.jpg", "4.jpg"],
   },
   {
+    projectTitle: "Pastry Shop",
+    category: "E-Commerce, Development",
+    client: "Katrin Scholz",
+    year: "2024",
+    description: "Details about how I created this e-commerce website",
+    tags: ["Development", "Next.js", "Tailwind CSS", "Figma", "Stripe"],
+    link: "https://tiny-cat-4b4dc8.netlify.app/",
+    images: [
+      "pastryShop/pastry1.png",
+      "pastryShop/pastry4.png",
+      "pastryShop/pastry5.png",
+    ],
+  },
+  {
     projectTitle: "Alba Portfolio",
     category: "Web Design, Development",
     client: "Alba Preysing",
@@ -34,6 +48,7 @@ const projects = [
     link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
     images: ["alba/alba1.png", "alba/alba2.png", "alba/alba3.png"],
   },
+
   // {
   //   projectTitle: "Design Portfolio",
   //   category: "Web Development",
