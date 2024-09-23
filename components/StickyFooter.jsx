@@ -15,6 +15,33 @@ export default function StickyFooter() {
       </div> */
   }
 
+  const menuLinks = [
+    { name: "Home", href: "#home" },
+    { name: "Projects", href: "#projects" },
+    // { name: "About", href: "/about" },
+    { name: "Contact", href: "mailto:malikkotb@icloud.com" },
+  ];
+
+  const socialLinks = [
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/in/malik-kotb-682412189/",
+      newPage: true,
+    },
+    {
+      name: "Instagram",
+      href: "https://instagram.com/malikhavemercy",
+      newPage: true,
+    },
+    { name: "TikTok", href: "https://tiktok.com/@malikruns", newPage: true },
+    { name: "GitHub", href: "https://github.com/malikkotb", newPage: true },
+  ];
+
+  const resourceLinks = [
+    { name: "Blog", href: "https://malikkotb.github.io/blog/", newPage: true },
+    { name: "GitHub", href: "https://github.com/malikkotb", newPage: true },
+  ];
+
   return (
     <div
       className="relative h-[45vh] md:h-[35vh]"
@@ -25,9 +52,11 @@ export default function StickyFooter() {
         <div className="columnFooter mr-4">
           <h1 className="w-full border-b pb-1 font-bold">Menu</h1>
           <ul className="mt-2 space-y-1">
-            {["Home", "Projects", "About", "Contact", "GitHub"].map((link) => (
-              <li key={link} className="flex h-fit w-fit">
-                <FlipLink href="/">{link}</FlipLink>
+            {menuLinks.map((link) => (
+              <li key={link.name} className="flex h-fit w-fit">
+                <FlipLink newPage={link.newPage} href={link.href}>
+                  {link.name}
+                </FlipLink>
               </li>
             ))}
           </ul>
@@ -35,21 +64,23 @@ export default function StickyFooter() {
         <div className="columnFooter mr-0 md:mr-4">
           <h1 className="w-full border-b pb-1 font-bold">Socials</h1>
           <ul className="mt-2 space-y-1">
-            {["LinkedIn", "Instagram", "TikTok", "YouTube", "GitHub"].map(
-              (link) => (
-                <li key={link} className="flex h-fit w-fit">
-                  <FlipLink href="/">{link}</FlipLink>
-                </li>
-              )
-            )}
+            {socialLinks.map((link) => (
+              <li key={link.name} className="flex h-fit w-fit">
+                <FlipLink newPage={link.newPage} href={link.href}>
+                  {link.name}
+                </FlipLink>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="columnFooter mt-4 md:mt-0">
           <h1 className="w-full border-b pb-1 font-bold">Resources</h1>
           <ul className="mt-2 space-y-1">
-            {["Blog", "Figma Templates", "GitHub"].map((link) => (
-              <li key={link} className="flex h-fit w-fit">
-                <FlipLink href="/">{link}</FlipLink>
+            {resourceLinks.map((link) => (
+              <li key={link.name} className="flex h-fit w-fit">
+                <FlipLink newPage={link.newPage} href={link.href}>
+                  {link.name}
+                </FlipLink>
               </li>
             ))}
           </ul>

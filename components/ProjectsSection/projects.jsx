@@ -5,7 +5,7 @@ export default function Projects() {
   const bgColor = "bg-black";
 
   return (
-    <div className="">
+    <div id="projects" className="">
       {projects.map((project, i) => {
         return (
           // <div key={`p_${i}`} className={bgColor}>

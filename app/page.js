@@ -117,24 +117,25 @@ export default function Home() {
           <Clock format={"h:mm A"} />
         </div>
         <div className="flex gap-2">
-          <div className="headerLink">
+          {/* <div className="headerLink">
             <FlipLink href="#about">ABOUT</FlipLink>
-          </div>
+          </div> */}
           <div className="headerLink">
             <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
               BLOG
             </FlipLink>
           </div>
           <div className="headerLink">
-            <FlipLink href="#projects">WORKS</FlipLink>
+            <FlipLink href="#projects">PROJECTS</FlipLink>
           </div>
           <div className="headerLink">
-            <FlipLink href="#contact">CONTACT</FlipLink>
+            <FlipLink href="mailto:malikkotb@icloud.com">CONTACT</FlipLink>
           </div>
         </div>
       </nav>
       {/* landing page section */}
       <div
+      id="home"
         className="h-screen w-full flex items-center justify-center text-white"
         ref={scrollContainer}
       >
@@ -189,7 +190,6 @@ export default function Home() {
 
       {/* to make space for scrolling */}
       {/* <div className="h-screen"></div> */}
-
       <Projects />
       {/* <TextFadeGradient
         paragraph={

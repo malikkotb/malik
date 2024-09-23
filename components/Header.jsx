@@ -18,10 +18,10 @@ export default function Header() {
           </FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="#projects">WORKS</FlipLink>
+          <FlipLink href="#projects">PROJECTS</FlipLink>
         </div>
         <div className="headerLink">
-          <FlipLink href="#contact">CONTACT</FlipLink>
+          <FlipLink href="mailto:malikkotb@icloud.com">CONTACT</FlipLink>
         </div>
       </div>
     </div>
