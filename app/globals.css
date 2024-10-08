@@ -5,7 +5,7 @@
 html,
 body {
   margin: 0px;
-  background-image: url("/noise-light.png");
+  /* background-image: url("/noise-light.png"); */
   background-color: black;
   background-attachment: fixed; /* This ensures the background stays in place */
 }
@@ -19,7 +19,7 @@ body {
 }
 
 .background {
-  background-image: url("/noise-light.png");
+  /* background-image: url("/noise-light.png"); */
   background-color: black;
   position: absolute;
   width: 100%;
