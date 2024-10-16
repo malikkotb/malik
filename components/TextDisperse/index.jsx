@@ -37,7 +37,7 @@ export default function TextDipserse({ children, setBackground, link }) {
 
   return (
     <div
-      onClick={() => window.open(link, "_blank")}
+      // onClick={() => window.open(link, "_blank")}
       style={{ cursor: "pointer" }}
       onMouseEnter={() => {
         manageMouseEnter();

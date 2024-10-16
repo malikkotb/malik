@@ -112,62 +112,59 @@ const Card = ({
           <span className="md:text-right text-nowrap">{year}</span>
         </div>
         <div className={styles.body}>
-          <p className="w-full mt-7 md:w-[80%] text-base font-semibold md:text-2xl lg:text-3xl">
-            {description} Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Perspiciatis suscipit modi adipisci quasi blanditiis nostrum
-            veniam.
+          <p className="w-full mt-7 md:w-[80%] text-xl font-medium md:text-2xl lg:text-[28px]">
+            {description}
           </p>
 
           {size.width <= 768 && (
-            <p className="flex items-center mt-4">
+            <p className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white">
               Visit Site <ArrowTopRightIcon />
             </p>
           )}
 
-          <ul className="flex md:flex-col gap-2 my-5">
-            {tags.map((tag) => {
-              return (
-                <li
-                  key={tag}
-                  className=" list-disc list-inside text-xs md:text-base font-semibold text-white py-1"
-                  // className="rounded-full text-xs md:text-sm text-black bg-white px-2 py-1"
-                >
-                  {tag}
-                </li>
-              );
-            })}
+          <ul className="flex md:flex-col gap-2 mt-5 mb-10 md:mb-5">
+            {tags.map((tag) => (
+              <li
+                key={tag}
+                className={`${styles.customLi} text-xs md:text-base font-semibold text-white md:py-1`}
+              >
+                {tag}
+              </li>
+            ))}
           </ul>
 
           {/* <div>
                 <HorizontalImageCard src={images[0]} i={i} />
               </div> */}
           {size.width <= 768 ? (
-            <Carousel setApi={setApi} ref={carouselRef} className="w-full">
-              <CarouselContent>
-                {images.map((img, index) => (
-                  <CarouselItem key={index}>
-                    <div
-                      style={{ aspectRatio: "9/12" }}
-                      className="relative w-full flex flex-col transition-opacity duration-200"
-                    >
-                      <Image
-                        className="object-cover"
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                        src={`/${img}`}
-                        alt="Product Image"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex  transition-all duration-500">
-                <CarouselPrevious />
-              </div>
-              <div className="flex transition-all duration-500">
-                <CarouselNext />
-              </div>
-            </Carousel>
+            <>
+              <Carousel setApi={setApi} ref={carouselRef} className="w-full">
+                <CarouselContent>
+                  {images.map((img, index) => (
+                    <CarouselItem key={index}>
+                      <div
+                        // style={{ aspectRatio: "9/12" }}
+                        className="relative w-full flex flex-col aspect-video transition-opacity duration-200"
+                      >
+                        <Image
+                          className="object-cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                          src={`/${img}`}
+                          alt="Product Image"
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex  transition-all duration-500">
+                  <CarouselPrevious />
+                </div>
+                <div className="flex transition-all duration-500">
+                  <CarouselNext />
+                </div>
+              </Carousel>
+            </>
           ) : (
             <CustomCursor link={link}>
               <motion.div

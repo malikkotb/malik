@@ -166,7 +166,7 @@ export default function Home() {
 
               <TextDipserse setBackground={setBackground}>
                 {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
-                <p>BOOK A CALL</p>
+                <p>PORTFOLIO 24</p>
               </TextDipserse>
 
               <TextDipserse

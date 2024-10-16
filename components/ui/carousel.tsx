@@ -203,7 +203,7 @@ const CarouselPrevious = React.forwardRef<
   return (
     <button
       ref={ref}
-      style={{ top: "35%" }}
+      style={{ top: "45%" }}
       className={cn(
         "absolute",
         orientation === "horizontal"
@@ -231,7 +231,7 @@ const CarouselNext = React.forwardRef<
   return (
     <button
       ref={ref}
-      style={{ top: "35%" }}
+      style={{ top: "45%" }}
       className={cn(
         "absolute",
         orientation === "horizontal"
