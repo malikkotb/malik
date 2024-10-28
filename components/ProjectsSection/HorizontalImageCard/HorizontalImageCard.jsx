@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function HorizontalImageCard({ src, i }) {
   return (
-    <div className="relative flex-1 aspect-square md:aspect-[4/3]">
-      <Image fill src={`/${src}`} alt="image" className="object-fit" />
+    <div className="relative flex-1 aspect-square md:aspect-video">
+      <Image fill src={`/${src}`} alt="image" className="object-contain object-top" />
     </div>
   );
 }
