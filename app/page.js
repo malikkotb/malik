@@ -201,7 +201,7 @@ export default function Home() {
       {/* to make space for scrolling */}
       {/* <div className="h-screen"></div> */}
       <HoverProjectSection />
-      <Projects />
+      {/* <Projects /> */}
       {/* <TextFadeGradient
         paragraph={
           "I am a frontend developer based in Paris and working globally. With a passion for creating seamless, engaging web experiences, I focus on ensuring every project leaves users with a feel-good sensation through attention to detail and a user-centric design approach."
