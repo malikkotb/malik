@@ -7,6 +7,7 @@ import ActionCall from "../components/ActionCall/ActionCall";
 import Projects from "../components/ProjectsSection/projects.jsx";
 import TextDipserse from "../components/TextDisperse";
 import { useGSAP } from "@gsap/react";
+import HoverProjectSection from "../components/HoverProject/HoverProjectSection";
 import gsap from "gsap";
 import { useScroll, useTransform, motion } from "framer-motion";
 import MagenticButton from "@/components/MagneticButton";
@@ -97,6 +98,15 @@ export default function Home() {
     gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
+  const items = [
+    { title: 'Section 1', content: 'Content for section 1' },
+    { title: 'Section 2', content: 'Content for section 2' },
+    { title: 'Section 3', content: 'Content for section 3' },
+  ];
+
+
+  // TODO: fix FOUC in the beginnning
+
   return (
     <main className="">
       <div ref={loader} className="loader">
@@ -135,8 +145,8 @@ export default function Home() {
       </nav>
       {/* landing page section */}
       <div
-      id="home"
-        className="h-screen w-full flex items-center justify-center text-white"
+        id="home"
+        className="h-[100vh] w-full flex items-center justify-center text-white"
         ref={scrollContainer}
       >
         <motion.div
@@ -164,7 +174,7 @@ export default function Home() {
                 <p>Creation</p>
               </div>
 
-              <TextDipserse setBackground={setBackground}>
+              <TextDipserse link={""} setBackground={setBackground}>
                 {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
                 <p>PORTFOLIO 24</p>
               </TextDipserse>
@@ -190,6 +200,7 @@ export default function Home() {
 
       {/* to make space for scrolling */}
       {/* <div className="h-screen"></div> */}
+      <HoverProjectSection />
       <Projects />
       {/* <TextFadeGradient
         paragraph={
