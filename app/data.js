@@ -55,18 +55,30 @@ const projects = [
     link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
     images: ["alba/alba1.png", "alba/alba2.png", "alba/alba3.png"],
   },
-
-  // {
-  //   projectTitle: "Design Portfolio",
-  //   category: "Web Development",
-  //   client: "Matteo Just",
-  //   year: "2024",
-  //   description: "Details about what I did here with Esmes model agencies",
-  //   tags: ["Development", "Next.js", "Tailwind CSS", "Figma"],
-  //   link: "https://www.theagentsmodelmanagement.com",
-  //   images: ["5.jpg", "2.jpg", "3.jpg"],
-  // },
-  // { projectTitle: "Photography Portfolio", client: "Meklit Fekadu" },
+  {
+    projectTitle: "Design Portfolio",
+    category: "Development, Design",
+    client: "Matteo Just",
+    year: "2024",
+    description: "Work in Progress",
+    // description:
+    //   "A portfolio website designed for Matteo Just, a Munich-based transportation designer.",
+    tags: ["Development", "Next.js", "Tailwind CSS"],
+    link: "https://www.theagentsmodelmanagement.com",
+    images: ["5.jpg", "2.jpg", "3.jpg"],
+  },
+  {
+    projectTitle: "Photography Portfolio",
+    client: "Meklit Fekadu",
+    category: "Web Design, Development",
+    year: "2024",
+    description: "Work in Progress",
+    // description:
+    //   "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
+    tags: ["Development", "Next.js", "Tailwind CSS"],
+    link: "https://www.theagentsmodelmanagement.com",
+    images: ["2.jpg", "5.jpg", "3.jpg"],
+  },
 ];
 
 export default projects;
