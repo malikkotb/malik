@@ -6,35 +6,44 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
-
+import projects from "@/app/data";
+import CardHoverSection from "./CardHoverSection";
 export default function HoverProjectSection() {
   return (
-    <div
-      style={{ zIndex: 10000 }}
-      className="borderr relative w-full bg-black text-white h-screen"
-    >
+    <div className="borderr relative w-full bg-black text-white h-[90vh]">
       <div className="mx-4">
+        <div className="uppercase -top-7 items-center border-white py-[5px] text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
+          <span>Project</span>
+          <span className="hidden md:block">Category</span>
+          <span className="hidden md:block text-left ml-12">Client</span>
+          <span className="md:text-right">Year</span>
+        </div>
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Is it accessible?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>Is it styled?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It comes with default styles that matches the other
-              components&apos; aesthetic.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Is it animated?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It&apos;s animated by default, but you can disable it if you
-              prefer.
-            </AccordionContent>
-          </AccordionItem>
+          {projects.map((project, i) => {
+            return (
+              <AccordionItem key={i} value={`item-${i + 1}`}>
+                <AccordionTrigger className="relative">
+                  <div className="text-sm absolute h-full font-semibold w-full grid grid-cols-2 md:grid-cols-4">
+                    <span className="text-nowrap text-left">
+                      {project.projectTitle}
+                    </span>
+                    <span className="hidden md:block text-nowrap text-left">
+                      {project.category}
+                    </span>
+                    <span className="hidden md:block text-nowrap text-left ml-12">
+                      {project.client}
+                    </span>
+                    <span className="md:text-right text-nowrap">
+                      {project.year}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <CardHoverSection {...project} className={"bg-black"} i={i} />
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </div>
     </div>
