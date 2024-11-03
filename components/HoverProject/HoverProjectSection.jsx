@@ -9,22 +9,33 @@ import { motion } from "framer-motion";
 import MarqueeButton from "../Marquee/MarqueeButton";
 import projects from "@/app/data";
 import CardHoverSection from "./CardHoverSection";
+import { useState } from "react";
 export default function HoverProjectSection() {
+  const [modal, setModal] = useState({ active: false, index: 0 });
+
   return (
     <div className="borderr relative w-full bg-black text-white h-[100vh]">
-      <div className="mx-4">
+      <div className="mx-4 relative">
         <div className="uppercase items-center border-white py-4 text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
           <span>Project</span>
           <span className="hidden md:block">Category</span>
           <span className="hidden md:block text-left ml-12">Client</span>
           <span className="md:text-right">Year</span>
         </div>
+        <MarqueeButton modal={modal} projects={projects} />
         <Accordion type="single" collapsible className="w-full">
-          <MarqueeButton />
           {projects.map((project, i) => {
             return (
               <AccordionItem key={i} value={`item-${i + 1}`}>
-                <AccordionTrigger className="relative">
+                <AccordionTrigger
+                  onMouseEnter={() => {
+                    setModal({ active: true, i });
+                  }}
+                  onMouseLeave={() => {
+                    setModal({ active: false, i });
+                  }}
+                  className="relative"
+                >
                   <div className="group text-sm items-center absolute transition-colors duration-300 ease-in-out hover:bg-white hover:text-black h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
                     <span className="text-nowrap text-xl text-left transform transition-transform duration-300 ease-in-out md:group-hover:translate-x-2">
                       {project.projectTitle}
