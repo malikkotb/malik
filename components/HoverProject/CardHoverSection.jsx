@@ -90,26 +90,6 @@ const CardHoverSection = ({
         //   top: `calc(-5vh + ${i * 2.5}em)`,
         // }}
       >
-        {/* {i === 0 && (
-          <div className="absolute uppercase -top-7 items-center border-white py-[5px] text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
-            <span>Project</span>
-            <span className="hidden md:block">Category</span>
-            <span className="hidden md:block text-left ml-12">Client</span>
-            <span className="md:text-right">Year</span>
-          </div>
-        )} */}
-        {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
-         And that's how the color of each card is set. */}
-        {/* <div className="text-sm font-semibold w-full grid grid-cols-2 md:grid-cols-4">
-          <span className="text-nowrap">{projectTitle}</span>
-          <span className="hidden md:block text-nowrap text-left">
-            {category}
-          </span>
-          <span className="hidden md:block text-nowrap text-left ml-12">
-            {client}
-          </span>
-          <span className="md:text-right text-nowrap">{year}</span>
-        </div> */}
         <div className={styles.body}>
           <p className="w-full md:w-[80%] text-xl font-medium md:text-2xl lg:text-[28px]">
             {description}
