@@ -23,7 +23,7 @@ export default function HoverProjectSection() {
             return (
               <AccordionItem key={i} value={`item-${i + 1}`}>
                 <AccordionTrigger className="relative">
-                  <div className="text-sm absolute h-full font-semibold w-full grid grid-cols-2 md:grid-cols-4">
+                  <div className="text-sm items-center absolute transition-colors duration-300 ease-in-out hover:bg-white hover:text-black h-full font-semibold w-full grid grid-cols-2 md:grid-cols-4">
                     <span className="text-nowrap text-left">
                       {project.projectTitle}
                     </span>
