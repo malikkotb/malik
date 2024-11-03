@@ -2,8 +2,24 @@
 import styles from "./style.module.css";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { motion } from "framer-motion";
 
 export default function MarqueeButton() {
+  const scaleAnimation = {
+    initial: { scale: 0, x: "-50%", y: "-50%" },
+    enter: {
+      scale: 1,
+      x: "-50%",
+      y: "-50%",
+      transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      scale: 0,
+      x: "-50%",
+      y: "-50%",
+      transition: { duration: 0.4, ease: [0.32, 0, 0.67, 0] },
+    },
+  };
   const firstText = useRef(null);
   const secondText = useRef(null);
   const slider = useRef(null);
@@ -45,11 +61,28 @@ export default function MarqueeButton() {
   };
 
   return (
-    <div href="" className={styles.main}>
-      <div ref={slider} className={styles.slider}>
-        <p ref={firstText}>View Details -</p>
-        <p ref={secondText}>View Details -</p>
-      </div>
-    </div>
+    <>
+      <motion.div
+        className={styles.cursor}
+        variants={scaleAnimation}
+        initial="initial"
+        animate={active ? "enter" : "closed"}
+      ></motion.div>
+
+      <motion.div
+        className={styles.cursorLabel}
+        variants={scaleAnimation}
+        initial="initial"
+        animate={active ? "enter" : "closed"}
+      >
+        View
+      </motion.div>
+      {/* <div className={styles.main}>
+        <div ref={slider} className={styles.slider}>
+          <p ref={firstText}>View Details -</p>
+          <p ref={secondText}>View Details -</p>
+        </div>
+      </div> */}
+    </>
   );
 }
