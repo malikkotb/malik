@@ -17,22 +17,39 @@ export default function MarqueeButton() {
     requestAnimationFrame(animate);
   }, []);
 
+  //   to animate to the right
+  //   const animate = () => {
+  //     if (xPercent > 0) {
+  //       xPercent = -100;
+  //     }
+  //     gsap.set(firstText.current, { xPercent: xPercent });
+  //     gsap.set(secondText.current, { xPercent: xPercent });
+  //     requestAnimationFrame(animate);
+  //     xPercent += 0.7;
+  //   };
+
+  //  to animate to the left
   const animate = () => {
-    if (xPercent > 0) {
-      xPercent = -100;
+    // Reset `xPercent` once it exceeds 100% to create the looping effect
+    if (xPercent < -100) {
+      xPercent = 0;
     }
+    // Move first text to the left
     gsap.set(firstText.current, { xPercent: xPercent });
+
+    // Move second text to the right
     gsap.set(secondText.current, { xPercent: xPercent });
+
     requestAnimationFrame(animate);
-    xPercent += 0.05;
+    xPercent -= 0.7; // Adjust the speed by changing the decrement value
   };
 
   return (
-    <a href="mailto:malikkotb@icloud.com" className={styles.main}>
+    <div href="" className={styles.main}>
       <div ref={slider} className={styles.slider}>
-        <p ref={firstText}>Get In Touch -</p>
-        <p ref={secondText}>Get In Touch -</p>
+        <p ref={firstText}>View Details -</p>
+        <p ref={secondText}>View Details -</p>
       </div>
-    </a>
+    </div>
   );
 }

@@ -4,7 +4,22 @@
   overflow: hidden;
   cursor: pointer;
   color: white;
-  border-bottom: 1px solid rgb(161 161 170);
+  background-color: blue;
+  border-radius: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  width: 120px;
+  /* border: 1px solid red; */
+}
+
+/* Responsive design for screens smaller than 768px */
+@media (max-width: 768px) {
+  .main {
+    display: none;
+    
+  }
 }
 
 .slider {
@@ -15,17 +30,9 @@
 .slider p {
   position: relative;
   margin: 0px;
-  font-size: 230px;
+  font-size: 16px;
   font-weight: 500;
-  padding-right: 50px;
-}
-
-/* Responsive design for screens smaller than 768px */
-@media (max-width: 768px) {
-  .slider p {
-    font-size: 100px; /* Adjust the font size as needed */
-    padding-right: 20px; /* Adjust the padding as needed */
-  }
+  padding-right: 4px;
 }
 
 .slider p:nth-of-type(2) {

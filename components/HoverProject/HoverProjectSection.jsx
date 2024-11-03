@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
+import MarqueeButton from "../Marquee/MarqueeButton";
 import projects from "@/app/data";
 import CardHoverSection from "./CardHoverSection";
 export default function HoverProjectSection() {
@@ -19,6 +20,7 @@ export default function HoverProjectSection() {
           <span className="md:text-right">Year</span>
         </div>
         <Accordion type="single" collapsible className="w-full">
+          <MarqueeButton />
           {projects.map((project, i) => {
             return (
               <AccordionItem key={i} value={`item-${i + 1}`}>
