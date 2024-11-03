@@ -5,16 +5,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
 import MarqueeButton from "../Marquee/MarqueeButton";
 import projects from "@/app/data";
 import CardHoverSection from "./CardHoverSection";
-import { useState } from "react";
+import { useRef, useState } from "react";
 export default function HoverProjectSection() {
   const [modal, setModal] = useState({ active: false, index: 0 });
 
   return (
-    <div className="borderr relative w-full bg-black text-white h-[100vh]">
+    <div className="relative w-full bg-black text-white h-[100vh]">
       <div className="mx-4 relative">
         <div className="uppercase items-center border-white py-4 text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
           <span>Project</span>
@@ -22,8 +21,8 @@ export default function HoverProjectSection() {
           <span className="hidden md:block text-left ml-12">Client</span>
           <span className="md:text-right">Year</span>
         </div>
-        <MarqueeButton modal={modal} projects={projects} />
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full relative">
+          <MarqueeButton modal={modal} projects={projects} />
           {projects.map((project, i) => {
             return (
               <AccordionItem key={i} value={`item-${i + 1}`}>
@@ -37,7 +36,11 @@ export default function HoverProjectSection() {
                   className="relative"
                 >
                   <div className="group text-sm items-center absolute transition-colors duration-300 ease-in-out hover:bg-white hover:text-black h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
-                    <span className="text-nowrap text-xl text-left transform transition-transform duration-300 ease-in-out md:group-hover:translate-x-2">
+                    <span
+                      className="text-nowrap text-xl text-left transform transition-transform duration-300 ease-in-out 
+                    "
+                    >
+                      {/* md:group-hover:translate-x-2 */}
                       {project.projectTitle}
                     </span>
                     <span className="hidden md:block text-nowrap text-left">
@@ -46,7 +49,7 @@ export default function HoverProjectSection() {
                     <span className="hidden md:block text-nowrap text-left ml-12">
                       {project.client}
                     </span>
-                    <span className="md:text-right text-nowrap transform transition-transform duration-300 ease-in-out md:group-hover:-translate-x-2">
+                    <span className="md:text-right text-nowrap transform transition-transform duration-300 ease-in-out">
                       {project.year}
                     </span>
                   </div>

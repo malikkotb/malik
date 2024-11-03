@@ -1,5 +1,6 @@
 .main {
-  position: relative;
+  position: fixed;
+  z-index: 10000;
   display: flex;
   overflow: hidden;
   cursor: pointer;
@@ -47,8 +48,8 @@
   border-radius: 50%;
   background-color: #455ce9;
   color: white;
-  position: absolute;
-  z-index: 2;
+  position: fixed;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;

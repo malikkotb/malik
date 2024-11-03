@@ -60,8 +60,9 @@ const projects = [
     category: "Development, Design",
     client: "Matteo Just",
     year: "2024",
-    description:
-      "A portfolio website designed for Matteo Just, a Munich-based transportation designer.",
+    description: "Work in Progress",
+    // description:
+    //   "A portfolio website designed for Matteo Just, a Munich-based transportation designer.",
     tags: ["Development", "Next.js", "Tailwind CSS"],
     link: "https://www.theagentsmodelmanagement.com",
     images: ["5.jpg", "2.jpg", "3.jpg"],
@@ -71,8 +72,9 @@ const projects = [
     client: "Meklit Fekadu",
     category: "Web Design, Development",
     year: "2024",
-    description:
-      "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
+    description: "Work in Progress",
+    // description:
+    //   "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
     tags: ["Development", "Next.js", "Tailwind CSS"],
     link: "https://www.theagentsmodelmanagement.com",
     images: ["2.jpg", "5.jpg", "3.jpg"],
