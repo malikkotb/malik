@@ -3,8 +3,6 @@ import FlipLink from "@/components/FlipLink";
 import Clock from "react-live-clock";
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
-import ActionCall from "../components/ActionCall/ActionCall";
-import Projects from "../components/ProjectsSection/projects.jsx";
 import TextDipserse from "../components/TextDisperse";
 import { useGSAP } from "@gsap/react";
 import HoverProjectSection from "../components/HoverProject/HoverProjectSection";
@@ -90,6 +88,86 @@ export default function Home() {
     gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
+  const revealRefs = useRef([]);
+  const headerRevealRefs = useRef([]);
+
+  const addToRefs = (refsArray) => (el) => {
+    if (el && !refsArray.current.includes(el)) {
+      refsArray.current.push(el);
+    }
+  };
+
+  const addToRevealRefs = addToRefs(revealRefs);
+  const addToHeaderRevealRefs = addToRefs(headerRevealRefs);
+
+  const setInitialStates = () => {
+    gsap.set(revealRefs.current, {
+      yPercent: 100,
+    });
+    gsap.set(headerRevealRefs.current, {
+      yPercent: 100,
+    });
+  };
+
+  const preloaderAnimation = () => {
+    const tl = gsap.timeline({
+      onComplete: () => {
+        const targetDiv = document.getElementById("portfolioId");
+        const targetDiv2 = document.getElementById("contactId");
+        if (targetDiv) {
+          targetDiv.style.removeProperty("overflow");
+          targetDiv2.style.removeProperty("overflow");
+        }
+      },
+      defaults: {},
+    });
+    tl.to(revealRefs.current, {
+      visibility: "visible",
+      delay: 0.2,
+    })
+      // .to(
+      //   headerRevealRefs.current,
+      //   {
+      //     visibility: "visible",
+      //     delay: 0.2,
+      //   },
+      //   "<"
+      // )
+      .to(
+        revealRefs.current,
+        {
+          yPercent: 0,
+          duration: 1,
+          ease: "power2.out",
+          stagger: 0.08,
+        },
+        "<"
+      )
+      .to(
+        headerRevealRefs.current,
+        {
+          visibility: "visible",
+          delay: 0.3,
+        },
+        "<"
+      )
+      .to(
+        headerRevealRefs.current,
+        {
+          yPercent: 0,
+          duration: 1,
+          ease: "power2.out",
+          // stagger: 0.08,
+        },
+        "<"
+      );
+  };
+
+  useGSAP(() => {
+    const master = gsap.timeline();
+    master.add(setInitialStates).add(preloaderAnimation());
+  }, []);
+
   return (
     <main className="">
       <div ref={loader} className="loader">
@@ -103,23 +181,27 @@ export default function Home() {
         style={{ fontWeight: "600" }}
         className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5"
       >
-        <div className="flex gap-3">
-          <MagenticButton>
-            <h1 className="cursor-pointer">MALIK KOTB</h1>
-          </MagenticButton>
-          <Clock format={"h:mm A"} />
+        <div className="overflow-hidden">
+          <div className="flex gap-3 invisible" ref={addToHeaderRevealRefs}>
+            <MagenticButton>
+              <h1 className="cursor-pointer">MALIK KOTB</h1>
+            </MagenticButton>
+            <Clock format={"h:mm A"} />
+          </div>
         </div>
-        <div className="flex gap-2">
-          <div className="headerLink">
-            <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
-              BLOG
-            </FlipLink>
-          </div>
-          <div className="headerLink">
-            <FlipLink href="#projects">PROJECTS</FlipLink>
-          </div>
-          <div className="headerLink">
-            <FlipLink href="mailto:malikkotb@icloud.com">CONTACT</FlipLink>
+        <div className="overflow-hidden">
+          <div className="flex gap-2 invisible" ref={addToHeaderRevealRefs}>
+            <div className="headerLink">
+              <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
+                BLOG
+              </FlipLink>
+            </div>
+            <div className="headerLink">
+              <FlipLink href="#projects">PROJECTS</FlipLink>
+            </div>
+            <div className="headerLink">
+              <FlipLink href="mailto:malikkotb@icloud.com">CONTACT</FlipLink>
+            </div>
           </div>
         </div>
       </nav>
@@ -139,42 +221,56 @@ export default function Home() {
         >
           <div className="maiN">
             <div className="body">
-              <div className="introLine">
-                <p>Malik</p>
-                <p>Kotb</p>
+              <div className="overflow-hidden">
+                <div className="introLine invisible" ref={addToRevealRefs}>
+                  <p>Malik</p>
+                  <p>Kotb</p>
+                </div>
               </div>
 
-              <div className="introLine">
-                <p>Design</p>
-                <p>&</p>
+              <div className="overflow-hidden">
+                <div className="introLine invisible" ref={addToRevealRefs}>
+                  <p>Design</p>
+                  <p>&</p>
+                </div>
               </div>
 
-              <div className="introLine">
-                <p>Web</p>
-                <p>Creation</p>
+              <div className="overflow-hidden">
+                <div className="introLine invisible" ref={addToRevealRefs}>
+                  <p>Web</p>
+                  <p>Creation</p>
+                </div>
               </div>
 
-              <TextDipserse
-                link={"https://github.com/malikkotb"}
-                setBackground={setBackground}
-              >
-                {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
-                <p>PORTFOLIO 24</p>
-              </TextDipserse>
+              <div style={{ overflow: "hidden" }} id="portfolioId">
+                <div className="" ref={addToRevealRefs}>
+                  <TextDipserse
+                    link={"https://github.com/malikkotb"}
+                    setBackground={setBackground}
+                  >
+                    {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
+                    <p>PORTFOLIO 24</p>
+                  </TextDipserse>
+                </div>
+              </div>
 
-              <TextDipserse
-                link={"mailto:malikkotb@icloud.com"}
-                setBackground={setBackground}
-              >
-                <p>→Email</p>
-              </TextDipserse>
+              <div style={{ overflow: "hidden" }} id="contactId">
+                <div className="gap-8 flex" ref={addToRevealRefs}>
+                  <TextDipserse
+                    link={"mailto:malikkotb@icloud.com"}
+                    setBackground={setBackground}
+                  >
+                    <p>→Email</p>
+                  </TextDipserse>
 
-              <TextDipserse
-                link={"https://instagram.com/malikhavemercy"}
-                setBackground={setBackground}
-              >
-                <p>→Insta</p>
-              </TextDipserse>
+                  <TextDipserse
+                    link={"https://instagram.com/malikhavemercy"}
+                    setBackground={setBackground}
+                  >
+                    <p>→Insta</p>
+                  </TextDipserse>
+                </div>
+              </div>
             </div>
             <div ref={background} className="background"></div>
           </div>

@@ -7,7 +7,7 @@ const projects = [
     year: "2024",
     description:
       "A comprehensive e-commerce store designed for Samira Prudentos, showcasing handmade garments crafted in Berlin.",
-    tags: ["Development", "Next.js", "E-Commerce"],
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
     images: [
       "prudentos/prudentos1.png",
@@ -22,7 +22,7 @@ const projects = [
     year: "2024",
     description:
       "Designed and developed the website for The Agents, a model management agency in Amsterdam.",
-    tags: ["Development", "Next.js", "Tailwind CSS"],
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.theagentsmodelmanagement.com",
     images: [
       "esme/theagents1.png",
@@ -31,12 +31,34 @@ const projects = [
     ],
   },
   {
-    projectTitle: "Pastry Shop",
-    category: "E-Commerce, Development",
-    client: "Katrin Schulz",
+    projectTitle: "Design Portfolio",
+    category: "Development",
+    client: "Matteo Just",
     year: "2024",
+    description:
+      "A portfolio website developed for Matteo Just, a Munich-based transportation designer. (Work in Progress)",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "GSAP"],
+    link: "",
+    images: ["matteo/mat1.png", "matteo/mat2.png", "matteo/mat3.png"],
+  },
+  {
+    projectTitle: "Photography Portfolio",
+    client: "Meklit Fekadu",
+    category: "Web Design, Development",
+    year: "2024",
+    description:
+      "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer. (Work in Progress)",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    link: "",
+    images: ["meki/meki1.png", "meki/meki2.png", "meki/meki3.png"],
+  },
+  {
+    projectTitle: "Pastry Shop",
+    category: "Web Design, Development",
+    client: "Katrin Schulz",
+    year: "2023",
     description: "Pastry Shop",
-    tags: ["Development", "Next.js", "Tailwind CSS"],
+    tags: ["Next.js", "Tailwind CSS", "Stripe"],
     link: "https://tiny-cat-4b4dc8.netlify.app/",
     images: [
       "pastryShop/pastry1.png",
@@ -48,36 +70,12 @@ const projects = [
     projectTitle: "Alba Portfolio",
     category: "Web Design, Development",
     client: "Alba Preysing",
-    year: "2024",
+    year: "2023",
     description:
       "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
-    tags: ["Next.js", "Tailwind CSS", "Figma"],
+    tags: ["Next.js", "Tailwind CSS", "GSAP"],
     link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
     images: ["alba/alba1.png", "alba/alba2.png", "alba/alba3.png"],
-  },
-  {
-    projectTitle: "Design Portfolio",
-    category: "Development, Design",
-    client: "Matteo Just",
-    year: "2024",
-    description: "Work in Progress",
-    // description:
-    //   "A portfolio website designed for Matteo Just, a Munich-based transportation designer.",
-    tags: ["Development", "Next.js", "Tailwind CSS"],
-    link: "https://www.theagentsmodelmanagement.com",
-    images: ["5.jpg", "2.jpg", "3.jpg"],
-  },
-  {
-    projectTitle: "Photography Portfolio",
-    client: "Meklit Fekadu",
-    category: "Web Design, Development",
-    year: "2024",
-    description: "Work in Progress",
-    // description:
-    //   "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
-    tags: ["Development", "Next.js", "Tailwind CSS"],
-    link: "https://www.theagentsmodelmanagement.com",
-    images: ["2.jpg", "5.jpg", "3.jpg"],
   },
 ];
 
