@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import gsap from "gsap";
 
-export default function link({ project, index }) {
+export default function Link({ project, index }) {
   const { projectTitle, category, client, year } = project;
   const outer = useRef(null);
   const inner = useRef(null);
@@ -43,14 +43,14 @@ export default function link({ project, index }) {
       className={styles.el}
     >
       <section className="group py-3 text-sm items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
-        <span className="text-nowrap text-xl text-left">{projectTitle}</span>
+        <span className="text-nowrap text-left">{projectTitle}</span>
         <span className="hidden md:block text-nowrap text-left">
           {category}
         </span>
         <span className="hidden md:block text-nowrap text-left ml-12">
           {client}
         </span>
-        <span className="md:text-right text-nowrap ">{year}</span>
+        <span className="md:text-right text-left text-nowrap ">{year}</span>
       </section>
       <div ref={outer} className={styles.outer}>
         <div ref={inner} className={styles.inner}></div>

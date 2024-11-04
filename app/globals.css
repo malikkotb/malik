@@ -6,7 +6,7 @@ html,
 body {
   margin: 0px;
   /* background-image: url("/noise-light.png"); */
-  background-color: black;
+  /* background-color: black; */
   background-attachment: fixed; /* This ensures the background stays in place */
 }
 
@@ -79,7 +79,7 @@ body {
 .loader {
   height: calc(100vh + 200px);
   width: 100%;
-  z-index: 9999;
+  z-index: 10000;
   position: fixed;
 }
 

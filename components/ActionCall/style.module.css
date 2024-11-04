@@ -4,6 +4,7 @@
   overflow: hidden;
   cursor: pointer;
   color: white;
+  background-color: black;
   border-bottom: 1px solid rgb(161 161 170);
 }
 
@@ -14,10 +15,20 @@
 
 .slider p {
   position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin: 0px;
-  font-size: 230px;
+  font-size: 200px;
+  line-height: 200px;
   font-weight: 500;
   padding-right: 50px;
+}
+
+@media (min-width: 1024px) {
+  .slider p {
+    /* font-size: 150px;  */
+    padding-right: 80px;
+  }
 }
 
 /* Responsive design for screens smaller than 768px */
@@ -25,6 +36,11 @@
   .slider p {
     font-size: 100px; /* Adjust the font size as needed */
     padding-right: 20px; /* Adjust the padding as needed */
+    padding-top: 0px;
+    line-height: 140px;
+    padding-bottom: 0px;
+    /* mb-8 md:mb-0 */
+    margin-bottom: 2rem;
   }
 }
 

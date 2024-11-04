@@ -15,13 +15,10 @@ gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
-
     function raf(time) {
       lenis.raf(time);
-
       requestAnimationFrame(raf);
     }
-
     requestAnimationFrame(raf);
   }, []);
 
@@ -34,22 +31,17 @@ export default function Home() {
 
   useEffect(() => {
     setPath(initialCurve);
-    setTimeout(() => {
-      requestAnimationFrame(animate);
-    }, 500);
+    requestAnimationFrame(animate);
+    document.body.style.backgroundColor = "black";
   }, []);
 
   const animate = (timestamp) => {
     if (start === undefined) {
       start = timestamp;
     }
-
     const elapsed = timestamp - start;
-
     const newCurve = easeOutQuad(elapsed, initialCurve, -200, duration);
-
     setPath(newCurve);
-
     loader.current.style.top =
       easeOutQuad(elapsed, 0, -loaderHeight(), duration) + "px";
 
@@ -98,15 +90,6 @@ export default function Home() {
     gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
-  const items = [
-    { title: 'Section 1', content: 'Content for section 1' },
-    { title: 'Section 2', content: 'Content for section 2' },
-    { title: 'Section 3', content: 'Content for section 3' },
-  ];
-
-
-  // TODO: fix FOUC in the beginnning
-
   return (
     <main className="">
       <div ref={loader} className="loader">
@@ -127,9 +110,6 @@ export default function Home() {
           <Clock format={"h:mm A"} />
         </div>
         <div className="flex gap-2">
-          {/* <div className="headerLink">
-            <FlipLink href="#about">ABOUT</FlipLink>
-          </div> */}
           <div className="headerLink">
             <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
               BLOG
@@ -174,7 +154,10 @@ export default function Home() {
                 <p>Creation</p>
               </div>
 
-              <TextDipserse link={""} setBackground={setBackground}>
+              <TextDipserse
+                link={"https://github.com/malikkotb"}
+                setBackground={setBackground}
+              >
                 {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
                 <p>PORTFOLIO 24</p>
               </TextDipserse>
@@ -198,8 +181,6 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* to make space for scrolling */}
-      {/* <div className="h-screen"></div> */}
       <HoverProjectSection />
       {/* <Projects /> */}
       {/* <TextFadeGradient
@@ -207,7 +188,7 @@ export default function Home() {
           "I am a frontend developer based in Paris and working globally. With a passion for creating seamless, engaging web experiences, I focus on ensuring every project leaves users with a feel-good sensation through attention to detail and a user-centric design approach."
         }
       /> */}
-      <ActionCall />
+      {/* <ActionCall /> */}
     </main>
   );
 }
