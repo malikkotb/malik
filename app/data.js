@@ -26,8 +26,8 @@ const projects = [
     link: "https://www.theagentsmodelmanagement.com",
     images: [
       "esme/theagents1.png",
-      "esme/theagents2.png",
       "esme/theagents3.png",
+      "esme/theagents2.png",
     ],
   },
   {

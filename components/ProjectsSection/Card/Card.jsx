@@ -117,9 +117,13 @@ const Card = ({
           </p>
 
           {size.width <= 768 && (
-            <p className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white">
+            <a
+              href={link}
+              target="_blank"
+              className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white"
+            >
               Visit Site <ArrowTopRightIcon />
-            </p>
+            </a>
           )}
 
           <ul className="flex md:flex-col gap-2 mt-5 mb-10 md:mb-5">
