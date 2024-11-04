@@ -1,5 +1,5 @@
 .customLi::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -29,7 +29,7 @@
     width: 100%;
     color: white;
     max-height: 650px;
-    padding-top: 10px;
+    // padding-top: 10px;
     transform-origin: top;
 
     .body {
@@ -39,7 +39,49 @@
       height: 100%;
     }
   }
+}
 
-
-
+.menu {
+  width: 100%;
+  .body {
+    position: relative;
+    width: 100%;
+    .el {
+      border-top: 1px solid white;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      perspective: 80vw;
+      transform-origin: top;
+    }
+    a,
+    p,
+    section {
+      color: white;
+      z-index: 1000;
+      // margin: 0px;
+      mix-blend-mode: difference;
+      text-decoration: none;
+    }
+    .outer {
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      will-change: top;
+      .inner {
+        background-color: white;
+        width: 100%;
+        justify-content: center;
+        position: absolute;
+        white-space: nowrap;
+        height: 100%;
+        top: 100%;
+        display: flex;
+        will-change: top;
+      }
+    }
+  }
 }

@@ -90,7 +90,7 @@ export default function Home() {
   });
 
   const scaleTransform = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const opacityTransform = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const yTranslate = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
   const background = useRef(null);

@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/accordion";
 import MarqueeButton from "../Marquee/MarqueeButton";
 import projects from "@/app/data";
+import styles from "./style.module.scss";
+import ListElement from "./link";
 import CardHoverSection from "./CardHoverSection";
 import { useRef, useState } from "react";
 export default function HoverProjectSection() {
@@ -35,23 +37,10 @@ export default function HoverProjectSection() {
                   }}
                   className="relative"
                 >
-                  <div className="group text-sm items-center absolute transition-colors duration-300 ease-in-out hover:bg-white hover:text-black h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
-                    <span
-                      className="text-nowrap text-xl text-left transform transition-transform duration-300 ease-in-out 
-                    "
-                    >
-                      {/* md:group-hover:translate-x-2 */}
-                      {project.projectTitle}
-                    </span>
-                    <span className="hidden md:block text-nowrap text-left">
-                      {project.category}
-                    </span>
-                    <span className="hidden md:block text-nowrap text-left ml-12">
-                      {project.client}
-                    </span>
-                    <span className="md:text-right text-nowrap transform transition-transform duration-300 ease-in-out">
-                      {project.year}
-                    </span>
+                  <div className={styles.menu}>
+                    <div className={styles.body}>
+                      <ListElement project={project} />
+                    </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>

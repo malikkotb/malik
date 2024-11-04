@@ -1,0 +1,56 @@
+.menu {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .body {
+    position: absolute;
+    width: 100%;
+    .el {
+      border-top: 1px solid white;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      perspective: 80vw;
+      transform-origin: top;
+      &:last-of-type {
+        border-bottom: 1px solid white;
+      }
+    }
+    a,
+    p {
+      color: white;
+      text-transform: uppercase;
+      z-index: 1000;
+      font-size: 3vw;
+      line-height: 3vw;
+      font-weight: 400;
+      margin: 0px;
+      mix-blend-mode: difference;
+      text-decoration: none;
+    }
+    .outer {
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      will-change: top;
+      .inner {
+        background-color: white;
+        width: 100%;
+        justify-content: center;
+        position: absolute;
+        white-space: nowrap;
+        height: 100%;
+        top: 100%;
+        display: flex;
+        will-change: top;
+      }
+    }
+  }
+}
