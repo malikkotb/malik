@@ -5,6 +5,7 @@ const DURATION = 0.45;
 const STAGGER = 0.025;
 
 export default function FlipLink({ children, href, newPage }) {
+
   return (
     <a href={href} target={newPage ? "_blank" : ""}>
       <motion.div

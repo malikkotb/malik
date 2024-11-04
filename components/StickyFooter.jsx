@@ -44,7 +44,7 @@ export default function StickyFooter() {
 
   return (
     <div
-      className="relative h-[40vh] md:h-[30vh]"
+      className="relative h-[40vh] md:h-[30vh] border-t"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       {/* height of parent div and child div needs to be the same */}

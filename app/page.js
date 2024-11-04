@@ -169,7 +169,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="">
+    <main className="relative">
       <div ref={loader} className="loader">
         <svg>
           <path ref={path}></path>
@@ -179,7 +179,7 @@ export default function Home() {
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
-        className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5"
+        className="z-50 text-white flex text-xs overflow-hidden justify-between w-full fixed p-5 px-4"
       >
         <div className="overflow-hidden">
           <div className="flex gap-3 invisible" ref={addToHeaderRevealRefs}>

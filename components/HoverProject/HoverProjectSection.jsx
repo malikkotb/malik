@@ -16,7 +16,7 @@ export default function HoverProjectSection() {
   const [modal, setModal] = useState({ active: false, index: 0 });
 
   return (
-    <div className="relative w-full bg-black text-white">
+    <div className="mb-48 md:mb-64 w-full bg-black text-white">
       <div className="mx-4 relative mb-8 md:mb-0">
         <div className="uppercase items-center border-white py-4 text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
           <span>Project</span>
@@ -52,7 +52,7 @@ export default function HoverProjectSection() {
           })}
         </Accordion>
       </div>
-      <ActionCall />
+      {/* <ActionCall /> */}
     </div>
   );
 }
