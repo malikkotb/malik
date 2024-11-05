@@ -148,7 +148,7 @@ const Card = ({
                     <CarouselItem key={index}>
                       <div
                         // style={{ aspectRatio: "9/12" }}
-                        className="relative w-full flex flex-col aspect-video transition-opacity duration-200"
+                        className="relative borderr w-full flex flex-col aspect-video transition-opacity duration-200"
                       >
                         <Image
                           className="object-cover"
