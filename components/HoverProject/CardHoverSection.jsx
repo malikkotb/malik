@@ -95,11 +95,15 @@ const CardHoverSection = ({
             {description}
           </p>
 
-          {size.width <= 768 && (
-            <a href={link} target="_blank" className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white">
-              Visit Site <ArrowTopRightIcon />
-            </a>
-          )}
+          {/* {size.width <= 768 && ( */}
+          <a
+            href={link}
+            target="_blank"
+            className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white"
+          >
+            Visit Site <ArrowTopRightIcon />
+          </a>
+          {/* )} */}
 
           <ul className="flex md:flex-col gap-2 mt-5 mb-10 md:mb-5">
             {tags.map((tag) => (
@@ -145,21 +149,19 @@ const CardHoverSection = ({
               </Carousel>
             </>
           ) : (
-            <CustomCursor link={link}>
-              <motion.div
-                // style={{ x: xTranslation }}
-                className="mt-5 flex w-full flex-col md:flex-row gap-4"
-                ref={ref}
-                // creates a copy of images, that will update and then seem like its scrolling infintely
-                // [...images, ...images]
-              >
-                {[...images].map((src, i) => {
-                  return (
-                    <HorizontalImageCard src={src} key={`img_${i}`} i={i} />
-                  );
-                })}
-              </motion.div>
-            </CustomCursor>
+            // <CustomCursor link={link}>
+            <motion.div
+              // style={{ x: xTranslation }}
+              className="mt-5 flex w-full flex-col md:flex-row gap-4"
+              ref={ref}
+              // creates a copy of images, that will update and then seem like its scrolling infintely
+              // [...images, ...images]
+            >
+              {[...images].map((src, i) => {
+                return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
+              })}
+            </motion.div>
+            // </CustomCursor>
           )}
         </div>
       </div>

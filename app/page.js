@@ -114,6 +114,9 @@ export default function Home() {
       onComplete: () => {
         const targetDiv = document.getElementById("portfolioId");
         const targetDiv2 = document.getElementById("contactId");
+        if (nav.current) {
+          nav.current.style.backgroundColor = "black";
+        }
         if (targetDiv) {
           targetDiv.style.removeProperty("overflow");
           targetDiv2.style.removeProperty("overflow");

@@ -104,8 +104,8 @@ export default function MarqueeButton({ modal, projects }) {
         className={styles.main}
       >
         <div ref={slider} className={styles.slider}>
-          <p ref={firstText}>View Details -</p>
-          <p ref={secondText}>View Details -</p>
+          <p ref={firstText}>View Details •</p>
+          <p ref={secondText}>View Details •</p>
         </div>
       </motion.div>
     </div>

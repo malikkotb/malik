@@ -53,6 +53,33 @@ const projects = [
     images: ["meki/meki1.png", "meki/meki2.png", "meki/meki3.png"],
   },
   {
+    projectTitle: "NoteTaker",
+    description:
+      "I personally designed and developed NoteTaker, a full-stack note-taking application, leveraging the power of Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
+    category: "Web Design, Development",
+    client: "Personal",
+    year: "2023",
+    tags: ["Next.js", "shadcn/ui", "Tailwind CSS", "Pocketbase", "Zustand"],
+    link: "https://malikkotb.github.io/notetaker/",
+    images: [
+      "notetaker/notetaker1.png",
+      "notetaker/notetaker2.png",
+      "notetaker/notetaker3.jpg",
+    ],
+  },
+  {
+    projectTitle: "Sticky Notes",
+    client: "Personal",
+    description:
+      "Designed and developed a dynamic sticky-notes app with Next.js, TypeScript, Tailwind CSS, Pocketbase, and Framer Motion for efficient notetaking.",
+    category: "Web Design, Development",
+    year: "2023",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Pocketbase"],
+    link: "https://github.com/malikkotb/sticky_notes",
+    images: ["sticky/sticky2.png", "sticky/sticky3.png", "sticky/sticky4.png"],
+  },
+
+  {
     projectTitle: "Pastry Shop",
     category: "Web Design, Development",
     client: "Catherine Schulz",
