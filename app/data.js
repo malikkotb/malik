@@ -10,9 +10,9 @@ const projects = [
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
     images: [
-      "prudentos/prudentos1.png",
-      "prudentos/prudentos2.png",
-      "prudentos/prudentos3.png",
+      "prudentos/prudentos1.webp",
+      "prudentos/prudentos2.webp",
+      "prudentos/prudentos3.webp",
     ],
   },
   {
@@ -25,9 +25,9 @@ const projects = [
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.theagentsmodelmanagement.com",
     images: [
-      "esme/theagents1.png",
-      "esme/theagents3.png",
-      "esme/theagents2.png",
+      "esme/theagents1.webp",
+      "esme/theagents3.webp",
+      "esme/theagents2.webp",
     ],
   },
   {
@@ -39,7 +39,7 @@ const projects = [
       "A portfolio website developed for Matteo Just, a Munich-based transportation designer. (Work in Progress)",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "GSAP"],
     link: "",
-    images: ["matteo/mat1.png", "matteo/mat2.png", "matteo/mat3.png"],
+    images: ["matteo/mat1.webp", "matteo/mat2.webp", "matteo/mat3.webp"],
   },
   {
     projectTitle: "Photography Portfolio",
@@ -50,7 +50,7 @@ const projects = [
       "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer. (Work in Progress)",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "",
-    images: ["meki/meki1.png", "meki/meki2.png", "meki/meki3.png"],
+    images: ["meki/meki1.webp", "meki/meki2.webp", "meki/meki3.webp"],
   },
   {
     projectTitle: "NoteTaker",
@@ -62,9 +62,9 @@ const projects = [
     tags: ["Next.js", "shadcn/ui", "Tailwind CSS", "Pocketbase", "Zustand"],
     link: "https://malikkotb.github.io/notetaker/",
     images: [
-      "notetaker/notetaker1.png",
-      "notetaker/notetaker2.png",
-      "notetaker/notetaker3.jpg",
+      "notetaker/notetaker1.webp",
+      "notetaker/notetaker2.webp",
+      "notetaker/notetaker3.webp",
     ],
   },
   {
@@ -76,7 +76,11 @@ const projects = [
     year: "2023",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Pocketbase"],
     link: "https://github.com/malikkotb/sticky_notes",
-    images: ["sticky/sticky2.png", "sticky/sticky3.png", "sticky/sticky4.png"],
+    images: [
+      "sticky/sticky2.webp",
+      "sticky/sticky3.webp",
+      "sticky/sticky4.webp",
+    ],
   },
 
   {
@@ -90,9 +94,9 @@ const projects = [
     tags: ["Next.js", "Tailwind CSS", "Stripe"],
     link: "https://tiny-cat-4b4dc8.netlify.app/",
     images: [
-      "pastryShop/pastry1.png",
-      "pastryShop/pastry4.png",
-      "pastryShop/pastry5.png",
+      "pastryShop/pastry1.webp",
+      "pastryShop/pastry4.webp",
+      "pastryShop/pastry5.webp",
     ],
   },
   {
@@ -104,7 +108,7 @@ const projects = [
       "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
     tags: ["Next.js", "Tailwind CSS", "GSAP"],
     link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
-    images: ["alba/alba1.png", "alba/alba2.png", "alba/alba3.png"],
+    images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
   },
 ];
 
