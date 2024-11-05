@@ -55,9 +55,11 @@ const projects = [
   {
     projectTitle: "Pastry Shop",
     category: "Web Design, Development",
-    client: "Katrin Schulz",
+    client: "Catherine Schulz",
     year: "2023",
     description: "Pastry Shop",
+    description:
+      "A modern and visually engaging pastry shop designed for the best France has to offer.",
     tags: ["Next.js", "Tailwind CSS", "Stripe"],
     link: "https://tiny-cat-4b4dc8.netlify.app/",
     images: [
@@ -67,7 +69,7 @@ const projects = [
     ],
   },
   {
-    projectTitle: "Alba Portfolio",
+    projectTitle: "Producer Portfolio",
     category: "Web Design, Development",
     client: "Alba Preysing",
     year: "2023",

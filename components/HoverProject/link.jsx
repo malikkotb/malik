@@ -33,28 +33,42 @@ export default function Link({ project, index }) {
   };
 
   return (
-    <motion.div
-      onMouseEnter={(e) => {
-        manageMouseEnter(e);
-      }}
-      onMouseLeave={(e) => {
-        manageMouseLeave(e);
-      }}
-      className={styles.el}
-    >
-      <section className="group py-3 text-sm items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
-        <span className="text-nowrap text-left">{projectTitle}</span>
-        <span className="hidden md:block text-nowrap text-left">
-          {category}
-        </span>
-        <span className="hidden md:block text-nowrap text-left ml-12">
-          {client}
-        </span>
-        <span className="md:text-right text-left text-nowrap ">{year}</span>
-      </section>
-      <div ref={outer} className={styles.outer}>
-        <div ref={inner} className={styles.inner}></div>
+    <div>
+      <div
+        onMouseEnter={(e) => {
+          manageMouseEnter(e);
+        }}
+        onMouseLeave={(e) => {
+          manageMouseLeave(e);
+        }}
+        className={`${styles.el} hidden md:flex`}
+      >
+        <section className="py-3 text-sm items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
+          <span className="text-nowrap text-left">{projectTitle}</span>
+          <span className="hidden md:block text-nowrap text-left">
+            {category}
+          </span>
+          <span className="hidden md:block text-nowrap text-left ml-12">
+            {client}
+          </span>
+          <span className="md:text-right text-left text-nowrap ">{year}</span>
+        </section>
+        <div ref={outer} className={`${styles.outer}`}>
+          <div ref={inner} className={styles.inner}></div>
+        </div>
       </div>
-    </motion.div>
+      <div className={`flex md:hidden ${styles.el}`}>
+        <section className="py-3 text-sm items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
+          <span className="text-nowrap text-left">{projectTitle}</span>
+          <span className="hidden md:block text-nowrap text-left">
+            {category}
+          </span>
+          <span className="hidden md:block text-nowrap text-left ml-12">
+            {client}
+          </span>
+          <span className="md:text-right text-left text-nowrap ">{year}</span>
+        </section>
+      </div>
+    </div>
   );
 }

@@ -44,11 +44,11 @@ export default function StickyFooter() {
 
   return (
     <div
-      className="relative h-[40vh] md:h-[30vh] border-t"
+      className="relative h-[35vh] md:h-[30vh] border-t"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       {/* height of parent div and child div needs to be the same */}
-      <div className="text-white containerFooter section-padding fixed text-sm bottom-0 md:h-[30vh] h-[40vh] w-full">
+      <div className="text-white containerFooter section-padding fixed text-sm bottom-0 md:h-[30vh] h-[35vh] w-full">
         <div className="columnFooter mr-4">
           <h1 className="w-full border-b pb-1 font-bold">Menu</h1>
           <ul className="mt-2 space-y-1">

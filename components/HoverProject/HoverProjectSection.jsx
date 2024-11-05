@@ -29,21 +29,33 @@ export default function HoverProjectSection() {
           {projects.map((project, i) => {
             return (
               <AccordionItem key={i} value={`item-${i + 1}`}>
-                <AccordionTrigger
-                  onMouseEnter={() => {
-                    setModal({ active: true, i });
-                  }}
-                  onMouseLeave={() => {
-                    setModal({ active: false, i });
-                  }}
-                  className="relative"
-                >
-                  <div className={styles.menu}>
-                    <div className={styles.body}>
-                      <ListElement project={project} />
+                <div className="hidden md:block">
+                  <AccordionTrigger
+                    onMouseEnter={() => {
+                      setModal({ active: true, i });
+                    }}
+                    onMouseLeave={() => {
+                      setModal({ active: false, i });
+                    }}
+                    className="relative"
+                  >
+                    <div className={styles.menu}>
+                      <div className={styles.body}>
+                        <ListElement project={project} />
+                      </div>
                     </div>
-                  </div>
-                </AccordionTrigger>
+                  </AccordionTrigger>
+                </div>
+                <div className="block md:hidden">
+                  <AccordionTrigger className="relative">
+                    <div className={styles.menu}>
+                      <div className={styles.body}>
+                        <ListElement project={project} />
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                </div>
+
                 <AccordionContent>
                   <CardHoverSection {...project} className={"bg-black"} i={i} />
                 </AccordionContent>
