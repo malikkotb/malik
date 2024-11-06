@@ -289,3 +289,52 @@ body {
     grid-column: 1 / -1; /* Make 3rd column take full width */
   }
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  text-align: center;
+  margin-top: 360px;
+}
+.btn {
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(60, 60, 60);
+}
+
+.btn::before {
+  content: "";
+  font-size: 1.125rem /* 18px */;
+  line-height: 1.75rem /* 28px */;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: white;
+  z-index: -1;
+  transition: 0.5s;
+}
+
+@media (min-width: 768px) {
+  .btn::before {
+    font-size: 1.25rem /* 20px */;
+    line-height: 1.75rem /* 28px */;
+  }
+}
+
+.btn2:hover{
+  color: rgb(60, 60, 60);
+}
+
+.btn2::before {
+  bottom: 0;
+  border-radius: 50% 50% 0 0;
+}
+
+.btn2:hover::before {
+  height: 180%;
+}

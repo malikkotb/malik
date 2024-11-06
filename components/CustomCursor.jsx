@@ -19,8 +19,6 @@ const CustomCursor = ({ children, link }) => {
     });
   };
 
-  // TODO: fix scroll issue
-
   // const handleScroll = () => {
   //   setScrolling(true);
   //   clearTimeout(window.scrollTimeout);

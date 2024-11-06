@@ -85,9 +85,6 @@ export default function StickyFooter() {
             ))}
           </ul>
         </div>
-        {/* TODO: .roboto-mono {
-            font-family: 'Roboto Mono', monospace;
-      } */}
         <h1 className="items-end flex font-bold uppercase">Malik Kotb</h1>
         <h1 className="items-end flex justify-end md:justify-start pr-4 md:pr-0 text-left cursor-default">
           <div className="flex flex-col">

@@ -9,11 +9,9 @@ import HoverProjectSection from "../components/HoverProject/HoverProjectSection"
 import gsap from "gsap";
 import { useScroll, useTransform, motion } from "framer-motion";
 import MagenticButton from "@/components/MagneticButton";
-import { Noto_Serif, Tinos } from "next/font/google";
-const noto = Noto_Serif({
-  weight: "400",
-  subsets: ["latin"],
-});
+import { Tinos } from "next/font/google";
+import { getCalApi } from "@calcom/embed-react";
+
 const tinos = Tinos({
   weight: "400",
   subsets: ["latin"],
@@ -27,6 +25,18 @@ export default function Home() {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi();
+      cal("ui", {
+        theme: "dark",
+        styles: {
+          branding: { brandColor: "#000000" },
+        },
+      });
+    })();
   }, []);
 
   const loader = useRef(null);
@@ -270,7 +280,6 @@ export default function Home() {
                     link={"https://github.com/malikkotb"}
                     setBackground={setBackground}
                   >
-                    {/* TODO: integrate cal.com and when you click Book A Call -> open modal */}
                     <p>PORTFOLIO 24</p>
                   </TextDipserse>
                 </div>
@@ -326,6 +335,29 @@ export default function Home() {
             DEC &apos;24
           </div>
         </div>
+      </motion.div>
+
+      <motion.div
+        style={{
+          opacity: statusOpacity,
+          position: "fixed",
+        }}
+        ref={status}
+        id="status"
+        data-cal-link="malikkotb"
+        data-cal-config='{"theme":"dark"}'
+        className="group font-medium text-white py-2 px-3 btn btn2 rounded-full overflow-hidden bottom-4 flex uppercase tracking-tight flex-col left-4"
+      >
+        {/* <motion.div
+          whileHover={{
+            y: -100,
+          }}
+          ref={addToRevealRefs}
+          className="text-xl md:text-2xl font-medium"
+        >
+          BOOK A CALL
+        </motion.div> */}
+        <button className="text-lg md:text-xl font-medium">BOOK A CALL</button>
       </motion.div>
 
       <HoverProjectSection />
