@@ -59,7 +59,7 @@ const projects = [
     category: "Web Design, Development",
     client: "Personal",
     year: "2023",
-    tags: ["Next.js", "shadcn/ui", "Tailwind CSS", "Pocketbase", "Zustand"],
+    tags: ["Next.js", "Tailwind CSS", "Pocketbase", "Zustand"],
     link: "https://malikkotb.github.io/notetaker/",
     images: [
       "notetaker/notetaker1.webp",
