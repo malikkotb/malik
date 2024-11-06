@@ -44,13 +44,13 @@ export default function StickyFooter() {
 
   return (
     <div
-      className="relative h-[35vh] md:h-[30vh] border-t"
+      className="relative h-[35vh] md:h-[30vh] border-t border-white"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       {/* height of parent div and child div needs to be the same */}
       <div className="text-white containerFooter section-padding fixed text-sm bottom-0 md:h-[30vh] h-[35vh] w-full">
         <div className="columnFooter mr-4">
-          <h1 className="w-full border-b pb-1 font-bold">Menu</h1>
+          <h1 className="w-full border-b border-white pb-1 font-bold">Menu</h1>
           <ul className="mt-2 space-y-1">
             {menuLinks.map((link) => (
               <li key={link.name} className="flex h-fit w-fit">
@@ -62,7 +62,9 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className="columnFooter mr-0 md:mr-4">
-          <h1 className="w-full border-b pb-1 font-bold">Socials</h1>
+          <h1 className="w-full border-b border-white pb-1 font-bold">
+            Socials
+          </h1>
           <ul className="mt-2 space-y-1">
             {socialLinks.map((link) => (
               <li key={link.name} className="flex h-fit w-fit">
@@ -74,7 +76,9 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className="columnFooter mt-4 md:mt-0">
-          <h1 className="w-full border-b pb-1 font-bold">Resources</h1>
+          <h1 className="w-full border-b border-white pb-1 font-bold">
+            Resources
+          </h1>
           <ul className="mt-2 space-y-1">
             {resourceLinks.map((link) => (
               <li key={link.name} className="flex h-fit w-fit">
@@ -90,7 +94,7 @@ export default function StickyFooter() {
           <div className="flex flex-col">
             <span className="font-bold ">LOCAL TIME</span>
             <span>
-              <Clock format={"h:mm A"} />, MUC
+              <Clock format={"h:mm A"} />
             </span>
           </div>
         </h1>

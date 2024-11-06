@@ -2,8 +2,9 @@
 import FlipLink from "@/components/FlipLink";
 import Clock from "react-live-clock";
 import Lenis from "lenis";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextDipserse from "../components/TextDisperse";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import HoverProjectSection from "../components/HoverProject/HoverProjectSection";
 import gsap from "gsap";
@@ -11,6 +12,7 @@ import { useScroll, useTransform, motion } from "framer-motion";
 import MagenticButton from "@/components/MagneticButton";
 import { Tinos } from "next/font/google";
 import { getCalApi } from "@calcom/embed-react";
+import Zoop from "../components/Zoop";
 
 const tinos = Tinos({
   weight: "400",
@@ -42,6 +44,8 @@ export default function Home() {
   const loader = useRef(null);
   const path = useRef(null);
   const initialCurve = 200;
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const duration = 600;
   let start;
@@ -345,24 +349,21 @@ export default function Home() {
         data-cal-config='{"theme":"dark"}'
         className="font-medium text-white bottom-4 flex uppercase tracking-tight flex-col left-4"
       >
-        {/* <motion.div
-          whileHover={{
-            y: -100,
-          }}
-          ref={addToRevealRefs}
-          className="text-xl md:text-2xl font-medium"
-        >
-          BOOK A CALL
-        </motion.div> */}
         <div className="overflow-hidden">
           <div
             ref={addToRevealRefs}
-            className="overflow-hidden md:text-lg py-2 px-3 btn btn2 rounded-full font-medium"
+            className="overflow-hidden relative py-3 px-4 btn btn2 rounded-full font-medium"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            BOOK A CALL
+            <Zoop isHovered={isHovered}>
+              BOOK A CALL <ArrowTopRightIcon />
+            </Zoop>
           </div>
         </div>
       </motion.div>
+
+      <div className="fixed bottom-0 text-white left-72"></div>
 
       <HoverProjectSection />
       {/* <Projects /> */}
