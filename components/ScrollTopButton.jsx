@@ -8,7 +8,8 @@ const ScrollToTopButton = () => {
     <MagneticButton>
       <button
         onClick={handleScrollToTop}
-        className="p-3 px-4 bg-white rounded-full shadow-lg text-black"
+        style={{ color: "rgb(18, 18, 18)" }}
+        className="p-3 px-4 bg-white rounded-full shadow-lg "
       >
         ↑
       </button>

@@ -107,7 +107,6 @@ export default function Home() {
     gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
-  const status = useRef(null);
   const statusOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
 
   const revealRefs = useRef([]);
@@ -182,7 +181,7 @@ export default function Home() {
           yPercent: 0,
           duration: 1,
           ease: "power2.out",
-          // stagger: 0.08,
+          stagger: 0.08,
         },
         "<"
       );
@@ -314,7 +313,6 @@ export default function Home() {
           position: "fixed",
           zIndex: -1,
         }}
-        ref={status}
         id="status"
         className="text-white bottom-4 flex uppercase tracking-tight flex-col right-4"
       >
@@ -342,11 +340,10 @@ export default function Home() {
           opacity: statusOpacity,
           position: "fixed",
         }}
-        ref={status}
         id="status"
         data-cal-link="malikkotb"
         data-cal-config='{"theme":"dark"}'
-        className="group font-medium text-white py-2 px-3 btn btn2 rounded-full overflow-hidden bottom-4 flex uppercase tracking-tight flex-col left-4"
+        className="font-medium text-white bottom-4 flex uppercase tracking-tight flex-col left-4"
       >
         {/* <motion.div
           whileHover={{
@@ -357,7 +354,14 @@ export default function Home() {
         >
           BOOK A CALL
         </motion.div> */}
-        <button className="text-lg md:text-xl font-medium">BOOK A CALL</button>
+        <div className="overflow-hidden">
+          <div
+            ref={addToRevealRefs}
+            className="overflow-hidden md:text-lg py-2 px-3 btn btn2 rounded-full font-medium"
+          >
+            BOOK A CALL
+          </div>
+        </div>
       </motion.div>
 
       <HoverProjectSection />
