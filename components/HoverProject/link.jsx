@@ -43,7 +43,7 @@ export default function Link({ project, index }) {
         }}
         className={`${styles.el} hidden md:flex`}
       >
-        <section className="py-3 text-sm items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
+        <section style={{ fontSize: "15px"}} className="py-2 items-center h-full font-medium w-full grid grid-cols-2 md:grid-cols-4">
           <span className="text-nowrap text-left">{projectTitle}</span>
           <span className="hidden md:block text-nowrap text-left">
             {category}

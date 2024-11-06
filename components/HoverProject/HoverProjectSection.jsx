@@ -16,9 +16,13 @@ export default function HoverProjectSection() {
   const [modal, setModal] = useState({ active: false, index: 0 });
 
   return (
-    <div id="projects" className="mb-[15dvh] w-full bg-black text-white">
+    <div
+      id="projects"
+      // style={{ backgroundColor: "rgb(18, 18, 18)" }}
+      className="mb-[15dvh] w-full text-white"
+    >
       <div className="mx-4 relative mb-8 md:mb-0">
-        <div className="uppercase items-center border-white py-4 text-zinc-400 text-xs w-full grid grid-cols-2 md:grid-cols-4">
+        <div className="uppercase items-center border-white py-4 white opacity-70 text-xs w-full grid grid-cols-2 md:grid-cols-4">
           <span>Project</span>
           <span className="hidden md:block">Category</span>
           <span className="hidden md:block text-left ml-12">Client</span>

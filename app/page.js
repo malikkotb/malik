@@ -9,6 +9,15 @@ import HoverProjectSection from "../components/HoverProject/HoverProjectSection"
 import gsap from "gsap";
 import { useScroll, useTransform, motion } from "framer-motion";
 import MagenticButton from "@/components/MagneticButton";
+import { Noto_Serif, Tinos } from "next/font/google";
+const noto = Noto_Serif({
+  weight: "400",
+  subsets: ["latin"],
+});
+const tinos = Tinos({
+  weight: "400",
+  subsets: ["latin"],
+});
 gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
@@ -30,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     setPath(initialCurve);
     requestAnimationFrame(animate);
-    document.body.style.backgroundColor = "black";
+    document.body.style.backgroundColor = "rgb(18, 18, 18)";
   }, []);
 
   const animate = (timestamp) => {
@@ -88,6 +97,9 @@ export default function Home() {
     gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
   };
 
+  const status = useRef(null);
+  const statusOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+
   const revealRefs = useRef([]);
   const headerRevealRefs = useRef([]);
 
@@ -115,7 +127,7 @@ export default function Home() {
         const targetDiv = document.getElementById("portfolioId");
         const targetDiv2 = document.getElementById("contactId");
         if (nav.current) {
-          nav.current.style.backgroundColor = "black";
+          nav.current.style.backgroundColor = "rgb(18, 18, 18)";
         }
         if (targetDiv) {
           targetDiv.style.removeProperty("overflow");
@@ -187,7 +199,7 @@ export default function Home() {
         <div className="overflow-hidden">
           <div className="flex gap-3 invisible" ref={addToHeaderRevealRefs}>
             <MagenticButton>
-              <h1 className="cursor-pointer">MALIK KOTB</h1>
+              <h1 className={`cursor-pointer`}>MALIK KOTB</h1>
             </MagenticButton>
             <Clock format={"h:mm A"} />
           </div>
@@ -223,25 +235,32 @@ export default function Home() {
           }}
         >
           <div className="maiN">
-            <div className="body">
+            <div className={`body ${tinos.className} tracking-tight`}>
               <div className="overflow-hidden">
-                <div className="introLine invisible" ref={addToRevealRefs}>
-                  <p>Malik</p>
-                  <p>Kotb</p>
+                <div
+                  className={`introLine invisible justify-center`}
+                  ref={addToRevealRefs}
+                >
+                  <p className=" tracking-tight">Malik Kotb</p>
                 </div>
               </div>
 
               <div className="overflow-hidden">
                 <div className="introLine invisible" ref={addToRevealRefs}>
-                  <p>Design</p>
-                  <p>&</p>
+                  <p
+                    style={{
+                      filter: "grayscale(100%)",
+                    }}
+                  >
+                    Front 🖼️ End ☀
+                  </p>
                 </div>
               </div>
 
               <div className="overflow-hidden">
                 <div className="introLine invisible" ref={addToRevealRefs}>
-                  <p>Web</p>
-                  <p>Creation</p>
+                  {/* <p>Web</p> */}
+                  <p style={{ filter: "grayscale(100%)" }}>Developer</p>
                 </div>
               </div>
 
@@ -279,6 +298,35 @@ export default function Home() {
           </div>
         </motion.div>
       </div>
+
+      <motion.div
+        style={{
+          opacity: statusOpacity,
+          position: "fixed",
+          zIndex: -1,
+        }}
+        ref={status}
+        id="status"
+        className="text-white bottom-4 flex uppercase tracking-tight flex-col right-4"
+      >
+        <div className="overflow-hidden">
+          <div
+            ref={addToRevealRefs}
+            className="opacity-70 flex md:gap-1 flex-col md:flex-row text-xs"
+          >
+            <span>Available for</span>
+            <span>Freelance Work</span>
+          </div>
+        </div>
+        <div className="overflow-hidden">
+          <div
+            ref={addToRevealRefs}
+            className="text-3xl md:text-4xl font-medium"
+          >
+            DEC &apos;24
+          </div>
+        </div>
+      </motion.div>
 
       <HoverProjectSection />
       {/* <Projects /> */}

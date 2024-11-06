@@ -55,7 +55,7 @@ const projects = [
   {
     projectTitle: "NoteTaker",
     description:
-      "I personally designed and developed NoteTaker, a full-stack note-taking application, leveraging the power of Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
+      "NoteTaker is a full-stack note-taking application, designed and developed with Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, shadcn/ui components for a polished user interface, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
     category: "Web Design, Development",
     client: "Personal",
     year: "2023",
@@ -86,11 +86,10 @@ const projects = [
   {
     projectTitle: "Pastry Shop",
     category: "Web Design, Development",
-    client: "Catherine Schulz",
-    year: "2023",
-    description: "Pastry Shop",
+    client: "Personal",
     description:
-      "A modern and visually engaging pastry shop designed for the best France has to offer.",
+      "A sleek, responsive e-commerce site showcasing pastries, built with Next.js and styled with Tailwind CSS. Featuring Stripe integration for secure checkout, it offers a smooth and delightful shopping experience for pastry lovers.",
+    year: "2023",
     tags: ["Next.js", "Tailwind CSS", "Stripe"],
     link: "https://tiny-cat-4b4dc8.netlify.app/",
     images: [

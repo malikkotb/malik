@@ -93,7 +93,7 @@ export default function StickyFooter() {
           <div className="flex flex-col">
             <span className="font-bold ">LOCAL TIME</span>
             <span>
-              <Clock format={"h:mm A"} />, PAR
+              <Clock format={"h:mm A"} />, MUC
             </span>
           </div>
         </h1>

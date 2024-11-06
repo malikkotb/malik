@@ -43,14 +43,16 @@ body {
 
 .introLine {
   display: flex;
-  font-size: 6vw;
-  justify-content: space-between;
+  font-size: 5.5vw;
+  line-height: 6.5vw;
+  justify-content: center;
   text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
   .introLine {
     font-size: 9vw;
+    line-height: 10vw;
   }
 
   .body {
