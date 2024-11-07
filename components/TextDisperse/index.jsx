@@ -24,7 +24,7 @@ export default function TextDipserse({ children, setBackground, link }) {
   };
 
   const manageMouseEnter = () => {
-    // setBackground(true);
+    setBackground(true);
     setIsAnimated(true);
   };
 
@@ -32,8 +32,6 @@ export default function TextDipserse({ children, setBackground, link }) {
     setBackground(false);
     setIsAnimated(false);
   };
-
-  const handleClick = () => {};
 
   return (
     <div

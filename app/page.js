@@ -125,6 +125,8 @@ export default function Home() {
   const addToRevealRefs = addToRefs(revealRefs);
   const addToHeaderRevealRefs = addToRefs(headerRevealRefs);
 
+  const [removeWrapper, setRemoveWrapper] = useState(false);
+
   const setInitialStates = () => {
     gsap.set(revealRefs.current, {
       yPercent: 100,
@@ -137,14 +139,9 @@ export default function Home() {
   const preloaderAnimation = () => {
     const tl = gsap.timeline({
       onComplete: () => {
-        const targetDiv = document.getElementById("portfolioId");
-        const targetDiv2 = document.getElementById("contactId");
+        setRemoveWrapper(true);
         if (nav.current) {
           nav.current.style.backgroundColor = "rgb(18, 18, 18)";
-        }
-        if (targetDiv) {
-          targetDiv.style.removeProperty("overflow");
-          targetDiv2.style.removeProperty("overflow");
         }
       },
       defaults: {},
@@ -153,14 +150,6 @@ export default function Home() {
       visibility: "visible",
       delay: 0.2,
     })
-      // .to(
-      //   headerRevealRefs.current,
-      //   {
-      //     visibility: "visible",
-      //     delay: 0.2,
-      //   },
-      //   "<"
-      // )
       .to(
         revealRefs.current,
         {
@@ -175,7 +164,7 @@ export default function Home() {
         headerRevealRefs.current,
         {
           visibility: "visible",
-          delay: 0.3,
+          delay: 0.2,
         },
         "<"
       )
@@ -185,7 +174,7 @@ export default function Home() {
           yPercent: 0,
           duration: 1,
           ease: "power2.out",
-          stagger: 0.08,
+          // stagger: 0.08,
         },
         "<"
       );
@@ -254,7 +243,7 @@ export default function Home() {
                   className={`introLine invisible justify-center`}
                   ref={addToRevealRefs}
                 >
-                  <p className=" tracking-tight">Malik Kotb</p>
+                  <p className="tracking-tight">Malik Kotb</p>
                 </div>
               </div>
 
@@ -277,19 +266,28 @@ export default function Home() {
                 </div>
               </div>
 
-              <div style={{ overflow: "hidden" }} id="portfolioId">
-                <div className="" ref={addToRevealRefs}>
-                  <TextDipserse
-                    link={"https://github.com/malikkotb"}
-                    setBackground={setBackground}
-                  >
-                    <p>PORTFOLIO 24</p>
-                  </TextDipserse>
+              {removeWrapper ? (
+                <TextDipserse
+                  link={"https://github.com/malikkotb"}
+                  setBackground={setBackground}
+                >
+                  <p>PORTFOLIO 24</p>
+                </TextDipserse>
+              ) : (
+                <div style={{ overflow: "hidden" }}>
+                  <div className="" ref={addToRevealRefs}>
+                    <TextDipserse
+                      link={"https://github.com/malikkotb"}
+                      setBackground={setBackground}
+                    >
+                      <p>PORTFOLIO 24</p>
+                    </TextDipserse>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div style={{ overflow: "hidden" }} id="contactId">
-                <div className="gap-8 flex" ref={addToRevealRefs}>
+              {removeWrapper ? (
+                <>
                   <TextDipserse
                     link={"mailto:malikkotb@icloud.com"}
                     setBackground={setBackground}
@@ -303,8 +301,26 @@ export default function Home() {
                   >
                     <p>→Insta</p>
                   </TextDipserse>
+                </>
+              ) : (
+                <div style={{ overflow: "hidden" }}>
+                  <div className="gap-8 flex" ref={addToRevealRefs}>
+                    <TextDipserse
+                      link={"mailto:malikkotb@icloud.com"}
+                      setBackground={setBackground}
+                    >
+                      <p>→Email</p>
+                    </TextDipserse>
+
+                    <TextDipserse
+                      link={"https://instagram.com/malikhavemercy"}
+                      setBackground={setBackground}
+                    >
+                      <p>→Insta</p>
+                    </TextDipserse>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div ref={background} className="background"></div>
           </div>
@@ -315,7 +331,6 @@ export default function Home() {
         style={{
           opacity: statusOpacity,
           position: "fixed",
-          zIndex: -1,
         }}
         id="status"
         className="text-white bottom-4 flex uppercase tracking-tight flex-col right-4"
@@ -362,8 +377,6 @@ export default function Home() {
           </div>
         </div>
       </motion.div>
-
-      <div className="fixed bottom-0 text-white left-72"></div>
 
       <HoverProjectSection />
       {/* <Projects /> */}
