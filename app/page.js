@@ -4,7 +4,7 @@ import Clock from "react-live-clock";
 import Lenis from "lenis";
 import { useEffect, useRef, useState } from "react";
 import TextDipserse from "../components/TextDisperse";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useGSAP } from "@gsap/react";
 import HoverProjectSection from "../components/HoverProject/HoverProjectSection";
 import gsap from "gsap";
@@ -108,7 +108,7 @@ export default function Home() {
 
   const background = useRef(null);
   const setBackground = (isActive) => {
-    gsap.to(background.current, { opacity: isActive ? 0.7 : 0 });
+    gsap.to(background.current, { opacity: isActive ? 0.8 : 0 });
   };
 
   const statusOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
@@ -141,7 +141,7 @@ export default function Home() {
       onComplete: () => {
         setRemoveWrapper(true);
         if (nav.current) {
-          nav.current.style.backgroundColor = "rgb(18, 18, 18)";
+          // nav.current.style.backgroundColor = "rgb(18, 18, 18)";
         }
       },
       defaults: {},
@@ -200,9 +200,9 @@ export default function Home() {
       >
         <div className="overflow-hidden">
           <div className="flex gap-3 invisible" ref={addToHeaderRevealRefs}>
-            <MagenticButton>
-              <h1 className={`cursor-pointer`}>MALIK KOTB</h1>
-            </MagenticButton>
+            {/* <MagenticButton> */}
+            <h1 className={`cursor-pointer`}>MALIK KOTB</h1>
+            {/* </MagenticButton> */}
             <Clock format={"h:mm A"} />
           </div>
         </div>
@@ -270,6 +270,7 @@ export default function Home() {
                 <TextDipserse
                   link={"https://github.com/malikkotb"}
                   setBackground={setBackground}
+                  flipped={false}
                 >
                   <p>PORTFOLIO 24</p>
                 </TextDipserse>
@@ -279,6 +280,7 @@ export default function Home() {
                     <TextDipserse
                       link={"https://github.com/malikkotb"}
                       setBackground={setBackground}
+                      flipped={false}
                     >
                       <p>PORTFOLIO 24</p>
                     </TextDipserse>
@@ -291,6 +293,7 @@ export default function Home() {
                   <TextDipserse
                     link={"mailto:malikkotb@icloud.com"}
                     setBackground={setBackground}
+                    flipped={false}
                   >
                     <p>→Email</p>
                   </TextDipserse>
@@ -298,6 +301,7 @@ export default function Home() {
                   <TextDipserse
                     link={"https://instagram.com/malikhavemercy"}
                     setBackground={setBackground}
+                    flipped={true}
                   >
                     <p>→Insta</p>
                   </TextDipserse>
@@ -308,6 +312,7 @@ export default function Home() {
                     <TextDipserse
                       link={"mailto:malikkotb@icloud.com"}
                       setBackground={setBackground}
+                      flipped={false}
                     >
                       <p>→Email</p>
                     </TextDipserse>
@@ -315,6 +320,7 @@ export default function Home() {
                     <TextDipserse
                       link={"https://instagram.com/malikhavemercy"}
                       setBackground={setBackground}
+                      flipped={true}
                     >
                       <p>→Insta</p>
                     </TextDipserse>
@@ -350,6 +356,24 @@ export default function Home() {
             className="text-3xl md:text-4xl font-medium"
           >
             DEC &apos;24
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        style={{
+          opacity: statusOpacity,
+          position: "fixed",
+        }}
+        id="status"
+        className="text-white bottom-4 flex uppercase tracking-tight flex-col left-1/2"
+      >
+        <div className="overflow-hidden">
+          <div
+            ref={addToRevealRefs}
+            className="text-3xl icon md:text-4xl font-medium"
+          >
+            <ArrowDownIcon />
           </div>
         </div>
       </motion.div>

@@ -16,7 +16,7 @@ export default function Zoop({ children, isHovered }) {
           hovered: {
             y: "-100%",
             transition: {
-              duration: 0.2,
+              duration: 0.3,
               ease: "easeOut", // Adds an ease-out effect
             },
           },

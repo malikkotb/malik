@@ -5,15 +5,14 @@ const DURATION = 0.45;
 const STAGGER = 0.025;
 
 export default function FlipLink({ children, href, newPage }) {
-
   return (
-    <a href={href} target={newPage ? "_blank" : ""}>
+    <a href={href} className="cursor-pointer" target={newPage ? "_blank" : ""}>
       <motion.div
         initial="initial"
         whileHover="hovered"
         // style={{ lineHeight: "0.8" }}
         // inline-flex allows the container to only take up the width of the content, not the full width of the parent.
-        className="relative overflow-hidden whitespace-nowrap"
+        className="relative cursor-pointer overflow-hidden whitespace-nowrap"
       >
         <div className="">
           {children.split("").map((l, i) => {

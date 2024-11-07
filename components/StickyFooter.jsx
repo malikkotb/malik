@@ -2,6 +2,9 @@
 import Clock from "react-live-clock";
 import FlipLink from "./FlipLink";
 import ScrollTopButton from "./ScrollTopButton";
+import Zoop from "./Zoop";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 
 export default function StickyFooter() {
   {
@@ -14,6 +17,8 @@ export default function StickyFooter() {
         </div>
       </div> */
   }
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const menuLinks = [
     { name: "Home", href: "#home" },
@@ -89,7 +94,31 @@ export default function StickyFooter() {
             ))}
           </ul>
         </div>
-        <h1 className="items-end flex font-bold uppercase">Malik Kotb</h1>
+        <div className="items-end flex font-bold uppercase">
+          <div
+            style={
+              {
+                // position: "fixed",
+              }
+            }
+            id="status"
+            data-cal-link="malikkotb"
+            data-cal-config='{"theme":"dark"}'
+            className="font-medium text-white bottom-4 flex uppercase tracking-tight flex-col left-4"
+          >
+            <div className="overflow-hidden">
+              <div
+                className="btnFooter overflow-hidden relative py-3 px-4 btn btn2 rounded-full font-medium"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <Zoop isHovered={isHovered}>
+                  BOOK A CALL <ArrowTopRightIcon />
+                </Zoop>
+              </div>
+            </div>
+          </div>
+        </div>
         <h1 className="items-end flex justify-end md:justify-start pr-4 md:pr-0 text-left cursor-default">
           <div className="flex flex-col">
             <span className="font-bold ">LOCAL TIME</span>

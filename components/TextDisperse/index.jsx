@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { disperse } from "./animation";
+import { disperse, disperseFlipped } from "./animation";
 
-export default function TextDipserse({ children, setBackground, link }) {
+export default function TextDipserse({
+  children,
+  flipped,
+  setBackground,
+  link,
+}) {
   const [isAnimated, setIsAnimated] = useState(false);
+  console.log(flipped);
 
   const getChars = (element) => {
     let chars = [];
@@ -12,7 +18,7 @@ export default function TextDipserse({ children, setBackground, link }) {
       chars.push(
         <motion.span
           custom={i}
-          variants={disperse}
+          variants={flipped ? disperseFlipped : disperse}
           animate={isAnimated ? "open" : "closed"}
           key={char + i}
         >
@@ -35,7 +41,7 @@ export default function TextDipserse({ children, setBackground, link }) {
 
   return (
     <div
-      onClick={() => link.length > 0 ? window.open(link, "_blank") : null}
+      onClick={() => (link.length > 0 ? window.open(link, "_blank") : null)}
       style={{ cursor: "pointer" }}
       onMouseEnter={() => {
         manageMouseEnter();
