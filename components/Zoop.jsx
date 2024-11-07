@@ -10,8 +10,16 @@ export default function Zoop({ children, isHovered }) {
     >
       <motion.div
         variants={{
-          initial: { y: 0 },
-          hovered: { y: "-100%" },
+          initial: {
+            y: 0,
+          },
+          hovered: {
+            y: "-100%",
+            transition: {
+              duration: 0.2,
+              ease: "easeOut", // Adds an ease-out effect
+            },
+          },
         }}
         className="flex gap-1 items-center"
       >
@@ -21,7 +29,13 @@ export default function Zoop({ children, isHovered }) {
         className="absolute inset-0 flex gap-1 items-center"
         variants={{
           initial: { y: "100%" },
-          hovered: { y: 0 },
+          hovered: {
+            y: 0,
+            // transition: {
+            //   duration: 0.5,
+            //   ease: "easeOut", // Adds an ease-out effect
+            // },
+          },
         }}
       >
         {children}

@@ -209,7 +209,7 @@ body {
   width: 100%;
   height: 0%;
   z-index: -1;
-  transition: 0.5s;
+  transition: 0.5s ease-out;
 }
 
 .btn2::before {
