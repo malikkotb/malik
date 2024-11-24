@@ -106,7 +106,7 @@ const projects = [
     description:
       "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
     tags: ["Next.js", "Tailwind CSS", "GSAP"],
-    link: "https://albaportfolio-git-main-malik-ctrls-projects.vercel.app/",
+    link: "https://www.albapreysing.com/",
     images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
   },
 ];
