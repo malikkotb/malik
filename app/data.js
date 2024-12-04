@@ -16,21 +16,6 @@ const projects = [
     ],
   },
   {
-    projectTitle: "Model Agency",
-    category: "Web Design, Development",
-    client: "The Agents - Amsterdam",
-    year: "2024",
-    description:
-      "Designed and developed the website for The Agents, a model management agency in Amsterdam.",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    link: "https://www.theagentsmodelmanagement.com",
-    images: [
-      "esme/theagents1.webp",
-      "esme/theagents3.webp",
-      "esme/theagents2.webp",
-    ],
-  },
-  {
     projectTitle: "Photography Portfolio",
     client: "Meklit Fekadu",
     category: "Web Design, Development",
@@ -68,6 +53,21 @@ const projects = [
     images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
   },
   {
+    projectTitle: "Model Agency",
+    category: "Web Design, Development",
+    client: "The Agents - Amsterdam",
+    year: "2024",
+    description:
+      "Designed and developed the website for The Agents, a model management agency in Amsterdam.",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    link: "https://www.theagentsmodelmanagement.com",
+    images: [
+      "esme/theagents1.webp",
+      "esme/theagents3.webp",
+      "esme/theagents2.webp",
+    ],
+  },
+  {
     projectTitle: "NoteTaker",
     description:
       "NoteTaker is a full-stack note-taking application, designed and developed with Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, shadcn/ui components for a polished user interface, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
@@ -87,7 +87,7 @@ const projects = [
     client: "Personal",
     description:
       "Designed and developed a dynamic sticky-notes app with Next.js, TypeScript, Tailwind CSS, Pocketbase, and Framer Motion for efficient notetaking.",
-    category: "Web Design, Development",
+    category: "Development",
     year: "2023",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Pocketbase"],
     link: "https://github.com/malikkotb/sticky_notes",
@@ -100,7 +100,7 @@ const projects = [
 
   {
     projectTitle: "Pastry Shop",
-    category: "Web Design, Development",
+    category: "Development",
     client: "Personal",
     description:
       "A sleek, responsive e-commerce site showcasing pastries, built with Next.js and styled with Tailwind CSS. Featuring Stripe integration for secure checkout, it offers a smooth and delightful shopping experience for pastry lovers.",
