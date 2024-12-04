@@ -31,6 +31,17 @@ const projects = [
     ],
   },
   {
+    projectTitle: "Photography Portfolio",
+    client: "Meklit Fekadu",
+    category: "Web Design, Development",
+    year: "2024",
+    description:
+      "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    link: "https://www.meklitfekadu.com",
+    images: ["meki/meki_1.webp", "meki/meki_2.webp", "meki/meki_3.webp"],
+  },
+  {
     projectTitle: "Design Portfolio",
     category: "Development",
     client: "Matteo Just",
@@ -39,18 +50,22 @@ const projects = [
       "A portfolio website developed for Matteo Just, a Munich-based transportation designer. (Work in Progress)",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "GSAP"],
     link: "",
-    images: ["matteo/mat1.webp", "matteo/mat2.webp", "matteo/mat3.webp"],
+    images: [
+      "matteo/matteo_1.webp",
+      "matteo/matteo_2.webp",
+      "matteo/matteo_3.webp",
+    ],
   },
   {
-    projectTitle: "Photography Portfolio",
-    client: "Meklit Fekadu",
+    projectTitle: "Producer Portfolio",
     category: "Web Design, Development",
-    year: "2024",
+    client: "Alba Preysing",
+    year: "2023",
     description:
-      "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer. (Work in Progress)",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    link: "",
-    images: ["meki/meki1.webp", "meki/meki2.webp", "meki/meki3.webp"],
+      "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
+    tags: ["Next.js", "Tailwind CSS", "GSAP"],
+    link: "https://www.albapreysing.com/",
+    images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
   },
   {
     projectTitle: "NoteTaker",
@@ -97,17 +112,6 @@ const projects = [
       "pastryShop/pastry4.webp",
       "pastryShop/pastry5.webp",
     ],
-  },
-  {
-    projectTitle: "Producer Portfolio",
-    category: "Web Design, Development",
-    client: "Alba Preysing",
-    year: "2023",
-    description:
-      "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
-    tags: ["Next.js", "Tailwind CSS", "GSAP"],
-    link: "https://www.albapreysing.com/",
-    images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
   },
 ];
 
