@@ -67,52 +67,52 @@ const projects = [
       "esme/theagents2.webp",
     ],
   },
-  {
-    projectTitle: "NoteTaker",
-    description:
-      "NoteTaker is a full-stack note-taking application, designed and developed with Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, shadcn/ui components for a polished user interface, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
-    category: "Web Design, Development",
-    client: "Personal",
-    year: "2023",
-    tags: ["Next.js", "Tailwind CSS", "Pocketbase", "Zustand"],
-    link: "https://malikkotb.github.io/notetaker/",
-    images: [
-      "notetaker/notetaker1.webp",
-      "notetaker/notetaker2.webp",
-      "notetaker/notetaker3.webp",
-    ],
-  },
-  {
-    projectTitle: "Sticky Notes",
-    client: "Personal",
-    description:
-      "Designed and developed a dynamic sticky-notes app with Next.js, TypeScript, Tailwind CSS, Pocketbase, and Framer Motion for efficient notetaking.",
-    category: "Development",
-    year: "2023",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Pocketbase"],
-    link: "https://github.com/malikkotb/sticky_notes",
-    images: [
-      "sticky/sticky2.webp",
-      "sticky/sticky3.webp",
-      "sticky/sticky4.webp",
-    ],
-  },
+  // {
+  //   projectTitle: "NoteTaker",
+  //   description:
+  //     "NoteTaker is a full-stack note-taking application, designed and developed with Next.js for server-side rendering, TailwindCSS for intuitive and responsive design, shadcn/ui components for a polished user interface, Pocketbase for seamless backend management, and Zustand for efficient state handling.",
+  //   category: "Web Design, Development",
+  //   client: "Personal",
+  //   year: "2023",
+  //   tags: ["Next.js", "Tailwind CSS", "Pocketbase", "Zustand"],
+  //   link: "https://malikkotb.github.io/notetaker/",
+  //   images: [
+  //     "notetaker/notetaker1.webp",
+  //     "notetaker/notetaker2.webp",
+  //     "notetaker/notetaker3.webp",
+  //   ],
+  // },
+  // {
+  //   projectTitle: "Sticky Notes",
+  //   client: "Personal",
+  //   description:
+  //     "Designed and developed a dynamic sticky-notes app with Next.js, TypeScript, Tailwind CSS, Pocketbase, and Framer Motion for efficient notetaking.",
+  //   category: "Development",
+  //   year: "2023",
+  //   tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Pocketbase"],
+  //   link: "https://github.com/malikkotb/sticky_notes",
+  //   images: [
+  //     "sticky/sticky2.webp",
+  //     "sticky/sticky3.webp",
+  //     "sticky/sticky4.webp",
+  //   ],
+  // },
 
-  {
-    projectTitle: "Pastry Shop",
-    category: "Development",
-    client: "Personal",
-    description:
-      "A sleek, responsive e-commerce site showcasing pastries, built with Next.js and styled with Tailwind CSS. Featuring Stripe integration for secure checkout, it offers a smooth and delightful shopping experience for pastry lovers.",
-    year: "2023",
-    tags: ["Next.js", "Tailwind CSS", "Stripe"],
-    link: "https://tiny-cat-4b4dc8.netlify.app/",
-    images: [
-      "pastryShop/pastry1.webp",
-      "pastryShop/pastry4.webp",
-      "pastryShop/pastry5.webp",
-    ],
-  },
+  // {
+  //   projectTitle: "Pastry Shop",
+  //   category: "Development",
+  //   client: "Personal",
+  //   description:
+  //     "A sleek, responsive e-commerce site showcasing pastries, built with Next.js and styled with Tailwind CSS. Featuring Stripe integration for secure checkout, it offers a smooth and delightful shopping experience for pastry lovers.",
+  //   year: "2023",
+  //   tags: ["Next.js", "Tailwind CSS", "Stripe"],
+  //   link: "https://tiny-cat-4b4dc8.netlify.app/",
+  //   images: [
+  //     "pastryShop/pastry1.webp",
+  //     "pastryShop/pastry4.webp",
+  //     "pastryShop/pastry5.webp",
+  //   ],
+  // },
 ];
 
 export default projects;
