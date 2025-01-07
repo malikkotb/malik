@@ -355,7 +355,7 @@ export default function Home() {
             ref={addToRevealRefs}
             className="text-3xl md:text-4xl font-medium"
           >
-            DEC &apos;24
+            FEB &apos;25
           </div>
         </div>
       </motion.div>
