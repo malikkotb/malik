@@ -4,7 +4,6 @@ import FlipLink from "./FlipLink";
 export default function Header() {
   return (
     <div
-      style={{ fontWeight: "600" }}
       className="z-50 text-white flex text-xs justify-between w-full fixed p-5"
     >
       <h1>MALIK KOTB</h1>

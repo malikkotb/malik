@@ -100,7 +100,7 @@ const Card = ({
         )}
         {/* A dynamic top position is set depending on the index of each cards, creating a simple stacking effect.
          And that's how the color of each card is set. */}
-        <div className="text-sm font-semibold w-full grid grid-cols-2 md:grid-cols-4">
+        <div className="text-sm w-full grid grid-cols-2 md:grid-cols-4">
           {/* <span className="font-bold">00{i + 1}</span> */}
           <span className="text-nowrap">{projectTitle}</span>
           <span className="hidden md:block text-nowrap text-left">
@@ -130,7 +130,7 @@ const Card = ({
             {tags.map((tag) => (
               <li
                 key={tag}
-                className={`${styles.customLi} text-xs md:text-base font-semibold text-white md:py-1`}
+                className={`${styles.customLi} text-xs md:text-base text-white md:py-1`}
               >
                 {tag}
               </li>

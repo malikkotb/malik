@@ -109,7 +109,7 @@ const CardHoverSection = ({
             {tags.map((tag) => (
               <li
                 key={tag}
-                className={`${styles.customLi} text-xs md:text-base font-semibold text-white md:py-1`}
+                className={`${styles.customLi} text-xs md:text-base text-white md:py-1`}
               >
                 {tag}
               </li>
