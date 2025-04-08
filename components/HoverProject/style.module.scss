@@ -22,7 +22,7 @@
     display: flex;
     background-attachment: fixed;
     // background-image: url("/noise-light.png");
-    background-color: rgb(18, 18, 18);
+    background-color: black;
 
     flex-direction: column;
     position: relative;
@@ -47,7 +47,7 @@
     position: relative;
     width: 100%;
     .el {
-      border-top: 1px solid white;
+      border-top: 1px solid rgba($color: #fff, $alpha: 0.5);
       justify-content: center;
       cursor: pointer;
       perspective: 80vw;

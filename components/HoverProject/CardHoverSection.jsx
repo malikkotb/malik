@@ -1,13 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import styles from "./style.module.scss";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
 import HorizontalImageCard from "../ProjectsSection/HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
 import { useMeasure, useWindowSize } from "@uidotdev/usehooks";
@@ -49,38 +43,6 @@ const CardHoverSection = ({
   const [api, setApi] = useState();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-
-  const carouselRef = useRef(null);
-
-  const [carouselWidth, setCarouselWidth] = useState(0);
-  useEffect(() => {
-    // Assuming you have a way to get the carousel width
-    const updateCarouselWidth = () => {
-      const carouselWidth = carouselRef.current?.offsetWidth;
-      setCarouselWidth(carouselWidth);
-    };
-
-    window.addEventListener("resize", updateCarouselWidth);
-    updateCarouselWidth();
-
-    return () => window.removeEventListener("resize", updateCarouselWidth);
-  }, []);
-
-  const itemWidth = carouselWidth ? carouselWidth / images.length : 0;
-  const leftPosition = current * itemWidth;
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
 
   return (
     <div className={`${styles.cardContainer} bg-transparent`} style={style}>

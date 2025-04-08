@@ -3,25 +3,22 @@ import FlipLink from "./FlipLink";
 
 export default function Header() {
   return (
-    <div
-      className="z-50 text-white flex text-xs justify-between w-full fixed p-5"
-    >
-      <h1>MALIK KOTB</h1>
-      <div className="flex gap-2">
-        <div className="headerLink">
-          <FlipLink href="#about">ABOUT</FlipLink>
-        </div>
-        <div className="headerLink">
-          <FlipLink newPage={true} href="https://malikkotb.github.io/blog/">
-            BLOG
-          </FlipLink>
-        </div>
-        <div className="headerLink">
-          <FlipLink href="#projects">PROJECTS</FlipLink>
-        </div>
-        <div className="headerLink">
-          <FlipLink href="mailto:malikkotb@icloud.com">CONTACT</FlipLink>
-        </div>
+    <div className='z-50 font-neuemontreal-medium flex justify-between items-center w-full'>
+      <h1 className='header-logo'>malik</h1>
+      <div className='flex gap-2'>
+        {/* <div className='headerLink'> */}
+        <FlipLink href='#about'>ABOUT</FlipLink>
+        {/* </div> */}
+        <FlipLink href='#work'>WORK</FlipLink>
+        <FlipLink href='#services'>SERVICES</FlipLink>
+
+        {/* <FlipLink
+          newPage={true}
+          href='https://malikkotb.github.io/blog/'
+        >
+          BLOG
+        </FlipLink> */}
+        <FlipLink href='mailto:hello@malikkotb.com'>CONTACT</FlipLink>
       </div>
     </div>
   );

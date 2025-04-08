@@ -1,14 +1,125 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 html,
 body {
   margin: 0px;
   /* background-image: url("/noise-light.png"); */
-  /* background-color: black; */
+  font-family: var(--font-neuemontreal-medium);
+  background-color: black;
+  color: white;
   background-attachment: fixed; /* This ensures the background stays in place */
 }
+
+@font-face {
+  font-family: "PPNeueCorp CompactUltrabold";
+  src: url("./fonts/PPNeueCorp-CompactUltrabold.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueCorp Extended";
+  src: url("./fonts/PPNeueCorp-ExtendedUltrabold.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueCorp NormalMedium";
+  src: url("./fonts/PPNeueCorp-NormalMedium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueCorp NarrowUltrabold";
+  src: url("./fonts/PPNeueCorp-NarrowUltrabold.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Light";
+  src: url("./fonts/PPNeueMontreal-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Medium";
+  src: url("./fonts/PPNeueMontreal-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Regular";
+  src: url("./fonts/PPNeueMontreal-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Book";
+  src: url("./fonts/PPNeueMontreal-Book.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Italic";
+  src: url("./fonts/PPNeueMontreal-Italic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Bold";
+  src: url("./fonts/PPNeueMontreal-Bold.otf") format("opentype");
+}
+
+@theme inline {
+  --font-neuecorp-extended-ultrabold: "PPNeueCorp Extended",
+    sans-serif;
+  --font-neuecorp-normal-medium: "PPNeueCorp NormalMedium", sans-serif;
+  --font-neuecorp-compact-ultrabold: "PPNeueCorp CompactUltrabold",
+    sans-serif;
+  --font-neuecorp-narrow-ultrabold: "PPNeueCorp NarrowUltrabold",
+    sans-serif;
+
+  --font-neuemontreal-bold: "PPNeueMontreal Bold", sans-serif;
+  --font-neuemontreal-italic: "PPNeueMontreal Italic", sans-serif;
+  --font-neuemontreal-book: "PPNeueMontreal Book", sans-serif;
+  --font-neuemontreal-regular: "PPNeueMontreal Regular", sans-serif;
+  --font-neuemontreal-medium: "PPNeueMontreal Medium", sans-serif;
+  --font-neuemontreal-light: "PPNeueMontreal Light", sans-serif;
+}
+
+/* ------------- */
+
+.header-logo {
+  font-family: var(--font-neuemontreal-bold);
+  font-size: 3rem;
+  letter-spacing: -5%;
+  line-height: 85%;
+}
+.h2 {
+  /* for headings of sections */
+  font-family: var(--font-neuemontreal-bold);
+  font-size: 10rem;
+  line-height: 85%;
+  text-transform: uppercase;
+  font-style: normal;
+  letter-spacing: -6px;
+}
+
+.h3 {
+  /* action call */
+  font-family: var(--font-neuemontreal-bold);
+  text-align: center;
+  font-size: 6rem;
+  line-height: 100%; /* 120px */
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* ------------- */
 
 .maiN {
   height: 100vh;
@@ -19,7 +130,7 @@ body {
 }
 
 .background {
-  background-color: rgb(18, 18, 18);
+  background-color: black;
   /* background-color: red; */
   position: absolute;
   width: 100%;
@@ -155,29 +266,6 @@ body {
   transform-origin: left; /* Ensure the line grows from left to right */
 }
 
-/* Reusable padding class */
-.section-padding {
-  padding: 16px; /* Small screens (default) */
-}
-
-@media (min-width: 600px) {
-  .section-padding {
-    padding: 16px; /* Medium screens */
-  }
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding: 24px; /* Large screens */
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-padding {
-    padding: 32px; /* Extra-large screens */
-  }
-}
-
 .containerFooter {
   display: grid;
   grid-template-columns: 50% 25% 25%;
@@ -231,4 +319,3 @@ body {
 .btn2:hover::before {
   height: 180%;
 }
-
