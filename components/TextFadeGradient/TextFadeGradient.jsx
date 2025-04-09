@@ -13,7 +13,7 @@ export default function TextFadeGradient({ paragraph }) {
   const words = paragraph.split(" ");
   return (
     <div className='h-fit flex justify-center items-center'>
-      <div className='borderr h3 text-white text-center'>
+      <div className='h3 text-white text-center'>
         <p ref={container} className={styles.paragraph}>
           {words.map((word, i) => {
             const start = i / words.length;
