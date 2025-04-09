@@ -1,15 +1,16 @@
 .paragraph {
-  display: flex;
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: center; */
+  /* text-align: center; */
+  display: inline-block;
   line-height: 1;
   color: white;
-  flex-wrap: wrap;
 }
 
 .paragraph .word {
   position: relative;
-  /* This control spacing between differnet words */
-  margin-right: 10px;
-  margin-top: 10px;
+  display: inline-block;
 }
 
 .paragraph .word .shadow {
