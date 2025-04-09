@@ -1,4 +1,5 @@
 "use client";
+import AnimatedLink from "../AnimatedLink/AnimatedLink";
 import TextFadeGradient from "../TextFadeGradient/TextFadeGradient";
 export default function ActionCall() {
   // TODO: opacity animation on scroll for this text
@@ -14,9 +15,9 @@ export default function ActionCall() {
       </h3>
       <a
         href='mailto:hello@malikkotb.com'
-        className='text-black px-6 py-5 bg-white font-neuemontreal-bold leading-[100%] tracking-[-0.5px] text-[2vw]'
+        className='text-black px-5 py-4 bg-white font-neuemontreal-bold leading-[100%] tracking-[-0.35px] text-[1.5vw]'
       >
-        BOOK A CALL
+        <AnimatedLink className=''>BOOK A CALL</AnimatedLink>
       </a>
     </div>
   );
