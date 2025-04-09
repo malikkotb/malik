@@ -9,17 +9,15 @@ const ScrollToTopButton = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <MagneticButton>
-      <button
-        onClick={handleScrollToTop}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        style={{ color: "black" }}
-        className="p-3 px-4 bg-white rounded-full shadow-lg"
-      >
-        <Zoop isHovered={isHovered}>↑</Zoop>
-      </button>
-    </MagneticButton>
+    <button
+      onClick={handleScrollToTop}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ color: "black" }}
+      className='p-4 pr-0 pb-0 text-4xl font-neuemontreal-bold bg-white rounded-full'
+    >
+      <Zoop isHovered={isHovered}>↑</Zoop>
+    </button>
   );
 };
 

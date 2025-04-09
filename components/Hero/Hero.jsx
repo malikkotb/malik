@@ -7,7 +7,7 @@ import { GooeyText } from "@/components/ui/gooey-text-morphing";
 gsap.registerPlugin(useGSAP);
 export default function Home() {
   return (
-    <div className='relative h-screen'>
+    <div className='relative w-full h-screen'>
       <div className=''>
         <GooeyText
           texts={["     ", "malik"]}

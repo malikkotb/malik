@@ -25,13 +25,11 @@ export default function Home() {
 
   return (
     <main className='relative px-5 py-5'>
-      {/* header */}
       <Header />
       <Hero />
       <Works />
       <Services />
       <ActionCall />
-      <StickyFooter />
     </main>
   );
 }

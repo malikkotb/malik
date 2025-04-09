@@ -58,14 +58,17 @@ const inter = Inter({ subsets: ["latin"] });
 // });
 
 export const metadata = {
-  title: "Malik Kotb - Creative Developer",
-  description: "Developed by Malik Kotb",
+  title: "Malik - Creative Developer",
+  description: "Developed by Malik",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        {children}
+        <StickyFooter />
+      </body>
     </html>
   );
 }

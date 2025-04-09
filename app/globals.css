@@ -152,43 +152,6 @@ body {
   padding: 0; /* Remove any extra padding */
 }
 
-.introLine {
-  display: flex;
-  font-size: 5.5vw;
-  line-height: 6.5vw;
-  justify-content: center;
-  text-transform: uppercase;
-}
-
-@media (max-width: 768px) {
-  .introLine {
-    font-size: 9vw;
-    line-height: 10vw;
-  }
-
-  .body {
-    width: 80vw;
-  }
-}
-
-.introLine p {
-  margin: 0px;
-}
-
-.introLine:nth-of-type(5),
-.introLine:nth-of-type(6) {
-  display: inline-flex;
-}
-
-.introLine:nth-of-type(6) {
-  right: -32px;
-  position: relative;
-}
-
-.introLine p {
-  margin: 0px;
-}
-
 .loader {
   height: calc(100vh + 200px);
   width: 100%;
@@ -264,58 +227,4 @@ body {
 .headerLink:hover::after {
   transform: scaleX(1); /* Scale to full width on hover */
   transform-origin: left; /* Ensure the line grows from left to right */
-}
-
-.containerFooter {
-  display: grid;
-  grid-template-columns: 50% 25% 25%;
-}
-
-@media (max-width: 768px) {
-  .containerFooter {
-    grid-template-columns: 50% 50%;
-  }
-
-  .columnFooter:nth-child(3) {
-    grid-column: 1 / -1; /* Make 3rd column take full width */
-  }
-}
-
-.btn {
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  background-color: rgb(60, 60, 60);
-  color: white;
-  visibility: hidden;
-}
-
-.btnFooter {
-  visibility: visible;
-}
-
-.btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  mix-blend-mode: difference;
-  width: 100%;
-  height: 0%;
-  z-index: 100;
-  transition: 0.5s ease-out;
-}
-
-.btn2::before {
-  background: rgb(32, 32, 32);
-}
-
-.btn1::before,
-.btn2::before {
-  bottom: 0;
-  border-radius: 50% 50% 0 0;
-}
-
-.btn1:hover::before,
-.btn2:hover::before {
-  height: 180%;
 }

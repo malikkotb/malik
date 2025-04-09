@@ -12,13 +12,13 @@ export default function StickyFooter() {
 
   const menuLinks = [
     { name: "Home", href: "#home" },
-    { name: "Projects", href: "#projects" },
-    // { name: "About", href: "/about" },
+    { name: "Work", href: "#projects" },
+    { name: "Services", href: "#about" },
+    { name: "About", href: "#about" },
     { name: "Contact", href: "mailto:hello@malikkotb.com" },
   ];
 
   const socialLinks = [
-    { name: "Socials", href: "#" },
     {
       name: "LinkedIn",
       href: "https://www.linkedin.com/in/malik-kotb-682412189/",
@@ -40,103 +40,84 @@ export default function StickyFooter() {
       newPage: true,
     },
   ];
-
-  const resourceLinks = [
-    {
-      name: "Blog",
-      href: "https://malikkotb.github.io/blog/",
-      newPage: true,
-    },
-    {
-      name: "GitHub",
-      href: "https://github.com/malikkotb",
-      newPage: true,
-    },
+  const stack = [
+    "Javascript",
+    "HTML5, CSS",
+    "Webflow",
+    "GSAP, Motion",
+    "Three.js",
   ];
 
   return (
-    <div
-      className='relative h-[35vh] md:h-[30vh]'
-      // TODO: fix clip path here for sticky footer (olivier)
+    <footer
+      className='relative h-[50vh] md:h-[60vh]'
       style={{
         clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
       }}
     >
       {/* height of parent div and child div needs to be the same for sticky footer to work */}
-      <div className='text-black bg-white containerFooter fixed text-sm bottom-5 md:h-[30vh] h-[35vh] w-full'>
-        <div className='columnFooter mr-4'>
-          <h1 className='w-full border-b border-white pb-1 font-bold'>
-            Menu
-          </h1>
-          <ul className='mt-2 space-y-1'>
-            {menuLinks.map((link) => (
-              <li key={link.name} className='flex h-fit w-fit'>
+      <div className='text-black pt-10 p-5  flex flex-col gap-8 justify-end bg-white fixed bottom-0 w-full h-[50vh] md:h-[60vh]'>
+        <div className='flex w-full '>
+          <ul className='w-2/8 flex flex-col gap-2'>
+            <li className='flex h-fit w-fit text-[#909090]'>
+              Navigation
+            </li>
+            {menuLinks.map((link, index) => (
+              <li key={index} className='flex h-fit w-fit'>
                 <AnimatedLink href={link.href}>
                   {link.name}
                 </AnimatedLink>
               </li>
             ))}
           </ul>
-        </div>
-        <div className='columnFooter mr-0 md:mr-4'>
-          <ul className='footer-column'>
+          <ul className='w-3/8 flex flex-col gap-2'>
+            <li className='flex h-fit w-fit text-[#909090]'>
+              Socials
+            </li>
             {socialLinks.map((link, index) => (
-              <li
-                key={link.name}
-                style={{ color: index === 0 ? "#909090" : "" }}
-                className='flex h-fit w-fit'
-              >
+              <li key={index} className='flex h-fit w-fit'>
                 <AnimatedLink href={link.href}>
                   {link.name}
                 </AnimatedLink>
               </li>
             ))}
           </ul>
-        </div>
-        <div className='columnFooter mt-4 md:mt-0'>
-          <h1 className='w-full border-b border-white pb-1 font-bold'>
-            Resources
-          </h1>
-          <ul className='mt-2 space-y-1'>
-            {resourceLinks.map((link) => (
-              <li key={link.name} className='flex h-fit w-fit'>
-                <FlipLink newPage={link.newPage} href={link.href}>
-                  {link.name}
-                </FlipLink>
+          <ul className='w-3/8 flex flex-col gap-2'>
+            <li className='flex h-fit w-fit text-[#909090]'>Stack</li>
+            {stack.map((link, index) => (
+              <li key={index} className='flex h-fit w-fit'>
+                <AnimatedLink>{link}</AnimatedLink>
               </li>
             ))}
           </ul>
         </div>
-        {/* <div className='items-end flex font-bold uppercase'>
+        <div className='flex w-full '>
           <div
-            style={
-              {
-                // position: "fixed",
-              }
-            }
-            id='status'
-            data-cal-link='malikkotb'
-            data-cal-config='{"theme":"dark"}'
-            className='font-medium text-white bottom-4 flex uppercase tracking-tight flex-col left-4'
+            style={{
+              lineHeight: "75%",
+              marginLeft: "-1vw",
+            }}
+            className='tracking-[-1.5vw] text-[25vw] font-neuemontreal-bold w-5/8 h-fit'
           >
-            <div className='overflow-hidden'>
-              <div
-                className='btnFooter overflow-hidden relative py-3 px-4 btn btn2 rounded-full font-medium'
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <Zoop isHovered={isHovered}>
-                  BOOK A CALL <ArrowTopRightIcon />
-                </Zoop>
-              </div>
-            </div>
+            malik
           </div>
-        </div> */}
-        <div className='md:flex hidden'></div>
-        <div className='items-center w-full flex justify-start'>
-          <ScrollTopButton />
+          <div
+            style={{
+              lineHeight: "85%",
+              marginLeft: "1vw",
+            }}
+            className='flex items-end'
+          >
+            © 2025 Malik Kotb
+            <br />
+            All rights reserved.
+          </div>
+
+          <div className=' w-2/8 flex items-end justify-end'>
+            <ScrollTopButton />
+          </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
