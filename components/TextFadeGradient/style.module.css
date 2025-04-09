@@ -1,7 +1,7 @@
 .paragraph {
   display: flex;
   line-height: 1;
-  color: black;
+  color: white;
   flex-wrap: wrap;
 }
 
