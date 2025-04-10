@@ -12,7 +12,7 @@ export default function ActionCall() {
     { name: "Book A Call", href: "mailto:hello@malikkotb.com" },
   ];
   return (
-    <footer className='md:mt-[10vh] p-5 h-[80vh] md:h-[50vh] flex flex-col justify-between'>
+    <footer className='md:mt-[5vh] p-5 h-[80vh] md:h-[50vh] flex flex-col justify-between'>
       <div className='flex gap-28 md:gap-0 flex-col md:flex-row w-full'>
         <div
           style={{

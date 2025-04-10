@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import AnimatedLink from "../AnimatedLink/AnimatedLink";
 import ScrollToTopButton from "../ScrollTopButton";
 import TextFadeGradient from "../TextFadeGradient/TextFadeGradient";
@@ -11,6 +12,9 @@ export default function ActionCall() {
     { name: "Contact", href: "mailto:hello@malikkotb.com" },
     { name: "Book A Call", href: "mailto:hello@malikkotb.com" },
   ];
+
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <section className='h-[100vh] relative flex gap-12 flex-col px-[5vw] justify-center items-center'>
       <div className='text-sm uppercase'>Have a project in mind?</div>
@@ -19,10 +23,14 @@ export default function ActionCall() {
       />
       <a
         href='mailto:hello@malikkotb.com'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className='px-12 py-6 rounded-full border-white border font-neuemontreal-medium leading-[100%] tracking-[-0.35px]'
       >
         {/* TODO: fix hover functionality */}
-        <AnimatedLink>HELLO@MALIKKOTB.COM</AnimatedLink>
+        <AnimatedLink hovered={isHovered}>
+          HELLO@MALIKKOTB.COM
+        </AnimatedLink>
       </a>
       {/* TODO: calendar link */}
       {/* <div className='uppercase text-sm absolute bottom-0 left-0'>

@@ -5,15 +5,16 @@ const DURATION = 0.25;
 
 export default function AnimatedLink({
   children,
-  className,
+  hovered = false, // ✅ allow manual override
   href,
   newPage,
 }) {
   return (
     <motion.div
       initial='initial'
-      whileHover='hovered'
-      className={`${className} relative inline-block cursor-pointer overflow-hidden whitespace-nowrap`}
+      animate={hovered ? "hovered" : "initial"} // ✅ control with prop
+      whileHover='hovered' // still allows self-hover
+      className={`relative cursor-pointer overflow-hidden whitespace-nowrap`}
     >
       {/* Top word (visible) */}
       <motion.span

@@ -1,0 +1,57 @@
+.spacer {
+  width: 100%;
+  height: 50vh;
+  background: #ddd;
+}
+
+.headline {
+  background: #2d4e86;
+  border-radius: 6px;
+  height: 4em;
+  width: 100%;
+}
+
+.text {
+  margin: 0.8em 0 0 0;
+  background: #2d4e86;
+  border-radius: 6px;
+  height: 1em;
+  width: 100%;
+}
+
+.gallery {
+  display: flex;
+  outline: 1px solid red;
+}
+
+.left {
+  width: 50%;
+}
+
+.detailsWrapper {
+  margin: auto;
+  width: 80%;
+}
+
+.details {
+  height: 100vh;
+  outline: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right {
+  outline: 1px solid purple;
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.photos {
+  width: 40vw;
+  height: 40vw;
+  background: maroon;
+}
