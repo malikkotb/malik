@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import StickyFooter from "../components/StickyFooter";
+import Footer from "../components/Footer/footer";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -69,7 +70,8 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={`antialiased`}>
         {children}
-        <StickyFooter />
+        {/* <StickyFooter /> */}
+        <Footer />
       </body>
     </html>
   );
