@@ -62,6 +62,8 @@ export const metadata = {
   description: "Developed by Malik",
 };
 
+// TODO: create logo
+
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>

@@ -13,7 +13,7 @@ export default function TextFadeGradient({ paragraph }) {
   const words = paragraph.split(" ");
   return (
     <div className='h-fit flex justify-center items-center'>
-      <div className='h3 text-white text-center'>
+      <div className='h4 text-white text-center'>
         <p ref={container} className={styles.paragraph}>
           {words.map((word, i) => {
             const start = i / words.length;
@@ -45,37 +45,3 @@ const Word = ({ children, progress, range }) => {
     </span>
   );
 };
-
-// const Word = ({ children, progress, range }) => {
-//   const amount = range[1] - range[0];
-//   const step = amount / children.length;
-//   return (
-//     <span className={styles.word}>
-//       {children.split("").map((char, i) => {
-//         const start = range[0] + i * step;
-//         const end = range[0] + (i + 1) * step;
-//         return (
-//           <Char
-//             key={`c_${i}`}
-//             progress={progress}
-//             range={[start, end]}
-//           >
-//             {char}
-//           </Char>
-//         );
-//       })}
-//     </span>
-//   );
-// };
-
-// const Char = ({ children, progress, range }) => {
-//   const opacity = useTransform(progress, range, [0, 1]);
-//   return (
-//     <span>
-//       <span className={styles.shadow}>{children}</span>
-//       <motion.span style={{ opacity: opacity }}>
-//         {children}
-//       </motion.span>
-//     </span>
-//   );
-// };

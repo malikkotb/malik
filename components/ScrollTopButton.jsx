@@ -13,8 +13,7 @@ const ScrollToTopButton = () => {
       onClick={handleScrollToTop}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ color: "black" }}
-      className='p-4 pr-0 pb-0 text-4xl font-neuemontreal-bold bg-white rounded-full'
+      className='text-xl font-neuemontreal-bold text-white rounded-full'
     >
       <Zoop isHovered={isHovered}>↑</Zoop>
     </button>

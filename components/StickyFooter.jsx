@@ -50,15 +50,15 @@ export default function StickyFooter() {
 
   return (
     <footer
-      className='relative h-[50vh] md:h-[60vh]'
+      className='relative h-[50vh] md:h-[55vh]'
       style={{
         clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
       }}
     >
       {/* height of parent div and child div needs to be the same for sticky footer to work */}
-      <div className='text-black pt-10 p-5  flex flex-col gap-8 justify-end bg-white fixed bottom-0 w-full h-[50vh] md:h-[60vh]'>
+      <div className='text-black pt-10 p-5 text-sm flex flex-col gap-8 justify-end bg-white fixed bottom-0 w-full h-[50vh] md:h-[55vh]'>
         <div className='flex w-full '>
-          <ul className='w-2/8 flex flex-col gap-2'>
+          <ul className='w-2/8 flex flex-col'>
             <li className='flex h-fit w-fit text-[#909090]'>
               Navigation
             </li>
@@ -70,7 +70,7 @@ export default function StickyFooter() {
               </li>
             ))}
           </ul>
-          <ul className='w-3/8 flex flex-col gap-2'>
+          <ul className='w-3/8 flex flex-col gap-1'>
             <li className='flex h-fit w-fit text-[#909090]'>
               Socials
             </li>
@@ -82,7 +82,7 @@ export default function StickyFooter() {
               </li>
             ))}
           </ul>
-          <ul className='w-3/8 flex flex-col gap-2'>
+          <ul className='w-3/8 flex flex-col gap-1'>
             <li className='flex h-fit w-fit text-[#909090]'>Stack</li>
             {stack.map((link, index) => (
               <li key={index} className='flex h-fit w-fit'>
@@ -95,9 +95,9 @@ export default function StickyFooter() {
           <div
             style={{
               lineHeight: "75%",
-              marginLeft: "-1vw",
+              marginLeft: "-0.5vw",
             }}
-            className='tracking-[-1.5vw] text-[25vw] font-neuemontreal-bold w-5/8 h-fit'
+            className='tracking-[-1vw] text-[20vw] font-neuemontreal-bold w-5/8 h-fit'
           >
             malik
           </div>
@@ -113,7 +113,7 @@ export default function StickyFooter() {
             All rights reserved.
           </div>
 
-          <div className=' w-2/8 flex items-end justify-end'>
+          <div className='w-2/8 flex items-end justify-end'>
             <ScrollTopButton />
           </div>
         </div>

@@ -3,12 +3,17 @@ import { motion } from "framer-motion";
 
 const DURATION = 0.25;
 
-export default function AnimatedLink({ children, href, newPage }) {
+export default function AnimatedLink({
+  children,
+  className,
+  href,
+  newPage,
+}) {
   return (
     <motion.div
       initial='initial'
       whileHover='hovered'
-      className='relative inline-block cursor-pointer overflow-hidden whitespace-nowrap'
+      className={`${className} relative inline-block cursor-pointer overflow-hidden whitespace-nowrap`}
     >
       {/* Top word (visible) */}
       <motion.span

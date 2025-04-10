@@ -111,6 +111,16 @@ body {
   text-transform: uppercase;
 }
 
+.h4 {
+  /* action call */
+  font-family: var(--font-neuemontreal-bold);
+  text-align: center;
+  font-size: 7.5vw;
+  line-height: 100%; /* 120px */
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
 .footer-column {
   display: flex;
   flex-direction: column;
@@ -217,7 +227,7 @@ body {
   height: 1px;
   background-color: white;
   left: 0;
-  bottom: -4px; /* Adjust this value to move the line closer to the text */
+  bottom: -1px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */
   position: absolute;
   transform: scaleX(0); /* Initially scale the width to 0 */
@@ -227,4 +237,55 @@ body {
 .headerLink:hover::after {
   transform: scaleX(1); /* Scale to full width on hover */
   transform-origin: left; /* Ensure the line grows from left to right */
+}
+
+.underline-link {
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+.underline-link::before,
+.underline-link.is--alt::before,
+.underline-link.is--alt::after {
+  content: "";
+  position: absolute;
+  bottom: 0em;
+  left: 0;
+  width: 100%;
+  height: 0.0625em;
+  background-color: white;
+  transition: transform 0.735s cubic-bezier(0.625, 0.05, 0, 1);
+  transform-origin: right;
+  transform: scaleX(0) rotate(0.001deg);
+}
+
+.underline-link:hover::before {
+  transform-origin: left;
+  transform: scaleX(1) rotate(0.001deg);
+}
+
+/* Alt */
+.underline-link.is--alt::before {
+  transform-origin: left;
+  transform: scaleX(1) rotate(0.001deg);
+  transition-delay: 0.3s;
+}
+
+.underline-link.is--alt:hover::before {
+  transform-origin: right;
+  transform: scaleX(0) rotate(0.001deg);
+  transition-delay: 0s;
+}
+
+.underline-link.is--alt::after {
+  transform-origin: right;
+  transform: scaleX(0) rotate(0.001deg);
+  transition-delay: 0s;
+}
+
+.underline-link.is--alt:hover::after {
+  transform-origin: left;
+  transform: scaleX(1) rotate(0.001deg);
+  transition-delay: 0.3s;
 }
