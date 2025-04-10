@@ -15,12 +15,12 @@ export default function Home() {
           cooldownTime={1}
           className='font-neuecorp-compact-ultrabold text-[250px] pt-64'
         />
-        <GooeyScroll
+        {/* <GooeyScroll
           texts={["     ", "malik"]}
           start={0.2} // Start morphing at 20% scroll
           end={0.6} // Complete morph at 60% scroll
           className='font-neuecorp-compact-ultrabold text-[250px] pt-80'
-        />
+        /> */}
       </div>
     </div>
   );

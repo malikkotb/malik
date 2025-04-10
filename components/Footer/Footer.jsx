@@ -12,14 +12,13 @@ export default function ActionCall() {
     { name: "Book A Call", href: "mailto:hello@malikkotb.com" },
   ];
   return (
-    <footer className='md:mt-[10vh] p-5 h-[50vh] flex flex-col justify-between'>
-      <div className='flex flex-col md:flex-row w-full'>
+    <footer className='md:mt-[10vh] p-5 h-[80vh] md:h-[50vh] flex flex-col justify-between'>
+      <div className='flex gap-28 md:gap-0 flex-col md:flex-row w-full'>
         <div
           style={{
             lineHeight: "75%",
-            marginLeft: "-0.5vw",
           }}
-          className='w-full md:w-4/8 tracking-[-0.5vw] text-[15vw] font-neuemontreal-bold h-fit'
+          className='w-full ml-[-1vw] md:ml-[-0.5vw] md:w-4/8 tracking-[-0.5vw] text-[25vw] md:text-[15vw] font-neuemontreal-bold h-fit'
         >
           malik
         </div>
@@ -28,7 +27,7 @@ export default function ActionCall() {
             <a
               href='#'
               key={index}
-              className='flex h-fit w-fit underline-link uppercase text-sm'
+              className='flex h-fit w-fit underline-link uppercase text-xs md:text-sm'
             >
               {link.name}
             </a>
@@ -37,21 +36,21 @@ export default function ActionCall() {
         <div>
           <a
             href='mailto:hello@malikkotb.com'
-            className='underline-link uppercase text-sm'
+            className='underline-link uppercase text-xs md:text-sm'
           >
             hello@malikkotb.com
           </a>
         </div>
       </div>
-      <div className='flex w-full text-sm'>
+      <div className='flex w-full text-xs md:text-sm'>
         <div className='w-4/8'>
           <div className='uppercase'>
             © 2025 Malik Kotb
-            <br />
-            All rights reserved.
+            {/* <br />
+            All rights reserved. */}
           </div>
         </div>
-        <div className='flex w-3/8 items-end gap-1 uppercase'>
+        <div className='flex justify-end md:justify-start w-4/8 md:w-3/8 items-end gap-1 uppercase'>
           <a
             href='https://www.linkedin.com/in/malik-kotb'
             className='underline-link'
