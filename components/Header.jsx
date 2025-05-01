@@ -1,6 +1,7 @@
 import AnimatedLink from "./AnimatedLink/AnimatedLink";
 
 export default function Header() {
+  // TODO: make header content have color exclusion effect
   return (
     <div className='z-50 font-neuemontreal-medium flex justify-between items-center w-full'>
       <h1 className='header-logo'>malik</h1>

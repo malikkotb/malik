@@ -22,14 +22,15 @@ export default function ActionCall() {
         paragraph={"Let’s tell your story - together."}
       />
       <a
-        href='mailto:hello@malikkotb.com'
+        href='mailto:hello@malikotb.com'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className='px-12 py-6 rounded-full border-white border font-neuemontreal-medium leading-[100%] tracking-[-0.35px]'
       >
+        {/* TODO: change every email to malikotb.com with only 1  */}
         {/* TODO: fix hover functionality */}
         <AnimatedLink hovered={isHovered}>
-          HELLO@MALIKKOTB.COM
+          HELLO@MALIKOTB.COM
         </AnimatedLink>
       </a>
       {/* TODO: calendar link */}
