@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+::selection {
+  background: #ffcc00; /* or your desired highlight color */
+  color: #000; /* text color inside the highlight */
+}
+
 html,
 body {
   margin: 0px;
@@ -86,24 +91,23 @@ body {
 /* ------------- */
 
 .header-logo {
-  font-family: var(--font-neuemontreal-bold);
-  font-size: 3rem;
-  letter-spacing: -5%;
+  font-family: var(--font-neuemontreal-medium);
+  font-size: 1em;
   line-height: 85%;
 }
 .h2 {
   /* for headings of sections */
-  font-family: var(--font-neuemontreal-bold);
-  font-size: 10rem;
+  font-family: var(--font-neuemontreal-medium);
+  font-size: 10vw;
   line-height: 85%;
   text-transform: uppercase;
   font-style: normal;
-  letter-spacing: -6px;
+  letter-spacing: "-3%";
 }
 
 .h3 {
   /* action call */
-  font-family: var(--font-neuemontreal-bold);
+  font-family: var(--font-neuemontreal-medium);
   text-align: center;
   font-size: 6rem;
   line-height: 100%; /* 120px */
@@ -113,7 +117,7 @@ body {
 
 .h4 {
   /* action call */
-  font-family: var(--font-neuemontreal-bold);
+  font-family: var(--font-neuemontreal-medium);
   text-align: center;
   font-size: 7.5vw;
   line-height: 100%; /* 120px */

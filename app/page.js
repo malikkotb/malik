@@ -37,11 +37,11 @@ export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <main className='relative px-5 py-5'>
+    <main className='relative'>
       <Header />
       <Hero />
-      <Works />
       <Services />
+      <Works />
       <ActionCall />
     </main>
   );

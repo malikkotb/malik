@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 const DURATION = 0.25;
 
 export default function AnimatedLink({
+  selected = false, // ✅ allow manual override
   children,
   hovered = false, // ✅ allow manual override
   href,
@@ -26,7 +27,9 @@ export default function AnimatedLink({
           duration: DURATION,
           ease: "easeInOut",
         }}
-        className='inline-block'
+        className={`inline-block font-neuemontreal-medium ${
+          selected ? "opacity-50" : "opacity-100"
+        }`}
       >
         {children}
       </motion.span>
@@ -41,7 +44,9 @@ export default function AnimatedLink({
           duration: DURATION,
           ease: "easeInOut",
         }}
-        className='absolute left-0 top-0 inline-block'
+        className={`absolute left-0 top-0 inline-block ${
+          selected ? "opacity-50" : "opacity-100"
+        } font-neuemontreal-medium`}
       >
         {children}
       </motion.span>
