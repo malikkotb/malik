@@ -41,7 +41,7 @@ export default function Navigation() {
           data-cal-config='{"theme":"dark"}'
           className='w-fit'
         >
-          <ScrambleLink href='#lets-talk'>LET'S TALK</ScrambleLink>
+          <ScrambleLink href='#lets-talk'>LET&apos;S TALK</ScrambleLink>
         </div>
       </nav>
       <div className='flex flex-col md:hidden mt-4 gap-4'>
@@ -77,7 +77,7 @@ export default function Navigation() {
           Freelance Work
         </div>
         <div className='font-neuemontreal-medium text-4xl'>
-          Sep '25
+          Sep &apos;25
         </div>
       </div>
       <div className='uppercase text-sm hidden md:flex flex-col gap-5'>

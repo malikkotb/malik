@@ -149,7 +149,7 @@ export default function Scramble() {
 
       <div className='scramble-section u--bg-light'>
         <h2 className='scramble-heading'>
-          and here's how to work with scramble text on hover:
+          and here&apos;s how to work with scramble text on hover:
         </h2>
         <a
           href='#'

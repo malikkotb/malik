@@ -2,7 +2,6 @@
 import projects from "@/app/data";
 import styles from "./style.module.scss";
 import ListElement from "./link";
-import CardHoverSection from "./CardHoverSection";
 import { useRef, useState } from "react";
 import ActionCall from "../ActionCall/ActionCall";
 export default function HoverProjectSection() {

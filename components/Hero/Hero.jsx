@@ -16,7 +16,7 @@ export default function Hero() {
         work deserves a great presence. */}
         Design deserves more than pixels — it deserves presence. I
         turn creative visions into powerful web experiences that look
-        as good as they feel. Let's make your next project
+        as good as they feel. Let&apos;s make your next project
         unforgettable.
       </h3>
     </div>

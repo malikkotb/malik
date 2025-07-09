@@ -100,7 +100,7 @@ export default function Services() {
               e-commerce storefronts.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value='item-7'>
+          <AccordionItem value='item-8'>
             <AccordionTrigger>Webflow Development</AccordionTrigger>
             <AccordionContent className='flex flex-col '>
               Build anything with webflow. I can help you with custom
