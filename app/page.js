@@ -1,15 +1,11 @@
 "use client";
 import Lenis from "lenis";
 import { useEffect, useState } from "react";
-import Hero from "../components/Hero/Hero";
-import { useGSAP } from "@gsap/react";
-import HoverProjectSection from "../components/HoverProject/HoverProjectSection";
-import gsap from "gsap";
-import ActionCall from "@/components/ActionCall/ActionCall";
 import Services from "@/components/Services/Services";
-import StickyFooter from "@/components/StickyFooter";
-import Header from "@/components/Header";
-import Works from "@/components/Works/Works";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Hero from "@/components/Hero/Hero";
+import Navigation from "@/components/Navigation/Navigation";
 gsap.registerPlugin(useGSAP);
 export default function Home() {
   useEffect(() => {
@@ -37,12 +33,12 @@ export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <main className='relative'>
-      <Header />
-      <Hero />
-      <Services />
-      <Works />
-      <ActionCall />
+    <main className='relative bg-[#0f0928] p-5 font-neuemontreal-mono-regular flex flex-col md:grid grid-cols-12 gap-5'>
+      <Navigation />
+      <div className='h-full col-span-6'>
+        <Hero />
+        <Services />
+      </div>
     </main>
   );
 }

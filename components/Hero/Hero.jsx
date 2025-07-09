@@ -6,29 +6,15 @@ import { GooeyText } from "@/components/ui/gooey-text-morphing";
 
 gsap.registerPlugin(useGSAP);
 export default function Hero() {
-  // TODO: add scroll interactions on more sections
-  // to keep the user engaged
-  // TODO: hook up to new domain makikotb.com
-  // TODO: incorporate google analytics
   return (
-    <div className='relative h-screen font-neuemontreal-medium overflow-hidden'>
-      <h1
-        style={{
-          letterSpacing: "-3%",
-          lineHeight: "0.85",
-        }}
-        className='uppercase pt-[15vh] text-[10vw] text-center'
-      >
-        Game-changing websites
-      </h1>
-      <div className='p-5 absolute items-end bottom-0 w-full flex justify-between'>
-        <div className='text-3xl w-[40%]'>
-          As a creative developer, I turn design-led ideas into
-          powerful websites—because great work deserves a great
-          presence.
-        </div>
-        <div className='uppercase text-sm'>SCROLL</div>
-      </div>
+    <div className='relative h-[calc(100vh-40px)] justify-center grid grid-cols-6 gap-5'>
+      <h1>Independent Creative Developer</h1>
+      <h3 className='uppercase text-sm mt-10 col-span-3'>
+        I turn design-led ideas into powerful websites—because great
+        work deserves a great presence.
+        {/* Design deserves more than pixels — it deserves presence. I turn creative visions into powerful web experiences that look as good as they feel.
+Let’s make your next project unforgettable. */}
+      </h3>
     </div>
   );
 }

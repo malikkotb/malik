@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 ::selection {
-  background: #ffcc00; /* or your desired highlight color */
+  background: #ff6b00; /* bold orange highlight color */
   color: #000; /* text color inside the highlight */
 }
 
@@ -13,31 +13,13 @@ body {
   margin: 0px;
   /* background-image: url("/noise-light.png"); */
   font-family: var(--font-neuemontreal-medium);
-  background-color: black;
   color: white;
   background-attachment: fixed; /* This ensures the background stays in place */
 }
 
 @font-face {
-  font-family: "PPNeueCorp CompactUltrabold";
-  src: url("./fonts/PPNeueCorp-CompactUltrabold.otf")
-    format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueCorp Extended";
-  src: url("./fonts/PPNeueCorp-ExtendedUltrabold.otf")
-    format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueCorp NormalMedium";
-  src: url("./fonts/PPNeueCorp-NormalMedium.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueCorp NarrowUltrabold";
-  src: url("./fonts/PPNeueCorp-NarrowUltrabold.otf")
+  font-family: "PPNeueMontrealMono Regular";
+  src: url("./fonts/PPNeueMontrealMono-Regular.otf")
     format("opentype");
 }
 
@@ -72,12 +54,7 @@ body {
 }
 
 @theme inline {
-  --font-neuecorp-extended-ultrabold: "PPNeueCorp Extended",
-    sans-serif;
-  --font-neuecorp-normal-medium: "PPNeueCorp NormalMedium", sans-serif;
-  --font-neuecorp-compact-ultrabold: "PPNeueCorp CompactUltrabold",
-    sans-serif;
-  --font-neuecorp-narrow-ultrabold: "PPNeueCorp NarrowUltrabold",
+  --font-neuemontreal-mono-regular: "PPNeueMontrealMono Regular",
     sans-serif;
 
   --font-neuemontreal-bold: "PPNeueMontreal Bold", sans-serif;
@@ -95,14 +72,20 @@ body {
   font-size: 1em;
   line-height: 85%;
 }
+
+h1 {
+  font-family: var(--font-neuemontreal-medium);
+  font-size: 5vw;
+  line-height: 95%;
+}
+
 .h2 {
   /* for headings of sections */
   font-family: var(--font-neuemontreal-medium);
-  font-size: 10vw;
-  line-height: 85%;
+  font-size: 20px;
+  opacity: 0.6;
+  line-height: 120%;
   text-transform: uppercase;
-  font-style: normal;
-  letter-spacing: "-3%";
 }
 
 .h3 {

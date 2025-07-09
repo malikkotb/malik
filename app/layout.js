@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
       <body className={`antialiased`}>
         {children}
         {/* <StickyFooter /> */}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
