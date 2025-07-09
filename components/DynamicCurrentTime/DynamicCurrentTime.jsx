@@ -88,12 +88,14 @@ export default function DynamicCurrentTime() {
   }
 
   return (
-    <div>
+    <div className="flex gap-1 opacity-65">
+      <p>{new Date().toLocaleDateString('en-US', {weekday: 'long'}).toUpperCase()}</p>
+      <span>|</span>
       <p data-current-time={defaultTimezone}>
         <span data-current-time-hours>9</span>:
         <span data-current-time-minutes>00</span>:
         <span data-current-time-seconds>24</span>
-        <span data-current-time-timezone>CET</span>
+        {/* <span data-current-time-timezone className="ml-1">CET</span> */}
       </p>
     </div>
   );

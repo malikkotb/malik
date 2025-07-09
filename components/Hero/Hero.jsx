@@ -1,19 +1,23 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { GooeyScroll } from "../ui/gooey-scroll";
-import { GooeyText } from "@/components/ui/gooey-text-morphing";
 
 gsap.registerPlugin(useGSAP);
 export default function Hero() {
   return (
-    <div className='relative h-[calc(100vh-40px)] justify-center grid grid-cols-6 gap-5'>
-      <h1>Independent Creative Developer</h1>
-      <h3 className='uppercase text-sm mt-10 col-span-3'>
-        I turn design-led ideas into powerful websites—because great
-        work deserves a great presence.
-        {/* Design deserves more than pixels — it deserves presence. I turn creative visions into powerful web experiences that look as good as they feel.
-Let’s make your next project unforgettable. */}
+    <div className='relative h-[calc(100vh-20px)] justify-center hidden md:grid grid-cols-6 gap-5 grid-rows-12'>
+      <h1 className='row-start-5 items-end'>
+        Independent
+        <br />
+        <span className=' whitespace-nowrap'>Creative Developer</span>
+      </h1>
+      <h3 className='uppercase text-sm md:col-span-6 lg:col-span-5 xl:col-span-4 md:-mt-5 lg:mt-2 xl:mt-5 row-start-7'>
+        {/* I turn design-led ideas into powerful websites—because great
+        work deserves a great presence. */}
+        Design deserves more than pixels — it deserves presence. I
+        turn creative visions into powerful web experiences that look
+        as good as they feel. Let's make your next project
+        unforgettable.
       </h3>
     </div>
   );

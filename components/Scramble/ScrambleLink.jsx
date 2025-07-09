@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(ScrambleTextPlugin, ScrollTrigger, SplitText);
-export default function ScrambleLink({ href, children }) {
+export default function ScrambleLink({ href, children, target }) {
   useEffect(() => {
     const initScrambleOnHover = () => {
       const targets = document.querySelectorAll(
@@ -38,16 +38,16 @@ export default function ScrambleLink({ href, children }) {
           });
         });
 
-        target.addEventListener("mouseleave", () => {
-          gsap.to(textEl, {
-            duration: 0.6,
-            scrambleText: {
-              text: originalText,
-              speed: 2,
-              chars: "◊▯∆",
-            },
-          });
-        });
+        // target.addEventListener("mouseleave", () => {
+        //   gsap.to(textEl, {
+        //     duration: 0.6,
+        //     scrambleText: {
+        //       text: originalText,
+        //       speed: 2,
+        //       chars: "◊▯∆",
+        //     },
+        //   });
+        // });
       });
     };
 
@@ -57,11 +57,11 @@ export default function ScrambleLink({ href, children }) {
   return (
     <a
       href={href}
+      {...(target && { target: "_blank" })}
       data-scramble-hover='link'
-      className='scramble-button w-inline-block'
+      className='w-fit opacity-65 transition-opacity duration-300 ease-in-out hover:opacity-100'
     >
       <p
-        className='scramble-button-text'
         data-scramble-hover='target'
         // data-scramble-text='this text can be custom too'
         data-scramble-text={children}
