@@ -13,6 +13,7 @@ import MagenticButton from "@/components/MagneticButton";
 import { Tinos } from "next/font/google";
 import { getCalApi } from "@calcom/embed-react";
 import Zoop from "../components/Zoop";
+import Banner from "@/components/Banner/Banner";
 
 const tinos = Tinos({
   weight: "400",
@@ -193,6 +194,9 @@ export default function Home() {
         </svg>
       </div>
       {/* header */}
+      <div style={{ zIndex: 900 }} className="absolute top-0 left-0 w-full h-fit">
+        <Banner />
+      </div>
       <nav
         ref={nav}
         style={{ fontWeight: "600" }}
@@ -353,9 +357,9 @@ export default function Home() {
         <div className="overflow-hidden">
           <div
             ref={addToRevealRefs}
-            className="text-3xl md:text-4xl font-medium"
+            className="text-3xl md:text-5xl font-medium"
           >
-            FEB &apos;25
+            SEP &apos;25
           </div>
         </div>
       </motion.div>

@@ -9,7 +9,6 @@ export default function TextDipserse({
   link,
 }) {
   const [isAnimated, setIsAnimated] = useState(false);
-  console.log(flipped);
 
   const getChars = (element) => {
     let chars = [];
