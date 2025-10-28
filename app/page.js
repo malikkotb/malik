@@ -67,6 +67,7 @@ export default function Home() {
       </div>
       {/* <Services />
       <Projects /> */}
+      {/* About section */}
       <ActionCall />
     </div>
   );

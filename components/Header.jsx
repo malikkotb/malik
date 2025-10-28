@@ -15,7 +15,7 @@ export default function Header() {
       }
     };
     getLenis();
-    
+
     // Try to get Lenis after a short delay to ensure it's initialized
     const timer = setTimeout(getLenis, 100);
     return () => clearTimeout(timer);
@@ -58,7 +58,10 @@ export default function Header() {
           <Link href='#about'>About</Link>
         </div> */}
         <div className='headerLink'>
-          <Link target='_blank' href='https://demos-4ckq.vercel.app/'>
+          <Link
+            target='_blank'
+            href='https://maliks-demos.vercel.app/'
+          >
             Playground
           </Link>
         </div>
@@ -80,7 +83,11 @@ export default function Header() {
 
 const SmoothLink = ({ href, children, target, ...props }) => {
   const handleClick = (e) => {
-    if (href && href.startsWith("#") && typeof window !== "undefined") {
+    if (
+      href &&
+      href.startsWith("#") &&
+      typeof window !== "undefined"
+    ) {
       e.preventDefault();
       const targetElement = document.querySelector(href);
       if (targetElement && window.lenis) {
