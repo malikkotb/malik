@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import HorizontalImageCard from "../ProjectsSection/HorizontalImageCard/HorizontalImageCard";
+import HorizontalImageCard from "../ServicesSection/HorizontalImageCard/HorizontalImageCard";
 import { animate, useMotionValue } from "framer-motion";
 import { useMeasure, useWindowSize } from "@uidotdev/usehooks";
 import { useEffect, useState, useRef } from "react";
@@ -63,7 +63,8 @@ const CardHoverSection = ({
     window.addEventListener("resize", updateCarouselWidth);
     updateCarouselWidth();
 
-    return () => window.removeEventListener("resize", updateCarouselWidth);
+    return () =>
+      window.removeEventListener("resize", updateCarouselWidth);
   }, []);
 
   const itemWidth = carouselWidth ? carouselWidth / images.length : 0;
@@ -83,29 +84,25 @@ const CardHoverSection = ({
   }, [api]);
 
   return (
-    <div className={`${styles.cardContainer} bg-transparent`} style={style}>
-      <div
-        className={`${styles.card} text-white`}
-        // style={{
-        //   top: `calc(-5vh + ${i * 2.5}em)`,
-        // }}
-      >
+    <div
+      className={`${styles.cardContainer} bg-transparent`}
+      style={style}
+    >
+      <div className={`${styles.card} text-white`}>
         <div className={styles.body}>
-          <p className="w-full md:w-[80%] text-xl font-medium md:text-2xl lg:text-[28px]">
+          <p className='w-full md:w-[80%] text-xl font-medium md:text-2xl lg:text-[28px]'>
             {description}
           </p>
 
-          {/* {size.width <= 768 && ( */}
           <a
             href={link}
-            target="_blank"
-            className="flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white"
+            target='_blank'
+            className='flex text-sm items-center mt-5 px-3 py-2 w-fit rounded-full text-black bg-white'
           >
             Visit Site <ArrowTopRightIcon />
           </a>
-          {/* )} */}
 
-          <ul className="flex md:flex-col gap-2 mt-5 mb-10 md:mb-5">
+          <ul className='flex md:flex-col gap-2 mt-5 mb-10 md:mb-5'>
             {tags.map((tag) => (
               <li
                 key={tag}
@@ -116,52 +113,54 @@ const CardHoverSection = ({
             ))}
           </ul>
 
-          {/* <div>
-                <HorizontalImageCard src={images[0]} i={i} />
-              </div> */}
           {size.width <= 768 ? (
             <>
-              <Carousel setApi={setApi} ref={carouselRef} className="w-full">
+              <Carousel
+                setApi={setApi}
+                ref={carouselRef}
+                className='w-full'
+              >
                 <CarouselContent>
                   {images.map((img, index) => (
                     <CarouselItem key={index}>
                       <div
                         // style={{ aspectRatio: "9/12" }}
-                        className="relative w-full flex flex-col aspect-video transition-opacity duration-200"
+                        className='relative w-full flex flex-col aspect-video transition-opacity duration-200'
                       >
                         <Image
-                          className="object-cover"
+                          className='object-cover'
                           fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                          sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'
                           src={`/${img}`}
-                          alt="Product Image"
+                          alt='Product Image'
                         />
                       </div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <div className="flex  transition-all duration-500">
+                <div className='flex  transition-all duration-500'>
                   <CarouselPrevious />
                 </div>
-                <div className="flex transition-all duration-500">
+                <div className='flex transition-all duration-500'>
                   <CarouselNext />
                 </div>
               </Carousel>
             </>
           ) : (
-            // <CustomCursor link={link}>
             <motion.div
-              // style={{ x: xTranslation }}
-              className="mt-5 flex w-full flex-col md:flex-row gap-4"
+              className='mt-5 flex w-full flex-col md:flex-row gap-4'
               ref={ref}
-              // creates a copy of images, that will update and then seem like its scrolling infintely
-              // [...images, ...images]
             >
               {[...images].map((src, i) => {
-                return <HorizontalImageCard src={src} key={`img_${i}`} i={i} />;
+                return (
+                  <HorizontalImageCard
+                    src={src}
+                    key={`img_${i}`}
+                    i={i}
+                  />
+                );
               })}
             </motion.div>
-            // </CustomCursor>
           )}
         </div>
       </div>

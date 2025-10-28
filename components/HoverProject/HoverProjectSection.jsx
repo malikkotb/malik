@@ -19,7 +19,7 @@ export default function HoverProjectSection() {
     <div
       id="projects"
       // style={{ backgroundColor: "rgb(18, 18, 18)" }}
-      className="mb-[15dvh] w-full text-white"
+      className="pb-[15dvh] w-full text-white"
     >
       <div className="mx-4 relative mb-8 md:mb-0">
         <div className="uppercase items-center border-white py-4 white opacity-70 text-xs w-full grid grid-cols-2 md:grid-cols-4">

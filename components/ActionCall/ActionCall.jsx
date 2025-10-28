@@ -1,42 +1,22 @@
 "use client";
-import styles from "./style.module.css";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
 
 export default function ActionCall() {
-  const firstText = useRef(null);
-  const secondText = useRef(null);
-  const slider = useRef(null);
-
-  let xPercent = 0;
-
-  useEffect(() => {
-    gsap.set(secondText.current, {
-      left: secondText.current.getBoundingClientRect().width,
-    });
-    requestAnimationFrame(animate);
-  }, []);
-
-  const animate = () => {
-    if (xPercent > 0) {
-      xPercent = -100;
-    }
-    gsap.set(firstText.current, { xPercent: xPercent });
-    gsap.set(secondText.current, { xPercent: xPercent });
-    requestAnimationFrame(animate);
-    xPercent += 0.05;
-  };
-
   return (
-    <a href="mailto:malikkotb@icloud.com" className={styles.main}>
-      <div ref={slider} className={styles.slider}>
-        <p ref={firstText}>Get In Touch -</p>
-        <p ref={secondText}>Get In Touch -</p>
+    <div className='h-screen w-full flex items-center justify-center'>
+      <div className='flex flex-col text-center text-white'>
+        <div className='text-3xl mb-8'>
+          <div>Get in touch today.</div>
+          <div>Booking new projects.</div>
+        </div>
+
+        <div className='lg:w-[65vw] w-[90vw] h-[55vh]'>
+          <iframe
+            src='https://cal.com/malikkotb?theme=dark'
+            frameBorder='0'
+            className='w-full h-full rounded-lg'
+          ></iframe>
+        </div>
       </div>
-      {/* <div ref={slider} className={styles.slider}>
-        <p ref={firstText}>Freelance Developer -</p>
-        <p ref={secondText}>Freelance Developer -</p>
-      </div> */}
-    </a>
+    </div>
   );
 }

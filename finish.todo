@@ -1,0 +1,24 @@
+☐ finish the threejs shader interaction
+✔ two column layout for entire page @started(25-07-09 07:16) @done(25-07-09 09:06) @lasted(1h50m16s)
+✔ scramble effect on hover @started(25-07-09 08:43) @done(25-07-09 08:43) @lasted(28s)
+☐ make first sentence that is read on hero section say exactly what I do; like Nuclassic website
+☐ toggle theme effect on click
+☐ scramble effect on scroll reveal ?
+✔ hook up cal.com to "LET'S TALK" @started(25-07-09 08:43) @done(25-07-09 08:43) @lasted(26s)
+✔ implement smooth scroll to any section in the page @started(25-07-09 08:36) @done(25-07-09 08:36) @lasted(9s)
+☐ check letter spacing of nav links etc. on mobile and desktop compared to figma file
+☐ use dvh or svh for mobile height and width
+☐ fix spacing between h1 and p on hero for very large screens
+☐ incorporate google analytics
+☐ maybe include the animation on scroll like: <TextFadeGradient />
+☐ set meta tags for optimal SEO engagement
+☐ change link/url to portfolio on all pages that have it
+    ☐ linkedin
+    ☐ instagram
+    ☐ github
+    ☐ youtube
+    ☐ tiktok
+    ☐ x (twitter)
+
+
+☐ esme's project hahhaa: https://the-agents-model-management-git-changes-malikkotbs-projects.vercel.app/

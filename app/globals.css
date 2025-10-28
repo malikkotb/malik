@@ -2,12 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+@font-face {
+  font-family: "PPNeueMontrealMono Regular";
+  src: url("./fonts/PPNeueMontrealMono-Regular.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Light";
+  src: url("./fonts/PPNeueMontreal-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Medium";
+  src: url("./fonts/PPNeueMontreal-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Regular";
+  src: url("./fonts/PPNeueMontreal-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Book";
+  src: url("./fonts/PPNeueMontreal-Book.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Italic";
+  src: url("./fonts/PPNeueMontreal-Italic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PPNeueMontreal Bold";
+  src: url("./fonts/PPNeueMontreal-Bold.otf") format("opentype");
+}
+
+@theme inline {
+  --font-neuemontreal-mono-regular: "PPNeueMontrealMono Regular",
+    sans-serif;
+
+  --font-neuemontreal-bold: "PPNeueMontreal Bold", sans-serif;
+  --font-neuemontreal-italic: "PPNeueMontreal Italic", sans-serif;
+  --font-neuemontreal-book: "PPNeueMontreal Book", sans-serif;
+  --font-neuemontreal-regular: "PPNeueMontreal Regular", sans-serif;
+  --font-neuemontreal-medium: "PPNeueMontreal Medium", sans-serif;
+  --font-neuemontreal-light: "PPNeueMontreal Light", sans-serif;
+}
+
 body {
-  margin: 0px;
-  /* background-image: url("/noise-light.png"); */
-  /* background-color: black; */
-  background-attachment: fixed; /* This ensures the background stays in place */
+  margin: 16px;
+  background-color: black;
+  font-family: "PPNeueMontreal Medium", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: white;
+  color: black;
+}
+
+::-moz-selection {
+  background: white;
+  color: black;
+}
+
+
+
+:root {
+  --radius: 0.5rem;
 }
 
 .maiN {
@@ -19,8 +85,6 @@ body {
 }
 
 .background {
-  background-color: rgb(18, 18, 18);
-  /* background-color: red; */
   position: absolute;
   width: 100%;
   height: 100%;
@@ -29,22 +93,10 @@ body {
   opacity: 0;
 }
 
-.body {
-  color: white;
-  width: 50vw;
-}
-
-.body a {
-  display: inline; /* Make the <a> tag inline */
-  text-decoration: none; /* Remove underline if needed */
-  margin: 0; /* Remove any extra margin */
-  padding: 0; /* Remove any extra padding */
-}
-
 .introLine {
   display: flex;
   font-size: 5.5vw;
-  line-height: 6.5vw;
+  line-height: 1;
   justify-content: center;
   text-transform: uppercase;
 }
@@ -52,7 +104,6 @@ body {
 @media (max-width: 768px) {
   .introLine {
     font-size: 9vw;
-    line-height: 10vw;
   }
 
   .body {
@@ -143,7 +194,7 @@ body {
   height: 1px;
   background-color: white;
   left: 0;
-  bottom: -4px; /* Adjust this value to move the line closer to the text */
+  bottom: 0px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */
   position: absolute;
   transform: scaleX(0); /* Initially scale the width to 0 */
@@ -155,27 +206,26 @@ body {
   transform-origin: left; /* Ensure the line grows from left to right */
 }
 
-/* Reusable padding class */
-.section-padding {
-  padding: 16px; /* Small screens (default) */
+.projectLink {
+  cursor: pointer;
+  position: relative;
 }
-
-@media (min-width: 600px) {
-  .section-padding {
-    padding: 16px; /* Medium screens */
-  }
+.projectLink::after {
+  cursor: pointer;
+  content: "";
+  height: 1px;
+  background-color: white;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease-in-out;
 }
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding: 24px; /* Large screens */
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-padding {
-    padding: 32px; /* Extra-large screens */
-  }
+.group:hover .projectLink::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .containerFooter {
@@ -231,4 +281,3 @@ body {
 .btn2:hover::before {
   height: 180%;
 }
-
