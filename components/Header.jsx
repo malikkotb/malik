@@ -45,8 +45,8 @@ export default function Header() {
   return (
     <div
       style={{ fontWeight: 500, mixBlendMode: "difference" }}
-      className={`text-sm lg:text-base z-50 text-white flex justify-between w-full fixed top-0 left-0 right-0 px-4 py-4 transition-transform ease-in-out duration-500 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
+      className={`text-sm lg:text-base z-50 text-white flex justify-between w-full fixed top-0 left-0 right-0 px-4 py-4 transition-all ease-in-out duration-500 ${
+        isVisible ? "translate-y-0 opacity-100" : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
       }`}
     >
       <h1>Malik Kotb</h1>

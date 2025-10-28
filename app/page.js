@@ -38,7 +38,7 @@ export default function Home() {
     <div className='h-full w-full bg-black text-white'>
       <Header />
       <div
-        style={{ lineHeight: 1, height: "calc(100vh - 16px)" }}
+        style={{ lineHeight: 1, height: "calc(100svh - 16px)" }}
         className='flex relative items-center w-full'
       >
         <div className='text-[10vw] md:text-[5vw] xl:text-[4vw]'>

@@ -8,7 +8,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.drinkbodyarmor.com/",
-    videoSrc: "/bodyarmor.webm",
+    videoSrc: "/bodyarmor.mp4",
   },
   {
     projectTitle: "From The Farm",
@@ -18,7 +18,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.fromthefarmco.com",
-    videoSrc: "/fromthefarm.webm",
+    videoSrc: "/fromthefarm.mp4",
   },
   {
     projectTitle: "Hotel Kühbacher",
@@ -28,7 +28,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://hotel-kuehbacher.com/",
-    videoSrc: "/hotel-kuehbacher.webm",
+    videoSrc: "/hotel-kuehbacher.mp4",
   },
   {
     projectTitle: "Lou Phelps",
@@ -38,7 +38,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://louphelps.com/",
-    videoSrc: "/lou-phelps.webm",
+    videoSrc: "/lou-phelps.mp4",
   },
   // {
   //   projectTitle: "A Unified Whole",
@@ -60,7 +60,7 @@ const projects = [
       "A comprehensive e-commerce store designed for Samira Prudentos, showcasing handmade garments crafted in Berlin.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
-    videoSrc: "/samira.webm",
+    videoSrc: "/samira.mp4",
   },
   {
     projectTitle: "Photography Portfolio",
@@ -71,7 +71,7 @@ const projects = [
       "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.meklitfekadu.com",
-    videoSrc: "/meki.webm",
+    videoSrc: "/meki.mp4",
   },
   // {
   //   projectTitle: "Secret Nature",
