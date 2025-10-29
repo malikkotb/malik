@@ -9,7 +9,7 @@ let resetPreviousCard = null;
 
 export default function ProjectCard({ link, title, videoSrc }) {
   const videoRef = useRef(null);
-  const [hasPlayedOnMobile, setHasPlayedOnMobile] = useState(false);
+  // Mobile detection determines behavior differences
   const [isMobile, setIsMobile] = useState(false);
   const [posterSrc, setPosterSrc] = useState(null);
 
@@ -27,32 +27,79 @@ export default function ProjectCard({ link, title, videoSrc }) {
     // Generate poster from first frame of video
     if (videoSrc && videoRef.current) {
       const video = videoRef.current;
-      
+
       const generatePoster = () => {
         if (video.readyState >= 2) {
-          const canvas = document.createElement('canvas');
+          const canvas = document.createElement("canvas");
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
           setPosterSrc(dataUrl);
         }
       };
-      
-      video.addEventListener('loadeddata', generatePoster);
-      
+
+      video.addEventListener("loadeddata", generatePoster);
+
       return () => {
-        video.removeEventListener('loadeddata', generatePoster);
+        video.removeEventListener("loadeddata", generatePoster);
       };
     }
   }, [videoSrc]);
 
+  useEffect(() => {
+    // Ensure videos always play on mobile
+    if (isMobile && videoRef.current && videoSrc) {
+      const video = videoRef.current;
+
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          // If autoplay fails, try again after a short delay
+          setTimeout(() => {
+            video.play().catch(() => {
+              // Ignore autoplay errors
+            });
+          }, 100);
+        }
+      };
+
+      // Try to play when video is ready
+      if (video.readyState >= 2) {
+        playVideo();
+      } else {
+        video.addEventListener("canplay", playVideo, { once: true });
+        video.addEventListener("loadeddata", playVideo, {
+          once: true,
+        });
+      }
+
+      // Monitor and restart if paused (except during user interaction pauses)
+      const checkPlaying = () => {
+        if (video.paused && !video.ended) {
+          playVideo();
+        }
+      };
+
+      const intervalId = setInterval(checkPlaying, 1000);
+
+      return () => {
+        video.removeEventListener("canplay", playVideo);
+        video.removeEventListener("loadeddata", playVideo);
+        clearInterval(intervalId);
+      };
+    }
+  }, [isMobile, videoSrc]);
 
   const handleMouseEnter = () => {
     if (videoRef.current && !isMobile) {
       // Pause any currently playing video
-      if (currentlyPlayingVideo && currentlyPlayingVideo !== videoRef.current) {
+      if (
+        currentlyPlayingVideo &&
+        currentlyPlayingVideo !== videoRef.current
+      ) {
         currentlyPlayingVideo.pause();
       }
       // Set as currently playing and play
@@ -72,36 +119,8 @@ export default function ProjectCard({ link, title, videoSrc }) {
   };
 
   const handleClick = () => {
-    if (isMobile && videoSrc) {
-      if (!hasPlayedOnMobile) {
-        // First click: play the video
-        if (videoRef.current) {
-          // Pause and reset any currently playing video from a different card
-          if (currentlyPlayingVideo && currentlyPlayingVideo !== videoRef.current) {
-            currentlyPlayingVideo.pause();
-            if (resetPreviousCard) {
-              resetPreviousCard(false);
-            }
-          }
-          // Set as currently playing and play
-          currentlyPlayingVideo = videoRef.current;
-          resetPreviousCard = setHasPlayedOnMobile;
-          videoRef.current.play();
-          setHasPlayedOnMobile(true);
-        }
-      } else {
-        // Second click: open the link
-        // Clear the currently playing video
-        if (currentlyPlayingVideo === videoRef.current) {
-          currentlyPlayingVideo = null;
-          resetPreviousCard = null;
-        }
-        window.open(link, "_blank");
-      }
-    } else {
-      // Desktop: open link immediately
-      window.open(link, "_blank");
-    }
+    // Open link on both mobile and desktop
+    window.open(link, "_blank");
   };
 
   return (
@@ -121,30 +140,30 @@ export default function ProjectCard({ link, title, videoSrc }) {
             loop
             muted
             playsInline
+            autoPlay={isMobile}
             preload='auto'
-            style={{ backgroundColor: '#000' }}
+            style={{ backgroundColor: "#000" }}
           />
         )}
       </div>
       <h3
         style={{
           fontWeight: 500,
-          fontSize: "20px",
-          lineHeight: "140%",
+          lineHeight: "120%",
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
         }}
-        className=''
+        className='text-[18px] md:text-[20px]'
       >
         {title}
       </h3>
-      <a 
+      <a
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           window.open(link, "_blank");
         }}
-        className='projectLink cursor-pointer'
+        className='projectLink cursor-pointer text-[14px] md:text-[16px]'
       >
         View the project ↗
       </a>
