@@ -23,3 +23,28 @@ export default function Services() {
     </div>
   );
 }
+
+// STRATEGY
+// Visual Research
+// Mitbewerber Analyse
+// Wireframes
+// Content Mapping
+// User Flow
+// Konzepte
+
+// DESIGN
+// Unternehmenswebsites
+// Marketing Websites
+// Design System
+// Animation
+// Design Support
+// Barrierefreies Design
+
+// BUILD
+
+// Webflow Entwicklung
+// Web Animation
+// Webflow CMS
+// Barrierefreie Entwicklung
+// Technisches SEO
+// Frontend Support
