@@ -70,6 +70,71 @@ html {
   color: black;
 }
 
+/* .subheading {
+  font-size: 1.25rem;
+  line-height: 1.75rem; 
+}
+
+@media (min-width: 768px) { */
+.subheading {
+  font-size: 1.5rem; /* text-2xl: 24px */
+  line-height: 2rem; /* 32px */
+}
+/* } */
+
+@media (min-width: 1024px) {
+  .subheading {
+    font-size: 1.875rem; /* text-3xl: 30px */
+    line-height: 2.25rem; /* 36px */
+  }
+}
+
+@media (min-width: 1280px) {
+  .subheading {
+    font-size: 2.25rem; /* text-4xl: 36px */
+    line-height: 2.5rem; /* 40px */
+  }
+}
+
+.header-footer-text {
+  font-size: 0.875rem; /* text-sm: 14px */
+  line-height: 1.25rem; /* 20px */
+}
+
+@media (min-width: 1024px) {
+  .header-footer-text {
+    font-size: 1rem; /* text-base: 16px */
+    line-height: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 1280px) {
+  .header-footer-text {
+    font-size: 1.125rem; /* text-lg: 18px */
+    line-height: 1.75rem; /* 28px */
+  }
+}
+
+@media (min-width: 1536px) {
+  .header-footer-text {
+    font-size: 1.25rem; /* text-xl: 20px */
+    line-height: 1.75rem; /* 28px */
+  }
+}
+
+.body-text {
+  font-size: 0.875rem; /* text-sm: 14px */
+  line-height: 1.25rem; /* 20px */
+}
+@media (min-width: 1024px) {
+  .body-text {
+    font-size: 1.125rem; /* text-lg: 18px */
+    line-height: 1.75rem; /* 28px */
+  }
+}
+@media (min-width: 1280px) {
+}
+
 :root {
   --radius: 0.5rem;
 }

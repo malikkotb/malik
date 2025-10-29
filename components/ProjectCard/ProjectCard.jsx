@@ -163,7 +163,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           e.stopPropagation();
           window.open(link, "_blank");
         }}
-        className='projectLink cursor-pointer text-[14px] md:text-[16px]'
+        className='projectLink cursor-pointer opacity-50 text-[14px] md:text-[16px]'
       >
         View the project ↗
       </a>

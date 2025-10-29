@@ -143,7 +143,7 @@ const Card = ({
             ))}
           </ul>
 
-          {/* {size.width <= 768 ? (
+          {size.width <= 768 ? (
             <>
               <Carousel
                 setApi={setApi}
@@ -177,7 +177,6 @@ const Card = ({
               </Carousel>
             </>
           ) : (
-            // <CustomCursor link={link}>
             <motion.div
               // style={{ x: xTranslation }}
               className='mt-5 flex w-full flex-col md:flex-row gap-4'
@@ -195,8 +194,7 @@ const Card = ({
                 );
               })}
             </motion.div>
-            // </CustomCursor>
-          )} */}
+          )}
         </div>
       </div>
     </div>

@@ -43,14 +43,14 @@ export default function StickyFooter() {
       href: "https://tiktok.com/@malikruns",
       newPage: true,
     },
-    {
-      name: "GitHub",
-      href: "https://github.com/malikkotb",
-      newPage: true,
-    },
   ];
 
   const resourceLinks = [
+    {
+      name: "Playground",
+      href: "https://maliks-demos.vercel.app/",
+      newPage: true,
+    },
     {
       name: "Blog",
       href: "https://malikkotb.github.io/blog/",
@@ -65,14 +65,14 @@ export default function StickyFooter() {
 
   return (
     <div
-      className='relative h-[50vh] md:h-[40vh] border-t border-white border-opacity-50 text-sm lg:text-base bg-black'
+      className='relative header-footer-text h-[50vh] md:h-[40vh] border-t border-white border-opacity-50 bg-black'
       style={{
         clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
       }}
     >
       {/* height of parent div and child div needs to be the same */}
       <div className='text-white containerFooter fixed pb-4 bottom-0 md:h-[40vh] h-[50vh] w-full'>
-        <div className='columnFooter mr-4'>
+        <div className='columnFooter'>
           <h1 className='w-full mb-1 opacity-50'>Navigation</h1>
           <ul className='space-y-1'>
             {menuLinks.map((link) => (
@@ -88,7 +88,7 @@ export default function StickyFooter() {
             ))}
           </ul>
         </div>
-        <div className='columnFooter mr-0 md:mr-4'>
+        <div className='columnFooter'>
           <h1 className='w-full mb-1 opacity-50'>Socials</h1>
           <ul className='space-y-1'>
             {socialLinks.map((link) => (
@@ -121,7 +121,7 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className='items-end flex'>Malik Kotb</div>
-        <h1 className='items-end flex pr-4 md:pr-0 text-left cursor-default'>
+        <h1 className='items-end flex text-left cursor-default'>
           <div className='flex flex-col'>
             <span className=''>Made by me with ♥</span>
           </div>
