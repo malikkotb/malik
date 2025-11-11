@@ -88,7 +88,7 @@ const CardHoverSection = ({
       className={`${styles.cardContainer} bg-transparent`}
       style={style}
     >
-      <div className={`${styles.card} text-white`}>
+      <div className={`${styles.card} `}>
         <div className={styles.body}>
           <p className='w-full md:w-[80%] text-xl font-medium md:text-2xl lg:text-[28px]'>
             {description}
@@ -106,7 +106,7 @@ const CardHoverSection = ({
             {tags.map((tag) => (
               <li
                 key={tag}
-                className={`${styles.customLi} text-xs md:text-base text-white md:py-1`}
+                className={`${styles.customLi} text-xs md:text-base  md:py-1`}
               >
                 {tag}
               </li>

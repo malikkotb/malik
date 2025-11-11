@@ -73,17 +73,17 @@ const projects = [
     link: "https://www.meklitfekadu.com",
     videoSrc: "/meki.mp4",
   },
-  // {
-  //   projectTitle: "Secret Nature",
-  //   category: "Web Development",
-  //   client: "A Unified Whole",
-  //   year: "2025",
-  //   description:
-  //     "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
-  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-  //   link: "https://www.fromthefarmco.com",
-  //   videoSrc: "https://www.secretnature.com/secretnature.mp4",
-  // },
+  {
+    projectTitle: "Secret Nature",
+    category: "Web Development",
+    client: "A Unified Whole",
+    year: "2025",
+    description:
+      "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
+    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+    link: "https://www.secretnature.co/",
+    videoSrc: "/meki.mp4",
+  },
   // {
   //   projectTitle: "Design Portfolio",
   //   category: "Development",

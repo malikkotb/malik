@@ -29,7 +29,7 @@ export default function HorizontalImageCard({ src, i }) {
 
 //   return (
 //     <div className="h-fit w-fit">
-//       <div className="z-40 fixed inset-0 bg-black opacity-50"></div>
+//       <div className="z-40 fixed inset-0  opacity-50"></div>
 //       <Image
 //         src={verticalSrc.replace("./public", "")}
 //         fill
@@ -47,7 +47,7 @@ export default function HorizontalImageCard({ src, i }) {
 //         className="object-cover hidden md:block"
 //       />
 //       <div className="fixed z-50 inset-0 flex flex-col justify-center items-center">
-//         <span className="text-white text-sm mt-20 uppercase tracking-wide w-[80vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] text-center">
+//         <span className=" text-sm mt-20 uppercase tracking-wide w-[80vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] text-center">
 //           Prudentos was founded in 2024 by Samira Lorene Prudentos in Berlin, in
 //           memory of her father and one of her closest friends. These influences
 //           sparked her desire to use her passion for fashion to create something

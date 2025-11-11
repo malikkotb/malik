@@ -44,19 +44,21 @@ export default function Header() {
 
   return (
     <div
-      style={{ fontWeight: 500, mixBlendMode: "difference" }}
-      className={`header-footer-text z-50 text-white flex justify-between w-full fixed top-0 left-0 right-0 px-4 py-4 transition-all ease-in-out duration-500 ${
-        isVisible ? "translate-y-0 opacity-100" : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
+      style={{ fontWeight: 500, mixBlendMode: "difference", color: "white" }}
+      className={`header-footer-text z-50 flex justify-between w-full fixed top-0 left-0 right-0 px-5 py-5 transition-all ease-in-out duration-500 ${
+        isVisible
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
       }`}
     >
       <h1>Malik Kotb</h1>
       <div className='flex gap-2'>
         <div className='headerLink'>
-          <SmoothLink href='#projects'>Work</SmoothLink>
+          <SmoothLink href='#work'>Work</SmoothLink>
         </div>
-        {/* <div className='headerLink'>
-          <Link href='#about'>About</Link>
-        </div> */}
+        <div className='headerLink'>
+          <SmoothLink href='#services'>Services</SmoothLink>
+        </div>
         <div className='headerLink'>
           <Link
             target='_blank'

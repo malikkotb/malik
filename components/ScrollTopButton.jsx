@@ -14,7 +14,7 @@ const ScrollToTopButton = () => {
         onClick={handleScrollToTop}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className='text-white'
+        className=''
       >
         ↑
       </button>

@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useState } from "react";
+import AboutImage from "./AboutImage";
 
 export default function About() {
   const [open, setOpen] = useState(null); // currently active accordion
@@ -105,25 +106,29 @@ export default function About() {
   };
 
   return (
-    <div className='relative text-white bg-black' id='about'>
-      <h2 className='subheading pb-8 pt-12'>About</h2>
-      <div className='w-full'>
-        <p className='body-text opacity-50 lg:pr-[50%]'>
-          Malik is a freelance web designer and developer driven by
-          curiosity and precision. He crafts digital experiences where
-          design meets functionality, bringing concepts to life
-          through iteration, creativity, and careful attention to
-          every detail.
+    <div className='relative section-padding' id='about'>
+      <h3 className='eyebrow eyebrow-light'>About</h3>
+      <div className='grid grid-cols-12 gap-5 w-full'>
+        <div className='md:col-span-5 col-span-12'>
+          <AboutImage src='/about.jpeg' alt='about' />
+        </div>
+        <h1 className='h1 md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
+          I&apos;m a <span className='underline'>web developer</span>{" "}
+          who loves{" "}
+          <span className='underline'>design and motion</span>.
           <br />
+          <br />I build <span className='underline'>
+            websites
+          </span>{" "}
+          that look great and work smoothly, turning ideas into real{" "}
+          <span className='underline'>experiences</span> through
+          creativity and{" "}
+          <span className='underline'>attention to detail.</span> to
+          detail.
           <br />
-          Passionate about the intersection of design and code, Malik
-          loves pushing the boundaries of web development to help
-          bring visions to life.
-          <br />
-          <br />
-          His goal: to elevate your digital presence with bold,
-          thoughtful, and creative solutions that perform and inspire.
-        </p>
+          <br />I enjoy combining design and code to bring ideas to
+          life in new and exciting ways.
+        </h1>
       </div>
     </div>
   );

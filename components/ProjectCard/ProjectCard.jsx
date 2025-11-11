@@ -130,7 +130,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className='aspect-[5/3] rounded-[8px] overflow-hidden relative'>
+      <div className='aspect-[5/3] rounded-[4px] overflow-hidden relative shadow-lg'>
         {videoSrc && (
           <video
             ref={videoRef}
@@ -142,7 +142,6 @@ export default function ProjectCard({ link, title, videoSrc }) {
             playsInline
             autoPlay={isMobile}
             preload='auto'
-            style={{ backgroundColor: "#000" }}
           />
         )}
       </div>

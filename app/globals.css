@@ -51,9 +51,10 @@
 }
 
 body {
-  margin: 16px;
-  background-color: black;
+  padding: 24px;
   font-family: "PPNeueMontreal Medium", sans-serif;
+  /* background-color: #f5f5f5; */
+  background-color: #fafafa;
 }
 
 html {
@@ -61,13 +62,46 @@ html {
 }
 
 ::selection {
-  background: white;
-  color: black;
+  background: black;
+  color: white;
 }
 
 ::-moz-selection {
-  background: white;
-  color: black;
+  background: black;
+  color: white;
+}
+
+.section-padding {
+  padding: 124px 0px;
+}
+
+.h1 {
+  font-size: 32px;
+  line-height: 120%;
+}
+
+@media (max-width: 1023px) {
+  .h1 {
+    font-size: 24px;
+  }
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  padding-bottom: 24px;
+  padding-top: 24px;
+  font-size: 12px;
+  line-height: 120%;
+}
+
+.eyebrow-light {
+  opacity: 0.6;
+}
+
+.eyebrow-footer {
+  opacity: 0.6;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 /* .subheading {
@@ -98,38 +132,34 @@ html {
 
 .header-footer-text {
   font-size: 0.875rem; /* text-sm: 14px */
-  line-height: 1.25rem; /* 20px */
+  line-height: 120%; /* 20px */
 }
 
 @media (min-width: 1024px) {
   .header-footer-text {
-    font-size: 1rem; /* text-base: 16px */
-    line-height: 1.5rem; /* 24px */
+    font-size: 1rem;
   }
 }
 
 @media (min-width: 1280px) {
   .header-footer-text {
-    font-size: 1.125rem; /* text-lg: 18px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1rem;
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1920px) {
   .header-footer-text {
-    font-size: 1.25rem; /* text-xl: 20px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.25rem;
   }
 }
 
 .body-text {
   font-size: 0.875rem; /* text-sm: 14px */
-  line-height: 1.25rem; /* 20px */
+  line-height: 120%; /* 20px */
 }
 @media (min-width: 1024px) {
   .body-text {
-    font-size: 1.125rem; /* text-lg: 18px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.125rem;
   }
 }
 @media (min-width: 1280px) {
@@ -269,6 +299,11 @@ html {
   transform-origin: left; /* Ensure the line grows from left to right */
 }
 
+/* StickyFooter specific: ensure headerLink::after has black background */
+.sticky-footer .headerLink::after {
+  background-color: black;
+}
+
 .projectLink {
   cursor: pointer;
   position: relative;
@@ -277,7 +312,7 @@ html {
   cursor: pointer;
   content: "";
   height: 1px;
-  background-color: white;
+  background-color: black;
   left: 0;
   bottom: -2px;
   width: 100%;
@@ -293,16 +328,14 @@ html {
 
 .containerFooter {
   display: grid;
-  grid-template-columns: 50% 25% 25%;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
   .containerFooter {
-    grid-template-columns: 50% 50%;
-  }
-
-  .columnFooter:nth-child(3) {
-    grid-column: 1 / -1; /* Make 3rd column take full width */
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
   }
 }
 

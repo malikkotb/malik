@@ -8,6 +8,9 @@ import { useEffect } from "react";
 import Services from "@/components/Services/Services";
 import Projects from "@/components/ServicesSection/projects";
 import About from "@/components/About/About";
+import HoverList from "@/components/HoverList/HoverList";
+import Work from "@/components/Work/Work";
+import HoverProjectSection from "@/components/HoverProject/HoverProjectSection";
 
 export default function Home() {
   useEffect(() => {
@@ -35,45 +38,58 @@ export default function Home() {
     };
   }, []);
 
+  const services = [
+    {
+      service: "Web Design",
+      description:
+        "Creating visually stunning and user-friendly websites tailored to your brand.",
+    },
+    {
+      service: "Web Development",
+      description:
+        "Building robust, scalable, and high-performing web applications.",
+    },
+    {
+      service: "3D Development",
+      description:
+        "Crafting clear and compelling digital identities for mission-driven brands.",
+    },
+  ];
+
   return (
-    <div className='h-full w-full bg-black text-white'>
+    <div className='h-full w-full'>
       <Header />
-      <div
-        style={{ lineHeight: 1, height: "calc(100svh - 16px)" }}
-        className='flex relative items-center w-full'
-      >
-        <div className='text-[10vw] md:text-[5vw] xl:text-[4vw] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4'>
-          We use design and technology to create web experiences that
-          perform, delight, and scale.
-        </div>
-        <div className='bg-black subheading leading-none absolute flex justify-between bottom-0 left-0 pb-4 pt-4 w-full'>
-          <div>Brands we have worked with.</div>
-          <div className='opacity-50 hidden md:block'>
-            See the latest results.
+      <div className='flex h-screen flex-col justify-center lg:grid grid-cols-12 gap-[20px] lg:items-center w-full'>
+        <div className='leading-[110%] pb-[10%] text-[24px] md:text-[32px] col-start-2 col-span-5 flex flex-col'>
+          <div className='flex flex-col'>
+            <span className='whitespace-nowrap'>
+              Creating web experiences
+            </span>
+            <span className='text-zinc-400'>
+              for mission-driven brands.
+            </span>
           </div>
+          <a
+            href='#work'
+            className='text-lg pt-5 hover:opacity-60 transition-all duration-300 cursor-pointer'
+          >
+            Learn more
+          </a>
+        </div>
+        <div className='col-start-7 col-span-5 flex flex-col'>
+          <video
+            src='/1111.mp4'
+            className='rounded-[4px] shadow-2xl'
+            autoPlay
+            muted
+            loop
+          />
         </div>
       </div>
-      <div
-        id='projects'
-        style={{
-          backgroundColor: "#000000",
-          position: "relative",
-        }}
-        className='w-full min-h-screen grid gap-4 gap-y-8 grid-cols-1 lg:grid-cols-2'
-      >
-        {projects.map((project, i) => {
-          return (
-            <ProjectCard
-              key={i}
-              title={project.projectTitle}
-              videoSrc={project.videoSrc}
-              link={project.link}
-            />
-          );
-        })}
-      </div>
-      <About />
+      <Work />
       <Services />
+      {/* <Projects projects={services} /> */}
+      <About />
       {/* <Testimonials /> */}
       <ActionCall />
     </div>
