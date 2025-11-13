@@ -22,13 +22,15 @@
 }
 
 .directional-list__col-award {
-  min-width: 35%;
   position: relative;
 }
 
 .directional-list__col-client {
   flex: 1;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  mix-blend-mode: difference;
 }
 
 .directional-list__col-year {

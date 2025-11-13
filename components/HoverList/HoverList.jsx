@@ -87,7 +87,7 @@ const HoverList = ({ projects }) => {
               href={project.link}
               target='_blank'
               rel='noreferrer'
-              className='directional-list__item'
+              className='directional-list__item relative'
             >
               <div
                 data-directional-hover-tile

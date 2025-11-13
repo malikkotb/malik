@@ -2,7 +2,7 @@ const projects = [
   // title, cateory, client,year, description,tags, link,images
   {
     projectTitle: "BODYARMOR",
-    category: "Web Development",
+    category: "Development",
     client: "A Unified Whole",
     year: "2025",
     description: "",
@@ -12,7 +12,7 @@ const projects = [
   },
   {
     projectTitle: "From The Farm",
-    category: "Web Development",
+    category: "Development",
     client: "A Unified Whole",
     year: "2025",
     description: "",
@@ -22,7 +22,7 @@ const projects = [
   },
   {
     projectTitle: "Hotel Kühbacher",
-    category: "Web Development",
+    category: "Development",
     client: "A Unified Whole",
     year: "2025",
     description: "",
@@ -32,7 +32,7 @@ const projects = [
   },
   {
     projectTitle: "Lou Phelps",
-    category: "Web Development",
+    category: "Development",
     client: "A Unified Whole",
     year: "2025",
     description: "",
@@ -53,7 +53,7 @@ const projects = [
   // },
   {
     projectTitle: "Prudentos",
-    category: "Web Design, Development",
+    category: "Design, Development",
     client: "Samira Prudentos",
     year: "2024",
     description:
@@ -65,7 +65,7 @@ const projects = [
   {
     projectTitle: "Photography Portfolio",
     client: "Meklit Fekadu",
-    category: "Web Design, Development",
+    category: "Design, Development",
     year: "2024",
     description:
       "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
@@ -75,7 +75,7 @@ const projects = [
   },
   {
     projectTitle: "Secret Nature",
-    category: "Web Development",
+    category: "Development",
     client: "A Unified Whole",
     year: "2025",
     description:

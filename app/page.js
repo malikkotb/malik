@@ -38,6 +38,21 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const documentTitleStore = document.title;
+    const documentTitleOnBlur = "Come back! It's nicer here with you.";
+
+    // Set original title if user is on the site
+    window.addEventListener("focus", () => {
+      document.title = documentTitleStore;
+    });
+
+    // If user leaves tab, set the alternative title
+    window.addEventListener("blur", () => {
+      document.title = documentTitleOnBlur;
+    });
+  }, []);
+
   const services = [
     {
       service: "Web Design",
@@ -79,7 +94,7 @@ export default function Home() {
         <div className='col-start-7 col-span-5 flex flex-col'>
           <video
             src='/1111.mp4'
-            className='rounded-[4px] shadow-2xl'
+            className='rounded-[4px] shadow-xl object-cover w-full h-full'
             autoPlay
             muted
             loop

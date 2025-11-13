@@ -5,7 +5,7 @@ import ProjectCard from "../ProjectCard/ProjectCard";
 export default function Work() {
   const [view, setView] = useState("grid");
   return (
-    <div id='work' className='min-h-[75vh] h-full w-full'>
+    <div id='work' className='min-h-[60vh] h-full w-full'>
       <div className='flex justify-between'>
         <div className='eyebrow eyebrow-light'>Selected Works</div>
         <div className='flex gap-2 eyebrow'>

@@ -2,7 +2,7 @@
 
 export default function ActionCall() {
   return (
-    <div className='pb-[124px] relative w-full h-full flex items-center justify-center'>
+    <div className='pb-[48px] md:pb-[124px] relative w-full h-full flex items-center justify-center'>
       <div className='flex flex-col text-center '>
         <div style={{ lineHeight: 1 }} className='subheading my-8'>
           <div>Get in touch today.</div>
