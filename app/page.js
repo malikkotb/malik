@@ -88,7 +88,7 @@ export default function Home() {
             href='#work'
             className='text-lg pt-5 hover:opacity-60 transition-all duration-300 cursor-pointer'
           >
-            Learn more
+            See my work
           </a>
         </div>
         <div className='col-start-7 col-span-5 flex flex-col'>
