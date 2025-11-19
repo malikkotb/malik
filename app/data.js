@@ -8,7 +8,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.drinkbodyarmor.com/",
-    videoSrc: "/bodyarmor.mp4",
+    videoSrc: "/bodyarmor.webm",
   },
   {
     projectTitle: "From The Farm",
@@ -18,7 +18,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.fromthefarmco.com",
-    videoSrc: "/fromthefarm.mp4",
+    videoSrc: "/fromthefarm.webm",
   },
   {
     projectTitle: "Hotel Kühbacher",
@@ -28,7 +28,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://hotel-kuehbacher.com/",
-    videoSrc: "/hotel-kuehbacher.mp4",
+    videoSrc: "/hotel-kuehbacher.webm",
   },
   {
     projectTitle: "Lou Phelps",
@@ -38,7 +38,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://louphelps.com/",
-    videoSrc: "/lou-phelps.mp4",
+    videoSrc: "/lou-phelps.webm",
   },
   // {
   //   projectTitle: "A Unified Whole",
@@ -60,7 +60,7 @@ const projects = [
       "A comprehensive e-commerce store designed for Samira Prudentos, showcasing handmade garments crafted in Berlin.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
-    videoSrc: "/samira.mp4",
+    videoSrc: "/samira.webm",
   },
   {
     projectTitle: "Photography Portfolio",
@@ -71,19 +71,19 @@ const projects = [
       "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.meklitfekadu.com",
-    videoSrc: "/meki.mp4",
+    videoSrc: "/meki.webm",
   },
-  {
-    projectTitle: "Secret Nature",
-    category: "Development",
-    client: "A Unified Whole",
-    year: "2025",
-    description:
-      "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
-    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-    link: "https://www.secretnature.co/",
-    videoSrc: "/meki.mp4",
-  },
+  // {
+  //   projectTitle: "Secret Nature",
+  //   category: "Development",
+  //   client: "A Unified Whole",
+  //   year: "2025",
+  //   description:
+  //     "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
+  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+  //   link: "https://www.secretnature.co/",
+  //   videoSrc: "/meki.mp4",
+  // },
   // {
   //   projectTitle: "Design Portfolio",
   //   category: "Development",

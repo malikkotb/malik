@@ -62,7 +62,7 @@ export default function Header() {
         <div className='headerLink'>
           <Link
             target='_blank'
-            href='https://maliks-demos.vercel.app/'
+            href='https://maliks-playground.vercel.app/'
           >
             Playground
           </Link>

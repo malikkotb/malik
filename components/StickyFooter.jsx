@@ -57,7 +57,7 @@ export default function StickyFooter() {
   const resourceLinks = [
     {
       name: "Playground",
-      href: "https://maliks-demos.vercel.app/",
+      href: "https://maliks-playground.vercel.app/",
       newPage: true,
     },
     {
