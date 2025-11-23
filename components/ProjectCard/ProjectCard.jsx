@@ -152,7 +152,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
         }}
-        className='text-[18px] md:text-[20px]'
+        className='text-[16px]'
       >
         {title}
       </h3>

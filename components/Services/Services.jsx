@@ -1,68 +1,68 @@
 "use client";
 import { motion } from "framer-motion";
 
-const services = [
-  {
-    title: "Web Design",
-    description: [
-      "Craft clean, engaging, user-focused web designs.",
-      "Figma interfaces",
-      "Webflow & custom builds",
-      "User journeys & flows",
-    ],
-  },
-
-  {
-    title: "Web Development",
-    description: [
-      "Build fast, scalable, modern websites.",
-      "Next.js & React",
-      "GSAP & Framer Motion",
-      "CMS integrations",
-    ],
-  },
-
-  {
-    title: "3D Development",
-    description: [
-      "Create immersive 3D web experiences.",
-      "Three.js & WebGL",
-      "Interactive visualizations",
-      "Cross-device performance",
-    ],
-  },
-];
-
 // const services = [
 //   {
 //     title: "Web Design",
 //     description: [
-//       "I craft visually striking and user-centric web designs that blend aesthetics with functionality.",
-//       "Design intuitive interfaces in Figma",
-//       "Focus on user journeys that make sense",
-//       "Build with Webflow or custom solutions",
+//       "Craft clean, engaging, user-focused web designs.",
+//       "Figma interfaces",
+//       "Webflow & custom builds",
+//       "User journeys & flows",
 //     ],
 //   },
 
 //   {
 //     title: "Web Development",
 //     description: [
-//       "I build high-performance, scalable websites using cutting-edge technologies.",
-//       "Develop with Webflow or Custom Solutions (Next.js, React, etc.)",
-//       "Animate with GSAP and Framer Motion",
-//       "Integrate flexible CMS solutions",
+//       "Build fast, scalable, modern websites.",
+//       "Next.js & React",
+//       "GSAP & Framer Motion",
+//       "CMS integrations",
 //     ],
 //   },
+
 //   {
 //     title: "3D Development",
 //     description: [
-//       "I create immersive 3D web experiences that push the boundaries of browser capabilities.",
-//       "Build with Three.js and WebGL",
-//       "Create interactive 3D visualizations",
-//       "Deliver performant cross-device experiences",
+//       "Create immersive 3D web experiences.",
+//       "Three.js & WebGL",
+//       "Interactive visualizations",
+//       "Cross-device performance",
 //     ],
 //   },
 // ];
+
+const services = [
+  {
+    title: "Web Design",
+    description: [
+      "Clean, intentional web design that looks good and works better.",
+      "Design intuitive interfaces in Figma",
+      "Focus on user journeys that make sense",
+      "Responsive design that works seamlessly across all devices",
+    ],
+  },
+
+  {
+    title: "Web Development",
+    description: [
+      "I build high-performance, premium websites that scale.",
+      "Custom sites and Webflow builds",
+      "Animations with GSAP and Framer Motion",
+      "CMS solutions so you can edit your own content with ease.",
+    ],
+  },
+  {
+    title: "3D Development",
+    description: [
+      "I create immersive 3D web experiences that push the boundaries of browser capabilities.",
+      "Build with Three.js and WebGL",
+      "Create interactive 3D visualizations",
+      "Deliver performant cross-device experiences",
+    ],
+  },
+];
 
 export default function Services() {
   const titleVariants = {
@@ -75,13 +75,13 @@ export default function Services() {
   };
 
   const letterVariants = {
-    hidden: { y: "100%", opacity: 0 },
+    hidden: { y: "50%", opacity: 0 },
     visible: {
       y: "0%",
       opacity: 1,
       transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -115,7 +115,7 @@ export default function Services() {
                 </motion.span>
               ))}
             </motion.div>
-            <div className='col-start-7 lg:text-[18px] col-span-6'>
+            <div className='col-start-7 col-span-6'>
               <p>{service.description[0]}</p>
               <ul className='list-disc list-inside mt-2 space-y-1'>
                 {service.description.slice(1).map((desc, idx) => (

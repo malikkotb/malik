@@ -154,10 +154,10 @@ export default function StickyFooter() {
             </span>
           </div>
         </div>
-        <div className='flex items-end justify-end col-span-6 md:col-start-11 md:col-span-2'>
+        <div className='flex items-end justify-end col-span-6 md:col-start-11 md:col-span-2 relative z-10'>
           <div
             style={{ color: "black", opacity: 1 }}
-            className='pb-0 p-3 pr-0 pl-2 pt-2 eyebrow eyebrow-footer hover:opacity-60 transition-all duration-300 relative cursor-pointer'
+            className='pb-0 p-3 w-fit pr-0 pl-2 pt-2 eyebrow eyebrow-footer hover:opacity-60 transition-all duration-300 relative cursor-pointer z-10'
             onClick={() =>
               window.scrollTo({ top: 0, behavior: "smooth" })
             }
@@ -197,7 +197,7 @@ export default function StickyFooter() {
               top: `${cursorPosition.y}px`,
             }}
           >
-            <div className='bg-black text-white px-3 uppercase py-1.5 rounded font-mono text-sm leading-none shadow-lg shadow-black/30'>
+            <div className='bg-black text-white px-3 uppercase py-1.5 rounded font-mono text-xs leading-none shadow-lg shadow-black/30'>
               Let's go!
             </div>
           </motion.div>

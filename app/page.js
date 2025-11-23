@@ -4,15 +4,21 @@ import Header from "@/components/Header";
 import ProjectCard from "@/components/ProjectCard/ProjectCard";
 import projects from "@/app/data";
 import Lenis from "lenis";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Services from "@/components/Services/Services";
 import Projects from "@/components/ServicesSection/projects";
 import About from "@/components/About/About";
 import HoverList from "@/components/HoverList/HoverList";
 import Work from "@/components/Work/Work";
-import HoverProjectSection from "@/components/HoverProject/HoverProjectSection";
 
 export default function Home() {
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("/tap_01.wav");
+    audioRef.current.volume = 0.5;
+  }, []);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.5,
@@ -40,7 +46,8 @@ export default function Home() {
 
   useEffect(() => {
     const documentTitleStore = document.title;
-    const documentTitleOnBlur = "Come back! It's nicer here with you.";
+    const documentTitleOnBlur =
+      "Come back! It's nicer here with you.";
 
     // Set original title if user is on the site
     window.addEventListener("focus", () => {
@@ -74,7 +81,7 @@ export default function Home() {
   return (
     <div className='h-full w-full'>
       <Header />
-      <div className='flex h-screen flex-col justify-center lg:grid grid-cols-12 gap-[20px] lg:items-center w-full'>
+      <div className='flex h-[calc(100vh-48px)] flex-col justify-center lg:grid grid-cols-12 gap-[20px] lg:items-center w-full'>
         <div className='leading-[110%] pb-[10%] text-[24px] md:text-[32px] col-start-2 col-span-5 flex flex-col'>
           <div className='flex flex-col'>
             <span className='whitespace-nowrap'>
@@ -86,9 +93,15 @@ export default function Home() {
           </div>
           <a
             href='#work'
-            className='text-lg pt-5 hover:opacity-60 transition-all duration-300 cursor-pointer'
+            className='see-work-btn text-base mt-5 rounded-full border border-black px-4 py-2 w-fit cursor-pointer'
+            onMouseEnter={() => {
+              if (audioRef.current) {
+                audioRef.current.currentTime = 0;
+                audioRef.current.play().catch(() => {});
+              }
+            }}
           >
-            See my work
+            <span className='see-work-btn-text'>See my work</span>
           </a>
         </div>
         <div className='col-start-7 col-span-5 flex flex-col'>

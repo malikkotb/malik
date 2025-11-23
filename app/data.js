@@ -62,28 +62,40 @@ const projects = [
     link: "https://www.samira-prudentos.com",
     videoSrc: "/samira.webm",
   },
+ 
   {
-    projectTitle: "Photography Portfolio",
+    projectTitle: "Iffy Studios",
+    category: "Design, Development",
+    client: "Iffy Studios",
+    year: "2025",
+    description:
+      "Developed a the storefront for Iffy Studios, a brand that sells natural CBD products.",
+    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+    link: "https://www.iffystudios.com/",
+    // videoSrc: "/iffy.mp4",
+  },
+  {
+    projectTitle: "Secret Nature",
+    category: "Development",
+    client: "A Unified Whole",
+    year: "2025",
+    description:
+      "Developed a the storefront for Secret Nature, a brand that sells natural CBD products.",
+    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+    link: "https://www.secretnature.co/",
+    // videoSrc: "/meki.mp4",
+  },
+  {
+    projectTitle: "Meklit Fekadu Photography",
     client: "Meklit Fekadu",
     category: "Design, Development",
     year: "2024",
     description:
-      "A photography portfolio designed for Meklit Fekadu, a Berlin-based photographer.",
+      "A photography portfolio designed and developed for Meklit Fekadu, a Berlin-based photographer.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.meklitfekadu.com",
     videoSrc: "/meki.webm",
   },
-  // {
-  //   projectTitle: "Secret Nature",
-  //   category: "Development",
-  //   client: "A Unified Whole",
-  //   year: "2025",
-  //   description:
-  //     "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
-  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-  //   link: "https://www.secretnature.co/",
-  //   videoSrc: "/meki.mp4",
-  // },
   // {
   //   projectTitle: "Design Portfolio",
   //   category: "Development",
@@ -99,17 +111,17 @@ const projects = [
   //     "matteo/matteo_3.webp",
   //   ],
   // },
-  // {
-  //   projectTitle: "Producer Portfolio",
-  //   category: "Web Design, Development",
-  //   client: "Alba Preysing",
-  //   year: "2023",
-  //   description:
-  //     "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
-  //   tags: ["Next.js", "Tailwind CSS", "GSAP"],
-  //   link: "https://www.albapreysing.com/",
-  //   images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
-  // },
+  {
+    projectTitle: "Producer Portfolio",
+    category: "Design, Development",
+    client: "Alba Preysing",
+    year: "2023",
+    description:
+      "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
+    tags: ["Next.js", "Tailwind CSS", "GSAP"],
+    link: "https://www.albapreysing.com/",
+    images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
+  },
   // {
   //   projectTitle: "Model Agency",
   //   category: "Web Design, Development",

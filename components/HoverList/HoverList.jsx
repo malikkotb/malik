@@ -1,6 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 import "./HoverList.css";
 const HoverList = ({ projects }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("/tap_01.wav");
+    audioRef.current.volume = 0.5;
+  }, []);
   useEffect(() => {
     function initDirectionalListHover() {
       const directionMap = {
@@ -88,6 +96,14 @@ const HoverList = ({ projects }) => {
               target='_blank'
               rel='noreferrer'
               className='directional-list__item relative'
+              onMouseEnter={() => {
+                setHoveredIndex(i);
+                if (audioRef.current) {
+                  audioRef.current.currentTime = 0;
+                  audioRef.current.play().catch(() => {});
+                }
+              }}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
               <div
                 data-directional-hover-tile
@@ -95,9 +111,14 @@ const HoverList = ({ projects }) => {
               ></div>
               <div className='directional-list__border is--item'></div>
               <div className='directional-list__col-award'>
-                <p className='direcitonal-list__p'>
+                <motion.p
+                  className='direcitonal-list__p'
+                  initial={{ x: 0 }}
+                  animate={{ x: hoveredIndex === i ? 10 : 0 }}
+                  transition={{ ease: "linear", duration: 0.1 }}
+                >
                   {project.projectTitle}
-                </p>
+                </motion.p>
               </div>
               <div className='hidden lg:block directional-list__col-client'>
                 <p className='direcitonal-list__p'>
@@ -105,9 +126,14 @@ const HoverList = ({ projects }) => {
                 </p>
               </div>
               <div className='directional-list__col-year'>
-                <p className='direcitonal-list__p text-right'>
+                <motion.p
+                  className='direcitonal-list__p text-right'
+                  initial={{ x: 0 }}
+                  animate={{ x: hoveredIndex === i ? -10 : 0 }}
+                  transition={{ ease: "linear", duration: 0.1 }}
+                >
                   {project.year}
-                </p>
+                </motion.p>
               </div>
             </a>
           ))}

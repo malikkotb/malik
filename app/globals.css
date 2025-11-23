@@ -383,3 +383,34 @@ html {
 .btn2:hover::before {
   height: 180%;
 }
+
+
+/* See my work button hover effect */
+.see-work-btn {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+.see-work-btn-text {
+  position: relative;
+  z-index: 1;
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.see-work-btn::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: black;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.see-work-btn:hover::before {
+  height: 100%;
+}
