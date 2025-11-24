@@ -123,8 +123,7 @@ export default function About() {
           that look great and work smoothly, turning ideas into real{" "}
           <span className='underline'>experiences</span> through
           creativity and{" "}
-          <span className='underline'>attention to detail.</span> to
-          detail.
+          <span className='underline'>attention to detail.</span>
           <br />
           <br />I enjoy combining design and code to bring ideas to
           life in new and exciting ways.
