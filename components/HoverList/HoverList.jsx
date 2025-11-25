@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import "./HoverList.css";
 const HoverList = ({ projects }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredVideo, setHoveredVideo] = useState(null);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -96,14 +98,28 @@ const HoverList = ({ projects }) => {
               target='_blank'
               rel='noreferrer'
               className='directional-list__item relative'
-              onMouseEnter={() => {
+              onMouseEnter={(e) => {
                 setHoveredIndex(i);
+                setHoveredVideo(project.videoSrc || null);
+                setCursorPos({
+                  x: e.clientX + 20,
+                  y: e.clientY - 125,
+                });
                 if (audioRef.current) {
                   audioRef.current.currentTime = 0;
                   audioRef.current.play().catch(() => {});
                 }
               }}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseMove={(e) =>
+                setCursorPos({
+                  x: e.clientX + 20,
+                  y: e.clientY - 125,
+                })
+              }
+              onMouseLeave={() => {
+                setHoveredIndex(null);
+                setHoveredVideo(null);
+              }}
             >
               <div
                 data-directional-hover-tile
@@ -141,6 +157,24 @@ const HoverList = ({ projects }) => {
       </div>
 
       <div className='directional-list__border'></div>
+      {hoveredVideo && (
+        <div
+          className='pointer-events-none hidden sm:block fixed z-[9999] w-[250px]'
+          style={{
+            top: `${cursorPos.y}px`,
+            left: `${cursorPos.x}px`,
+          }}
+        >
+          <video
+            src={hoveredVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className='w-full h-auto rounded-md object-cover'
+          />
+        </div>
+      )}
     </div>
   );
 };

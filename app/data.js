@@ -30,27 +30,7 @@ const projects = [
     link: "https://hotel-kuehbacher.com/",
     videoSrc: "/hotel-kuehbacher.webm",
   },
-  {
-    projectTitle: "Lou Phelps",
-    category: "Development",
-    client: "A Unified Whole",
-    year: "2025",
-    description: "",
-    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-    link: "https://louphelps.com/",
-    videoSrc: "/lou-phelps.webm",
-  },
-  // {
-  //   projectTitle: "A Unified Whole",
-  //   category: "Web Development",
-  //   client: "A Unified Whole",
-  //   year: "2025",
-  //   description:
-  //     "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
-  //   tags: ["Next.js", "Tailwind CSS", "GSAP"],
-  //   link: "https://auw.webflow.io/",
-  //   videoSrc: "https://www.aunifiedwhole.com/aunifiedwhole.mp4",
-  // },
+
   {
     projectTitle: "Prudentos",
     category: "Design, Development",
@@ -62,7 +42,51 @@ const projects = [
     link: "https://www.samira-prudentos.com",
     videoSrc: "/samira.webm",
   },
- 
+  {
+    projectTitle: "Lou Phelps",
+    category: "Development",
+    client: "A Unified Whole",
+    year: "2025",
+    description: "",
+    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+    link: "https://louphelps.com/",
+    videoSrc: "/lou-phelps.webm",
+  },
+
+  // {
+  //   projectTitle: "Postcards from Nowhere",
+  //   category: "Development",
+  //   client: "A Unified Whole",
+  //   year: "2025",
+  //   description: "",
+  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+  //   link: "https://www.postcardsfromnowhere.com/",
+  //   videoSrc: "/postcardsfromnowhere.webm",
+  // },
+
+  // {
+  //   projectTitle: "A Unified Whole - V2",
+  //   category: "Web Development",
+  //   client: "A Unified Whole",
+  //   year: "2025",
+  //   description: "",
+  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+  //   link: "https://www.aunifiedwhole.com/",
+  //   videoSrc: "/aunifiedwhole.webm",
+  // },
+
+  // {
+  //   projectTitle: "A Unified Whole",
+  //   category: "Web Development",
+  //   client: "A Unified Whole",
+  //   year: "2025",
+  //   description:
+  //     "Developed a custom Shopify website for From The Farm that brings their brand to life online. Inspired by their vintage aesthetic and rooted identity, the site combines clean design with nostalgic touches, making it easy for customers to explore and shop their full range of products.",
+  //   tags: ["Next.js", "Tailwind CSS", "GSAP"],
+  //   link: "https://auw.webflow.io/",
+  //   videoSrc: "https://www.aunifiedwhole.com/aunifiedwhole.mp4",
+  // },
+
   {
     projectTitle: "Iffy Studios",
     category: "Design, Development",
@@ -72,7 +96,7 @@ const projects = [
       "Developed a the storefront for Iffy Studios, a brand that sells natural CBD products.",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.iffystudios.com/",
-    // videoSrc: "/iffy.mp4",
+    videoSrc: "/iffy_demo.webm",
   },
   {
     projectTitle: "Secret Nature",
@@ -83,7 +107,7 @@ const projects = [
       "Developed a the storefront for Secret Nature, a brand that sells natural CBD products.",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.secretnature.co/",
-    // videoSrc: "/meki.mp4",
+    videoSrc: "/secret.webm",
   },
   {
     projectTitle: "Meklit Fekadu Photography",
@@ -111,17 +135,17 @@ const projects = [
   //     "matteo/matteo_3.webp",
   //   ],
   // },
-  {
-    projectTitle: "Producer Portfolio",
-    category: "Design, Development",
-    client: "Alba Preysing",
-    year: "2023",
-    description:
-      "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
-    tags: ["Next.js", "Tailwind CSS", "GSAP"],
-    link: "https://www.albapreysing.com/",
-    images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
-  },
+  // {
+  //   projectTitle: "Producer Portfolio",
+  //   category: "Design, Development",
+  //   client: "Alba Preysing",
+  //   year: "2023",
+  //   description:
+  //     "A modern and visually engaging portfolio created for a Freelance Producer and founder of Tête-à-tête dining.",
+  //   tags: ["Next.js", "Tailwind CSS", "GSAP"],
+  //   link: "https://www.albapreysing.com/",
+  //   images: ["alba/alba1.webp", "alba/alba2.webp", "alba/alba3.webp"],
+  // },
   // {
   //   projectTitle: "Model Agency",
   //   category: "Web Design, Development",
