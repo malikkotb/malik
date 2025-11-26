@@ -8,7 +8,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.drinkbodyarmor.com/",
-    videoSrc: "/bodyarmor.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/bodyarmor.mp4",
   },
   {
     projectTitle: "From The Farm",
@@ -18,7 +18,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.fromthefarmco.com",
-    videoSrc: "/fromthefarm.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/fromthefarm.mp4",
   },
   {
     projectTitle: "Hotel Kühbacher",
@@ -28,7 +28,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://hotel-kuehbacher.com/",
-    videoSrc: "/hotel-kuehbacher.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/hotel-kuehbacher.mp4",
   },
 
   {
@@ -40,7 +40,7 @@ const projects = [
       "A comprehensive e-commerce store designed for Samira Prudentos, showcasing handmade garments crafted in Berlin.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
-    videoSrc: "/samira.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/samira.mp4",
   },
   {
     projectTitle: "Lou Phelps",
@@ -50,7 +50,7 @@ const projects = [
     description: "",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://louphelps.com/",
-    videoSrc: "/lou-phelps.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/lou.mp4",
   },
 
   // {
@@ -96,7 +96,7 @@ const projects = [
       "Developed a the storefront for Iffy Studios, a brand that sells natural CBD products.",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.iffystudios.com/",
-    videoSrc: "/iffy_demo.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/iffy_demo.mp4",
   },
   {
     projectTitle: "Secret Nature",
@@ -107,7 +107,7 @@ const projects = [
       "Developed a the storefront for Secret Nature, a brand that sells natural CBD products.",
     tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
     link: "https://www.secretnature.co/",
-    videoSrc: "/secret.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/secret.mp4",
   },
   {
     projectTitle: "Meklit Fekadu Photography",
@@ -118,7 +118,7 @@ const projects = [
       "A photography portfolio designed and developed for Meklit Fekadu, a Berlin-based photographer.",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     link: "https://www.meklitfekadu.com",
-    videoSrc: "/meki.webm",
+    videoSrc: "https://malik-portfolio.b-cdn.net/meki.mp4",
   },
   // {
   //   projectTitle: "Design Portfolio",

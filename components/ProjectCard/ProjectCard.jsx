@@ -34,9 +34,14 @@ export default function ProjectCard({ link, title, videoSrc }) {
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
           const ctx = canvas.getContext("2d");
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-          setPosterSrc(dataUrl);
+          try {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+            setPosterSrc(dataUrl);
+          } catch (error) {
+            console.warn("Unable to generate poster frame", error);
+            setPosterSrc(null);
+          }
         }
       };
 
@@ -135,6 +140,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           <video
             ref={videoRef}
             src={videoSrc}
+            crossOrigin='anonymous'
             poster={posterSrc || undefined}
             className='block w-full h-full object-cover'
             loop

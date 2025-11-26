@@ -104,9 +104,9 @@ export default function Home() {
             <span className='see-work-btn-text'>See my work</span>
           </a>
         </div>
-        <div className='col-start-7 col-span-5 flex flex-col'>
+        <div className='col-start-7 col-span-5 aspect-[5/3] flex flex-col'>
           <video
-            src='/1111.webm'
+            src='https://malik-portfolio.b-cdn.net/all_projects.mp4'
             className='rounded-[4px] shadow-xl object-cover w-full h-full'
             autoPlay
             muted
