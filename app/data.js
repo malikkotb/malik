@@ -1,6 +1,16 @@
 const projects = [
   // title, cateory, client,year, description,tags, link,images
   {
+    projectTitle: "A Unified Whole",
+    category: "Development",
+    client: "A Unified Whole",
+    year: "2025",
+    description: "",
+    tags: ["Next.js", "GSAP"],
+    link: "https://www.auw.studio/",
+    videoSrc: "https://malik-portfolio.b-cdn.net/auww.mp4",
+  },
+  {
     projectTitle: "BODYARMOR",
     category: "Development",
     client: "A Unified Whole",
@@ -21,17 +31,6 @@ const projects = [
     videoSrc: "https://malik-portfolio.b-cdn.net/fromthefarm.mp4",
   },
   {
-    projectTitle: "Hotel Kühbacher",
-    category: "Development",
-    client: "A Unified Whole",
-    year: "2025",
-    description: "",
-    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-    link: "https://hotel-kuehbacher.com/",
-    videoSrc: "https://malik-portfolio.b-cdn.net/hotel-kuehbacher.mp4",
-  },
-
-  {
     projectTitle: "Prudentos",
     category: "Design, Development",
     client: "Samira Prudentos",
@@ -41,6 +40,17 @@ const projects = [
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Shopify"],
     link: "https://www.samira-prudentos.com",
     videoSrc: "https://malik-portfolio.b-cdn.net/samira.mp4",
+  },
+  {
+    projectTitle: "Hotel Kühbacher",
+    category: "Development",
+    client: "A Unified Whole",
+    year: "2025",
+    description: "",
+    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+    link: "https://hotel-kuehbacher.com/",
+    videoSrc:
+      "https://malik-portfolio.b-cdn.net/hotel-kuehbacher.mp4",
   },
   {
     projectTitle: "Lou Phelps",
@@ -62,17 +72,6 @@ const projects = [
   //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
   //   link: "https://www.postcardsfromnowhere.com/",
   //   videoSrc: "/postcardsfromnowhere.webm",
-  // },
-
-  // {
-  //   projectTitle: "A Unified Whole - V2",
-  //   category: "Web Development",
-  //   client: "A Unified Whole",
-  //   year: "2025",
-  //   description: "",
-  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-  //   link: "https://www.aunifiedwhole.com/",
-  //   videoSrc: "/aunifiedwhole.webm",
   // },
 
   // {
