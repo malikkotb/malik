@@ -6,7 +6,6 @@ export default function ActionCall() {
       <div className='flex flex-col text-center '>
         <div style={{ lineHeight: 1 }} className='subheading my-8'>
           <div>Get in touch today.</div>
-          <div>Booking new projects.</div>
         </div>
 
         <div className='lg:w-[65vw] w-[90vw] h-[70vh] min-h-[650px]'>

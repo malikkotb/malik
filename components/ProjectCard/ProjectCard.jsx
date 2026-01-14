@@ -158,7 +158,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
         }}
-        className='text-[16px]'
+        className='text-[14px] lg:text-[16px]'
       >
         {title}
       </h3>
@@ -168,9 +168,9 @@ export default function ProjectCard({ link, title, videoSrc }) {
           e.stopPropagation();
           window.open(link, "_blank");
         }}
-        className='projectLink cursor-pointer opacity-50 text-[14px] md:text-[16px]'
+        className='projectLink uppercase cursor-pointer opacity-50 text-[12px] lg:text-[14px]'
       >
-        View the project ↗
+        View project
       </a>
     </div>
   );

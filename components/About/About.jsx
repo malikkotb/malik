@@ -109,25 +109,28 @@ export default function About() {
     <div className='relative section-padding' id='about'>
       <h3 className='eyebrow eyebrow-light'>About</h3>
       <div className='grid grid-cols-12 gap-5 w-full'>
-        <div className='md:col-span-5 col-span-12'>
+        <div className='md:col-span-6 col-span-12'>
           <AboutImage src='/about.jpeg' alt='about' />
         </div>
-        <h1 className='h1 md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
-          I&apos;m a <span className='underline'>web developer</span>{" "}
-          who loves{" "}
-          <span className='underline'>design and motion</span>.
+        <p className='md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
+          I&apos;m a creative developer who loves design, motion, and
+          pushing the boundaries of what&apos;s possible on the web.
           <br />
-          <br />I build <span className='underline'>
-            websites
-          </span>{" "}
-          that look great and work smoothly, turning ideas into real{" "}
-          <span className='underline'>experiences</span> through
-          creativity and{" "}
-          <span className='underline'>attention to detail.</span>
           <br />
-          <br />I enjoy combining design and code to bring ideas to
-          life in new and exciting ways.
-        </h1>
+          I build websites that look great and work smoothly, with a
+          focus on beautiful execution and precise attention to
+          detail. My expertise lies in elevating web experiences
+          through motion, animations, and immersive 3D elements using
+          WebGL and Three.js.
+          <br />
+          <br />
+          Every project is focused on performance and smooth
+          usability, turning ideas into real experiences that feel
+          alive and engaging.
+          <br />
+          <br />
+          Let&apos;s create something together.
+        </p>
       </div>
     </div>
   );

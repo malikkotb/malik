@@ -1,9 +1,5 @@
-// @ts-check
-import withPlaiceholder from "@plaiceholder/next";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@plaiceholder/next"],
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -12,7 +8,14 @@ const nextConfig = {
 
     return config;
   },
-  turbopack: {},
+  turbopack: {
+    rules: {
+      "*.{glsl,vs,fs,vert,frag}": {
+        loaders: ["raw-loader"],
+        as: "*.js",
+      },
+    },
+  },
 };
 
-export default withPlaiceholder(nextConfig);
+export default nextConfig;

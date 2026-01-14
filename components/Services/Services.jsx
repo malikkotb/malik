@@ -1,248 +1,122 @@
 "use client";
-import { motion } from "framer-motion";
-
-// const services = [
-//   {
-//     title: "Web Design",
-//     description: [
-//       "Craft clean, engaging, user-focused web designs.",
-//       "Figma interfaces",
-//       "Webflow & custom builds",
-//       "User journeys & flows",
-//     ],
-//   },
-
-//   {
-//     title: "Web Development",
-//     description: [
-//       "Build fast, scalable, modern websites.",
-//       "Next.js & React",
-//       "GSAP & Framer Motion",
-//       "CMS integrations",
-//     ],
-//   },
-
-//   {
-//     title: "3D Development",
-//     description: [
-//       "Create immersive 3D web experiences.",
-//       "Three.js & WebGL",
-//       "Interactive visualizations",
-//       "Cross-device performance",
-//     ],
-//   },
-// ];
-
-const services = [
-  {
-    title: "Web Design",
-    description: [
-      "Clean, intentional web design that looks good and works better.",
-      "Design intuitive interfaces in Figma",
-      "Focus on user journeys that make sense",
-      "Responsive design that works seamlessly across all devices",
-    ],
-  },
-
-  {
-    title: "Web Development",
-    description: [
-      "I build high-performance, premium websites that scale.",
-      "Custom sites and Webflow builds",
-      "Animations with GSAP and Framer Motion",
-      "CMS solutions so you can edit your own content with ease.",
-    ],
-  },
-  {
-    title: "3D Development",
-    description: [
-      "I create immersive 3D web experiences that push the boundaries of browser capabilities.",
-      "Build with Three.js and WebGL",
-      "Create interactive 3D visualizations",
-      "Deliver performant cross-device experiences",
-    ],
-  },
-];
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 
 export default function Services() {
-  const titleVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.02,
-      },
-    },
+  const linkRefs = useRef({
+    linkedin: [],
+    instagram: [],
+    tiktok: [],
+    github: [],
+  });
+
+  const links = [
+    { id: "linkedin", text: "LinkedIn", href: "https://www.linkedin.com/in/malik-kotb/" },
+    { id: "instagram", text: "Instagram", href: "https://instagram.com/malikkotbb" },
+    { id: "tiktok", text: "TikTok", href: "https://www.tiktok.com/@malik.code" },
+    { id: "github", text: "GitHub", href: "https://github.com/malikkotb" },
+  ];
+
+  const splitTextIntoLetters = (text) => {
+    return text.split("").map((char, index) => ({
+      char: char === " " ? "\u00A0" : char,
+      id: index,
+    }));
   };
 
-  const letterVariants = {
-    hidden: { y: "50%", opacity: 0 },
-    visible: {
-      y: "0%",
-      opacity: 1,
-      transition: {
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1],
+  const handleLinkHover = (linkId) => {
+    const validRefs = linkRefs.current[linkId].filter(Boolean);
+    if (validRefs.length === 0) return;
+
+    gsap.to(validRefs, {
+      opacity: 0,
+      duration: 0.2,
+      stagger: 0.02,
+      ease: "power2.out",
+      onComplete: () => {
+        gsap.to(validRefs, {
+          opacity: 1,
+          duration: 0.2,
+          stagger: 0.02,
+          ease: "power2.out",
+        });
       },
-    },
+    });
   };
+
 
   return (
-    <div
-      className='relative w-full h-full section-padding'
-      id='services'
-    >
-      <h3 className='eyebrow eyebrow-light'>Services</h3>
-      <div className='flex flex-col gap-10 lg:gap-20 w-full'>
-        {services.map((service, serviceIndex) => (
-          <div
-            key={service.title}
-            className='flex flex-col md:grid grid-cols-12 gap-5'
-          >
-            <motion.div
-              className='text-[24px] leading-[110%] lg:text-[32px] col-span-5 overflow-hidden'
-              variants={titleVariants}
-              initial='hidden'
-              whileInView='visible'
-              viewport={{ once: true, amount: 0.8 }}
-            >
-              {[...service.title].map((char, idx) => (
-                <motion.span
-                  key={`${service.title}-${idx}`}
-                  variants={letterVariants}
-                  className='inline-block'
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-            </motion.div>
-            <div className='col-start-7 col-span-6'>
-              <p>{service.description[0]}</p>
-              <ul className='list-disc list-inside mt-2 space-y-1'>
-                {service.description.slice(1).map((desc, idx) => (
-                  <li key={`${service.title}-desc-${idx}`}>{desc}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
+    <div className='relative grid gap-2 grid-cols-12 w-full h-full' id='services'>
+      <div className='col-span-3 flex flex-col'>
+        <h3 className='eyebrow eyebrow-light'>Services</h3>
+        <div className='flex w-full '>
+          <ul>
+            <li>Web Design, Figma</li>
+            <li>Frontend Development</li>
+            <li>Next, React</li>
+            <li>WebGL, Three.js</li>
+            <li>Creative Coding</li>
+            <li>Headless CMS, Sanity</li>
+            <li>Headless E-commerce, Shopify</li>
+            <li>Webflow</li>
+          </ul>
+        </div>
+      </div>
+      <div className='col-span-3 flex flex-col'>
+        <h3 className='eyebrow eyebrow-light'>Clients</h3>
+        <div className='flex w-full '>
+          <ul>
+            <li>BODYARMOR</li>
+            <li>Coca-Cola</li>
+            <li>A Unified Whole</li>
+            <li>Lou Phelps</li>
+            <li>Prudentos</li>
+            <li>Iffy Studios</li>
+            <li>From The Farm</li>
+            <li>Hotel Kühbacher</li>
+            <li>Secret Nature</li>
+            <li>Meklit Fekadu Photography</li>
+          </ul>
+        </div>
+      </div>
+      <div className='col-span-3 flex flex-col'>
+        <h3 className='eyebrow eyebrow-light'>Links</h3>
+        <div className='flex w-full '>
+          <ul>
+            {links.map((link) => {
+              const letters = splitTextIntoLetters(link.text);
+              return (
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    onMouseEnter={() => handleLinkHover(link.id)}
+                    className='cursor-pointer'
+                  >
+                    {letters.map((letter, index) => (
+                      <span
+                        key={letter.id}
+                        ref={(el) => {
+                          if (el) {
+                            if (!linkRefs.current[link.id]) {
+                              linkRefs.current[link.id] = [];
+                            }
+                            linkRefs.current[link.id][index] = el;
+                          }
+                        }}
+                        style={{ display: "inline-block" }}
+                      >
+                        {letter.char}
+                      </span>
+                    ))}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );
 }
-
-// const services = [
-//   {
-//     id: "01",
-//     title: "Web Design",
-//     items: [
-//       "Go-To-Market Strategy",
-//       "Brand Strategy",
-//       "Visual Identities",
-//       "Brand Guidelines",
-//       "Logo Creation",
-//       "Value Propositions",
-//     ],
-//   },
-//   {
-//     id: "02",
-//     title: "Web Development",
-//     items: [
-//       "UX/UI Design",
-//       "CMS Implementation",
-//       "Web Design",
-//       "Development",
-//       "Webflow",
-//     ],
-//   },
-//   {
-//     id: "03",
-//     title: "3D Development",
-//     items: [
-//       "Content",
-//       "Social",
-//       "Paid Media",
-//       "Campaigns",
-//       "SEO",
-//       "Marketing Ops",
-//       "Analytics",
-//     ],
-//   },
-// ];
-
-// export default function Services() {
-//   return (
-//     <div
-//       className='relative w-full h-full section-padding'
-//       id='services'
-//     >
-//       <h3 className='eyebrow eyebrow-light'>Services</h3>
-//       <section className='py-16 borderr md:pl-[5%]'>
-//         <div className='flex flex-col md:flex-row gap-12 justify-center borderr w-full'>
-//           {services.map((service, index) => (
-//             <div
-//               key={service.id}
-//               className='flex flex-col flex-1 md:w-[25vw]'
-//             >
-//               <span className='eyebrow eyebrow-light md:mb-2'>{service.id}</span>
-//               <h3 className='text-[32px] mb-4'>{service.title}</h3>
-//               <ul className='space-y-1'>
-//                 {service.items.map((item, index) => (
-//                   <li key={index} className='text-lg'>
-//                     {item}
-//                   </li>
-//                 ))}
-//               </ul>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-//       {/* <div className='flex flex-col gap-10 lg:gap-20 w-full'>
-//         <div className='flex flex-col lg:grid grid-cols-12 gap-5'>
-//           <div className='text-[24px] leading-[100%] lg:text-[32px] col-span-5'>
-//             {services[0].title}
-//           </div>
-//           <div className='col-start-7 col-span-6'>
-//             <p>{services[0].description[0]}</p>
-//             <ul className='list-disc list-inside mt-2 space-y-1'>
-//               {services[0].description
-//                 .slice(1)
-//                 .map((description, i) => (
-//                   <li key={i + 1}>{description}</li>
-//                 ))}
-//             </ul>
-//           </div>
-//         </div>
-//         <div className='flex flex-col lg:grid grid-cols-12 gap-5'>
-//           <div className='text-[24px] leading-[100%] lg:text-[32px] col-span-5'>
-//             {services[1].title}
-//           </div>
-//           <div className='col-start-7 col-span-6'>
-//             <p>{services[1].description[0]}</p>
-//             <ul className='list-disc list-inside mt-2 space-y-1'>
-//               {services[1].description
-//                 .slice(1)
-//                 .map((description, i) => (
-//                   <li key={i + 1}>{description}</li>
-//                 ))}
-//             </ul>
-//           </div>
-//         </div>
-//         <div className='flex flex-col lg:grid grid-cols-12 gap-5'>
-//           <div className='text-[24px] leading-[100%] lg:text-[32px] col-span-5'>
-//             {services[2].title}
-//           </div>
-//           <div className='col-start-7 col-span-6'>
-//             <p>{services[2].description[0]}</p>
-//             <ul className='list-disc list-inside mt-2 space-y-1'>
-//               {services[2].description
-//                 .slice(1)
-//                 .map((description, i) => (
-//                   <li key={i + 1}>{description}</li>
-//                 ))}
-//             </ul>
-//           </div>
-//         </div>
-//       </div> */}
-//     </div>
-//   );
-// }

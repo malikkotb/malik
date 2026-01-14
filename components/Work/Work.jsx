@@ -35,7 +35,7 @@ export default function Work() {
           id='projects'
           className='relative w-full grid gap-4 gap-y-8 grid-cols-1 lg:grid-cols-2'
         >
-          {projects.slice(0, 4).map((project, i) => {
+          {projects.map((project, i) => {
             return (
               <ProjectCard
                 key={i}

@@ -30,9 +30,9 @@ export default function StickyFooter() {
 
   const menuLinks = [
     { name: "Home", href: "/" },
-    { name: "Work", href: "#work" },
-    { name: "Services", href: "#services" },
-    { name: "About", href: "#about" },
+    { name: "Work", href: "/work" },
+    { name: "About", href: "/about" },
+    { name: "Lab", href: "/lab" },
     { name: "Contact", href: "mailto:malikkotb@icloud.com" },
   ];
 
@@ -56,7 +56,7 @@ export default function StickyFooter() {
 
   const resourceLinks = [
     {
-      name: "Playground",
+      name: "Lab",
       href: "https://maliks-playground.vercel.app/",
       newPage: true,
     },
@@ -166,7 +166,7 @@ export default function StickyFooter() {
           </div>
         </div>
       </div>
-      <a
+      {/* <a
         ref={getInTouchRef}
         href='mailto:malikkotb@icloud.com'
         style={{
@@ -202,7 +202,7 @@ export default function StickyFooter() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }

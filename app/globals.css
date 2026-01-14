@@ -2,40 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "PPNeueMontrealMono Regular";
-  src: url("./fonts/PPNeueMontrealMono-Regular.otf")
-    format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueMontreal Light";
-  src: url("./fonts/PPNeueMontreal-Light.otf") format("opentype");
-}
 
 @font-face {
   font-family: "PPNeueMontreal Medium";
   src: url("./fonts/PPNeueMontreal-Medium.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueMontreal Regular";
-  src: url("./fonts/PPNeueMontreal-Regular.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueMontreal Book";
-  src: url("./fonts/PPNeueMontreal-Book.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueMontreal Italic";
-  src: url("./fonts/PPNeueMontreal-Italic.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "PPNeueMontreal Bold";
-  src: url("./fonts/PPNeueMontreal-Bold.otf") format("opentype");
 }
 
 @theme inline {
@@ -51,17 +21,18 @@
 }
 
 body {
-  padding: 24px;
+  padding: 14px;
   font-family: "PPNeueMontreal Medium", sans-serif;
-  /* background-color: #f5f5f5; */
-  background-color: #fafafa;
+  font-weight: 530;
+  /* background-color: #fafafa; */
+  background-color: #fff;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-::selection {
+/* ::selection {
   background: black;
   color: white;
 }
@@ -69,7 +40,7 @@ html {
 ::-moz-selection {
   background: black;
   color: white;
-}
+} */
 
 .section-padding {
   padding: 80px 0px;
@@ -94,10 +65,16 @@ html {
 
 .eyebrow {
   text-transform: uppercase;
-  padding-bottom: 24px;
-  padding-top: 24px;
+  padding-bottom: 14px;
+  padding-top: 14px;
   font-size: 12px;
-  line-height: 120%;
+  line-height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .eyebrow {
+    font-size: 14px;
+  }
 }
 
 .eyebrow-light {
@@ -137,27 +114,21 @@ html {
 }
 
 .header-footer-text {
-  font-size: 0.875rem; /* text-sm: 14px */
-  line-height: 120%; /* 20px */
+  font-size: 0.75rem; /* text-sm: 14px */
+  line-height: 100%; 
 }
 
 @media (min-width: 1024px) {
   .header-footer-text {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 }
 
-@media (min-width: 1280px) {
+/* @media (min-width: 1440px) {
   .header-footer-text {
     font-size: 1rem;
   }
-}
-
-@media (min-width: 1920px) {
-  .header-footer-text {
-    font-size: 1.25rem;
-  }
-}
+} */
 
 .body-text {
   font-size: 0.875rem; /* text-sm: 14px */
@@ -293,16 +264,16 @@ html {
   height: 1px;
   background-color: white;
   left: 0;
-  bottom: 0px; /* Adjust this value to move the line closer to the text */
+  bottom: -1px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */
   position: absolute;
   transform: scaleX(0); /* Initially scale the width to 0 */
-  transform-origin: left; /* The animation starts from the left */
+  transform-origin: right; /* Start from right so it transitions out to the right */
   transition: transform 0.5s ease-in-out;
 }
 .headerLink:hover::after {
   transform: scaleX(1); /* Scale to full width on hover */
-  transform-origin: left; /* Ensure the line grows from left to right */
+  transform-origin: left; /* The line comes in from the left */
 }
 
 /* StickyFooter specific: ensure headerLink::after has black background */
@@ -413,4 +384,20 @@ html {
 
 .see-work-btn:hover::before {
   height: 100%;
+}
+
+/* WebGL Carousel animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
 }

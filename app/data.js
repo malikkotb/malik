@@ -43,7 +43,7 @@ const projects = [
   },
   {
     projectTitle: "Hotel Kühbacher",
-    category: "Development",
+    category: "Design, Development",
     client: "A Unified Whole",
     year: "2025",
     description: "",

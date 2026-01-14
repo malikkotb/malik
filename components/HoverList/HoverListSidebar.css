@@ -1,13 +1,20 @@
-.directional-list {
+.directional-list-sidebar {
   color: black;
   flex-flow: column;
-  text-transform: uppercase;
   width: 100%;
   display: flex;
   position: relative;
 }
 
-.directional-list__item {
+.directional-list__collection-sidebar {
+  width: 100%;
+}
+
+.directional-list__list-sidebar {
+  width: 100%;
+}
+
+.directional-list__item-sidebar {
   grid-column-gap: 1em;
   grid-row-gap: 1em;
   color: inherit;
@@ -21,33 +28,19 @@
   overflow: hidden;
 }
 
-.directional-list__col-award {
+.directional-list__col-award-sidebar {
   position: relative;
 }
 
-.directional-list__col-client {
-  flex: 1;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  mix-blend-mode: difference;
-}
-
-.directional-list__col-year {
-  flex: none;
-  min-width: 3em;
-  position: relative;
-}
-
-.direcitonal-list__p {
+.direcitonal-list__p-sidebar {
   margin-bottom: 0;
-  font-size: 14px;
-  line-height: 100%;
+  font-size: 1em;
+  line-height: 1;
   mix-blend-mode: difference;
   color: white;
 }
 
-.directional-list__border {
+.directional-list__border-sidebar {
   z-index: 2;
   opacity: 0.3;
   background-color: currentColor;
@@ -58,12 +51,12 @@
   left: 0;
 }
 
-.directional-list__border.is--item {
+.directional-list__border-sidebar.is--item-sidebar {
   top: 0;
   bottom: auto;
 }
 
-.directional-list__hover-tile {
+.directional-list__hover-tile-sidebar {
   background-color: black;
   width: 100%;
   height: 100%;
@@ -72,8 +65,11 @@
   left: 0;
 }
 
-[data-directional-hover-tile] {
+[data-directional-hover-tile-sidebar] {
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   transform: translateY(-100%);
   will-change: transform;
 }
+
+/* Sidebar-specific styles can be added here */
+

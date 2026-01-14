@@ -1,17 +1,16 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import StickyFooter from "../components/StickyFooter";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import Header from "@/components/Header";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export const metadata = {
-  title: "MALIK | Web Design & Development",
-  description: "Developed by Malik Kotb",
+  title: "Index | Malik Kotb",
+  description: "Designed & Developed by Malik Kotb",
   icons: {
-    icon: "/fav_white.png",
-    shortcut: "/fav_white.png",
-    apple: "/fav_white.png",
+    icon: "/fav.png",
+    shortcut: "/fav.png",
+    apple: "/fav.png",
   },
 };
 
@@ -19,9 +18,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={`antialiased`}>
-        {/* <body className={`${neueMontreal.className} antialiased`}> */}
+        <Header />
         {children}
-        <StickyFooter />
       </body>
     </html>
   );
