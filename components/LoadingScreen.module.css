@@ -1,0 +1,47 @@
+@keyframes loadBar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 150px;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  99% {
+    opacity: 0;
+    pointer-events: auto;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  animation: fadeOut 0.5s ease-out 2s forwards;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  width: 150px;
+}
+
+.line {
+  width: 0;
+  height: 1px;
+  background-color: #000000;
+  animation: loadBar 1.5s linear forwards;
+}
