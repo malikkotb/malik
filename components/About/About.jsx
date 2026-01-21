@@ -112,7 +112,7 @@ export default function About() {
         <div className='md:col-span-6 col-span-12'>
           <AboutImage src='/about.jpeg' alt='about' />
         </div>
-        <p className='md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
+        <p className='text-[14px] md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
           I&apos;m a creative developer who loves design, motion, and
           pushing the boundaries of what&apos;s possible on the web.
           <br />

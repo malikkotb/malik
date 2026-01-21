@@ -71,11 +71,7 @@ html {
   line-height: 100%;
 }
 
-@media (min-width: 1024px) {
-  .eyebrow {
-    font-size: 14px;
-  }
-}
+
 
 .eyebrow-light {
   opacity: 0.6;
@@ -87,17 +83,11 @@ html {
   padding-top: 0px;
 }
 
-/* .subheading {
-  font-size: 1.25rem;
-  line-height: 1.75rem; 
-}
 
-@media (min-width: 768px) { */
 .subheading {
   font-size: 1.5rem; /* text-2xl: 24px */
   line-height: 2rem; /* 32px */
 }
-/* } */
 
 @media (min-width: 1024px) {
   .subheading {
@@ -120,26 +110,8 @@ html {
 
 @media (min-width: 1024px) {
   .header-footer-text {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
-}
-
-/* @media (min-width: 1440px) {
-  .header-footer-text {
-    font-size: 1rem;
-  }
-} */
-
-.body-text {
-  font-size: 0.875rem; /* text-sm: 14px */
-  line-height: 120%; /* 20px */
-}
-@media (min-width: 1024px) {
-  .body-text {
-    font-size: 1.125rem;
-  }
-}
-@media (min-width: 1280px) {
 }
 
 :root {
@@ -264,7 +236,7 @@ html {
   height: 1px;
   background-color: white;
   left: 0;
-  bottom: -1px; /* Adjust this value to move the line closer to the text */
+  bottom: 0px; /* Adjust this value to move the line closer to the text */
   width: 100%; /* Start with full width */
   position: absolute;
   transform: scaleX(0); /* Initially scale the width to 0 */

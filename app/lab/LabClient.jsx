@@ -45,12 +45,14 @@ export default function LabClient({ labPosts }) {
                     key={`${rowIndex}-${colIndex}`}
                     onClick={() => {
                       // TODO: use correct link to the experiment
-                      window.open(
-                        "https://maliks-playground.vercel.app/",
-                        "_blank"
-                      );
+                      if (cell === 1) {
+                        window.open(
+                          "https://maliks-playground.vercel.app/",
+                          "_blank"
+                        );
+                      }
                     }}
-                    className='overflow-hidden cursor-pointer hover:scale-125 transition-none'
+                    className={`overflow-hidden ${cell === 1 ? "cursor-pointer" : "cursor-default"}`}
                     style={{
                       aspectRatio: "4/3",
                       transformOrigin,
