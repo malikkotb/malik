@@ -1,0 +1,40 @@
+.main {
+  margin-top: 10vh;
+}
+
+.container {
+  position: relative;
+  height: calc(350vh); /* Adjust based on number of images */
+  margin-bottom: 50vh;
+}
+
+.imageWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  mask-image: url("/maskReveal/vec.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 0%; /* Start hidden */
+  webkit-mask-image: url("/maskReveal/vec.svg");
+  webkit-mask-position: center;
+  webkit-mask-repeat: no-repeat;
+  webkit-mask-size: 0%;
+}
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageWrapper:nth-child(2) {
+  z-index: 2;
+}
+
+.imageWrapper:nth-child(3) {
+  z-index: 3;
+}

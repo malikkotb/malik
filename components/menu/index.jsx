@@ -11,6 +11,9 @@ const menu = [
     title: "About",
   },
   {
+    title: "Lab",
+  },
+  {
     title: "Contact",
   },
 ];

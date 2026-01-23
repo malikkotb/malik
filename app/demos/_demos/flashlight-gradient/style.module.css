@@ -1,0 +1,8 @@
+/* here we are using css variables, and setting the default values to 100px each */
+.cover {
+    background-image: radial-gradient(
+      circle farthest-side at var(--x, 100px) var(--y, 100px),
+      var(--color, #1250aa) 0%,
+      transparent var(--gradient-width, 100%)
+    );
+  }
