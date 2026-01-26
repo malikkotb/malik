@@ -63,37 +63,37 @@ export default function Header() {
         <ScrambleText text="Malik Kotb" />
       </Link>
 
-      {/* Show Combobox in the center when on /demos route */}
+      {/* Show Combobox in the center when on /demos route - hidden on mobile */}
       {isOnDemosRoute && (
-        <div className='flex absolute top-[14px] left-1/2 -translate-x-1/2 items-center justify-center'>
+        <div className='hidden sm:flex absolute top-[14px] left-1/2 -translate-x-1/2 items-center justify-center'>
           <Combobox />
         </div>
       )}
 
-      <div className={`flex gap-2 lg:gap-4 col-span-3 ${isOnDemosRoute ? 'col-start-10' : 'col-start-10'} justify-end`}>
-        <div className='headerLink'>
+      <div className={`flex flex-col items-end gap-1 col-span-9 sm:col-span-3 ${isOnDemosRoute ? 'col-start-4 sm:col-start-10' : 'col-start-4 sm:col-start-10'} justify-end`}>
+        <div className='flex gap-2 lg:gap-4'>
           <Link href='/work'>
-            <ScrambleText text="Work" />
+            <ScrambleText text="Work" underline />
           </Link>
-        </div>
-        <div className='headerLink'>
           <Link href='/about'>
-            <ScrambleText text="About" />
+            <ScrambleText text="About" underline />
           </Link>
-        </div>
-        <div className='headerLink'>
           <Link href='/demos'>
-            <ScrambleText text="Lab" />
+            <ScrambleText text="Lab" underline />
           </Link>
-        </div>
-        {/* <div className='headerLink'>
-          <Link href='/blog'>Blog</Link>
-        </div> */}
-        <div className='headerLink'>
+          {/* <Link href='/blog'>
+            <ScrambleText text="Blog" underline />
+          </Link> */}
           <a href='mailto:malikkotb@icloud.com'>
-            <ScrambleText text="Contact" />
+            <ScrambleText text="Contact" underline />
           </a>
         </div>
+        {/* Show Combobox below links on mobile */}
+        {isOnDemosRoute && (
+          <div className='flex sm:hidden'>
+            <Combobox />
+          </div>
+        )}
       </div>
     </div>
   );

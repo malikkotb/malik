@@ -7,7 +7,7 @@ export default function TopSection() {
 
   return (
     <div className="w-full mb-36">
-      <div className="images flex gap-5 ">
+      <div className="images flex gap-[14px] ">
         <div className="image1 relative w-[30%] min-w-[600px] h-[800px]">
           <Image src="/demos/10.avif" alt="Description" fill />
         </div>

@@ -1,0 +1,63 @@
+.image-hover-trail-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.trail-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.content-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.description {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Trail image styling - no transitions, controlled by JS */
+:global(.trail-image) {
+  position: fixed;
+  width: 150px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(255, 255, 255, 0.1);
+  z-index: 10;
+  will-change: transform, opacity;
+  /* No transitions - animation is handled by requestAnimationFrame */
+  /* Height is set dynamically in JS for each image */
+}

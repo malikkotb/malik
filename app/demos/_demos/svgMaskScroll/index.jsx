@@ -32,16 +32,15 @@ export default function Home() {
           // end: `${350 * (index + 1)}vh top`,
           scrub: true,
         },
-        maskSize: "200%",
-        webkitMaskSize: "200%",
+        maskSize: "300%",
+        webkitMaskSize: "300%",
         ease: "none",
       });
     });
   }, []);
 
   return (
-    <main className={`${styles.main} overflow-x-clip`}>
-      <div className="absolute items-center flex justify-center w-full">Scroll</div>
+    <main className={`${styles.main} overflow-x-hidden`}>
       <div ref={container} className={styles.container}>
         {[...Array(3)].map((_, i) => (
           <div

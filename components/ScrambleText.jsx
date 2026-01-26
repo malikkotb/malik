@@ -2,11 +2,12 @@
 import { useState, useEffect, useRef } from "react";
 
 // Reusable ScrambleText component
-export default function ScrambleText({ text, className = "" }) {
+export default function ScrambleText({ text, className = "", underline = false }) {
   const lettersRef = useRef([]);
   const containerRef = useRef(null);
   const [width, setWidth] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const letters = text.split("").map((char, index) => ({
     char: char === " " ? "\u00A0" : char,
@@ -40,6 +41,7 @@ export default function ScrambleText({ text, className = "" }) {
   }, []);
 
   const handleMouseEnter = () => {
+    setIsHovered(true);
     // Disable scramble on mobile
     if (isMobile) return;
     
@@ -69,10 +71,15 @@ export default function ScrambleText({ text, className = "" }) {
     }, 50);
   };
 
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <span 
       ref={containerRef}
-      onMouseEnter={handleMouseEnter} 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={className}
       style={{ 
         display: "inline-block",
@@ -82,20 +89,37 @@ export default function ScrambleText({ text, className = "" }) {
         overflow: "visible"
       }}
     >
-      {letters.map((letter, index) => (
-        <span
-          key={letter.id}
-          ref={(el) => {
-            if (el) lettersRef.current[index] = el;
-          }}
-          style={{ 
-            display: "inline-block",
-            fontKerning: "normal"
-          }}
-        >
-          {letter.char}
-        </span>
-      ))}
+      <span style={{ position: "relative", display: "inline-block" }}>
+        {letters.map((letter, index) => (
+          <span
+            key={letter.id}
+            ref={(el) => {
+              if (el) lettersRef.current[index] = el;
+            }}
+            style={{ 
+              display: "inline-block",
+              fontKerning: "normal"
+            }}
+          >
+            {letter.char}
+          </span>
+        ))}
+        {underline && (
+          <span
+            style={{
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              height: "1px",
+              backgroundColor: "currentColor",
+              width: "100%",
+              transform: isHovered ? "scaleX(1)" : "scaleX(0)",
+              transformOrigin: isHovered ? "left" : "right",
+              transition: "transform 0.5s ease-in-out",
+            }}
+          />
+        )}
+      </span>
     </span>
   );
 }

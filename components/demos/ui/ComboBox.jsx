@@ -19,6 +19,7 @@ const frameworks = [
   { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
   { value: "svgMaskScroll", label: "SVG Mask Scroll" },
   { value: "textScrolly", label: "Text Scrolly" },
+  { value: "imageTrailEffect", label: "Image Trail Effect" },
 ];
 
 export function Combobox({ setProject }) {
@@ -39,7 +40,7 @@ export function Combobox({ setProject }) {
     <select
       value={currentProject}
       onChange={handleChange}
-      className="bg-transparent border-none uppercase outline-none cursor-pointer text-[12px]"
+      className="bg-transparent border-none uppercase outline-none cursor-pointer text-[12px] w-[140px] min-w-0"
     >
       <option value="">Experiments [{frameworks.length}]</option>
       {frameworks.map((framework) => (

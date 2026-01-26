@@ -19,6 +19,7 @@ const demos = {
   "particle-morphing-canvas": dynamic(() => import("@/app/demos/_demos/particle-morphing-canvas")),
   "svgMaskScroll": dynamic(() => import("@/app/demos/_demos/svgMaskScroll")),
   "textScrolly": dynamic(() => import("@/app/demos/_demos/textScrolly")),
+  "imageTrailEffect": dynamic(() => import("@/app/demos/_demos/imageTrailEffect/page")),
 };
 
 export function generateStaticParams() {
