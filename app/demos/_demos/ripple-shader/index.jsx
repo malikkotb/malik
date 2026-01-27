@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
 import ripple from "./ripple.png";
@@ -53,6 +54,14 @@ export default function RippleShader() {
 
     containerRef.current.appendChild(renderer.domElement);
 
+    // Add orbit controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.enableZoom = true;
+    controls.enableRotate = true;
+    controls.enablePan = true;
+
     let mouse = new THREE.Vector2(0, 0);
     let prevMouse = new THREE.Vector2(0, 0);
     let currentWave = 0;
@@ -65,22 +74,35 @@ export default function RippleShader() {
     window.addEventListener("mousemove", moveMouse);
 
     // Create plane geometry (1x1 base, scaled via mesh.scale)
-    const geometry = new THREE.PlaneGeometry(40, 40, 1, 1);
+    const geometry = new THREE.PlaneGeometry(64, 64, 1, 1);
+    const geometryFullScreen = new THREE.PlaneGeometry(sizes.width, sizes.height, 1, 1);
 
     // Create shader material
-    const material = new THREE.ShaderMaterial({
+    let material = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
       side: THREE.DoubleSide,
       uniforms: {
         uTime: { value: 0 },
-        uTexture: { value: new THREE.TextureLoader().load(image.src) },
+        // uTexture: { value: new THREE.TextureLoader().load(image.src) },
+        uTexture: {
+          value: new THREE.TextureLoader().load(image.src, (tex) => {
+            const imgAspect = tex.image.width / tex.image.height;
+            const scrAspect = sizes.width / sizes.height;
+            material.uniforms.resolution.value.set(
+              sizes.width,
+              sizes.height,
+              scrAspect > imgAspect ? 1 : imgAspect / scrAspect,
+              scrAspect > imgAspect ? scrAspect / imgAspect : 1
+            );
+          })
+        },
         uDisplacement: { value: null },
         resolution: { value: new THREE.Vector4() },
       },
     });
 
-    const maxWaves = 50;
+    const maxWaves = 100;
     const meshes = [];
 
     // create 50 randomly rotated brushes on the screen
@@ -101,7 +123,8 @@ export default function RippleShader() {
       meshes.push(mesh);
     }
 
-    // const mesh = new THREE.Mesh(geometry, material1);
+    const quad = new THREE.Mesh(geometryFullScreen, material);
+    scene1.add(quad);
     // scene.add(mesh);
 
     const setNewWave = (x, y, index) => {
@@ -109,8 +132,8 @@ export default function RippleShader() {
       mesh.visible = true;
       mesh.position.x = x;
       mesh.position.y = y;
-      mesh.material.opacity = 1; // reset opacity
-      mesh.scale.x = mesh.scale.y = 1;
+      mesh.material.opacity = 0.5; // reset opacity
+      mesh.scale.x = mesh.scale.y = 0.2;
     };
 
     const trackMousePos = () => {
@@ -123,7 +146,6 @@ export default function RippleShader() {
       } else {
         setNewWave(mouse.x, mouse.y, currentWave);
         currentWave = (currentWave + 1) % maxWaves;
-        console.log(currentWave);
       }
 
       // Update prevMouse to current position for next frame comparison
@@ -141,6 +163,18 @@ export default function RippleShader() {
       material.uniforms.uTime.value =
         elapsedTime;
 
+      // Update controls
+      controls.update();
+
+      // merge the two scenes, key!!!
+      // we are basically using the whole previous scene as a texture 
+      renderer.setRenderTarget(baseTexture);
+      renderer.render(scene, camera);
+      material.uniforms.uDisplacement.value = baseTexture.texture;
+      renderer.setRenderTarget(null);
+      renderer.clear();
+      renderer.render(scene1, camera);
+
       meshes.forEach((mesh) => {
         if (mesh.visible) {
           // Mouse coordinates are already in world space (pixels centered at 0,0)
@@ -151,17 +185,17 @@ export default function RippleShader() {
           mesh.material.opacity *= 0.96;
 
           // this simulates one of the easing curves
-          // suimulates really slow exponential growth, but not linear
-          mesh.scale.x = 0.98 * mesh.scale.x + 0.1;
-          mesh.scale.y = 0.98 * mesh.scale.y + 0.1;
+          // simulates really slow exponential growth, but not linear
+          mesh.scale.x = 0.982 * mesh.scale.x + 0.108;
+          // mesh.scale.y = 0.98 * mesh.scale.y + 0.1;
+          mesh.scale.y = mesh.scale.x;
 
-          if (mesh.material.opacity < 0.02) {
+          if (mesh.material.opacity < 0.002) {
             mesh.visible = false;
           }
         }
       });
 
-      renderer.render(scene, camera);
       requestAnimationFrame(animate);
     };
 
@@ -185,6 +219,19 @@ export default function RippleShader() {
       // Update renderer
       renderer.setSize(sizes.width, sizes.height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Update resolution for aspect ratio
+      const tex = material.uniforms.uTexture.value;
+      if (tex.image) {
+        const imgAspect = tex.image.width / tex.image.height;
+        const scrAspect = sizes.width / sizes.height;
+        material.uniforms.resolution.value.set(
+          sizes.width,
+          sizes.height,
+          scrAspect > imgAspect ? 1 : imgAspect / scrAspect,
+          scrAspect > imgAspect ? scrAspect / imgAspect : 1
+        );
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -192,6 +239,8 @@ export default function RippleShader() {
     // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", moveMouse);
+      controls.dispose();
       renderer.dispose();
       geometry.dispose();
       material.dispose();
