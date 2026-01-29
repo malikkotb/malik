@@ -1,11 +1,31 @@
-import ProjectCarousel from "@/components/ProjectCarousel/ProjectCarousel";
+"use client";
+import { useState, useEffect } from "react";
 import projects from "@/app/carouselData";
-import WebGLCarousel from "@/components/WebGLCarousel/WebGLCarousel";
+import dynamic from "next/dynamic";
+
+// Dynamically import WebGLCarousel to prevent it from blocking initial render
+const WebGLCarousel = dynamic(
+  () => import("@/components/WebGLCarousel/WebGLCarousel"),
+  { ssr: false }
+);
+
 export default function IndexClient() {
+  // Delay mounting WebGLCarousel until after loading screen animation completes
+  const [showCarousel, setShowCarousel] = useState(false);
+
+  useEffect(() => {
+    // Loading screen: 1.5s load animation + 0.5s fadeout starting at 2s = ~2.5s total
+    // We delay mounting to avoid blocking the main thread during animation
+    const timer = setTimeout(() => {
+      setShowCarousel(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className='h-full w-full'>
       <div className="hidden lg:block">
-        <WebGLCarousel />
+        {showCarousel && <WebGLCarousel />}
       </div>
       {/* <div className="text-center h-[30vh] flex items-center justify-center uppercase">
         Creative Web Development

@@ -10,6 +10,18 @@ import ripple from "./ripple.png";
 // Texture URLs for the 3 images
 const textureUrls = ['/demos/img1.png', '/demos/img4.png', '/demos/img3.png'];
 
+/*
+    - Every time you move the cursor, lots of images are created (the brush) to create those ripples
+    - 1. Step create black and white ripples for the screen, and then convert it to the displacement map for the texture
+    - And then we’ll create the displacement with those waves/ripples 
+    - We are using orthographic camera 
+    - Tie object (brush) to mouse
+    - On each mouse move we want to start/create a new wave
+    - => that wave will degrade with time, its gonna get bigger and then at some point it will dissappear (by decreasing opacity)
+    - We dont change position of each wave because starting position of the wave stays the same
+    - but on mouse move we want to create a new wave
+*/
+
 export default function RippleShader() {
   const containerRef = useRef(null);
 
