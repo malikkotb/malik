@@ -6,7 +6,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
 import ripple from "./ripple.png";
-import image from "./image.png";
+
+// Texture URLs for the 3 images
+const textureUrls = ['/demos/img1.png', '/demos/img4.png', '/demos/img3.png'];
 
 export default function RippleShader() {
   const containerRef = useRef(null);
@@ -51,6 +53,7 @@ export default function RippleShader() {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0xffffff, 1);
 
     containerRef.current.appendChild(renderer.domElement);
 
@@ -75,31 +78,73 @@ export default function RippleShader() {
 
     // Create plane geometry (1x1 base, scaled via mesh.scale)
     const geometry = new THREE.PlaneGeometry(64, 64, 1, 1);
-    const geometryFullScreen = new THREE.PlaneGeometry(sizes.width, sizes.height, 1, 1);
 
-    // Create shader material
-    let material = new THREE.ShaderMaterial({
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-      side: THREE.DoubleSide,
-      uniforms: {
-        uTime: { value: 0 },
-        // uTexture: { value: new THREE.TextureLoader().load(image.src) },
-        uTexture: {
-          value: new THREE.TextureLoader().load(image.src, (tex) => {
-            const imgAspect = tex.image.width / tex.image.height;
-            const scrAspect = sizes.width / sizes.height;
-            material.uniforms.resolution.value.set(
-              sizes.width,
-              sizes.height,
-              scrAspect > imgAspect ? 1 : imgAspect / scrAspect,
-              scrAspect > imgAspect ? scrAspect / imgAspect : 1
-            );
-          })
+    // Layout configuration - percentage based
+    const paddingPercent = 0.05;  // 5% padding on each edge
+    const gapPercent = 0.05;      // 5% gap between images
+    const numQuads = 3;
+
+    let edgePadding = sizes.width * paddingPercent;
+    let gapSize = sizes.width * gapPercent;
+    const totalGaps = (numQuads - 1) * gapSize;
+    const availableWidth = sizes.width - (2 * edgePadding) - totalGaps;
+    let quadWidth = 350;//availableWidth / numQuads;
+    let quadHeight = sizes.height * 0.5;
+
+    // Create geometry for quads
+    let quadGeometry = new THREE.PlaneGeometry(quadWidth, quadHeight, 1, 1);
+
+    // Create shader materials array
+    const materials = [];
+    const quads = [];
+    const textureLoader = new THREE.TextureLoader();
+
+    // Start from left edge + padding + half quad width
+    let startX = -sizes.width / 2 + edgePadding + quadWidth / 2;
+
+    textureUrls.forEach((url, index) => {
+      const material = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+        side: THREE.DoubleSide,
+        uniforms: {
+          uTime: { value: 0 },
+          uTexture: {
+            value: textureLoader.load(url, (tex) => {
+              const imgAspect = tex.image.width / tex.image.height;
+              const quadAspect = quadWidth / quadHeight;
+              material.uniforms.resolution.value.set(
+                quadWidth,
+                quadHeight,
+                quadAspect > imgAspect ? 1 : imgAspect / quadAspect,
+                quadAspect > imgAspect ? quadAspect / imgAspect : 1
+              );
+            })
+          },
+          uDisplacement: { value: null },
+          resolution: { value: new THREE.Vector4() },
+          uQuadOffset: { value: new THREE.Vector2() },
+          uQuadSize: { value: new THREE.Vector2() },
         },
-        uDisplacement: { value: null },
-        resolution: { value: new THREE.Vector4() },
-      },
+      });
+
+      // Calculate quad position
+      const posX = startX + index * (quadWidth + gapSize);
+
+      // Calculate screen-space UV offset and size for global ripple effect
+      const normalizedX = (posX + sizes.width / 2 - quadWidth / 2) / sizes.width;
+      const normalizedY = (sizes.height / 2 - quadHeight / 2) / sizes.height;
+      material.uniforms.uQuadOffset.value.set(normalizedX, normalizedY);
+      material.uniforms.uQuadSize.value.set(quadWidth / sizes.width, quadHeight / sizes.height);
+
+      materials.push(material);
+
+      // Create and position quad
+      const quad = new THREE.Mesh(quadGeometry, material);
+      quad.position.x = posX;
+      quad.position.y = 0;
+      scene1.add(quad);
+      quads.push(quad);
     });
 
     const maxWaves = 100;
@@ -123,17 +168,13 @@ export default function RippleShader() {
       meshes.push(mesh);
     }
 
-    const quad = new THREE.Mesh(geometryFullScreen, material);
-    scene1.add(quad);
-    // scene.add(mesh);
-
     const setNewWave = (x, y, index) => {
       let mesh = meshes[index]; // mesh we want to be currently animated
       mesh.visible = true;
       mesh.position.x = x;
       mesh.position.y = y;
-      mesh.material.opacity = 0.5; // reset opacity
-      mesh.scale.x = mesh.scale.y = 0.2;
+      mesh.material.opacity = 1; // reset opacity
+      mesh.scale.x = mesh.scale.y = 1;
     };
 
     const trackMousePos = () => {
@@ -160,17 +201,28 @@ export default function RippleShader() {
     const animate = () => {
       trackMousePos();
       const elapsedTime = clock.getElapsedTime();
-      material.uniforms.uTime.value =
-        elapsedTime;
+
+      // Update all materials
+      materials.forEach((mat) => {
+        mat.uniforms.uTime.value = elapsedTime;
+      });
 
       // Update controls
       controls.update();
 
-      // merge the two scenes, key!!!
-      // we are basically using the whole previous scene as a texture 
+      // Render ripple brushes to texture (needs black background for displacement)
+      renderer.setClearColor(0x000000, 1);
       renderer.setRenderTarget(baseTexture);
+      renderer.clear();
       renderer.render(scene, camera);
-      material.uniforms.uDisplacement.value = baseTexture.texture;
+
+      // Update displacement for all materials
+      materials.forEach((mat) => {
+        mat.uniforms.uDisplacement.value = baseTexture.texture;
+      });
+
+      // Render final scene with white background
+      renderer.setClearColor(0xffffff, 1);
       renderer.setRenderTarget(null);
       renderer.clear();
       renderer.render(scene1, camera);
@@ -184,8 +236,7 @@ export default function RippleShader() {
           mesh.rotation.z += 0.01;
           mesh.material.opacity *= 0.96;
 
-          // this simulates one of the easing curves
-          // simulates really slow exponential growth, but not linear
+          // simulates really slow exponential growth, but not linear (easing curve)
           mesh.scale.x = 0.982 * mesh.scale.x + 0.108;
           // mesh.scale.y = 0.98 * mesh.scale.y + 0.1;
           mesh.scale.y = mesh.scale.x;
@@ -220,18 +271,51 @@ export default function RippleShader() {
       renderer.setSize(sizes.width, sizes.height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // Update resolution for aspect ratio
-      const tex = material.uniforms.uTexture.value;
-      if (tex.image) {
-        const imgAspect = tex.image.width / tex.image.height;
-        const scrAspect = sizes.width / sizes.height;
-        material.uniforms.resolution.value.set(
-          sizes.width,
-          sizes.height,
-          scrAspect > imgAspect ? 1 : imgAspect / scrAspect,
-          scrAspect > imgAspect ? scrAspect / imgAspect : 1
-        );
-      }
+      // Update render target
+      baseTexture.setSize(sizes.width, sizes.height);
+
+      // Recalculate percentage-based layout
+      edgePadding = sizes.width * paddingPercent;
+      gapSize = sizes.width * gapPercent;
+      const newTotalGaps = (numQuads - 1) * gapSize;
+      const newAvailableWidth = sizes.width - (2 * edgePadding) - newTotalGaps;
+      quadWidth = newAvailableWidth / numQuads;
+      quadHeight = sizes.height * 0.7;
+
+      // Update geometry
+      quadGeometry.dispose();
+      quadGeometry = new THREE.PlaneGeometry(quadWidth, quadHeight, 1, 1);
+
+      // Update starting X position with edge padding
+      startX = -sizes.width / 2 + edgePadding + quadWidth / 2;
+
+      // Update all quads and materials
+      quads.forEach((quad, index) => {
+        quad.geometry = quadGeometry;
+        const posX = startX + index * (quadWidth + gapSize);
+        quad.position.x = posX;
+
+        const mat = materials[index];
+
+        // Update screen-space UV offset and size
+        const normalizedX = (posX + sizes.width / 2 - quadWidth / 2) / sizes.width;
+        const normalizedY = (sizes.height / 2 - quadHeight / 2) / sizes.height;
+        mat.uniforms.uQuadOffset.value.set(normalizedX, normalizedY);
+        mat.uniforms.uQuadSize.value.set(quadWidth / sizes.width, quadHeight / sizes.height);
+
+        // Update resolution for aspect ratio
+        const tex = mat.uniforms.uTexture.value;
+        if (tex.image) {
+          const imgAspect = tex.image.width / tex.image.height;
+          const quadAspect = quadWidth / quadHeight;
+          mat.uniforms.resolution.value.set(
+            quadWidth,
+            quadHeight,
+            quadAspect > imgAspect ? 1 : imgAspect / quadAspect,
+            quadAspect > imgAspect ? quadAspect / imgAspect : 1
+          );
+        }
+      });
     };
 
     window.addEventListener("resize", handleResize);
@@ -243,7 +327,9 @@ export default function RippleShader() {
       controls.dispose();
       renderer.dispose();
       geometry.dispose();
-      material.dispose();
+      quadGeometry.dispose();
+      materials.forEach((mat) => mat.dispose());
+      baseTexture.dispose();
       if (containerRef.current && renderer.domElement) {
         containerRef.current.removeChild(renderer.domElement);
       }

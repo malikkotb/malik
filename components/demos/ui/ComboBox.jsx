@@ -20,6 +20,7 @@ const frameworks = [
   { value: "svgMaskScroll", label: "SVG Mask Scroll" },
   { value: "textScrolly", label: "Text Scrolly" },
   { value: "imageTrailEffect", label: "Image Trail Effect" },
+  { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
 ];
 
 export function Combobox({ setProject }) {

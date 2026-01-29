@@ -34,7 +34,7 @@ import * as React from 'react';
 
 const BUFFER = 2;
 const MAX_AROUND = 12; // Hard cap to avoid excessive DOM nodes
-const LERP_FACTOR = 0.1; // Smooth lerp (lower = smoother)
+const LERP_FACTOR = 0.05; // Smooth lerp (lower = smoother)
 const LERP_THRESHOLD = 0.01; // Stop lerping when within this many pixels
 const LINE_HEIGHT = 100 / 6; // Line height for wheel deltaMode === 1
 const WHEEL_MULTIPLIER = 1;
@@ -141,8 +141,8 @@ export function InfiniteScroll({
         deltaMode === 1
           ? LINE_HEIGHT
           : deltaMode === 2
-          ? containerHeight || window.innerHeight
-          : 1;
+            ? containerHeight || window.innerHeight
+            : 1;
 
       targetScrollRef.current += deltaY * multiplier * WHEEL_MULTIPLIER;
     },

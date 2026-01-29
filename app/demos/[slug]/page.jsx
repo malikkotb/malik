@@ -20,6 +20,7 @@ const demos = {
   "svgMaskScroll": dynamic(() => import("@/app/demos/_demos/svgMaskScroll")),
   "textScrolly": dynamic(() => import("@/app/demos/_demos/textScrolly")),
   "imageTrailEffect": dynamic(() => import("@/app/demos/_demos/imageTrailEffect/page")),
+  "pixelated-infinite-scroll": dynamic(() => import("@/app/demos/_demos/pixelated-infinite-scroll/page")),
 };
 
 export function generateStaticParams() {
