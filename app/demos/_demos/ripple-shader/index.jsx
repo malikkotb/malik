@@ -79,17 +79,18 @@ export default function RippleShader() {
     // Create plane geometry (1x1 base, scaled via mesh.scale)
     const geometry = new THREE.PlaneGeometry(64, 64, 1, 1);
 
-    // Layout configuration - percentage based
-    const paddingPercent = 0.05;  // 5% padding on each edge
-    const gapPercent = 0.05;      // 5% gap between images
+    // Layout configuration - fixed dimensions with 4:5 aspect ratio
     const numQuads = 3;
 
-    let edgePadding = sizes.width * paddingPercent;
-    let gapSize = sizes.width * gapPercent;
+    // Fixed dimensions - 4:5 aspect ratio (width:height)
+    let quadWidth = 360;  // Fixed width in pixels
+    let quadHeight = quadWidth * (5 / 4);  // Height based on 4:5 ratio
+
+    // Calculate spacing based on fixed quad dimensions
+    let gapSize = 42;  // Fixed gap between images
     const totalGaps = (numQuads - 1) * gapSize;
-    const availableWidth = sizes.width - (2 * edgePadding) - totalGaps;
-    let quadWidth = 350;//availableWidth / numQuads;
-    let quadHeight = sizes.height * 0.5;
+    const totalQuadWidth = numQuads * quadWidth + totalGaps;
+    let edgePadding = (sizes.width - totalQuadWidth) / 2;
 
     // Create geometry for quads
     let quadGeometry = new THREE.PlaneGeometry(quadWidth, quadHeight, 1, 1);
@@ -274,13 +275,15 @@ export default function RippleShader() {
       // Update render target
       baseTexture.setSize(sizes.width, sizes.height);
 
-      // Recalculate percentage-based layout
-      edgePadding = sizes.width * paddingPercent;
-      gapSize = sizes.width * gapPercent;
+      // Keep fixed dimensions with 4:5 aspect ratio
+      quadWidth = 360;
+      quadHeight = quadWidth * (5 / 4);
+
+      // Recalculate spacing
+      gapSize = 42;
       const newTotalGaps = (numQuads - 1) * gapSize;
-      const newAvailableWidth = sizes.width - (2 * edgePadding) - newTotalGaps;
-      quadWidth = newAvailableWidth / numQuads;
-      quadHeight = sizes.height * 0.7;
+      const totalQuadWidth = numQuads * quadWidth + newTotalGaps;
+      edgePadding = (sizes.width - totalQuadWidth) / 2;
 
       // Update geometry
       quadGeometry.dispose();
