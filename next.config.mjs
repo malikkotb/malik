@@ -6,6 +6,11 @@ const nextConfig = {
       use: [{ loader: "@svgr/webpack", options: { icon: true } }],
     });
 
+    config.module.rules.push({
+      test: /\.(glsl|vs|fs|vert|frag)$/,
+      type: "asset/source",
+    });
+
     return config;
   },
   turbopack: {

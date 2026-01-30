@@ -1,0 +1,67 @@
+// Slide data for zoom carousel
+// Each slide can have: texture1, textureOverlay, mask, and various shader settings
+
+export const slides = [
+  {
+    id: 1,
+    texture1: '/demos/img1.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 2,
+    texture1: '/demos/img2.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 3,
+    texture1: '/demos/img3.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 4,
+    texture1: '/demos/img4.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 5,
+    texture1: '/demos/img5.jpg',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 6,
+    texture1: '/demos/img6.jpg',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+];
+
+export default slides;

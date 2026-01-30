@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useRouter, usePathname } from "next/navigation";
 
-const frameworks = [
+export const frameworks = [
   { value: "animated-counter", label: "Animated Counter" },
   { value: "horizontal-section", label: "Horizontal Section" },
   { value: "mouse-image-distorter", label: "Mouse Image Distorter" },
@@ -12,7 +12,6 @@ const frameworks = [
   { value: "particle-distorter", label: "Particle Distorter" },
   { value: "threedwave", label: "3D Wave on Scroll" },
   { value: "3d-image-universe", label: "3D Image Universe" },
-  { value: "3d-video-throwback", label: "3D Video Throwback" },
   { value: "tile-hover-distortion", label: "Tile Hover Distortion" },
   { value: "gradient-shader", label: "Gradient Shader" },
   { value: "ripple-shader", label: "Ripple Shader" },
@@ -21,6 +20,9 @@ const frameworks = [
   { value: "textScrolly", label: "Text Scrolly" },
   { value: "imageTrailEffect", label: "Image Trail Effect" },
   { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
+  { value: "zoom-carousel", label: "Zoom Carousel" },
+  { value: "3d-dna-carousel", label: "3D DNA Carousel" },
+  { value: "infinite-draggable-grid", label: "Infinite Draggable Grid" },
 ];
 
 export function Combobox({ setProject }) {

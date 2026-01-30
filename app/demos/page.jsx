@@ -1,77 +1,91 @@
 "use client";
-import { useState } from "react";
+import Link from "next/link";
 import { InfiniteScroll } from "@/components/Infinite-Scroll/infinite-scroll";
+import { frameworks } from "@/components/demos/ui/ComboBox";
 
-// 10 rows × 6 columns matrix
-// Edit this matrix directly to set initial values (0 = no image, 1 = image)
-const initialMatrix = [
-  [0, 1, 0, 0, 1, 1],
-  [1, 0, 1, 0, 1, 0],
-  [1, 0, 0, 1, 0, 1],
-  [0, 1, 1, 0, 1, 0],
+const COLUMNS = 4;
+
+// Define the matrix pattern (0 = empty, 1 = demo)
+// This creates a visually interesting layout with empty spaces
+const matrixPattern = [
+  [0, 1, 0, 1],
+  [1, 0, 1, 0],
+  [0, 1, 0, 1],
+  [1, 0, 0, 1],
+  [0, 1, 1, 0],
+  [1, 0, 1, 0],
+  [1, 1, 0, 1],
+  [0, 1, 0, 0],
 ];
 
-// TODO: get random layout every time the page is loaded of the matrix but make sure its evenly spread out
-// TODO: add a button to shuffle the matrix
-
 export default function DemosPage() {
-  // Initialize matrix from the constant
-  const [matrix, setMatrix] = useState(() => {
-    // Deep copy the initial matrix
-    return initialMatrix.map((row) => [...row]);
+  // Build rows by following the matrix pattern
+  let demoIndex = 0;
+  const rows = matrixPattern.map((pattern) => {
+    return pattern.map((hasDemo) => {
+      if (hasDemo === 1 && demoIndex < frameworks.length) {
+        return frameworks[demoIndex++];
+      }
+      return null; // Empty cell
+    });
   });
 
   return (
     <main className="w-full h-full mt-[28px]">
       <InfiniteScroll style={{ height: "calc(100vh - 56px)" }}>
-        <div className='space-y-[80px] pb-[80px] lg:space-y-[64px]'>
-          {matrix.map((row, rowIndex) => (
-            <div
-              key={rowIndex}
-              className='grid grid-cols-6 gap-[7px]'
-            >
-              {row.map((cell, colIndex) => {
-                // Calculate transform origin based on position
+        <div className="space-y-[80px] pb-[80px] lg:space-y-[64px]">
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="grid grid-cols-4 gap-[7px]">
+              {row.map((demo, colIndex) => {
                 const isLeftEdge = colIndex === 0;
-                const isRightEdge = colIndex === row.length - 1;
+                const isRightEdge = colIndex === COLUMNS - 1;
                 const transformOrigin = isLeftEdge
                   ? "left center"
                   : isRightEdge
                     ? "right center"
                     : "center center";
 
+                if (demo === null) {
+                  // Empty cell
+                  return (
+                    <div
+                      key={`empty-${rowIndex}-${colIndex}`}
+                      className="cursor-default"
+                      style={{
+                        aspectRatio: "4/3",
+                        transformOrigin,
+                      }}
+                    />
+                  );
+                }
+
                 return (
-                  <div
-                    key={`${rowIndex}-${colIndex}`}
-                    onClick={() => {
-                      // TODO: use correct link to the experiment
-                      if (cell === 1) {
-                        window.open(
-                          "https://maliks-playground.vercel.app/",
-                          "_blank"
-                        );
-                      }
-                    }}
-                    className={`overflow-hidden ${cell === 1 ? "cursor-pointer" : "cursor-default"}`}
+                  <Link
+                    key={demo.value}
+                    href={`/demos/${demo.value}`}
+                    className="relative group block overflow-hidden cursor-pointer"
                     style={{
                       aspectRatio: "4/3",
                       transformOrigin,
                     }}
                   >
-                    {/* {cell === 1 ? (
-                      <video
-                        src='/video1.mov'
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className='w-full h-full object-cover'
+                    <div className="w-full h-full">
+                      <img
+                        src="/image.png"
+                        alt={demo.label}
+                        className="w-full h-full p-[20%] object-cover"
                       />
-                    ) : null} */}
-                    {cell === 1 ? (
-                      <img src='/image.png' alt='lab' className='w-full h-full object-cover' />
-                    ) : null}
-                  </div>
+                    </div>
+                    {/* Centered red text with shadow */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span
+                        className="text-red-500 text-lg font-bold"
+                        style={{ textShadow: "0 2px 4px rgba(0,0,0,0.8)" }}
+                      >
+                        {demo.label}
+                      </span>
+                    </div>
+                  </Link>
                 );
               })}
             </div>

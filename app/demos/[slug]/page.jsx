@@ -21,6 +21,9 @@ const demos = {
   "textScrolly": dynamic(() => import("@/app/demos/_demos/textScrolly")),
   "imageTrailEffect": dynamic(() => import("@/app/demos/_demos/imageTrailEffect/page")),
   "pixelated-infinite-scroll": dynamic(() => import("@/app/demos/_demos/pixelated-infinite-scroll/page")),
+  "zoom-carousel": dynamic(() => import("@/app/demos/_demos/zoom-carousel")),
+  "3d-dna-carousel": dynamic(() => import("@/app/demos/_demos/3d-dna-carousel")),
+  "infinite-draggable-grid": dynamic(() => import("@/app/demos/_demos/infinite-draggable-grid/page")),
 };
 
 export function generateStaticParams() {
