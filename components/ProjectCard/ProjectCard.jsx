@@ -135,7 +135,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className='aspect-[5/3] rounded-[4px] overflow-hidden relative shadow-lg'>
+      <div className='aspect-[5/3] overflow-hidden relative'>
         {videoSrc && (
           <video
             ref={videoRef}
@@ -158,7 +158,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
         }}
-        className='text-[14px] lg:text-[16px]'
+        className='text-[12px]'
       >
         {title}
       </h3>
@@ -168,7 +168,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
           e.stopPropagation();
           window.open(link, "_blank");
         }}
-        className='projectLink uppercase cursor-pointer opacity-50 text-[12px] lg:text-[14px]'
+        className='projectLink uppercase cursor-pointer opacity-50 text-[12px]'
       >
         View project
       </a>

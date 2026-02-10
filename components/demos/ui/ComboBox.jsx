@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 export const frameworks = [
   { value: "mouse-image-distorter", label: "Mouse Image Distorter" },
   { value: "bulge-distortion-shader", label: "Bulge Distortion Shader" },
-  { value: "particle-distorter", label: "Particle Distorter" },
+  // { value: "particle-distorter", label: "Particle Distorter" },
   { value: "threedwave", label: "3D Wave on Scroll" },
   { value: "3d-image-universe", label: "3D Image Universe" },
   { value: "tile-hover-distortion", label: "Tile Hover Distortion" },

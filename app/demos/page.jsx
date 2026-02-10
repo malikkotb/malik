@@ -30,6 +30,16 @@ export default function DemosPage() {
     });
   });
 
+  const showComingSoon = true;
+
+  if (showComingSoon) {
+    return (
+      <main className="w-full h-[90vh] mt-[28px] flex items-center justify-center">
+        <div className="text-center text-[12px]">Updated Lab Coming Soon</div>
+      </main>
+    );
+  }
+
   return (
     <main className="w-full h-full mt-[28px]">
       <InfiniteScroll style={{ height: "calc(100vh - 56px)" }}>

@@ -112,15 +112,15 @@ export default function About() {
         <div className='md:col-span-6 col-span-12'>
           <AboutImage src='/about.jpeg' alt='about' />
         </div>
-        <p className='text-[14px] md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
-          I&apos;m a creative developer who loves design, motion, and
+        <p className='text-[12px] md:col-start-7 md:col-span-6 col-start-1 col-span-12'>
+          I&apos;m a web designer and developer who loves design, motion, and
           pushing the boundaries of what&apos;s possible on the web.
           <br />
           <br />
           I build websites that look great and work smoothly, with a
           focus on beautiful execution and precise attention to
           detail. My expertise lies in elevating web experiences
-          through motion, animations, and immersive 3D elements using
+          through eye-catching design, smooth animations, and immersive 3D elements using
           WebGL and Three.js.
           <br />
           <br />

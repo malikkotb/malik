@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 const demos = {
   "mouse-image-distorter": dynamic(() => import("@/app/demos/_demos/mouse-image-distorter")),
   "bulge-distortion-shader": dynamic(() => import("@/app/demos/_demos/bulge-distortion-shader")),
-  "particle-distorter": dynamic(() => import("@/app/demos/_demos/particle-distorter")),
+  // "particle-distorter": dynamic(() => import("@/app/demos/_demos/particle-distorter")),
   "threedwave": dynamic(() => import("@/app/demos/_demos/threedwave")),
   "3d-image-universe": dynamic(() => import("@/app/demos/_demos/3d-image-universe")),
   "3d-video-throwback": dynamic(() => import("@/app/demos/_demos/3d-video-throwback")),

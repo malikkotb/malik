@@ -64,19 +64,19 @@ export default function Header() {
       </Link>
 
       {/* Show Combobox in the center when on /demos route - hidden on mobile */}
-      {isOnDemosRoute && (
+      {/* {isOnDemosRoute && (
         <div className='hidden sm:flex absolute top-[14px] left-1/2 -translate-x-1/2 items-center justify-center'>
           <Combobox />
         </div>
-      )}
+      )} */}
 
       <div className={`flex flex-col items-end gap-1 col-span-9 sm:col-span-3 ${isOnDemosRoute ? 'col-start-4 sm:col-start-10' : 'col-start-4 sm:col-start-10'} justify-end`}>
         <div className='flex gap-2 lg:gap-4'>
           <Link href='/work'>
             <ScrambleText text="Work" underline />
           </Link>
-          <Link href='/about'>
-            <ScrambleText text="About" underline />
+          <Link href='/info'>
+            <ScrambleText text="Info" underline />
           </Link>
           <Link href='/demos' className='hidden md:block'>
             <ScrambleText text="Lab" underline />

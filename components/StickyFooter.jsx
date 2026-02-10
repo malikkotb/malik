@@ -31,7 +31,7 @@ export default function StickyFooter() {
   const menuLinks = [
     { name: "Home", href: "/" },
     { name: "Work", href: "/work" },
-    { name: "About", href: "/about" },
+    { name: "Info", href: "/info" },
     { name: "Lab", href: "/lab" },
     { name: "Contact", href: "mailto:malikkotb@icloud.com" },
   ];
@@ -56,8 +56,8 @@ export default function StickyFooter() {
 
   const resourceLinks = [
     {
-      name: "Lab",
-      href: "https://maliks-playground.vercel.app/",
+      name: "Substack",
+      href: "https://substack.com/@malik09/notes?utm_campaign=profile&utm_medium=profile-page",
       newPage: true,
     },
     {

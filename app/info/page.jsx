@@ -45,7 +45,7 @@ export default function IndexClient() {
   return (
     <div className='h-full w-full'>
       <div className='flex h-[calc(100vh-48px)] flex-col justify-center lg:grid grid-cols-12 gap-[20px] lg:items-center w-full'>
-        <div className='leading-[110%] pb-[10%] text-[24px] md:text-[32px] col-start-2 col-span-5 flex flex-col'>
+        <div className='leading-[110%] pb-[10%] text-[24px] col-start-2 col-span-5 flex flex-col'>
           <div className='flex flex-col'>
             <span className='whitespace-nowrap'>
               Creating web experiences
@@ -54,23 +54,23 @@ export default function IndexClient() {
               for mission-driven brands.
             </span>
           </div>
-          <Link
+          {/* <Link
             href='/work'
             className='see-work-btn text-base mt-5 rounded-full border border-black px-4 pt-1.5 pb-2 w-fit cursor-pointer'
             onMouseEnter={() => {
               if (audioRef.current) {
                 audioRef.current.currentTime = 0;
-                audioRef.current.play().catch(() => {});
+                audioRef.current.play().catch(() => { });
               }
             }}
           >
             <span className='see-work-btn-text'>See my work</span>
-          </Link>
+          </Link> */}
         </div>
         <div className='col-start-7 col-span-5 aspect-[5/3] flex flex-col'>
           <video
             src='https://malik-portfolio.b-cdn.net/reel.mp4'
-            className='rounded-[4px] shadow-xl object-cover w-full h-full'
+            className='object-cover w-full h-full'
             autoPlay
             muted
             loop
