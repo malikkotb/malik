@@ -23,7 +23,8 @@ const demos = {
   "pixelated-infinite-scroll": dynamic(() => import("@/app/demos/_demos/pixelated-infinite-scroll/page")),
   "zoom-carousel": dynamic(() => import("@/app/demos/_demos/zoom-carousel")),
   "3d-dna-carousel": dynamic(() => import("@/app/demos/_demos/3d-dna-carousel")),
-  "infinite-draggable-grid": dynamic(() => import("@/app/demos/_demos/infinite-draggable-grid/page")),
+  "infinite-scroll-gallery": dynamic(() => import("@/app/demos/_demos/infinite-scroll-gallery")),
+  "rubiks-cube": dynamic(() => import("@/app/demos/_demos/rubiks-cube")),
 };
 
 export function generateStaticParams() {

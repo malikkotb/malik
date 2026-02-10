@@ -35,7 +35,7 @@ const fragmentShader = `
   uniform sampler2D mask;
 
   void main() {
-    vec2 uMouse = mouse * -0.5;
+    vec2 uMouse = mouse * -0.05;
     uMouse.y *= resolution.y / resolution.x;
     uMouse *= -1.;
 
@@ -122,7 +122,7 @@ const CarouselSlide = forwardRef(function CarouselSlide({
     mouse: { value: new THREE.Vector2(0, 0) },
     resolution: { value: new THREE.Vector2(1, 1) },
     scaleCenter: { value: 0.5 },
-    imageScale: { value: slideData.imageScale || 1.0 },
+    imageScale: { value: slideData.imageScale || 0.85 },
     maskScale: { value: slideData.maskScale || 1.0 },
     hasVideo: { value: slideData.hasVideo ? 1.0 : 0.0 },
     darken: { value: slideData.darken || 0.0 },
@@ -144,7 +144,6 @@ const CarouselSlide = forwardRef(function CarouselSlide({
         if (!mounted) return;
         texture.minFilter = THREE.LinearFilter;
         texture.magFilter = THREE.LinearFilter;
-        texture.colorSpace = THREE.SRGBColorSpace;
         texturesRef.current.texture1 = texture;
         if (materialRef.current) {
           materialRef.current.uniforms.texture1.value = texture;

@@ -41,10 +41,8 @@ const fragmentShader = `
   void main() {
     vec4 texColor = texture2D(uTexture, vUv);
 
-    // Subtle vignette for depth
-    float vignette = 1.0 - smoothstep(0.3, 0.7, length(vUv - 0.5) * 1.5);
-
-    vec3 finalColor = texColor.rgb * (0.9 + vignette * 0.1);
+    // Keep original texture colors without darkening
+    vec3 finalColor = texColor.rgb;
 
     gl_FragColor = vec4(finalColor, texColor.a * uOpacity);
   }
@@ -98,7 +96,8 @@ const HelixSlide = forwardRef(function HelixSlide({
       if (!mounted) return;
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
-      texture.colorSpace = THREE.SRGBColorSpace;
+      // Don't set colorSpace - with custom shaders, this causes sRGB->linear conversion
+      // which darkens the image since the shader doesn't convert back to sRGB
       textureRef.current = texture;
       if (materialRef.current) {
         materialRef.current.uniforms.uTexture.value = texture;

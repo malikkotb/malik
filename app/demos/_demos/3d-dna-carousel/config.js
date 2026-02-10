@@ -9,7 +9,7 @@ export const defaultConfig = {
   itemsPerRotation: 8,
 
   // Camera
-  cameraDistance: 8,
+  cameraDistance: 15,
   cameraAngle: 0.3,
   cameraFov: 50,
 

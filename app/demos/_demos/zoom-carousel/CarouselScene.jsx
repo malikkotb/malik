@@ -19,7 +19,7 @@ const CarouselScene = memo(function CarouselScene({
     const pxToViewport = (px) => (px / size.height) * viewport.height;
 
     // Fixed values
-    const gap = pxToViewport(-75); // Negative gap - slides overlap
+    const gap = pxToViewport(-100); // Negative gap - slides overlap
     const slideHeight = pxToViewport(350);
 
     // 4:5 aspect ratio (vertical)
@@ -57,20 +57,49 @@ const CarouselScene = memo(function CarouselScene({
       const normalizedProgress = ((smoothProgress.current % 1) + 1) % 1;
       groupRef.current.position.x = -normalizedProgress * layout.totalWidth;
 
-      // Update scale for each slide based on distance from center
-      slideRefs.current.forEach((slideRef) => {
+      // First pass: calculate scale factors and store them
+      const scaleFactors = [];
+      const maxDistance = layout.slideWidth * 3;
+
+      slideRefs.current.forEach((slideRef, i) => {
         if (slideRef && slideRef.current) {
-          // Get world position of the slide
-          const worldPos = slideRef.current.position.clone();
-          worldPos.add(groupRef.current.position);
+          // Store base X position on first run
+          if (slideRef.current.userData.baseX === undefined) {
+            slideRef.current.userData.baseX = slideRef.current.position.x;
+          }
 
-          // Calculate distance from center (0, 0, 0)
-          const distanceFromCenter = Math.abs(worldPos.x);
+          // Get world position using base X
+          const baseWorldX = slideRef.current.userData.baseX + groupRef.current.position.x;
+          const distanceFromCenter = Math.abs(baseWorldX);
 
-          // Calculate scale factor (1.0 at center, decreases with distance)
-          // Adjust the divisor to control how quickly scale decreases
-          const maxDistance = layout.slideWidth * 2;
           const scaleFactor = Math.max(0.5, 1 - (distanceFromCenter / maxDistance) * 0.5);
+          scaleFactors[i] = { scaleFactor, baseWorldX, distanceFromCenter };
+        }
+      });
+
+      // Second pass: apply positioning with compression for consistent overlap
+      slideRefs.current.forEach((slideRef, i) => {
+        if (slideRef && slideRef.current && scaleFactors[i]) {
+          const { scaleFactor, baseWorldX, distanceFromCenter } = scaleFactors[i];
+          const baseX = slideRef.current.userData.baseX;
+
+          // Compress X position toward center based on scale reduction
+          // The further from center, the more compression needed
+          const sign = baseWorldX >= 0 ? 1 : -1;
+          const normalizedDist = Math.min(distanceFromCenter / maxDistance, 1);
+          const compressionAmount = (1 - scaleFactor) * normalizedDist * layout.slideWidth * 1.5;
+          slideRef.current.position.x = baseX - sign * compressionAmount;
+
+          // Set renderOrder inversely proportional to distance
+          slideRef.current.renderOrder = Math.round((1 - distanceFromCenter / maxDistance) * 100);
+
+          // Apply arc curve - center slide at top, sides curve down
+          const arcDepth = layout.slideHeight * 0.8;
+          const yOffset = -arcDepth * normalizedDist * normalizedDist;
+          slideRef.current.position.y = yOffset;
+
+          // Hide slides outside the curve range
+          slideRef.current.visible = distanceFromCenter <= maxDistance;
 
           // Apply scale to slide
           slideRef.current.scale.set(

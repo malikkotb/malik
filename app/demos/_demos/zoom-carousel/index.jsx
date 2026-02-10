@@ -2,6 +2,7 @@
 
 import { useRef, useCallback, useEffect, useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import CarouselScene from "./CarouselScene";
 
 export default function ZoomCarousel() {
@@ -100,12 +101,13 @@ export default function ZoomCarousel() {
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
+    outputColorSpace: THREE.LinearSRGBColorSpace,
   }), []);
 
   return (
     <div
       ref={containerRef}
-      className="h-screen w-full"
+      className="h-full absolute top-0 left-0 right-0 bottom-0 w-full"
       style={{
         cursor: isDragging ? 'grabbing' : 'grab',
         touchAction: 'none',

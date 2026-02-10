@@ -22,7 +22,8 @@ export const frameworks = [
   { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
   { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
-  { value: "infinite-draggable-grid", label: "Infinite Draggable Grid" },
+  { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
+  { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 
 export function Combobox({ setProject }) {

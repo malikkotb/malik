@@ -62,6 +62,36 @@ export const slides = [
     hasVideo: false,
     darken: 0.0,
   },
+  {
+    id: 7,
+    texture1: '/demos/img7.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 8,
+    texture1: '/demos/img8.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
+  {
+    id: 9,
+    texture1: '/demos/img9.png',
+    textureOverlay: null,
+    mask: null,
+    imageScale: 1.0,
+    maskScale: 1.0,
+    hasVideo: false,
+    darken: 0.0,
+  },
 ];
 
 export default slides;
