@@ -3,19 +3,14 @@ import * as React from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 export const frameworks = [
-  { value: "animated-counter", label: "Animated Counter" },
-  { value: "horizontal-section", label: "Horizontal Section" },
   { value: "mouse-image-distorter", label: "Mouse Image Distorter" },
-  { value: "cursor-blend", label: "Cursor Blend" },
   { value: "bulge-distortion-shader", label: "Bulge Distortion Shader" },
-  { value: "flashlight-gradient", label: "Flashlight Gradient" },
   { value: "particle-distorter", label: "Particle Distorter" },
   { value: "threedwave", label: "3D Wave on Scroll" },
   { value: "3d-image-universe", label: "3D Image Universe" },
   { value: "tile-hover-distortion", label: "Tile Hover Distortion" },
-  { value: "gradient-shader", label: "Gradient Shader" },
   { value: "ripple-shader", label: "Ripple Shader" },
-  { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
+  // { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
   { value: "svgMaskScroll", label: "SVG Mask Scroll" },
   { value: "textScrolly", label: "Text Scrolly" },
   { value: "imageTrailEffect", label: "Image Trail Effect" },

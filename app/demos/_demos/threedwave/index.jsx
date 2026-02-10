@@ -21,30 +21,30 @@ export default function ThreeDWaveScroll() {
     // Load texture for the plane
     const planeTexture = textureLoader.load("/demos/image.avif");
 
-    // Debug UI
-    const gui = new GUI({
-      width: 250,
-      title: "Debug UI",
-    });
+    // // Debug UI
+    // const gui = new GUI({
+    //   width: 250,
+    //   title: "Debug UI",
+    // });
 
-    // Position the GUI
-    gui.domElement.style.position = "fixed";
-    gui.domElement.style.top = "65vh";
-    gui.domElement.style.right = "15px";
+    // // Position the GUI
+    // gui.domElement.style.position = "fixed";
+    // gui.domElement.style.top = "65vh";
+    // gui.domElement.style.right = "15px";
 
     const parameters = {
       amplitude: 0.35,
       wavelength: 4.0,
     };
 
-    gui.add(parameters, "amplitude", 0, 1).onChange(() => {
-      planeMaterial.uniforms.uAmplitude.value = parameters.amplitude;
-    });
+    // gui.add(parameters, "amplitude", 0, 1).onChange(() => {
+    //   planeMaterial.uniforms.uAmplitude.value = parameters.amplitude;
+    // });
 
-    gui.add(parameters, "wavelength", 0, 10).onChange(() => {
-      planeMaterial.uniforms.uWavelength.value =
-        parameters.wavelength;
-    });
+    // gui.add(parameters, "wavelength", 0, 10).onChange(() => {
+    //   planeMaterial.uniforms.uWavelength.value =
+    //     parameters.wavelength;
+    // });
 
     // Sizes
     const sizes = {

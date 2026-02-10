@@ -78,7 +78,7 @@ export default function Header() {
           <Link href='/about'>
             <ScrambleText text="About" underline />
           </Link>
-          <Link href='/demos'>
+          <Link href='/demos' className='hidden md:block'>
             <ScrambleText text="Lab" underline />
           </Link>
           {/* <Link href='/blog'>
