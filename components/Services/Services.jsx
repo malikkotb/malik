@@ -13,18 +13,15 @@ export default function Services() {
     "Webflow",
   ];
 
-  const clients = [
-    "BODYARMOR",
-    "Coca-Cola",
-    "A Unified Whole",
-    "Lou Phelps",
-    "Prudentos",
-    "Iffy Studios",
-    "From The Farm",
-    "Hotel Kühbacher",
-    "Secret Nature",
-    "Meklit Fekadu Photography",
-  ];
+  const bio = (
+    <>
+      Malik Kotb is a web designer and developer who loves design, motion, and pushing the boundaries of what's possible on the web.
+      <br /><br />
+      He builds websites that look great and work smoothly, with a focus on beautiful execution and precise attention to detail.
+      <br /><br />
+      His expertise lies in elevating web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js.
+    </>
+  );
 
   const links = [
     { label: "EMAIL", value: "hello@malikkotb.com", href: "mailto:hello@malikkotb.com" },
@@ -38,16 +35,16 @@ export default function Services() {
     <div className='relative text-[12px] uppercase w-full' id='services'>
       {/* Desktop: 3 columns side by side */}
       <div className='hidden lg:grid grid-cols-12 gap-x-4'>
-        {/* Services Section */}
+        {/* Bio Section */}
         <div className='col-span-1 opacity-50'>Services</div>
-        <div className='col-span-3'>
-          {services.join(", ")}
+        <div className='col-span-3 leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>
+          {bio}
         </div>
 
-        {/* Clients Section */}
-        <div className='col-span-1 opacity-50'>Clients</div>
-        <div className='col-span-3'>
-          {clients.join(", ")}
+        {/* Services Section */}
+        <div className='col-span-1 opacity-50'>Services</div>
+        <div className='col-span-3 leading-[130%]' style={{ letterSpacing: '0.01em' }}>
+          {services.join(", ")}
         </div>
 
         {/* Links Section */}
@@ -68,16 +65,16 @@ export default function Services() {
 
       {/* Mobile: stacked layout */}
       <div className='flex flex-col gap-6 lg:hidden'>
+        {/* Bio Section */}
+        <div className='grid grid-cols-[80px_1fr] gap-4'>
+          <div className='opacity-50'>Services</div>
+          <div className='leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>{bio}</div>
+        </div>
+
         {/* Services Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
           <div className='opacity-50'>Services</div>
-          <div>{services.join(", ")}</div>
-        </div>
-
-        {/* Clients Section */}
-        <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>Clients</div>
-          <div>{clients.join(", ")}</div>
+          <div className='leading-[130%]' style={{ letterSpacing: '0.01em' }}>{services.join(", ")}</div>
         </div>
 
         {/* Links Section */}

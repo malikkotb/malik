@@ -68,19 +68,17 @@ export default function IndexClient() {
           </Link> */}
         </div>
         <div className='col-start-7 col-span-5 aspect-[5/3] flex flex-col'>
-          <video
-            src='https://malik-portfolio.b-cdn.net/reel.mp4'
+          <img
+            src='/about.jpeg'
+            alt='About'
             className='object-cover w-full h-full'
-            autoPlay
-            muted
-            loop
           />
         </div>
       </div>
       {/* <Work /> */}
       <Services />
       {/* <Projects projects={services} /> */}
-      <About />
+      {/* <About /> */}
       {/* <Testimonials /> */}
       <ActionCall />
     </div>
