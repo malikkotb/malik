@@ -19,6 +19,7 @@ export const frameworks = [
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
   { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
   { value: "rubiks-cube", label: "Rubik's Cube" },
+  { value: "3d-video-carousel", label: "3D Video Carousel" },
 ];
 
 export function Combobox({ setProject }) {

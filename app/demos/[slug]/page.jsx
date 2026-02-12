@@ -20,6 +20,7 @@ const demos = {
   "3d-dna-carousel": dynamic(() => import("@/app/demos/_demos/3d-dna-carousel")),
   "infinite-scroll-gallery": dynamic(() => import("@/app/demos/_demos/infinite-scroll-gallery")),
   "rubiks-cube": dynamic(() => import("@/app/demos/_demos/rubiks-cube")),
+  "3d-video-carousel": dynamic(() => import("@/app/demos/_demos/3d-video-carousel")),
 };
 
 export function generateStaticParams() {

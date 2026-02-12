@@ -30,7 +30,7 @@ export default function DemosPage() {
     });
   });
 
-  const showComingSoon = true;
+  const showComingSoon = false;
 
   if (showComingSoon) {
     return (
