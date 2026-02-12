@@ -76,7 +76,7 @@ export default function IndexClient() {
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12 lg:gap-x-[20px] lg:items-center w-full">
             {/* Hero Text */}
             <div className="order-1 lg:col-start-2 lg:col-span-5 flex flex-col">
-              <div className="leading-[110%] text-[24px] lg:text-[32px] flex flex-col">
+              <div className="leading-[110%] text-[24px] flex flex-col">
                 <span>Creating web experiences</span>
                 <span className="text-zinc-400">for mission-driven brands.</span>
               </div>

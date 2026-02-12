@@ -34,35 +34,41 @@ export default function Services() {
 
   return (
     <div className='relative text-[12px] uppercase w-full' id='services'>
-      {/* Desktop: 3 columns side by side */}
-      <div className='hidden lg:grid grid-cols-12 gap-x-[12px]'>
+      {/* Desktop: 3 parent columns, each with internal 4-column grid */}
+      <div className='hidden lg:grid grid-cols-3'>
         {/* Bio Section */}
-        <div className='col-span-1 opacity-50'>About</div>
-        <div className='col-span-3 leading-[130%] normal-case mr-6' style={{ letterSpacing: '0.01em' }}>
-          {bio}
+        <div className='grid grid-cols-4 mr-6'>
+          <div className='col-span-1 opacity-50'>About</div>
+          <div className='col-span-3 leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>
+            {bio}
+          </div>
         </div>
 
         {/* Services Section */}
-        <div className='col-span-1 opacity-50'>Services</div>
-        <div className='col-span-3 leading-[130%] flex flex-col mr-6' style={{ letterSpacing: '0.01em' }}>
-          {services.map((service, index) => (
-            <span key={index}>{service}</span>
-          ))}
+        <div className='grid grid-cols-4 mr-6'>
+          <div className='col-span-1 opacity-50'>Services</div>
+          <div className='col-span-3 leading-[130%] flex flex-col uppercase' style={{ letterSpacing: '0.01em' }}>
+            {services.map((service, index) => (
+              <span key={index}>{service}</span>
+            ))}
+          </div>
         </div>
 
         {/* Links Section */}
-        <div className='col-span-1 opacity-50'>Contact</div>
-        <div className='col-span-3 mr-6'>
-          <ul className='flex flex-col'>
+        <div className='grid grid-cols-4 mr-6'>
+          <div className='col-span-1 opacity-50'>Contact</div>
+          <div className='col-span-1 flex flex-col uppercase'>
             {links.map((link) => (
-              <li key={link.label} className='grid grid-cols-[80px_1fr]'>
-                <span>{link.label}</span>
-                <a href={link.href} target='_blank' rel='noopener noreferrer' className='cursor-pointer'>
-                  <ScrambleText text={link.value} />
-                </a>
-              </li>
+              <span key={link.label}>{link.label}</span>
             ))}
-          </ul>
+          </div>
+          <div className='col-span-2 flex flex-col uppercase'>
+            {links.map((link) => (
+              <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer' className='cursor-pointer'>
+                <ScrambleText text={link.value} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -70,14 +76,14 @@ export default function Services() {
       <div className='flex flex-col gap-6 lg:hidden'>
         {/* Bio Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>Services</div>
+          <div className='opacity-50'>About</div>
           <div className='leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>{bio}</div>
         </div>
 
         {/* Services Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
           <div className='opacity-50'>Services</div>
-          <div className='leading-[130%] flex flex-col' style={{ letterSpacing: '0.01em' }}>
+          <div className='leading-[130%] flex flex-col uppercase' style={{ letterSpacing: '0.01em' }}>
             {services.map((service, index) => (
               <span key={index}>{service}</span>
             ))}
@@ -86,12 +92,12 @@ export default function Services() {
 
         {/* Links Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>Links</div>
-          <ul className='flex flex-col'>
+          <div className='opacity-50'>Contact</div>
+          <ul className='flex flex-col uppercase'>
             {links.map((link) => (
               <li key={link.label} className='grid grid-cols-[80px_1fr]'>
                 <span>{link.label}</span>
-                <a href={link.href} target='_blank' rel='noopener noreferrer' className='cursor-pointer lowercase'>
+                <a href={link.href} target='_blank' rel='noopener noreferrer' className='cursor-pointer'>
                   <ScrambleText text={link.value} />
                 </a>
               </li>

@@ -1,6 +1,4 @@
-import localFont from "next/font/local";
 import "./globals.css";
-import StickyFooter from "../components/StickyFooter";
 import Header from "@/components/Header";
 import LoadingScreen from "@/components/LoadingScreen";
 
