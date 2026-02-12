@@ -43,7 +43,7 @@ export default function ActionCall({ overlayMode = false }) {
             <iframe
               src='https://cal.com/malikkotb?theme=light'
               frameBorder='0'
-              scrolling='no'
+              scrolling='yes'
               className='w-full h-full rounded-lg'
             ></iframe>
           </div>
@@ -66,7 +66,7 @@ export default function ActionCall({ overlayMode = false }) {
           <iframe
             src='https://cal.com/malikkotb?theme=light'
             frameBorder='0'
-            scrolling='no'
+            scrolling='yes'
             className='w-full h-full rounded-lg'
           ></iframe>
         </div>
