@@ -145,7 +145,7 @@ export default function StickyFooter() {
           </ul>
         </div>
         <div className='items-end eyebrow eyebrow-footer flex col-span-6 md:col-start-1 md:col-span-3'>
-          Malik Kotb© 2025
+          Malik Kotb© 2026
         </div>
         <div className='hidden md:flex items-end text-left cursor-default md:col-start-5 md:col-span-3'>
           <div className='flex flex-col'>

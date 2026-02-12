@@ -4,9 +4,10 @@ import ScrambleText from "../ScrambleText";
 export default function Services() {
   const services = [
     "Web Design, Figma",
-    "Frontend Development",
-    "Next.js, React",
+    "Next.js/ React.js",
+    "Nuxt.js/ Vue.js",
     "WebGL, Three.js",
+    "React Three Fiber",
     "Creative Coding",
     "Headless CMS, Sanity",
     "Headless E-commerce, Shopify",
@@ -34,22 +35,24 @@ export default function Services() {
   return (
     <div className='relative text-[12px] uppercase w-full' id='services'>
       {/* Desktop: 3 columns side by side */}
-      <div className='hidden lg:grid grid-cols-12 gap-x-4'>
+      <div className='hidden lg:grid grid-cols-12 gap-x-[12px]'>
         {/* Bio Section */}
-        <div className='col-span-1 opacity-50'>Services</div>
-        <div className='col-span-3 leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>
+        <div className='col-span-1 opacity-50'>About</div>
+        <div className='col-span-3 leading-[130%] normal-case mr-6' style={{ letterSpacing: '0.01em' }}>
           {bio}
         </div>
 
         {/* Services Section */}
         <div className='col-span-1 opacity-50'>Services</div>
-        <div className='col-span-3 leading-[130%]' style={{ letterSpacing: '0.01em' }}>
-          {services.join(", ")}
+        <div className='col-span-3 leading-[130%] flex flex-col mr-6' style={{ letterSpacing: '0.01em' }}>
+          {services.map((service, index) => (
+            <span key={index}>{service}</span>
+          ))}
         </div>
 
         {/* Links Section */}
-        <div className='col-span-1 opacity-50'>Links</div>
-        <div className='col-span-3'>
+        <div className='col-span-1 opacity-50'>Contact</div>
+        <div className='col-span-3 mr-6'>
           <ul className='flex flex-col'>
             {links.map((link) => (
               <li key={link.label} className='grid grid-cols-[80px_1fr]'>
@@ -74,7 +77,11 @@ export default function Services() {
         {/* Services Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
           <div className='opacity-50'>Services</div>
-          <div className='leading-[130%]' style={{ letterSpacing: '0.01em' }}>{services.join(", ")}</div>
+          <div className='leading-[130%] flex flex-col' style={{ letterSpacing: '0.01em' }}>
+            {services.map((service, index) => (
+              <span key={index}>{service}</span>
+            ))}
+          </div>
         </div>
 
         {/* Links Section */}

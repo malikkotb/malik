@@ -54,7 +54,7 @@ export default function Header() {
         mixBlendMode: "difference",
         color: "#fff",
       }}
-      className={`header-footer-text uppercase z-[100] grid grid-cols-12 gap-[8px] justify-between w-full fixed top-0 left-0 right-0 p-[14px] transition-all ease-in-out duration-500 ${isVisible
+      className={`header-footer-text uppercase z-[100] grid grid-cols-12 gap-[8px] justify-between w-full fixed top-0 left-0 right-0 p-[12px] transition-all ease-in-out duration-500 ${isVisible
         ? "translate-y-0 opacity-100"
         : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
         }`}
@@ -65,7 +65,7 @@ export default function Header() {
 
       {/* Show Combobox in the center when on /demos route - hidden on mobile */}
       {/* {isOnDemosRoute && (
-        <div className='hidden sm:flex absolute top-[14px] left-1/2 -translate-x-1/2 items-center justify-center'>
+        <div className='hidden sm:flex absolute top-[12px] left-1/2 -translate-x-1/2 items-center justify-center'>
           <Combobox />
         </div>
       )} */}

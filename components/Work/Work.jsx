@@ -12,17 +12,15 @@ export default function Work() {
           <div
             onClick={() => setView("grid")}
             style={{ color: "black" }}
-            className={`cursor-pointer text-black ${
-              view === "grid" ? "opacity-100" : "opacity-60"
-            }`}
+            className={`cursor-pointer text-black ${view === "grid" ? "opacity-100" : "opacity-60"
+              }`}
           >
             Grid
           </div>
           <div
             onClick={() => setView("list")}
-            className={`cursor-pointer text-black ${
-              view === "list" ? "opacity-100" : "opacity-60"
-            }`}
+            className={`cursor-pointer text-black ${view === "list" ? "opacity-100" : "opacity-60"
+              }`}
           >
             List
           </div>
@@ -33,7 +31,7 @@ export default function Work() {
       ) : (
         <div
           id='projects'
-          className='relative w-full grid gap-4 gap-y-8 grid-cols-1 lg:grid-cols-2'
+          className='relative w-full grid gap-[12px] gap-y-8 grid-cols-1 lg:grid-cols-2'
         >
           {projects.map((project, i) => {
             return (

@@ -108,7 +108,7 @@ const HoverList = ({ projects }) => {
                 });
                 if (audioRef.current) {
                   audioRef.current.currentTime = 0;
-                  audioRef.current.play().catch(() => {});
+                  audioRef.current.play().catch(() => { });
                 }
               }}
               onMouseMove={(e) =>
@@ -138,7 +138,7 @@ const HoverList = ({ projects }) => {
                 </motion.p>
               </div>
               <div className='hidden lg:block directional-list__col-client'>
-                <p className='direcitonal-list__p'>
+                <p className='direcitonal-list__p hidden'>
                   {project.category}
                 </p>
               </div>
@@ -172,7 +172,7 @@ const HoverList = ({ projects }) => {
             muted
             loop
             playsInline
-            className='w-full h-auto rounded-md object-cover'
+            className='w-full h-auto object-cover'
           />
         </div>
       )}

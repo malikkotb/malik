@@ -74,36 +74,6 @@ export default function IndexClient() {
       </div> */}
       <div className="lg:hidden pt-[30vh]" ref={mobileContainerRef}>
         <Work />
-        {/* <div className="flex flex-col gap-4" style={{ paddingTop: "30vh" }}>
-          {projects.map((project) => {
-            const aspectClass = project.orientation === "vertical"
-              ? "aspect-[4/5]"
-              : "aspect-video";
-
-            return (
-              <div
-                key={project.title}
-                // href={project.link}
-                className={`relative overflow-hidden ${aspectClass} w-full`}
-                style={{ textDecoration: "none" }}
-              >
-                {project.videoSrc && (
-                  <video
-                    src={project.videoSrc}
-                    className='w-full h-full object-cover'
-                    loop
-                    muted
-                    playsInline
-                    autoPlay
-                    preload='auto'
-                  />
-                )}
-
-
-              </div>
-            );
-          })}
-        </div> */}
       </div>
     </div>
   );

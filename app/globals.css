@@ -21,7 +21,7 @@
 }
 
 body {
-  padding: 14px;
+  padding: 12px;
   font-family: "PPNeueMontreal Medium", sans-serif;
   font-weight: 530;
   /* background-color: #fafafa; */
@@ -104,7 +104,7 @@ html {
 }
 
 .header-footer-text {
-  font-size: 0.75rem; /* text-sm: 14px */
+  font-size: 0.75rem;
   line-height: 100%; 
 }
 

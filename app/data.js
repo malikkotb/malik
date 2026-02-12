@@ -97,17 +97,17 @@ const projects = [
     link: "https://www.iffystudios.com/",
     videoSrc: "https://malik-portfolio.b-cdn.net/iffy_demo.mp4",
   },
-  {
-    projectTitle: "Secret Nature",
-    category: "Development",
-    client: "A Unified Whole",
-    year: "2025",
-    description:
-      "Developed a the storefront for Secret Nature, a brand that sells natural CBD products.",
-    tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
-    link: "https://www.secretnature.co/",
-    videoSrc: "https://malik-portfolio.b-cdn.net/secret.mp4",
-  },
+  // {
+  //   projectTitle: "Secret Nature",
+  //   category: "Development",
+  //   client: "A Unified Whole",
+  //   year: "2025",
+  //   description:
+  //     "Developed a the storefront for Secret Nature, a brand that sells natural CBD products.",
+  //   tags: ["Shopify/Hydrogen", "React.js", "GSAP"],
+  //   link: "https://www.secretnature.co/",
+  //   videoSrc: "https://malik-portfolio.b-cdn.net/secret.mp4",
+  // },
   {
     projectTitle: "Meklit Fekadu Photography",
     client: "Meklit Fekadu",
