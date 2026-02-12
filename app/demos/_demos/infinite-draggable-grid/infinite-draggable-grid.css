@@ -39,6 +39,25 @@ body {
   .infinite_draggable_grid_item {
     cursor: pointer;
   }
+
+  /* Title/Label overlay */
+  .infinite_draggable_grid_item_overlay {
+    position: absolute;
+    inset: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .infinite_draggable_grid_item_label {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    padding: 8px 16px;
+  }
   
   /* Use opacity instead of filter for better Webflow/Safari compatibility */
   .infinite_draggable_grid_item_image {
@@ -65,7 +84,7 @@ body {
   }
   
   [data-anm-grid].is-detail-view .infinite_draggable_grid_fullscreen {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.1);
   }
   
   .infinite_draggable_grid_fullscreen .infinite_draggable_grid_item_image {

@@ -158,20 +158,10 @@ export default function ProjectCard({ link, title, videoSrc }) {
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
         }}
-        className='text-[12px]'
+        className='text-[12px] w-fit projectLink'
       >
         {title}
       </h3>
-      <a
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          window.open(link, "_blank");
-        }}
-        className='projectLink uppercase cursor-pointer opacity-50 text-[12px]'
-      >
-        View project
-      </a>
     </div>
   );
 }

@@ -10,6 +10,7 @@ export const frameworks = [
   { value: "3d-image-universe", label: "3D Image Universe" },
   { value: "tile-hover-distortion", label: "Tile Hover Distortion" },
   { value: "ripple-shader", label: "Ripple Shader" },
+  // { value: "infinite-draggable-grid", label: "Infinite Draggable Grid" },
   // { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
   { value: "svgMaskScroll", label: "SVG Mask Scroll" },
   { value: "textScrolly", label: "Text Scrolly" },
@@ -17,9 +18,9 @@ export const frameworks = [
   { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
   { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
-  { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
-  { value: "rubiks-cube", label: "Rubik's Cube" },
-  { value: "3d-video-carousel", label: "3D Video Carousel" },
+  // { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
+  // { value: "rubiks-cube", label: "Rubik's Cube" },
+  // { value: "3d-video-carousel", label: "3D Video Carousel" },
 ];
 
 export function Combobox({ setProject }) {

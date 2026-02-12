@@ -16,16 +16,18 @@ if (typeof window !== 'undefined') {
  * Creates a seamless brick pattern that wraps infinitely in all directions.
  *
  * @param {string} [className=''] - Additional CSS classes
- * @param {Array} [images] - Array of image objects with src and alt
+ * @param {Array} [images] - Array of image objects with src, alt, and optionally label/value
  * @param {boolean} [drag=true] - Enable drag interaction
  * @param {boolean} [scroll=true] - Enable scroll/wheel interaction
  * @param {number} [ease=0.06] - Lerp ease factor for smooth scrolling
  * @param {number} [speed=1] - Speed multiplier (alias for speedFactor * 0.4)
  * @param {number} [scaleDuration=0.3] - Duration of scale animation on drag
  * @param {string} [scaleEase='expo.out'] - Easing for scale animation
- * @param {boolean} [detail=true] - Enable detail view on click
+ * @param {boolean} [detail=true] - Enable detail view on click (disabled when onItemClick provided)
  * @param {number} [detailDuration=1] - Duration of detail view animation
  * @param {string} [detailEase='expo.inOut'] - Easing for detail view animation
+ * @param {function} [onItemClick] - Callback when item is clicked (receives item data)
+ * @param {boolean} [showLabel=false] - Show label overlay on each item
  */
 export default function InfiniteDraggableGrid({
     className = '',
@@ -46,6 +48,8 @@ export default function InfiniteDraggableGrid({
     detail = true,
     detailDuration = 1,
     detailEase = 'expo.inOut',
+    onItemClick = null,
+    showLabel = false,
 }) {
     const containerRef = useRef(null);
     const wrapperRef = useRef(null);
@@ -82,19 +86,23 @@ export default function InfiniteDraggableGrid({
         clickStartY: 0,
     });
 
+    // Determine if detail view should be enabled (disabled when onItemClick is provided)
+    const enableDetailView = detail && !onItemClick;
+
     // Window dimensions
     const winRef = useRef({ w: 0, h: 0 });
 
     // Layout configuration for seamless brick pattern
     const layout = useRef({
-        cardW: 240,
-        cardH: 300, // 4:5 aspect ratio (240 * 5/4 = 300)
-        gap: 132,
-        cols: 6,
-        rowCount: 6,
-        offsetX: 132,
-        tileW: 0,
-        tileH: 0,
+        cardW: 250,        // Width of each card/image in pixels
+        cardH: 200,        // Height of each card/image in pixels
+        gapX: 200,         // Horizontal spacing between cards (left-to-right gap)
+        gapY: 150,         // Vertical spacing between rows (top-to-bottom gap)
+        cols: 6,           // Number of columns in the grid pattern
+        rowCount: 6,       // Number of rows in the repeating tile pattern
+        offsetX: 132,      // Horizontal offset for alternating rows (creates brick pattern)
+        tileW: 0,          // Calculated total width of one tile (auto-computed)
+        tileH: 0,          // Calculated total height of one tile (auto-computed)
     });
 
     // Calculate positions programmatically
@@ -106,10 +114,10 @@ export default function InfiniteDraggableGrid({
         for (let row = 0; row < l.rowCount; row++) {
             const isOffsetRow = row % 2 === 0;
             const rowOffsetX = isOffsetRow ? l.offsetX : 0;
-            const yPos = row * (l.cardH + l.gap);
+            const yPos = row * (l.cardH + l.gapY);
 
             for (let col = 0; col < l.cols; col++) {
-                const xPos = rowOffsetX + col * (l.cardW + l.gap);
+                const xPos = rowOffsetX + col * (l.cardW + l.gapX);
                 positions.push({
                     x: xPos,
                     y: yPos,
@@ -126,19 +134,37 @@ export default function InfiniteDraggableGrid({
         return positions;
     }, []);
 
-    // Scale animation helper
-    const animateScale = useCallback((scale) => {
-        itemsRef.current.forEach((item) => {
-            if (item?.img) {
-                gsap.to(item.img, {
-                    scale,
-                    duration: scaleDuration,
-                    ease: scaleEase,
-                    overwrite: true,
-                });
-            }
-        });
-    }, [scaleDuration, scaleEase]);
+    // Scale animation ref for continuous scaling while dragging
+    const scaleAnimationRef = useRef(null);
+
+    // Canvas zoom - scales entire wrapper to simulate moving closer to camera
+    const startCanvasZoom = useCallback(() => {
+        if (scaleAnimationRef.current) {
+            scaleAnimationRef.current.kill();
+        }
+        if (wrapperRef.current) {
+            scaleAnimationRef.current = gsap.to(wrapperRef.current, {
+                scale: 1.08,
+                duration: 2,
+                ease: 'power2.out',
+                overwrite: true,
+            });
+        }
+    }, []);
+
+    const stopCanvasZoom = useCallback(() => {
+        if (scaleAnimationRef.current) {
+            scaleAnimationRef.current.kill();
+        }
+        if (wrapperRef.current) {
+            gsap.to(wrapperRef.current, {
+                scale: 1,
+                duration: 1.2,
+                ease: scaleEase,
+                overwrite: true,
+            });
+        }
+    }, [scaleEase]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -151,8 +177,8 @@ export default function InfiniteDraggableGrid({
         const ds = detailStateRef.current;
 
         // Calculate tile dimensions
-        l.tileW = l.cols * (l.cardW + l.gap);
-        l.tileH = l.rowCount * (l.cardH + l.gap);
+        l.tileW = l.cols * (l.cardW + l.gapX);
+        l.tileH = l.rowCount * (l.cardH + l.gapY);
 
         // Initialize window dimensions
         winRef.current.w = window.innerWidth;
@@ -164,7 +190,7 @@ export default function InfiniteDraggableGrid({
         // Store items data
         itemsRef.current = itemData.map((data, index) => {
             const el = wrapper.children[index];
-            const img = el?.querySelector('img');
+            const img = el?.querySelector('img, video');
             return {
                 el,
                 img,
@@ -191,8 +217,8 @@ export default function InfiniteDraggableGrid({
 
         const onMouseDown = (e) => {
             if (!drag || ds.isDetailView) return;
-            // Don't start drag if clicking on an item with detail view enabled
-            if (detail && e.target.closest('.infinite_draggable_grid_item')) {
+            // Don't start drag if clicking on an item with detail view or onItemClick enabled
+            if ((enableDetailView || onItemClick) && e.target.closest('.infinite_draggable_grid_item')) {
                 ds.clickStartX = e.clientX;
                 ds.clickStartY = e.clientY;
                 return;
@@ -204,14 +230,14 @@ export default function InfiniteDraggableGrid({
             dragRef.current.startY = e.clientY;
             dragRef.current.scrollX = scrollRef.current.target.x;
             dragRef.current.scrollY = scrollRef.current.target.y;
-            animateScale(0.95);
+            startCanvasZoom();
         };
 
         const onMouseUp = () => {
             if (!dragRef.current.isDragging) return;
             dragRef.current.isDragging = false;
             wrapper.classList.remove('is-dragging');
-            animateScale(1);
+            stopCanvasZoom();
         };
 
         const onMouseMove = (e) => {
@@ -223,8 +249,8 @@ export default function InfiniteDraggableGrid({
 
         const onTouchStart = (e) => {
             if (!drag || ds.isDetailView) return;
-            // Don't start drag if tapping on an item with detail view enabled
-            if (detail && e.target.closest('.infinite_draggable_grid_item')) {
+            // Don't start drag if tapping on an item with detail view or onItemClick enabled
+            if ((enableDetailView || onItemClick) && e.target.closest('.infinite_draggable_grid_item')) {
                 ds.clickStartX = e.touches[0].clientX;
                 ds.clickStartY = e.touches[0].clientY;
                 return;
@@ -235,7 +261,7 @@ export default function InfiniteDraggableGrid({
             dragRef.current.startY = e.touches[0].clientY;
             dragRef.current.scrollX = scrollRef.current.target.x;
             dragRef.current.scrollY = scrollRef.current.target.y;
-            animateScale(0.95);
+            startCanvasZoom();
         };
 
         const onTouchMove = (e) => {
@@ -249,7 +275,7 @@ export default function InfiniteDraggableGrid({
             if (!dragRef.current.isDragging) return;
             dragRef.current.isDragging = false;
             wrapper.classList.remove('is-dragging');
-            animateScale(1);
+            stopCanvasZoom();
         };
 
         const onResize = () => {
@@ -306,11 +332,42 @@ export default function InfiniteDraggableGrid({
         };
 
         // ============================================
+        // CUSTOM ITEM CLICK HANDLER (when onItemClick provided)
+        // ============================================
+        if (onItemClick && !enableDetailView) {
+            const CLICK_THRESHOLD = 5;
+
+            itemsRef.current.forEach((item, index) => {
+                const handleItemMouseDown = (e) => {
+                    ds.clickStartX = e.clientX;
+                    ds.clickStartY = e.clientY;
+                };
+
+                const handleItemClick = (e) => {
+                    const deltaX = Math.abs(e.clientX - ds.clickStartX);
+                    const deltaY = Math.abs(e.clientY - ds.clickStartY);
+
+                    if (deltaX < CLICK_THRESHOLD && deltaY < CLICK_THRESHOLD) {
+                        const imageData = images[index % images.length];
+                        onItemClick(imageData, index);
+                    }
+                };
+
+                item.el.addEventListener('mousedown', handleItemMouseDown);
+                item.el.addEventListener('click', handleItemClick);
+
+                // Store handlers for cleanup
+                item._mousedownHandler = handleItemMouseDown;
+                item._clickHandler = handleItemClick;
+            });
+        }
+
+        // ============================================
         // DETAIL VIEW (Flip Animation on Click)
         // ============================================
         let fullscreenEl = null;
 
-        if (detail) {
+        if (enableDetailView) {
             // Create fullscreen container
             fullscreenEl = document.createElement('div');
             fullscreenEl.className = 'infinite_draggable_grid_fullscreen';
@@ -326,6 +383,116 @@ export default function InfiniteDraggableGrid({
       `;
             container.appendChild(fullscreenEl);
             fullscreenRef.current = fullscreenEl;
+
+            // Create buttons container
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.className = 'infinite_draggable_grid_buttons';
+            buttonsContainer.style.cssText = `
+        position: fixed;
+        bottom: 40px;
+        left: 40px;
+        z-index: 101;
+        display: flex;
+        gap: 8px;
+        pointer-events: auto;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      `;
+
+            // Create SHOW CODE button
+            // const showCodeBtn = document.createElement('button');
+            // showCodeBtn.style.cssText = `
+            //     font-size: 12px;
+            //     text-transform: uppercase;
+            //     background: none;
+            //     border: none;
+            //     color: black;
+            //     padding: 0;
+            //     cursor: pointer;
+            //     position: relative;
+            //   `;
+
+            // const showCodeText = document.createElement('span');
+            // showCodeText.textContent = 'SHOW CODE';
+            // showCodeBtn.appendChild(showCodeText);
+
+            // const showCodeUnderline = document.createElement('span');
+            // showCodeUnderline.style.cssText = `
+            //     position: absolute;
+            //     left: 0;
+            //     bottom: -2px;
+            //     height: 1px;
+            //     background-color: currentColor;
+            //     width: 100%;
+            //     transform: scaleX(0);
+            //     transform-origin: right;
+            //     transition: transform 0.5s ease-in-out;
+            //   `;
+            // showCodeBtn.appendChild(showCodeUnderline);
+
+            // showCodeBtn.onmouseenter = () => {
+            //     showCodeUnderline.style.transform = 'scaleX(1)';
+            //     showCodeUnderline.style.transformOrigin = 'left';
+            // };
+            // showCodeBtn.onmouseleave = () => {
+            //     showCodeUnderline.style.transform = 'scaleX(0)';
+            //     showCodeUnderline.style.transformOrigin = 'right';
+            // };
+            // showCodeBtn.onclick = (e) => {
+            //     e.stopPropagation();
+            //     // TODO: Implement show code functionality
+            // };
+
+            // Create VIEW IN FULL button
+            const viewFullBtn = document.createElement('button');
+            viewFullBtn.style.cssText = `
+        font-size: 12px;
+        text-transform: uppercase;
+        background: none;
+        border: none;
+        color: black;
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+      `;
+
+            const viewFullText = document.createElement('span');
+            viewFullText.textContent = 'VIEW IN FULL';
+            viewFullBtn.appendChild(viewFullText);
+
+            const viewFullUnderline = document.createElement('span');
+            viewFullUnderline.style.cssText = `
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        height: 1px;
+        background-color: currentColor;
+        width: 100%;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease-in-out;
+      `;
+            viewFullBtn.appendChild(viewFullUnderline);
+
+            viewFullBtn.onmouseenter = () => {
+                viewFullUnderline.style.transform = 'scaleX(1)';
+                viewFullUnderline.style.transformOrigin = 'left';
+            };
+            viewFullBtn.onmouseleave = () => {
+                viewFullUnderline.style.transform = 'scaleX(0)';
+                viewFullUnderline.style.transformOrigin = 'right';
+            };
+            viewFullBtn.onclick = (e) => {
+                e.stopPropagation();
+                // Navigate to demo page - will be set when detail view opens
+            };
+
+            // buttonsContainer.appendChild(showCodeBtn);
+            buttonsContainer.appendChild(viewFullBtn);
+            container.appendChild(buttonsContainer);
+
+            // Store reference for showing/hiding
+            fullscreenEl._buttonsContainer = buttonsContainer;
 
             // Get visible items (within viewport)
             const getVisibleItems = () => {
@@ -363,10 +530,23 @@ export default function InfiniteDraggableGrid({
                 killAnimations();
 
                 if (ds.currentDetailItem) {
+                    // Pause and reset video if it's a video element
+                    if (ds.currentDetailItem.img.tagName === 'VIDEO') {
+                        ds.currentDetailItem.img.pause();
+                        ds.currentDetailItem.img.currentTime = 0;
+                    }
+
                     if (ds.currentDetailItem.img.parentElement === fullscreenEl) {
                         ds.currentDetailItem.el.appendChild(ds.currentDetailItem.img);
                     }
-                    ds.currentDetailItem.img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                    // Reset style based on element type
+                    if (ds.currentDetailItem.img.tagName === 'VIDEO') {
+                        ds.currentDetailItem.img.style.cssText = 'width:100%;height:auto;object-fit:cover;';
+                        // Remove fullscreen flag to restore hover behavior
+                        delete ds.currentDetailItem.img.dataset.fullscreen;
+                    } else {
+                        ds.currentDetailItem.img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                    }
                     gsap.set(ds.currentDetailItem.el, { zIndex: 'auto', clearProps: 'zIndex' });
                 }
 
@@ -387,16 +567,32 @@ export default function InfiniteDraggableGrid({
                 ds.currentDetailItem = null;
                 fullscreenEl.style.pointerEvents = 'none';
                 container.classList.remove('is-detail-view');
+
+                // Hide buttons
+                if (fullscreenEl._buttonsContainer) {
+                    fullscreenEl._buttonsContainer.style.opacity = '0';
+                }
             };
 
             // Open detail view
-            const openDetailView = (clickedItem) => {
+            const openDetailView = (clickedItem, itemIndex) => {
                 if (ds.isDetailView || ds.isAnimating) return;
 
                 ds.isAnimating = true;
                 ds.isDetailView = true;
                 ds.isRenderPaused = true;
                 ds.currentDetailItem = clickedItem;
+
+                // Get the image data for navigation
+                const imageData = images[itemIndex % images.length];
+
+                // Set up VIEW IN FULL button navigation
+                if (viewFullBtn && imageData.value) {
+                    viewFullBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        window.location.href = `/demos/${imageData.value}`;
+                    };
+                }
 
                 const clickedRect = clickedItem.el.getBoundingClientRect();
 
@@ -419,10 +615,21 @@ export default function InfiniteDraggableGrid({
           object-fit: cover;
         `;
 
+                // Mark video as in fullscreen to prevent hover handlers from pausing
+                if (clickedItem.img.tagName === 'VIDEO') {
+                    clickedItem.img.dataset.fullscreen = 'true';
+                }
+
                 const flipTween = Flip.from(clickedState, {
                     duration: detailDuration,
                     ease: detailEase,
                     absolute: true,
+                    onComplete: () => {
+                        // Play video if it's a video element
+                        if (clickedItem.img.tagName === 'VIDEO') {
+                            clickedItem.img.play();
+                        }
+                    },
                 });
                 ds.activeTimeline.add(flipTween, 0);
 
@@ -481,6 +688,11 @@ export default function InfiniteDraggableGrid({
 
                 fullscreenEl.style.pointerEvents = 'auto';
                 container.classList.add('is-detail-view');
+
+                // Show buttons
+                if (fullscreenEl._buttonsContainer) {
+                    fullscreenEl._buttonsContainer.style.opacity = '1';
+                }
             };
 
             // Close detail view
@@ -499,6 +711,12 @@ export default function InfiniteDraggableGrid({
 
                 ds.isAnimating = true;
                 const clickedItem = ds.currentDetailItem;
+
+                // Pause and reset video if it's a video element
+                if (clickedItem.img.tagName === 'VIDEO') {
+                    clickedItem.img.pause();
+                    clickedItem.img.currentTime = 0;
+                }
 
                 ds.activeTimeline = gsap.timeline({
                     onComplete: () => {
@@ -521,7 +739,14 @@ export default function InfiniteDraggableGrid({
                 const clickedState = Flip.getState(clickedItem.img, { props: '' });
 
                 clickedItem.el.appendChild(clickedItem.img);
-                clickedItem.img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                // Reset style based on element type
+                if (clickedItem.img.tagName === 'VIDEO') {
+                    clickedItem.img.style.cssText = 'width:100%;height:auto;object-fit:cover;';
+                    // Remove fullscreen flag to restore hover behavior
+                    delete clickedItem.img.dataset.fullscreen;
+                } else {
+                    clickedItem.img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                }
 
                 const flipTween = Flip.from(clickedState, {
                     duration: detailDuration,
@@ -556,12 +781,17 @@ export default function InfiniteDraggableGrid({
 
                 fullscreenEl.style.pointerEvents = 'none';
                 container.classList.remove('is-detail-view');
+
+                // Hide buttons
+                if (fullscreenEl._buttonsContainer) {
+                    fullscreenEl._buttonsContainer.style.opacity = '0';
+                }
             };
 
             const CLICK_THRESHOLD = 5;
 
             // Add click handlers to each item
-            itemsRef.current.forEach((item) => {
+            itemsRef.current.forEach((item, index) => {
                 const handleItemMouseDown = (e) => {
                     ds.clickStartX = e.clientX;
                     ds.clickStartY = e.clientY;
@@ -575,7 +805,7 @@ export default function InfiniteDraggableGrid({
                         if (ds.isDetailView) {
                             closeDetailView();
                         } else {
-                            openDetailView(item);
+                            openDetailView(item, index);
                         }
                     }
                 };
@@ -661,10 +891,14 @@ export default function InfiniteDraggableGrid({
                 if (fullscreenEl._escapeHandler) {
                     document.removeEventListener('keydown', fullscreenEl._escapeHandler);
                 }
+                // Clean up buttons container
+                if (fullscreenEl._buttonsContainer) {
+                    fullscreenEl._buttonsContainer.remove();
+                }
                 fullscreenEl.remove();
             }
         };
-    }, [images, drag, scroll, ease, speedFactor, animateScale, calculatePositions, detail, detailDuration, detailEase]);
+    }, [images, drag, scroll, ease, speedFactor, startCanvasZoom, stopCanvasZoom, calculatePositions, detail, detailDuration, detailEase, enableDetailView, onItemClick]);
 
     // Calculate positions for initial render
     const itemPositions = calculatePositions(images);
@@ -672,33 +906,69 @@ export default function InfiniteDraggableGrid({
     return (
         <div ref={containerRef} className={`infinite_draggable_grid_wrap ${className}`.trim()} data-anm-grid>
             <div ref={wrapperRef} className="infinite_draggable_grid_container" data-anm-grid-container>
-                {itemPositions.map((pos, index) => (
-                    <div
-                        key={index}
-                        className="infinite_draggable_grid_item"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            padding: '50px',
-                            aspectRatio: '4/5',
-                            width: `${pos.w}px`,
-                            willChange: 'transform',
-                        }}
-                    >
-                        <img
-                            src={images[index % images.length].src}
-                            alt={images[index % images.length].alt}
-                            className="infinite_draggable_grid_item_image"
-                            data-anm-grid-image
+                {itemPositions.map((pos, index) => {
+                    const imageData = images[index % images.length];
+                    return (
+                        <div
+                            key={index}
+                            className="infinite_draggable_grid_item"
                             style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: `${pos.w}px`,
+                                willChange: 'transform',
                             }}
-                        />
-                    </div>
-                ))}
+                        >
+                            {imageData.isVideo ? (
+                                <video
+                                    src={imageData.src}
+                                    className="infinite_draggable_grid_item_image"
+                                    data-anm-grid-image
+                                    loop
+                                    muted
+                                    playsInline
+                                    onMouseEnter={(e) => {
+                                        // Only play on hover if not in fullscreen mode
+                                        if (!e.currentTarget.dataset.fullscreen) {
+                                            e.currentTarget.play();
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        // Only pause/reset on hover out if not in fullscreen mode
+                                        if (!e.currentTarget.dataset.fullscreen) {
+                                            e.currentTarget.pause();
+                                            e.currentTarget.currentTime = 0;
+                                        }
+                                    }}
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            ) : (
+                                <img
+                                    src={imageData.src}
+                                    alt={imageData.alt}
+                                    className="infinite_draggable_grid_item_image"
+                                    data-anm-grid-image
+                                    style={{
+                                        aspectRatio: '4/3',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            )}
+                            {showLabel && imageData.label && (
+                                <div className="infinite_draggable_grid_item_overlay">
+                                    <span className="infinite_draggable_grid_item_label">
+                                        {imageData.label}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

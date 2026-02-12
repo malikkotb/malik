@@ -1,3 +1,8 @@
 ☐ add page transditions (like benpaine.com)
-☐ add videos of demos to lab (use infinte scroll or draggable slider) and remobe combobox completely even from header
+☐ add videos of demos to lab
 ☐ add motion (reveal stuff on load like anna erdelen)
+☐ add case study pages for each project (need sophisticated design for this as well)
+    ☐ and then take images from good fella, alex salicki, and auw.studio
+
+☐ fix ripple-shader hard reload issue
+☐ uncomment show code button in demos

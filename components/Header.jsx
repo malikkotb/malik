@@ -88,12 +88,7 @@ export default function Header() {
             <ScrambleText text="Contact" underline />
           </a>
         </div>
-        {/* Show Combobox below links on mobile */}
-        {isOnDemosRoute && (
-          <div className='flex sm:hidden'>
-            <Combobox />
-          </div>
-        )}
+
       </div>
     </div>
   );
