@@ -24,6 +24,7 @@
     "@sanity/image-url": "^2.0.2",
     "@studio-freight/react-lenis": "^0.0.43",
     "@uidotdev/usehooks": "^2.4.1",
+    "@vercel/analytics": "^1.6.1",
     "cannon": "^0.6.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
