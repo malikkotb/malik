@@ -22,7 +22,7 @@ export default function LabClient({ labPosts }) {
   });
 
   return (
-    <div className='w-full h-full mt-[28px]'>
+    <div className='w-full h-full mt-[28px]' data-transition-content>
       <InfiniteScroll style={{ height: "calc(100vh - 56px)" }}>
         <div className='space-y-[80px] pb-[80px] lg:space-y-[64px]'>
           {matrix.map((row, rowIndex) => (

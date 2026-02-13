@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import TransitionLink from "@/components/TransitionLink";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import ScrambleText from "./ScrambleText";
@@ -59,9 +60,9 @@ export default function Header() {
         : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
         }`}
     >
-      <Link href='/' className={`col-span-3 w-fit cursor-pointer`}>
+      <TransitionLink href='/' className={`col-span-3 w-fit cursor-pointer`}>
         <ScrambleText text="Malik Kotb" />
-      </Link>
+      </TransitionLink>
 
       {/* Show Combobox in the center when on /demos route - hidden on mobile */}
       {/* {isOnDemosRoute && (
@@ -72,18 +73,18 @@ export default function Header() {
 
       <div className={`flex flex-col items-end gap-1 col-span-9 sm:col-span-3 ${isOnDemosRoute ? 'col-start-4 sm:col-start-10' : 'col-start-4 sm:col-start-10'} justify-end`}>
         <div className='flex gap-2 lg:gap-4'>
-          <Link href='/work'>
+          <TransitionLink href='/work'>
             <ScrambleText text="Work" underline />
-          </Link>
-          <Link href='/info'>
+          </TransitionLink>
+          <TransitionLink href='/info'>
             <ScrambleText text="Info" underline />
-          </Link>
-          <Link href='/demos' className='hidden md:block'>
+          </TransitionLink>
+          <TransitionLink href='/demos' className='hidden md:block'>
             <ScrambleText text="Lab" underline />
-          </Link>
-          {/* <Link href='/blog'>
+          </TransitionLink>
+          {/* <TransitionLink href='/blog'>
             <ScrambleText text="Blog" underline />
-          </Link> */}
+          </TransitionLink> */}
           <a href='mailto:malikkotb@icloud.com'>
             <ScrambleText text="Contact" underline />
           </a>

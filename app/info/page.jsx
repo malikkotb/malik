@@ -64,7 +64,7 @@ export default function IndexClient() {
   }, []);
 
   return (
-    <div className="h-full w-full bg-white">
+    <div className="h-full w-full bg-white" data-transition-content>
       {/* Three.js scene with ripple effect on hero image only */}
       <InfoPageScene />
 

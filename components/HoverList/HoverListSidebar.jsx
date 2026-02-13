@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import TransitionLink from "@/components/TransitionLink";
 import "./HoverListSidebar.css";
 
 const HoverListSidebar = ({ posts, basePath }) => {
@@ -98,7 +99,7 @@ const HoverListSidebar = ({ posts, basePath }) => {
               const href = slug ? `${basePath}/${slug}` : "#";
 
               return (
-                <Link
+                <TransitionLink
                   key={post._id || i}
                   data-directional-hover-item
                   href={href}
@@ -129,7 +130,7 @@ const HoverListSidebar = ({ posts, basePath }) => {
                       {post.title}
                     </motion.p>
                   </div>
-                </Link>
+                </TransitionLink>
               );
             })
           ) : (

@@ -65,7 +65,7 @@ export default function IndexClient() {
   }, []);
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-full w-full' data-transition-content>
       <div className="hidden lg:block">
         {showCarousel && <WebGLCarousel />}
       </div>

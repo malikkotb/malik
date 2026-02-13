@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import InfiniteDraggableGrid from "@/app/demos/_demos/infinite-draggable-grid/page";
 import { frameworks } from "@/components/demos/ui/ComboBox";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function DemosPage() {
   const router = useRouter();
@@ -32,12 +33,15 @@ export default function DemosPage() {
   }));
 
   return (
-    <main className="w-full h-full absolute top-0 left-0">
-      <InfiniteDraggableGrid
-        images={demoVideos}
-        detail={true}
-        showLabel={false}
-      />
-    </main>
+    <>
+      <LoadingScreen />
+      <main className="w-full h-full absolute top-0 left-0" data-transition-content>
+        <InfiniteDraggableGrid
+          images={demoVideos}
+          detail={true}
+          showLabel={false}
+        />
+      </main>
+    </>
   );
 }
