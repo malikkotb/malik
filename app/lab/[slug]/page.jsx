@@ -1,65 +1,43 @@
-import { client } from "../../sanity/client";
-import Link from "next/link";
-import TransitionLink from "@/components/TransitionLink";
+import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 
-const LAB_QUERY = `*[_type == "lab" && slug.current == $slug][0]{
-    _id,
-    _createdAt,
-    _updatedAt,
-    title,
+// Map of all available demos
+const demos = {
+  "mouse-image-distorter": dynamic(() => import("@/app/lab/_demos/mouse-image-distorter")),
+  "bulge-distortion-shader": dynamic(() => import("@/app/lab/_demos/bulge-distortion-shader")),
+  // "particle-distorter": dynamic(() => import("@/app/demos/_demos/particle-distorter")),
+  "threedwave": dynamic(() => import("@/app/lab/_demos/threedwave")),
+  "3d-image-universe": dynamic(() => import("@/app/lab/_demos/3d-image-universe")),
+  "3d-video-throwback": dynamic(() => import("@/app/lab/_demos/3d-video-throwback")),
+  "tile-hover-distortion": dynamic(() => import("@/app/lab/_demos/tile-hover-distortion")),
+  "ripple-shader": dynamic(() => import("@/app/lab/_demos/ripple-shader")),
+  // "infinite-draggable-grid": dynamic(() => import("@/app/demos/_demos/infinite-draggable-grid/page")),
+  // "particle-morphing-canvas": dynamic(() => import("@/app/demos/_demos/particle-morphing-canvas")),
+  "svgMaskScroll": dynamic(() => import("@/app/lab/_demos/svgMaskScroll")),
+  "textScrolly": dynamic(() => import("@/app/lab/_demos/textScrolly")),
+  "imageTrailEffect": dynamic(() => import("@/app/lab/_demos/imageTrailEffect/page")),
+  "pixelated-infinite-scroll": dynamic(() => import("@/app/lab/_demos/pixelated-infinite-scroll/page")),
+  "zoom-carousel": dynamic(() => import("@/app/lab/_demos/zoom-carousel")),
+  "3d-dna-carousel": dynamic(() => import("@/app/lab/_demos/3d-dna-carousel")),
+  // "infinite-scroll-gallery": dynamic(() => import("@/app/demos/_demos/infinite-scroll-gallery")),
+  // "rubiks-cube": dynamic(() => import("@/app/demos/_demos/rubiks-cube")),
+  "3d-video-carousel": dynamic(() => import("@/app/lab/_demos/3d-video-carousel")),
+};
+
+export function generateStaticParams() {
+  return Object.keys(demos).map((slug) => ({
     slug,
-    description,
-    videoSources,
-}`;
+  }));
+}
 
-    const options = { next: { revalidate: 3600 } }; 
-
-export default async function PostPage({ params }) {
+export default async function DemoPage({ params }) {
   const { slug } = await params;
-  const post = await client.fetch(LAB_QUERY, { slug: slug }, options);
 
-  if (!post) {
-    return (
-      <main className='container mx-auto h-full max-w-3xl p-8 flex flex-col gap-4'>
-        <TransitionLink href='/lab' className='hover:underline'>
-          ← Back to Lab
-        </TransitionLink>
-        <h1 className='text-4xl font-bold mb-8'>Post not found</h1>
-      </main>
-    );
+  const DemoComponent = demos[slug];
+
+  if (!DemoComponent) {
+    notFound();
   }
 
-  console.log(post);
-
-  return (
-    <main className='container mx-auto h-full max-w-3xl p-8 flex flex-col gap-4' data-transition-content>
-      <Link href='/lab' className='hover:underline'>
-        ← Back to Lab
-      </Link>
-      <h1 className='text-4xl font-bold mb-4'>{post.title}</h1>
-      {post.description && (
-        <p className='text-lg text-gray-700 mb-6'>{post.description}</p>
-      )}
-      {post._createdAt && (
-        <p className='text-sm text-gray-500 mb-6'>
-          Created: {new Date(post._createdAt).toLocaleDateString()}
-        </p>
-      )}
-      {Array.isArray(post.videoSources) && post.videoSources.length > 0 && (
-        <div className='space-y-4'>
-          {post.videoSources.map((videoSrc, index) => (
-            <video
-              key={index}
-              src={videoSrc}
-              controls
-              className='w-full rounded-xl'
-              autoPlay
-              loop
-              muted
-            />
-          ))}
-        </div>
-      )}
-    </main>
-  );
+  return <DemoComponent />;
 }

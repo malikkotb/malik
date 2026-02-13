@@ -1,4 +1,4 @@
-import BulgeDistortionAnimation from "@/app/demos/three-d/_lessons/11-materials/BulgeDistortionAnimation";
+import BulgeDistortionAnimation from "@/app/lab/three-d/_lessons/11-materials/BulgeDistortionAnimation";
 
 export default function BulgeDistortionShader() {
   return (

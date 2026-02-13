@@ -79,7 +79,7 @@ export default function Header() {
           <TransitionLink href='/info'>
             <ScrambleText text="Info" underline />
           </TransitionLink>
-          <TransitionLink href='/demos' className='hidden md:block'>
+          <TransitionLink href='/lab' className='hidden md:block'>
             <ScrambleText text="Lab" underline />
           </TransitionLink>
           {/* <TransitionLink href='/blog'>
