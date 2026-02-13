@@ -4,7 +4,6 @@ import TransitionLink from "@/components/TransitionLink";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import ScrambleText from "./ScrambleText";
-import { Combobox } from "./demos/ui/ComboBox";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
