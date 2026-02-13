@@ -61,13 +61,8 @@ body {
   
   /* Use opacity instead of filter for better Webflow/Safari compatibility */
   .infinite_draggable_grid_item_image {
-    opacity: 0.85;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Hover state on image directly */
-  .infinite_draggable_grid_item_image:hover {
     opacity: 1;
+    transition: opacity 0.3s ease;
   }
   
   /* ============================================
@@ -83,9 +78,9 @@ body {
     transition: background 0.6s ease;
   }
   
-  [data-anm-grid].is-detail-view .infinite_draggable_grid_fullscreen {
+  /* [data-anm-grid].is-detail-view .infinite_draggable_grid_fullscreen {
     background: rgba(0, 0, 0, 0.1);
-  }
+  } */
   
   .infinite_draggable_grid_fullscreen .infinite_draggable_grid_item_image {
     opacity: 1;

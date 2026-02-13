@@ -457,14 +457,22 @@ export default function InfiniteDraggableGrid({
       `;
 
             const viewFullText = document.createElement('span');
-            viewFullText.textContent = 'VIEW IN FULL';
+            viewFullText.textContent = 'LIVE DEMO';
             viewFullBtn.appendChild(viewFullText);
+
+            const arrowIcon = document.createElement('span');
+            arrowIcon.innerHTML = '&#8599;';
+            arrowIcon.style.cssText = `
+        margin-left: 4px;
+        font-size: 14px;
+      `;
+            viewFullBtn.appendChild(arrowIcon);
 
             const viewFullUnderline = document.createElement('span');
             viewFullUnderline.style.cssText = `
         position: absolute;
         left: 0;
-        bottom: -2px;
+        bottom: 0px;
         height: 1px;
         background-color: currentColor;
         width: 100%;
