@@ -1,11 +1,36 @@
 "use client";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import InfiniteDraggableGrid from "@/app/lab/_demos/infinite-draggable-grid/page";
-import { frameworks } from "@/components/demos/ui/ComboBox";
 // import LoadingScreen from "@/components/LoadingScreen";
+
+const frameworks = [
+  { value: "mouse-image-distorter", label: "Mouse Image Distorter" },
+  { value: "bulge-distortion-shader", label: "Bulge Distortion Shader" },
+  // { value: "particle-distorter", label: "Particle Distorter" },
+  { value: "threedwave", label: "3D Wave on Scroll" },
+  { value: "3d-image-universe", label: "3D Image Universe" },
+  { value: "tile-hover-distortion", label: "Tile Hover Distortion" },
+  { value: "ripple-shader", label: "Ripple Shader" },
+  // { value: "infinite-draggable-grid", label: "Infinite Draggable Grid" },
+  // { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
+  { value: "svgMaskScroll", label: "SVG Mask Scroll" },
+  { value: "textScrolly", label: "Text Scrolly" },
+  { value: "imageTrailEffect", label: "Image Trail Effect" },
+  { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
+  { value: "zoom-carousel", label: "Zoom Carousel" },
+  { value: "3d-dna-carousel", label: "3D DNA Carousel" },
+  // { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
+  // { value: "rubiks-cube", label: "Rubik's Cube" },
+  // { value: "3d-video-carousel", label: "3D Video Carousel" },
+];
 
 export default function DemosPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    document.title = "Lab";
+  }, []);
 
   // Video URL mapping for demos
   const videoUrls = {
