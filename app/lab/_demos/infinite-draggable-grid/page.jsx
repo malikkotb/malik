@@ -928,7 +928,41 @@ export default function InfiniteDraggableGrid({
                                 willChange: 'transform',
                             }}
                         >
-                            {imageData.isVideo ? (
+                            {imageData.isPlaceholder ? (
+                                <div
+                                    className="infinite_draggable_grid_item_placeholder"
+                                    data-anm-grid-image
+                                    style={{
+                                        width: '100%',
+                                        aspectRatio: '4/3',
+                                        backgroundColor: 'white',
+                                        border: '1px solid black',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '8px',
+                                        padding: '20px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: '500',
+                                        color: 'black',
+                                        textTransform: 'uppercase',
+                                    }}>
+                                        {imageData.label}
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        color: 'black',
+                                        textTransform: 'uppercase',
+                                    }}>
+                                        Coming Soon
+                                    </div>
+                                </div>
+                            ) : imageData.isVideo ? (
                                 <video
                                     src={imageData.src}
                                     className="infinite_draggable_grid_item_image"

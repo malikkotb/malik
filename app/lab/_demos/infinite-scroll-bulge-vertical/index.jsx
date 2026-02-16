@@ -10,16 +10,17 @@ import { config } from "./config";
 export default function InfiniteScrollGallery() {
   const containerRef = useRef();
 
-  // Debug values state
-  const [debugValues, setDebugValues] = useState({
-    curveDepth: config.curveDepth,
-    curveWidth: config.curveWidth,
-    scrollSensitivity: config.scrollSensitivity,
-    smoothing: config.smoothing,
-    gap: config.gap,
+  // Debug values state (only grid layout is adjustable)
+  const [gridConfig, setGridConfig] = useState({
     columns: config.columns,
     rows: config.rows,
   });
+
+  // Merge static config with dynamic grid config
+  const debugValues = useMemo(() => ({
+    ...config,
+    ...gridConfig,
+  }), [gridConfig]);
 
   // Store current sensitivity in ref for wheel handler
   const sensitivityRef = useRef(debugValues.scrollSensitivity);
@@ -28,7 +29,7 @@ export default function InfiniteScrollGallery() {
   }, [debugValues.scrollSensitivity]);
 
   const handleDebugChange = useCallback((name, value) => {
-    setDebugValues(prev => ({ ...prev, [name]: value }));
+    setGridConfig(prev => ({ ...prev, [name]: value }));
   }, []);
 
   // Scroll state - refs for animation performance
@@ -93,7 +94,6 @@ export default function InfiniteScrollGallery() {
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
-    outputColorSpace: THREE.LinearSRGBColorSpace,
   }), []);
 
   return (
@@ -114,10 +114,11 @@ export default function InfiniteScrollGallery() {
         gl={glProps}
         dpr={[1, 2]}
         frameloop="always"
+        flat
       >
         <GalleryScene scrollState={scrollState} config={debugValues} />
       </Canvas>
-      <DebugUI values={debugValues} onChange={handleDebugChange} />
+      <DebugUI values={gridConfig} onChange={handleDebugChange} />
     </div>
   );
 }

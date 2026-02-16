@@ -9,9 +9,8 @@ export const config = {
   scrollSensitivity: 0.0015,
   smoothing: 0.08,
 
-  // Curved surface (vertical sin wave bulge)
-  curveDepth: 1.2,        // How deep the curve dips inward
-  curveWidth: 2.0,        // Height of the curved region (in world units)
+  // Curved surface (velocity-activated cosine dome)
+  curveDepth: 1.2,        // Max curve depth when scrolling at full speed
 
   // Image spacing
   gap: 0.06,              // Gap between images as fraction of cell size

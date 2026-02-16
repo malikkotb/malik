@@ -28,14 +28,16 @@ function shuffleArray(array, seed) {
   return shuffled;
 }
 
-// Generate 27 cubes with positions and random textures
-export function generateCubes(cubeSize = 1, gap = 0.2, seed = 42) {
+// Generate all cubes for maximum grid (5x5x5) - they get shown/hidden based on level
+// Stores grid coordinates, actual positions calculated on render
+export function generateCubes(seed = 42) {
   const cubes = [];
-  const offset = cubeSize + gap;
+  const maxGridSize = 5;
+  const totalCubes = maxGridSize * maxGridSize * maxGridSize;
 
-  // Create extended texture array (27 cubes need 27 textures, cycling through 8)
+  // Create extended texture array (cycle through available textures)
   const extendedTextures = [];
-  for (let i = 0; i < 27; i++) {
+  for (let i = 0; i < totalCubes; i++) {
     extendedTextures.push(textures[i % textures.length]);
   }
 
@@ -43,15 +45,24 @@ export function generateCubes(cubeSize = 1, gap = 0.2, seed = 42) {
   const shuffledTextures = shuffleArray(extendedTextures, seed);
 
   let index = 0;
+  const halfGrid = Math.floor(maxGridSize / 2); // -2 to 2
 
-  // Generate 3x3x3 grid centered at origin
-  for (let x = -1; x <= 1; x++) {
-    for (let y = -1; y <= 1; y++) {
-      for (let z = -1; z <= 1; z++) {
+  // Generate 5x5x5 grid centered at origin
+  for (let x = -halfGrid; x <= halfGrid; x++) {
+    for (let y = -halfGrid; y <= halfGrid; y++) {
+      for (let z = -halfGrid; z <= halfGrid; z++) {
+        // Calculate distance from center (for gradual appearance)
+        const absX = Math.abs(x);
+        const absY = Math.abs(y);
+        const absZ = Math.abs(z);
+        const gridDistance = Math.max(absX, absY, absZ); // 0=center, 1=inner ring, 2=outer ring
+
         cubes.push({
-          id: index,
-          position: [x * offset, y * offset, z * offset],
+          id: `cube-${x}-${y}-${z}`, // Unique ID based on position
+          gridCoord: [x, y, z], // Store grid coordinates
           texture: shuffledTextures[index],
+          entryDelay: seededRandom(seed + index + 1000), // Random delay 0-1
+          gridDistance: gridDistance, // Distance from center for gradual visibility
         });
         index++;
       }

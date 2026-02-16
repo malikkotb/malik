@@ -20,9 +20,9 @@ const frameworks = [
   { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
   { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
-  // { value: "infinite-scroll-gallery", label: "Infinite Scroll Gallery" },
+  { value: "infinite-scroll-bulge-vertical", label: "Infinite Scroll Bulge Vertical" },
+  { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
-  // { value: "3d-video-carousel", label: "3D Video Carousel" },
 ];
 
 export default function DemosPage() {
@@ -50,17 +50,18 @@ export default function DemosPage() {
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid
   const demoVideos = frameworks.map((demo) => ({
-    src: videoUrls[demo.value] || "/image.png", // Fallback to image if no video
+    src: videoUrls[demo.value],
     alt: demo.label,
     value: demo.value,
     label: demo.label,
     isVideo: !!videoUrls[demo.value],
+    isPlaceholder: !videoUrls[demo.value],
   }));
 
   return (
     <>
       {/* <LoadingScreen /> */}
-      <main className="w-full h-full absolute top-0 left-0" data-transition-content>
+      <main className="w-full h-full absolute top-0 left-0 bg-white" data-transition-content>
         <InfiniteDraggableGrid
           images={demoVideos}
           detail={true}

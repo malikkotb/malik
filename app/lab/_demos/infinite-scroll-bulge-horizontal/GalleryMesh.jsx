@@ -5,27 +5,19 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { images } from './data';
 
-// Vertex shader - creates curved surface with vertical sin wave
+// Vertex shader - creates curved surface with cosine dome
 const vertexShader = `
   uniform float curveDepth;
-  uniform float curveWidth;
-  uniform float scrollY;
+  uniform float scrollX;
 
   varying vec2 vUv;
-  varying float vDepth;
 
   void main() {
     vUv = uv;
 
-    // Create vertical sin curve bulge - center of viewport (Y) dips inward
-    // Use Y position to create the curve along the height
-    float normalizedY = abs(position.y);
-
-    // Sin curve for depth - center is deepest
-    float curveAmount = 1.0 - smoothstep(0.0, curveWidth, normalizedY);
-    float depth = -curveDepth * sin(curveAmount * 3.14159 * 0.5);
-
-    vDepth = depth;
+    // Full-width dome: cosine curve spanning entire geometry
+    float t = abs(position.x) / 3.0;  // Normalize to 0-1
+    float depth = -curveDepth * cos(t * 1.5708);  // 1.5708 = π/2
 
     vec3 pos = position;
     pos.z = depth;
@@ -37,7 +29,7 @@ const vertexShader = `
 // Fragment shader - renders tiled images with scroll
 const fragmentShader = `
   uniform sampler2D textures[8];
-  uniform float scrollY;
+  uniform float scrollX;
   uniform float columns;
   uniform float rows;
   uniform float gap;
@@ -45,12 +37,11 @@ const fragmentShader = `
   uniform vec2 resolution;
 
   varying vec2 vUv;
-  varying float vDepth;
 
   void main() {
     // Apply scroll offset to UV
     vec2 uv = vUv;
-    uv.y = fract(uv.y + scrollY);
+    uv.x = fract(uv.x + scrollX);
 
     // Calculate grid cell
     float cellWidth = 1.0 / columns;
@@ -66,18 +57,31 @@ const fragmentShader = `
       fract(uv.y / cellHeight)
     );
 
-    // Apply gap - shrink the image area
+    // Calculate cell aspect ratio in pixels
+    float cellAspect = (cellWidth * resolution.x) / (cellHeight * resolution.y);
+
+    // Apply gap - adjust for aspect ratio to keep visual gap equal
     float gapHalf = gap * 0.5;
-    vec2 imageUV = (cellUV - gapHalf) / (1.0 - gap);
+    vec2 gapAdjusted = vec2(gapHalf, gapHalf);
+
+    // Scale gap based on cell aspect to maintain equal pixel spacing
+    if (cellAspect > 1.0) {
+      // Cell is wider - reduce horizontal gap
+      gapAdjusted.x = gapHalf / cellAspect;
+    } else {
+      // Cell is taller - reduce vertical gap
+      gapAdjusted.y = gapHalf * cellAspect;
+    }
+
+    vec2 imageUV = (cellUV - gapAdjusted) / (1.0 - gapAdjusted * 2.0);
 
     // Check if we're in the gap area
     if (imageUV.x < 0.0 || imageUV.x > 1.0 || imageUV.y < 0.0 || imageUV.y > 1.0) {
       discard;
     }
 
-    // Correct aspect ratio (4:5 images in variable cells)
+    // Correct aspect ratio (4:5 portrait images)
     float targetAspect = 4.0 / 5.0;
-    float cellAspect = (cellWidth * resolution.x) / (cellHeight * resolution.y);
 
     vec2 finalUV = imageUV;
     if (cellAspect > targetAspect) {
@@ -108,10 +112,6 @@ const fragmentShader = `
     else if (idx == 6) color = texture2D(textures[6], finalUV);
     else color = texture2D(textures[7], finalUV);
 
-    // Subtle depth-based darkening for 3D feel
-    float depthShade = 1.0 + vDepth * 0.15;
-    color.rgb *= depthShade;
-
     gl_FragColor = color;
   }
 `;
@@ -121,9 +121,13 @@ export default function GalleryMesh({ scrollState, config }) {
   const materialRef = useRef();
   const { size } = useThree();
 
+  // Track smoothed velocity for curve activation
+  const smoothedVelocity = useRef(0);
+  const lastScrollX = useRef(0);
+
   // Create geometry with subdivisions for smooth curve
   const geometry = useMemo(() => {
-    return new THREE.PlaneGeometry(4, 6, 64, 96);
+    return new THREE.PlaneGeometry(6, 4, 96, 64);
   }, []);
 
   // Load all textures
@@ -143,9 +147,8 @@ export default function GalleryMesh({ scrollState, config }) {
   // Create uniforms
   const uniforms = useMemo(() => ({
     textures: { value: textures },
-    scrollY: { value: 0 },
+    scrollX: { value: 0 },
     curveDepth: { value: config.curveDepth },
-    curveWidth: { value: config.curveWidth },
     columns: { value: config.columns },
     rows: { value: config.rows },
     gap: { value: config.gap },
@@ -157,12 +160,11 @@ export default function GalleryMesh({ scrollState, config }) {
   useEffect(() => {
     if (materialRef.current) {
       materialRef.current.uniforms.curveDepth.value = config.curveDepth;
-      materialRef.current.uniforms.curveWidth.value = config.curveWidth;
       materialRef.current.uniforms.columns.value = config.columns;
       materialRef.current.uniforms.rows.value = config.rows;
       materialRef.current.uniforms.gap.value = config.gap;
     }
-  }, [config.curveDepth, config.curveWidth, config.columns, config.rows, config.gap]);
+  }, [config.curveDepth, config.columns, config.rows, config.gap]);
 
   // Update resolution on resize
   useEffect(() => {
@@ -178,10 +180,20 @@ export default function GalleryMesh({ scrollState, config }) {
     const state = scrollState.current;
 
     // Smooth scroll
-    state.currentY += (state.targetY - state.currentY) * config.smoothing;
+    state.currentX += (state.targetX - state.currentX) * config.smoothing;
 
-    // Update shader uniform
-    materialRef.current.uniforms.scrollY.value = state.currentY;
+    // Calculate scroll velocity (how fast the scroll position is changing)
+    const scrollDelta = Math.abs(state.currentX - lastScrollX.current);
+    lastScrollX.current = state.currentX;
+
+    // Smooth the velocity - ramp up quickly, decay faster
+    const targetVelocity = Math.min(scrollDelta * 80, 1); // Normalize to 0-1
+    const velocitySmoothing = targetVelocity > smoothedVelocity.current ? 0.15 : 0.12;
+    smoothedVelocity.current += (targetVelocity - smoothedVelocity.current) * velocitySmoothing;
+
+    // Update shader uniforms
+    materialRef.current.uniforms.scrollX.value = state.currentX;
+    materialRef.current.uniforms.curveDepth.value = config.curveDepth * smoothedVelocity.current;
   });
 
   return (
