@@ -586,6 +586,9 @@ export default function InfiniteDraggableGrid({
             const openDetailView = (clickedItem, itemIndex) => {
                 if (ds.isDetailView || ds.isAnimating) return;
 
+                // Don't open detail view if there's no img/video element (e.g., placeholder items)
+                if (!clickedItem.img) return;
+
                 ds.isAnimating = true;
                 ds.isDetailView = true;
                 ds.isRenderPaused = true;
@@ -598,7 +601,7 @@ export default function InfiniteDraggableGrid({
                 if (viewFullBtn && imageData.value) {
                     viewFullBtn.onclick = (e) => {
                         e.stopPropagation();
-                        window.location.href = `/demos/${imageData.value}`;
+                        window.location.href = `/lab/${imageData.value}`;
                     };
                 }
 

@@ -21,7 +21,7 @@ const frameworks = [
   { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
   { value: "infinite-scroll-bulge-vertical", label: "Infinite Scroll Bulge Vertical" },
-  { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
+  // { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 
@@ -46,6 +46,7 @@ export default function DemosPage() {
     "threedwave": "https://malik-portfolio.b-cdn.net/Lab/threedwave.webm",
     "tile-hover-distortion": "https://malik-portfolio.b-cdn.net/Lab/tile-hover-distortion.webm",
     "zoom-carousel": "https://malik-portfolio.b-cdn.net/Lab/zoom-carousel.webm",
+    "infinite-scroll-bulge-vertical": "https://malik-portfolio.b-cdn.net/Lab/infinte-scroll-bulge-vertical.mp4",
   };
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid
