@@ -18,6 +18,7 @@ const demos = {
   "3d-dna-carousel": dynamic(() => import("@/app/lab/_demos/3d-dna-carousel")),
   "infinite-scroll-bulge-vertical": dynamic(() => import("@/app/lab/_demos/infinite-scroll-bulge-vertical")),
   "infinite-scroll-bulge-horizontal": dynamic(() => import("@/app/lab/_demos/infinite-scroll-bulge-horizontal")),
+  "infinity-scale-carousel": dynamic(() => import("@/app/lab/_demos/infinity-scale-carousel")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

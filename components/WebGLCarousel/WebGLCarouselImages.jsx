@@ -8,20 +8,20 @@ import projects from "@/app/carouselData";
 const vertexShader = `
   varying vec2 vUv;
   uniform vec2 u_offset;
-  
+
   #define PI 3.1415926535897932384626433832795
 
   vec3 deformPosition(vec3 position, vec2 uv, vec2 offset) {
     float waveX = sin(uv.y * PI);
     float waveY = sin(uv.x * PI);
-    
+
     // Bend based on velocity - scale up for visible effect
     position.x = position.x + (waveX * offset.x);
     position.y = position.y + (waveY * offset.y * 0.5);
-    
+
     // Subtle z-depth
     position.z = position.z + (waveX * abs(offset.x) * 0.15);
-    
+
     return position;
   }
 
@@ -43,54 +43,32 @@ const fragmentShader = `
     vec2 uv = vUv;
     uv.x += u_offset.x * 0.02 * (0.5 - abs(vUv.y - 0.5));
 
-    vec4 texture = texture2D(u_texture, uv);
-    gl_FragColor = vec4(texture.rgb, texture.a * u_opacity);
+    vec4 texColor = texture2D(u_texture, uv);
+    gl_FragColor = vec4(texColor.rgb, texColor.a * u_opacity);
   }
 `;
 
 // Shared geometry - created once and reused by all carousel items
 const sharedGeometry = new THREE.PlaneGeometry(1, 1, 16, 16);
 
-// Default light placeholder for initial state
+// Default transparent placeholder for initial state
 const defaultPlaceholderCanvas = typeof document !== 'undefined' ? (() => {
   const canvas = document.createElement('canvas');
   canvas.width = 16;
   canvas.height = 16;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#e5e5e5';
-  ctx.fillRect(0, 0, 16, 16);
+  // Create a fully transparent canvas
+  ctx.clearRect(0, 0, 16, 16);
   return canvas;
 })() : null;
 
 const defaultPlaceholderTexture = defaultPlaceholderCanvas ? new THREE.CanvasTexture(defaultPlaceholderCanvas) : null;
 
-// Helper function to create a blurred frame texture from video
-function createBlurredFrameTexture(video, blurAmount = 20) {
-  const canvas = document.createElement('canvas');
-  // Use smaller resolution for performance
-  const scale = 0.25;
-  canvas.width = video.videoWidth * scale;
-  canvas.height = video.videoHeight * scale;
-
-  const ctx = canvas.getContext('2d');
-  ctx.filter = `blur(${blurAmount}px)`;
-
-  // Draw video frame with blur
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.colorSpace = THREE.SRGBColorSpace;
-
-  return texture;
-}
-
-// Video carousel item component - memoized to prevent unnecessary re-renders
+// Image carousel item component - memoized to prevent unnecessary re-renders
 const CarouselItem = memo(function CarouselItem({
   position,
   scale,
-  videoSrc,
+  imageSrc,
   offsetRef,
   index,
   onClick,
@@ -99,102 +77,65 @@ const CarouselItem = memo(function CarouselItem({
 }) {
   const meshRef = useRef();
   const materialRef = useRef();
-  const videoRef = useRef(null);
   const textureRef = useRef(null);
-  const blurredTextureRef = useRef(null);
   const currentOffset = useRef(new THREE.Vector2(0, 0));
   const transitionOpacity = useRef(1);
   const isTransitioning = useRef(false);
   const pendingTexture = useRef(null);
-  const [loadingState, setLoadingState] = useState('initial'); // 'initial' | 'blurred' | 'ready'
+  const [loadingState, setLoadingState] = useState('initial'); // 'initial' | 'ready'
 
-  // Create video and texture with staggered loading
+  // Load image texture with staggered loading
   useEffect(() => {
     let mounted = true;
-    let video = null;
     let texture = null;
-    let blurredTexture = null;
     let loadTimeout = null;
 
-    const initVideo = () => {
+    const initImage = () => {
       if (!mounted) return;
 
-      video = document.createElement('video');
-      video.src = videoSrc;
-      video.crossOrigin = 'anonymous';
-      video.loop = true;
-      video.muted = true;
-      video.playsInline = true;
-      video.preload = 'auto';
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
+      const loader = new THREE.TextureLoader();
 
-      videoRef.current = video;
+      loader.load(
+        imageSrc,
+        // onLoad
+        (loadedTexture) => {
+          if (!mounted) return;
 
-      texture = new THREE.VideoTexture(video);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.format = THREE.RGBAFormat;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.generateMipmaps = false;
-      textureRef.current = texture;
+          loadedTexture.minFilter = THREE.LinearFilter;
+          loadedTexture.magFilter = THREE.LinearFilter;
+          loadedTexture.generateMipmaps = false;
+          // Don't set colorSpace - let raw values pass through
 
-      // When first frame is available, create blurred placeholder
-      const handleLoadedData = () => {
-        if (!mounted) return;
-
-        // Create blurred version of first frame
-        blurredTexture = createBlurredFrameTexture(video);
-        blurredTextureRef.current = blurredTexture;
-        setLoadingState('blurred');
-
-        // Start playing video
-        video.play().then(() => {
-          if (mounted) {
-            // Small delay to ensure video is actually playing smoothly
-            setTimeout(() => {
-              if (mounted) setLoadingState('ready');
-            }, 100);
-          }
-        }).catch(() => {
-          // Autoplay blocked, still show blurred frame
-          if (mounted) setLoadingState('blurred');
-        });
-      };
-
-      const handleError = () => {
-        if (!mounted) return;
-        // Retry loading after a short delay
-        setTimeout(() => {
-          if (mounted && video) {
-            video.load();
-          }
-        }, 2000);
-      };
-
-      video.addEventListener('loadeddata', handleLoadedData, { once: true });
-      video.addEventListener('error', handleError, { once: true });
-      video.load();
+          texture = loadedTexture;
+          textureRef.current = texture;
+          setLoadingState('ready');
+        },
+        // onProgress
+        undefined,
+        // onError
+        (error) => {
+          console.error('Error loading image:', error);
+          if (!mounted) return;
+          // Retry loading after a short delay
+          setTimeout(() => {
+            if (mounted) {
+              initImage();
+            }
+          }, 2000);
+        }
+      );
     };
 
-    // Stagger video loading to avoid network congestion
-    loadTimeout = setTimeout(initVideo, loadDelay);
+    // Stagger image loading to avoid network congestion
+    loadTimeout = setTimeout(initImage, loadDelay);
 
     return () => {
       mounted = false;
       if (loadTimeout) clearTimeout(loadTimeout);
-      if (video) {
-        video.pause();
-        video.src = '';
-        video.load();
-      }
       if (texture) texture.dispose();
-      if (blurredTexture) blurredTexture.dispose();
-      videoRef.current = null;
       textureRef.current = null;
-      blurredTextureRef.current = null;
     };
-  }, [videoSrc, loadDelay]);
+  }, [imageSrc, loadDelay]);
 
   // Update uniforms in animation frame - no React state updates
   useFrame(() => {
@@ -240,14 +181,8 @@ const CarouselItem = memo(function CarouselItem({
       // Queue texture change and start fade transition
       pendingTexture.current = textureRef.current;
       isTransitioning.current = true;
-    } else if (loadingState === 'blurred' && blurredTextureRef.current) {
-      // Queue texture change and start fade transition
-      pendingTexture.current = blurredTextureRef.current;
-      isTransitioning.current = true;
     }
   }, [loadingState]);
-
-  // Always render - show placeholder while loading
 
   return (
     <mesh
@@ -286,10 +221,10 @@ const CarouselScene = memo(function CarouselScene({
   // Convert px to viewport units - memoized
   const layout = useMemo(() => {
     const pxToViewport = (px) => (px / size.height) * viewport.height;
-    const bottomPadding = pxToViewport(14);
+    const bottomPadding = pxToViewport(12);
     const gap = pxToViewport(12);
     const itemHeight = viewport.height - bottomPadding;
-    const aspect = 16 / 10;
+    const aspect = 16 / 9;
     const itemWidth = itemHeight * aspect;
     const yPosition = -viewport.height / 2 + itemHeight / 2 + bottomPadding;
     const totalWidth = projects.length * (itemWidth + gap);
@@ -347,7 +282,7 @@ const CarouselScene = memo(function CarouselScene({
           key={item.key}
           position={item.position}
           scale={item.scale}
-          videoSrc={item.videoSrc}
+          imageSrc={item.imageSrc}
           offsetRef={offsetRef}
           index={item.originalIndex}
           onClick={onItemClick}
@@ -359,8 +294,8 @@ const CarouselScene = memo(function CarouselScene({
   );
 });
 
-// Main WebGL Carousel component
-export default function WebGLCarousel() {
+// Main WebGL Carousel component with images
+export default function WebGLCarouselImages() {
   const containerRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -488,6 +423,8 @@ export default function WebGLCarousel() {
         style={{ background: 'transparent' }}
         frameloop="always"
         dpr={[1, 2]}
+        linear
+        flat
       >
         <CarouselScene
           scrollStateRef={scrollStateRef}

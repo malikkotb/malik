@@ -21,6 +21,7 @@ const frameworks = [
   { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
   { value: "infinite-scroll-bulge-vertical", label: "Infinite Scroll Bulge Vertical" },
+  { value: "infinity-scale-carousel", label: "Infinity Scale Carousel" },
   // { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];

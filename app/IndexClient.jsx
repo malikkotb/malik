@@ -5,8 +5,14 @@ import dynamic from "next/dynamic";
 import Work from "@/components/Work/Work";
 
 // Dynamically import WebGLCarousel to prevent it from blocking initial render
-const WebGLCarousel = dynamic(
-  () => import("@/components/WebGLCarousel/WebGLCarousel"),
+// const WebGLCarousel = dynamic(
+//   () => import("@/components/WebGLCarousel/WebGLCarousel"),
+//   { ssr: false }
+// );
+
+// Testing with image-based carousel
+const WebGLCarouselImages = dynamic(
+  () => import("@/components/WebGLCarousel/WebGLCarouselImages"),
   { ssr: false }
 );
 
@@ -67,7 +73,8 @@ export default function IndexClient() {
   return (
     <div className='h-full w-full' data-transition-content>
       <div className="hidden lg:block">
-        {showCarousel && <WebGLCarousel />}
+        {/* {showCarousel && <WebGLCarousel />} */}
+        {showCarousel && <WebGLCarouselImages />}
       </div>
       {/* <div className="text-center h-[30vh] flex items-center justify-center uppercase">
         Creative Web Development

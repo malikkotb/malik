@@ -120,6 +120,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
         currentlyPlayingVideo = null;
       }
       videoRef.current.pause();
+      videoRef.current.currentTime = 0;
     }
   };
 
