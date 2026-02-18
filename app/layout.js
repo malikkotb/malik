@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import LoadingScreen from '@/components/LoadingScreen';
 import TransitionLayout from '@/components/TransitionLayout';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
   title: 'Index | Malik Kotb',
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
           {children}
         </TransitionLayout>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
