@@ -7,6 +7,7 @@ import Zoop from "./Zoop";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import ActionCall from "@/components/ActionCall/ActionCall";
 
 export default function StickyFooter() {
   {
@@ -26,6 +27,7 @@ export default function StickyFooter() {
     y: 0,
   });
   const [showCustomCursor, setShowCustomCursor] = useState(false);
+  const [showBookingOverlay, setShowBookingOverlay] = useState(false);
   const getInTouchRef = useRef(null);
 
   const menuLinks = [
@@ -92,7 +94,8 @@ export default function StickyFooter() {
   };
 
   return (
-    <div className='relative h-full border-t border-black border-opacity-30 sticky-footer'>
+    <>
+      <div className='relative h-full border-t border-black border-opacity-30 sticky-footer'>
       <div className='header-footer-text pt-5 containerFooter h-full w-full'>
         <div className='columnFooter md:pb-12 pb-0 col-span-6 md:col-span-4'>
           <h1 className='w-full mb-1 eyebrow eyebrow-footer'>
@@ -101,9 +104,18 @@ export default function StickyFooter() {
           <ul className='space-y-1'>
             {menuLinks.map((link) => (
               <li key={link.name} className='flex h-fit w-fit'>
-                <a className='headerLink' href={link.href}>
-                  {link.name}
-                </a>
+                {link.name === "Contact" ? (
+                  <button
+                    className='headerLink'
+                    onClick={() => setShowBookingOverlay(true)}
+                  >
+                    {link.name}
+                  </button>
+                ) : (
+                  <a className='headerLink' href={link.href}>
+                    {link.name}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -203,6 +215,45 @@ export default function StickyFooter() {
           </motion.div>
         )}
       </AnimatePresence> */}
-    </div>
+      </div>
+
+      {/* Booking Overlay */}
+      {showBookingOverlay && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowBookingOverlay(false)}
+        >
+          <div
+            className="relative bg-white rounded-lg shadow-xl max-w-[95vw] max-h-[95vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setShowBookingOverlay(false)}
+              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            {/* Cal.com booking component */}
+            <ActionCall overlayMode={true} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
