@@ -9,6 +9,7 @@ import { images } from './data';
 const vertexShader = `
   uniform float curveDepth;
   uniform float scrollX;
+  uniform float halfWidth;
 
   varying vec2 vUv;
 
@@ -16,7 +17,7 @@ const vertexShader = `
     vUv = uv;
 
     // Full-width dome: cosine curve spanning entire geometry
-    float t = abs(position.x) / 3.0;  // Normalize to 0-1
+    float t = abs(position.x) / halfWidth;  // Normalize to 0-1
     float depth = -curveDepth * cos(t * 1.5708);  // 1.5708 = π/2
 
     vec3 pos = position;
@@ -126,9 +127,13 @@ export default function GalleryMesh({ scrollState, config }) {
   const lastScrollX = useRef(0);
 
   // Create geometry with subdivisions for smooth curve
+  // Make it responsive to viewport aspect ratio
   const geometry = useMemo(() => {
-    return new THREE.PlaneGeometry(6, 4, 96, 64);
-  }, []);
+    const aspect = size.width / size.height;
+    const height = 4;
+    const width = height * aspect;
+    return new THREE.PlaneGeometry(width, height, 96, 64);
+  }, [size.width, size.height]);
 
   // Load all textures
   const textures = useMemo(() => {
@@ -145,16 +150,22 @@ export default function GalleryMesh({ scrollState, config }) {
   }, []);
 
   // Create uniforms
-  const uniforms = useMemo(() => ({
-    textures: { value: textures },
-    scrollX: { value: 0 },
-    curveDepth: { value: config.curveDepth },
-    columns: { value: config.columns },
-    rows: { value: config.rows },
-    gap: { value: config.gap },
-    aspectRatio: { value: 4 / 5 },
-    resolution: { value: new THREE.Vector2(size.width, size.height) },
-  }), [textures]);
+  const uniforms = useMemo(() => {
+    const aspect = size.width / size.height;
+    const height = 4;
+    const width = height * aspect;
+    return {
+      textures: { value: textures },
+      scrollX: { value: 0 },
+      curveDepth: { value: config.curveDepth },
+      columns: { value: config.columns },
+      rows: { value: config.rows },
+      gap: { value: config.gap },
+      aspectRatio: { value: 4 / 5 },
+      resolution: { value: new THREE.Vector2(size.width, size.height) },
+      halfWidth: { value: width / 2 },
+    };
+  }, [textures]);
 
   // Update uniforms when config changes
   useEffect(() => {
@@ -166,10 +177,14 @@ export default function GalleryMesh({ scrollState, config }) {
     }
   }, [config.curveDepth, config.columns, config.rows, config.gap]);
 
-  // Update resolution on resize
+  // Update resolution and halfWidth on resize
   useEffect(() => {
     if (materialRef.current) {
       materialRef.current.uniforms.resolution.value.set(size.width, size.height);
+      const aspect = size.width / size.height;
+      const height = 4;
+      const width = height * aspect;
+      materialRef.current.uniforms.halfWidth.value = width / 2;
     }
   }, [size.width, size.height]);
 

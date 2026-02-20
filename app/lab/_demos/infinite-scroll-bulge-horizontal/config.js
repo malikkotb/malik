@@ -2,7 +2,7 @@
 
 export const config = {
   // Grid layout
-  columns: 6,
+  columns: 4,
   rows: 2,  // Visible columns (we'll tile for infinite)
 
   // Scroll behavior

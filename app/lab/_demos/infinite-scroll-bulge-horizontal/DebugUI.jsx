@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 
 export default function DebugUI({ values, onChange }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const Slider = ({ label, name, min, max, step, value }) => (
     <div style={{ marginBottom: 8 }}>
