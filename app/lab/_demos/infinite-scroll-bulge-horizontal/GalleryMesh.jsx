@@ -117,7 +117,7 @@ const fragmentShader = `
   }
 `;
 
-export default function GalleryMesh({ scrollState, config }) {
+export default function GalleryMesh({ scrollState, config, onVelocityChange }) {
   const meshRef = useRef();
   const materialRef = useRef();
   const { size } = useThree();
@@ -205,6 +205,11 @@ export default function GalleryMesh({ scrollState, config }) {
     const targetVelocity = Math.min(scrollDelta * 80, 1); // Normalize to 0-1
     const velocitySmoothing = targetVelocity > smoothedVelocity.current ? 0.15 : 0.12;
     smoothedVelocity.current += (targetVelocity - smoothedVelocity.current) * velocitySmoothing;
+
+    // Expose velocity to parent for post-processing
+    if (onVelocityChange) {
+      onVelocityChange(smoothedVelocity.current);
+    }
 
     // Update shader uniforms
     materialRef.current.uniforms.scrollX.value = state.currentX;

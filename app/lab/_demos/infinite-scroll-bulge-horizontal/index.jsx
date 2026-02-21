@@ -3,6 +3,7 @@
 import { useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
+import { NoToneMapping, LinearSRGBColorSpace } from "three";
 import GalleryScene from "./GalleryScene";
 import DebugUI from "./DebugUI";
 import { config } from "./config";
@@ -10,17 +11,19 @@ import { config } from "./config";
 export default function InfiniteScrollGallery() {
   const containerRef = useRef();
 
-  // Debug values state (only grid layout is adjustable)
-  const [gridConfig, setGridConfig] = useState({
+  // Debug values state (grid layout and motion blur are adjustable)
+  const [debugConfig, setDebugConfig] = useState({
     columns: config.columns,
     rows: config.rows,
+    motionBlurIntensity: config.motionBlurIntensity,
+    motionBlurStyle: config.motionBlurStyle,
   });
 
-  // Merge static config with dynamic grid config
+  // Merge static config with dynamic debug config
   const debugValues = useMemo(() => ({
     ...config,
-    ...gridConfig,
-  }), [gridConfig]);
+    ...debugConfig,
+  }), [debugConfig]);
 
   // Store current sensitivity in ref for wheel handler
   const sensitivityRef = useRef(debugValues.scrollSensitivity);
@@ -29,7 +32,7 @@ export default function InfiniteScrollGallery() {
   }, [debugValues.scrollSensitivity]);
 
   const handleDebugChange = useCallback((name, value) => {
-    setGridConfig(prev => ({ ...prev, [name]: value }));
+    setDebugConfig(prev => ({ ...prev, [name]: value }));
   }, []);
 
   // Scroll state - refs for animation performance
@@ -94,6 +97,8 @@ export default function InfiniteScrollGallery() {
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
+    toneMapping: NoToneMapping,
+    outputColorSpace: LinearSRGBColorSpace,
   }), []);
 
   return (
@@ -114,11 +119,10 @@ export default function InfiniteScrollGallery() {
         gl={glProps}
         dpr={[1, 2]}
         frameloop="always"
-        flat
       >
         <GalleryScene scrollState={scrollState} config={debugValues} />
       </Canvas>
-      <DebugUI values={gridConfig} onChange={handleDebugChange} />
+      <DebugUI values={debugConfig} onChange={handleDebugChange} />
     </div>
   );
 }

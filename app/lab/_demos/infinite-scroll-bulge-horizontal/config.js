@@ -14,6 +14,10 @@ export const config = {
 
   // Image spacing
   gap: 0.06,              // Gap between images as fraction of cell size
+
+  // Motion blur (velocity-activated horizontal blur)
+  motionBlurIntensity: 1.0,  // Max blur intensity at full velocity (0-2)
+  motionBlurStyle: 'smear',  // 'smear' (directional streaks) or 'gaussian' (soft blur)
 };
 
 export default config;

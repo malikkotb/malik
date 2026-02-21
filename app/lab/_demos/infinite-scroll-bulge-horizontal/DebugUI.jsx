@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 export default function DebugUI({ values, onChange }) {
   const [collapsed, setCollapsed] = useState(true);
@@ -58,6 +58,34 @@ export default function DebugUI({ values, onChange }) {
     </div>
   );
 
+  const Toggle = ({ label, name, value, options }) => (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <label style={{ fontSize: 11, color: '#fff' }}>{label}</label>
+        <div style={{ display: 'flex', gap: 4 }}>
+          {options.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => onChange(name, opt.value)}
+              style={{
+                padding: '4px 8px',
+                fontSize: 10,
+                background: value === opt.value ? '#fff' : '#000',
+                border: '1px solid #fff',
+                borderRadius: 0,
+                color: value === opt.value ? '#000' : '#fff',
+                cursor: 'pointer',
+                fontFamily: 'monospace',
+              }}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div
       style={{
@@ -107,6 +135,27 @@ export default function DebugUI({ values, onChange }) {
             max={8}
             step={1}
             value={values.rows}
+          />
+
+          <div style={{ fontSize: 10, color: '#fff', marginBottom: 8, marginTop: 16, textTransform: 'uppercase', letterSpacing: 1 }}>
+            Motion Blur
+          </div>
+          <Slider
+            label="Intensity"
+            name="motionBlurIntensity"
+            min={0}
+            max={2}
+            step={0.1}
+            value={values.motionBlurIntensity}
+          />
+          <Toggle
+            label="Style"
+            name="motionBlurStyle"
+            value={values.motionBlurStyle}
+            options={[
+              { value: 'smear', label: 'Smear' },
+              { value: 'gaussian', label: 'Gaussian' },
+            ]}
           />
         </>
       )}
