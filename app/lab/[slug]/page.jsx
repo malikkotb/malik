@@ -19,6 +19,7 @@ const demos = {
   "infinite-scroll-bulge-vertical": dynamic(() => import("@/app/lab/_demos/infinite-scroll-bulge-vertical")),
   "infinite-scroll-bulge-horizontal": dynamic(() => import("@/app/lab/_demos/infinite-scroll-bulge-horizontal")),
   "infinity-scale-carousel": dynamic(() => import("@/app/lab/_demos/infinity-scale-carousel")),
+  "circular-infinite-carousel": dynamic(() => import("@/app/lab/_demos/circular-infinite-carousel")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

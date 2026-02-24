@@ -23,6 +23,7 @@ const frameworks = [
   { value: "infinite-scroll-bulge-vertical", label: "Infinite Scroll Bulge Vertical" },
   { value: "infinity-scale-carousel", label: "Infinity Scale Carousel" },
   { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
+  { value: "circular-infinite-carousel", label: "Circular Infinite Carousel" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 
@@ -49,6 +50,7 @@ export default function DemosPage() {
     "zoom-carousel": "https://malik-portfolio.b-cdn.net/Lab/zoom-carousel.webm",
     "infinite-scroll-bulge-vertical": "https://malik-portfolio.b-cdn.net/Lab/infinte-scroll-bulge-vertical.mp4",
     "infinite-scroll-bulge-horizontal": "https://malik-portfolio.b-cdn.net/Lab/infinte-scroll-bulge-horizontal.mp4",
+    "circular-infinite-carousel": "https://malik-portfolio.b-cdn.net/Lab/circular-carousel.mp4",
   };
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid
