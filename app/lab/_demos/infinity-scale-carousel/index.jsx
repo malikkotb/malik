@@ -10,7 +10,6 @@
  */
 
 import { useRef, useEffect, useState, useCallback, useLayoutEffect } from 'react';
-import gsap from 'gsap';
 import Lenis from 'lenis';
 
 // Configuration
@@ -23,7 +22,8 @@ const DRAG_MULTIPLIER = 1;
 
 // Scale configuration - simple gradient from right to left
 const MIN_SCALE = 0.7;
-const MAX_SCALE = 1.8;
+const MAX_SCALE = 2.0;
+const SCALE_EXPONENT = 0.6; // Gentle exponential curve
 
 // Sample images
 const IMAGES = [
@@ -37,13 +37,12 @@ const IMAGES = [
 export default function InfinityScaleCarousel() {
     const containerRef = useRef(null);
     const trackRef = useRef(null);
-    const cardsRef = useRef([]);
     const rafRef = useRef(null);
     const lenisRef = useRef(null);
 
-    // Scroll state refs
-    const targetScrollRef = useRef(0);
-    const animatedScrollRef = useRef(0);
+    // Scroll state refs (parametric - in image units)
+    const targetParamScrollRef = useRef(0);
+    const animatedParamScrollRef = useRef(0);
 
     // Drag state
     const isDraggingRef = useRef(false);
@@ -61,124 +60,151 @@ export default function InfinityScaleCarousel() {
         return Math.min(MAX_COPIES_PER_SIDE, Math.max(3, required + BUFFER));
     })();
 
-    // Calculate scale based on position in viewport (right = large, left = small)
-    const calculateScale = useCallback((cardElement) => {
-        if (!containerRef.current || !cardElement) return MIN_SCALE;
-
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const cardRect = cardElement.getBoundingClientRect();
-
-        // Get the center of the card relative to viewport
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const containerLeft = containerRect.left;
-        const containerRight = containerRect.right;
-
-        // Normalize position from 0 (left) to 1 (right)
-        const normalizedPosition = (cardCenter - containerLeft) / (containerRight - containerLeft);
-
-        // Clamp between 0 and 1
-        const clampedPosition = Math.max(0, Math.min(1, normalizedPosition));
-
-        // Linear interpolation: right side (1) = MAX_SCALE, left side (0) = MIN_SCALE
-        const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * clampedPosition;
-
-        return scale;
-    }, []);
-
-    // Teleport scroll position back to center zone when out of bounds
-    const normalizeScroll = useCallback(
+    // Teleport parametric scroll position back to center zone when out of bounds
+    const normalizeParametricScroll = useCallback(
         (scroll) => {
-            if (contentWidth === 0) return scroll;
+            const imageCount = IMAGES.length;
+            if (imageCount === 0) return scroll;
 
-            const centerZoneStart = contentWidth * copiesPerSide;
-            const centerZoneEnd = centerZoneStart + contentWidth;
+            const centerZoneStart = copiesPerSide * imageCount;
+            const centerZoneEnd = centerZoneStart + imageCount;
 
             if (scroll < centerZoneStart || scroll >= centerZoneEnd) {
-                const withinCycle = ((scroll % contentWidth) + contentWidth) % contentWidth;
+                const withinCycle = ((scroll % imageCount) + imageCount) % imageCount;
                 return centerZoneStart + withinCycle;
             }
 
             return scroll;
         },
-        [contentWidth, copiesPerSide]
+        [copiesPerSide]
     );
 
-    // Update scales for all cards based on their current viewport position
-    const updateCardScales = useCallback(() => {
-        if (!containerRef.current || itemWidth === 0) return;
+    // Calculate positions and scales for all cards based on parametric scroll
+    const calculateAllPositionsAndScales = useCallback((parametricScroll) => {
+        if (itemWidth === 0) return [];
 
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const containerLeft = containerRect.left;
-        const containerRight = containerRect.right;
-        const containerWidth = containerRight - containerLeft;
+        const containerW = containerRef.current?.clientWidth || window.innerWidth;
+        const baseW = itemWidth;
 
-        cardsRef.current.forEach((card) => {
-            if (!card) return;
+        // Estimate visible count for normalization
+        const avgScale = (MIN_SCALE + MAX_SCALE) / 2;
+        const visibleCount = Math.ceil(containerW / (baseW * MIN_SCALE)) + 2;
 
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2;
+        const totalImages = (copiesPerSide * 2 + 1) * IMAGES.length;
+        const results = [];
 
-            // Normalize position from 0 (left) to 1 (right)
-            const normalizedPosition = (cardCenter - containerLeft) / containerWidth;
-            const clampedPosition = Math.max(0, Math.min(1, normalizedPosition));
+        // Pass 1: Calculate all scales based on parametric index
+        for (let i = 0; i < totalImages; i++) {
+            const relativeParam = i - parametricScroll;
+            const normalized = relativeParam / visibleCount;
+            const clamped = Math.max(0, Math.min(1, normalized));
+            const eased = Math.pow(clamped, SCALE_EXPONENT);
+            results[i] = {
+                scale: MIN_SCALE + (MAX_SCALE - MIN_SCALE) * eased,
+                globalIndex: i
+            };
+        }
 
-            // Linear interpolation: right side (1) = MAX_SCALE, left side (0) = MIN_SCALE
-            const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * clampedPosition;
+        // Pass 2: Calculate cumulative centers (adjacent scaled edges touch)
+        let cumulativeCenter = 0;
+        for (let i = 0; i < totalImages; i++) {
+            if (i === 0) {
+                results[i].center = 0;
+            } else {
+                // Gap between centers = half of previous + half of current scaled width
+                const gap = baseW * (results[i - 1].scale + results[i].scale) / 2;
+                cumulativeCenter += gap;
+                results[i].center = cumulativeCenter;
+            }
+        }
 
-            // Use actual width/height instead of scale transform to prevent overlap
-            const scaledSize = itemWidth * scale;
-            card.style.width = `${scaledSize}px`;
-            card.style.height = `${scaledSize}px`;
-        });
-    }, [itemWidth]);
+        // Pass 3: Convert to visual positions relative to viewport
+        // Find what world position corresponds to left edge of viewport
+        const floorIndex = Math.floor(parametricScroll);
+        const fraction = parametricScroll - floorIndex;
+        const clampedFloor = Math.max(0, Math.min(totalImages - 2, floorIndex));
+
+        // Interpolate scroll offset in world space
+        const worldScrollOffset = results[clampedFloor].center +
+            fraction * baseW * (results[clampedFloor].scale + results[Math.min(clampedFloor + 1, totalImages - 1)].scale) / 2;
+
+        // Calculate visual positions
+        // Position the card so its CENTER (before scaling) is at the calculated center point
+        // Since transform-origin is 'center bottom', scale happens from the center
+        for (let i = 0; i < totalImages; i++) {
+            const scaledW = baseW * results[i].scale;
+            // Position so the element's center is at the world center point
+            results[i].visualLeft = results[i].center - baseW / 2 - worldScrollOffset;
+            results[i].visualRight = results[i].visualLeft + scaledW;
+
+            // Z-index: larger scale = higher z-index
+            results[i].zIndex = Math.round((results[i].scale - MIN_SCALE) / (MAX_SCALE - MIN_SCALE) * 100);
+        }
+
+        return results;
+    }, [itemWidth, copiesPerSide]);
 
     // Animation loop: lerp toward target & normalize if needed
     const animate = useCallback(() => {
         const track = trackRef.current;
-        if (!track || contentWidth === 0) {
+        if (!track || itemWidth === 0) {
             rafRef.current = requestAnimationFrame(animate);
             return;
         }
 
-        // 1. Lerp animated position toward target
-        const target = targetScrollRef.current;
-        const current = animatedScrollRef.current;
+        // 1. Lerp animated parametric position toward target
+        const target = targetParamScrollRef.current;
+        const current = animatedParamScrollRef.current;
         const distance = Math.abs(target - current);
-        const next = distance < LERP_THRESHOLD
+        const next = distance < (LERP_THRESHOLD / itemWidth)
             ? target
             : current + (target - current) * LERP_FACTOR;
 
-        animatedScrollRef.current = next;
+        animatedParamScrollRef.current = next;
 
         // 2. Check if we need to teleport (normalize)
-        const normalized = normalizeScroll(next);
+        const normalized = normalizeParametricScroll(next);
 
         if (normalized !== next) {
             const offset = normalized - next;
-            animatedScrollRef.current = normalized;
-            targetScrollRef.current += offset;
+            animatedParamScrollRef.current = normalized;
+            targetParamScrollRef.current += offset;
         }
 
-        // 3. Apply transform with final position (either lerped or normalized)
-        track.style.transform = `translateX(${-animatedScrollRef.current}px)`;
+        // 3. Calculate all positions and scales
+        const layout = calculateAllPositionsAndScales(animatedParamScrollRef.current);
 
-        // 4. Force layout calculation to ensure transform is applied before scale calculation
-        void track.offsetHeight;
+        // 4. Apply transforms to each card
+        const cards = track.querySelectorAll('[data-index]');
+        cards.forEach((card) => {
+            const globalIndex = parseInt(card.dataset.index, 10);
+            if (isNaN(globalIndex) || !layout[globalIndex]) return;
 
-        // 5. Update scales based on new viewport positions
-        updateCardScales();
+            const { visualLeft, scale, zIndex } = layout[globalIndex];
+
+            // Apply individual position and scale
+            card.style.transform = `translateX(${visualLeft}px) scale(${scale})`;
+            card.style.zIndex = zIndex;
+        });
 
         rafRef.current = requestAnimationFrame(animate);
-    }, [normalizeScroll, contentWidth, updateCardScales]);
+    }, [normalizeParametricScroll, itemWidth, calculateAllPositionsAndScales]);
 
     // Wheel handler
     const handleWheel = useCallback(
         (event) => {
             event.preventDefault();
-            const delta = event.deltaY !== 0 ? event.deltaY : event.deltaX;
-            targetScrollRef.current += delta * WHEEL_MULTIPLIER;
+            const deltaPixels = event.deltaY !== 0 ? event.deltaY : event.deltaX;
+
+            // Convert pixel delta to parametric delta
+            if (itemWidth > 0) {
+                const avgScale = (MIN_SCALE + MAX_SCALE) / 2;
+                const avgScaledWidth = itemWidth * avgScale;
+                const parametricDelta = (deltaPixels * WHEEL_MULTIPLIER) / avgScaledWidth;
+                targetParamScrollRef.current += parametricDelta;
+            }
         },
-        []
+        [itemWidth]
     );
 
     // Pointer/drag handlers
@@ -191,11 +217,17 @@ export default function InfinityScaleCarousel() {
     const handlePointerMove = useCallback((event) => {
         if (!isDraggingRef.current) return;
 
-        const deltaX = event.clientX - lastPointerXRef.current;
+        const deltaPixels = event.clientX - lastPointerXRef.current;
         lastPointerXRef.current = event.clientX;
 
-        targetScrollRef.current -= deltaX * DRAG_MULTIPLIER;
-    }, []);
+        // Convert pixel delta to parametric delta
+        if (itemWidth > 0) {
+            const avgScale = (MIN_SCALE + MAX_SCALE) / 2;
+            const avgScaledWidth = itemWidth * avgScale;
+            const parametricDelta = (deltaPixels * DRAG_MULTIPLIER) / avgScaledWidth;
+            targetParamScrollRef.current -= parametricDelta;
+        }
+    }, [itemWidth]);
 
     const handlePointerUp = useCallback((event) => {
         isDraggingRef.current = false;
@@ -266,16 +298,14 @@ export default function InfinityScaleCarousel() {
             setItemWidth(singleItemW);
             setContentWidth(totalContentW);
 
-            // Initialize scroll to center zone
-            if (totalContentW > 0) {
-                const copies = Math.min(
-                    MAX_COPIES_PER_SIDE,
-                    Math.max(3, Math.ceil(containerW / totalContentW) + BUFFER)
-                );
-                const initialScroll = totalContentW * copies;
-                targetScrollRef.current = initialScroll;
-                animatedScrollRef.current = initialScroll;
-            }
+            // Initialize parametric scroll to center zone
+            const copies = Math.min(
+                MAX_COPIES_PER_SIDE,
+                Math.max(3, Math.ceil(containerW / totalContentW) + BUFFER)
+            );
+            const initialParamScroll = IMAGES.length * copies;
+            targetParamScrollRef.current = initialParamScroll;
+            animatedParamScrollRef.current = initialParamScroll;
         };
 
         measureAndInit();
@@ -294,18 +324,14 @@ export default function InfinityScaleCarousel() {
             return (
                 <div
                     key={`${copyIndex}-${imageIndex}`}
-                    ref={(el) => {
-                        if (el && !cardsRef.current.includes(el)) {
-                            cardsRef.current.push(el);
-                        }
-                    }}
-                    className="flex-shrink-0"
                     style={{
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
                         width: `${itemWidth}px`,
                         height: `${itemWidth}px`,
-                        aspectRatio: '1/1',
-                        transformOrigin: 'bottom center',
-                        willChange: 'width, height',
+                        transformOrigin: 'center bottom',
+                        willChange: 'transform',
                     }}
                     data-index={globalIndex}
                 >
@@ -316,7 +342,6 @@ export default function InfinityScaleCarousel() {
                         draggable={false}
                         style={{
                             display: 'block',
-                            aspectRatio: '1/1',
                         }}
                     />
                 </div>
@@ -338,11 +363,11 @@ export default function InfinityScaleCarousel() {
         >
             <div
                 ref={trackRef}
-                className="flex items-end"
                 style={{
+                    position: 'relative',
+                    height: `${itemWidth * MAX_SCALE}px`,
+                    width: '100%',
                     willChange: 'transform',
-                    gap: 0,
-                    lineHeight: 0,
                 }}
             >
                 {/* Before copies */}
