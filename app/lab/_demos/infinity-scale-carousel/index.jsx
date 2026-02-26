@@ -21,17 +21,19 @@ const WHEEL_MULTIPLIER = 1.5;
 const DRAG_MULTIPLIER = 1;
 
 // Scale configuration - simple gradient from right to left
-const MIN_SCALE = 0.7;
-const MAX_SCALE = 2.0;
+const MIN_SCALE = 0.5;
+const MAX_SCALE = 2.5;
 const SCALE_EXPONENT = 0.6; // Gentle exponential curve
 
 // Sample images
 const IMAGES = [
-    'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800',
-    'https://images.unsplash.com/photo-1682687221038-404cb8830901?w=800',
-    'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800',
-    'https://images.unsplash.com/photo-1682687219356-e820ca126c92?w=800',
-    'https://images.unsplash.com/photo-1682687220923-c58b9a4592ae?w=800',
+    '/demos/fancy_img1.webp',
+    '/demos/fancy_img2.webp',
+    '/demos/fancy_img3.webp',
+    '/demos/fancy_img4.webp',
+    '/demos/fancy_img5.webp',
+    '/demos/fancy_img6.webp',
+    '/demos/fancy_img7.webp',
 ];
 
 export default function InfinityScaleCarousel() {
