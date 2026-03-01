@@ -7,7 +7,7 @@ const projects = [
     orientation: 'horizontal',
   },
   {
-    title: 'BODYARMOR',
+    title: 'BodyArmor',
     videoSrc: '/home_carousel/bodyarmor_hero_short.mp4',
     imageSrc: '/home-carousel-images/bodyarmor.avif',
     link: 'https://www.drinkbodyarmor.com/',

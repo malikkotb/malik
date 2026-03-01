@@ -8,6 +8,16 @@
   src: url("./fonts/PPNeueMontreal-Medium.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "PPNeueMontreal Regular";
+  src: url("./fonts/PPNeueMontreal-Regular.otf") format("opentype");
+}
+
+/* @font-face {
+  font-family: "haas-grotesk";
+  src: url("fonts/grotesk/NeueHaasGrotText-55Roman-Trial.otf") format("opentype");
+} */
+
 @theme inline {
   --font-neuemontreal-mono-regular: "PPNeueMontrealMono Regular",
     sans-serif;
@@ -22,8 +32,8 @@
 
 body {
   padding: 12px;
+  /* font-family: "haas-grotesk", sans-serif; */
   font-family: "PPNeueMontreal Medium", sans-serif;
-  font-weight: 530;
   /* background-color: #fafafa; */
   background-color: #fff;
 }
@@ -64,7 +74,7 @@ html {
 }
 
 .eyebrow {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   padding-bottom: 12px;
   padding-top: 12px;
   font-size: 12px;
@@ -105,6 +115,7 @@ html {
 
 .header-footer-text {
   font-size: 0.75rem;
+  letter-spacing: 0em;
   line-height: 100%; 
 }
 
@@ -140,7 +151,7 @@ html {
   font-size: 5.5vw;
   line-height: 1;
   justify-content: center;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 @media (max-width: 768px) {
@@ -203,7 +214,7 @@ html {
   overflow: hidden; /* Hide the content when width is less than content */
   white-space: nowrap; /* Ensure text doesn’t wrap */
   gap: 4px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   background-color: black;
   padding-left: 2px;
   align-items: center;

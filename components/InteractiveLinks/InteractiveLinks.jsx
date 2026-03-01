@@ -13,7 +13,7 @@ const links = [
 export default function InteractiveLinks() {
   return (
     <div className="flex flex-col">
-      <span className="text-[12px] uppercase text-zinc-400 mb-3">Links</span>
+      <span className="text-[12px] text-zinc-400 mb-3">Links</span>
       <ul className="flex flex-col text-[12px] uppercase leading-[1.5]">
         {links.map((link) => (
           <li key={link.label}>

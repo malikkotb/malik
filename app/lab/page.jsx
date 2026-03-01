@@ -25,6 +25,9 @@ const frameworks = [
   { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   { value: "circular-infinite-carousel", label: "Circular Infinite Carousel" },
   { value: "snake-image-trail", label: "Snake Image Trail" },
+  { value: "peeling-image-carousel", label: "Peeling Image Carousel" },
+  { value: "dark-cloud-ripple-shader", label: "Dark Cloud Ripple Shader" },
+  { value: "magazine-carousel-shader", label: "Magazine Carousel Shader" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 

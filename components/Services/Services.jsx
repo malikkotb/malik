@@ -25,20 +25,20 @@ export default function Services() {
   );
 
   const links = [
-    { label: "EMAIL", value: "hello@malikkotb.com", href: "mailto:hello@malikkotb.com" },
-    { label: "LINKEDIN", value: "MALIK-KOTB", href: "https://www.linkedin.com/in/malik-kotb/" },
-    { label: "INSTAGRAM", value: "@MALIKKOTBB", href: "https://instagram.com/malikkotbb" },
-    { label: "TIKTOK", value: "@MALIKRUNS", href: "https://www.tiktok.com/@malikruns" },
-    { label: "GITHUB", value: "@MALIKKOTB", href: "https://github.com/malikkotb" },
+    { label: "E-mail", value: "hello@malikkotb.com", href: "mailto:hello@malikkotb.com" },
+    { label: "LinkedIn", value: "malik-kotb", href: "https://www.linkedin.com/in/malik-kotb/" },
+    { label: "Instagram", value: "malikkotbb", href: "https://instagram.com/malikkotbb" },
+    { label: "TikTok", value: "malikruns", href: "https://www.tiktok.com/@malikruns" },
+    { label: "GitHub", value: "malikkotb", href: "https://github.com/malikkotb" },
   ];
 
   return (
-    <div className='relative text-[12px] uppercase w-full' id='services'>
+    <div className='relative text-[12px] w-full' id='services'>
       {/* Desktop: 3 parent columns, each with internal 4-column grid */}
       <div className='hidden lg:grid grid-cols-3'>
         {/* Bio Section */}
         <div className='grid grid-cols-4 mr-6'>
-          <div className='col-span-1 opacity-50'>About</div>
+          <div className='col-span-1'>About</div>
           <div className='col-span-3 leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>
             {bio}
           </div>
@@ -46,8 +46,8 @@ export default function Services() {
 
         {/* Services Section */}
         <div className='grid grid-cols-4 mr-6'>
-          <div className='col-span-1 opacity-50'>Services</div>
-          <div className='col-span-3 leading-[130%] flex flex-col uppercase' style={{ letterSpacing: '0.01em' }}>
+          <div className='col-span-1'>Services</div>
+          <div className='col-span-3 leading-[130%] flex flex-col ' style={{ letterSpacing: '0.01em' }}>
             {services.map((service, index) => (
               <span key={index}>{service}</span>
             ))}
@@ -56,13 +56,13 @@ export default function Services() {
 
         {/* Links Section */}
         <div className='grid grid-cols-4 mr-6'>
-          <div className='col-span-1 opacity-50'>Contact</div>
-          <div className='col-span-1 flex flex-col uppercase'>
+          <div className='col-span-1'>Contact</div>
+          <div className='col-span-1 flex flex-col'>
             {links.map((link) => (
               <span key={link.label}>{link.label}</span>
             ))}
           </div>
-          <div className='col-span-2 flex flex-col uppercase'>
+          <div className='col-span-2 flex flex-col '>
             {links.map((link) => (
               <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer' className='cursor-pointer'>
                 <ScrambleText text={link.value} />
@@ -76,14 +76,14 @@ export default function Services() {
       <div className='flex flex-col gap-6 lg:hidden'>
         {/* Bio Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>About</div>
+          <div className=''>About</div>
           <div className='leading-[130%] normal-case' style={{ letterSpacing: '0.01em' }}>{bio}</div>
         </div>
 
         {/* Services Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>Services</div>
-          <div className='leading-[130%] flex flex-col uppercase' style={{ letterSpacing: '0.01em' }}>
+          <div className=''>Services</div>
+          <div className='leading-[130%] flex flex-col' style={{ letterSpacing: '0.01em' }}>
             {services.map((service, index) => (
               <span key={index}>{service}</span>
             ))}
@@ -92,8 +92,8 @@ export default function Services() {
 
         {/* Links Section */}
         <div className='grid grid-cols-[80px_1fr] gap-4'>
-          <div className='opacity-50'>Contact</div>
-          <ul className='flex flex-col uppercase'>
+          <div className=''>Contact</div>
+          <ul className='flex flex-col'>
             {links.map((link) => (
               <li key={link.label} className='grid grid-cols-[80px_1fr]'>
                 <span>{link.label}</span>

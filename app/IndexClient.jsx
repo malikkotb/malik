@@ -10,8 +10,13 @@ import Work from "@/components/Work/Work";
 // );
 
 // Testing with image-based carousel
-const WebGLCarouselImages = dynamic(
-  () => import("@/components/WebGLCarousel/WebGLCarouselImages"),
+// const WebGLCarouselImages = dynamic(
+//   () => import("@/components/WebGLCarousel/WebGLCarouselImages"),
+//   { ssr: false }
+// );
+
+const HeroCarousel = dynamic(
+  () => import("@/components/HeroCarousel/HeroCarousel"),
   { ssr: false }
 );
 
@@ -62,7 +67,8 @@ export default function IndexClient() {
     <div className='h-full w-full' data-transition-content>
       <div className="hidden lg:block">
         {/* {showCarousel && <WebGLCarousel />} */}
-        <WebGLCarouselImages />
+        {/* <WebGLCarouselImages /> */}
+        <HeroCarousel />
       </div>
       {/* <div className="text-center h-[30vh] flex items-center justify-center uppercase">
         Creative Web Development

@@ -21,6 +21,9 @@ const demos = {
   "infinity-scale-carousel": dynamic(() => import("@/app/lab/_demos/infinity-scale-carousel")),
   "circular-infinite-carousel": dynamic(() => import("@/app/lab/_demos/circular-infinite-carousel")),
   "snake-image-trail": dynamic(() => import("@/app/lab/_demos/snake-image-trail")),
+  "peeling-image-carousel": dynamic(() => import("@/app/lab/_demos/peeling-image-carousel")),
+  "dark-cloud-ripple-shader": dynamic(() => import("@/app/lab/_demos/dark-cloud-ripple-shader")),
+  "magazine-carousel-shader": dynamic(() => import("@/app/lab/_demos/magazine-carousel-shader")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

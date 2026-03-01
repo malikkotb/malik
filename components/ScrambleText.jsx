@@ -34,7 +34,7 @@ export default function ScrambleText({ text, className = "", underline = false }
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -44,11 +44,12 @@ export default function ScrambleText({ text, className = "", underline = false }
     setIsHovered(true);
     // Disable scramble on mobile
     if (isMobile) return;
-    
+
     const validRefs = lettersRef.current.filter(Boolean);
     if (validRefs.length === 0) return;
 
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const chars = "abcdefghijklmnopqrstuvwxyz";
     let i = 0;
 
     const interval = setInterval(() => {
@@ -76,12 +77,12 @@ export default function ScrambleText({ text, className = "", underline = false }
   };
 
   return (
-    <span 
+    <span
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={className}
-      style={{ 
+      style={{
         display: "inline-block",
         width: width ? `${width}px` : "auto",
         textAlign: "left",
@@ -96,7 +97,7 @@ export default function ScrambleText({ text, className = "", underline = false }
             ref={(el) => {
               if (el) lettersRef.current[index] = el;
             }}
-            style={{ 
+            style={{
               display: "inline-block",
               fontKerning: "normal"
             }}

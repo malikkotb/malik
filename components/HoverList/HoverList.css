@@ -1,20 +1,18 @@
 .directional-list {
-  color: black;
+  color: rgb(0, 0, 0, 0.8);
   flex-flow: column;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   width: 100%;
   display: flex;
   position: relative;
 }
 
 .directional-list__item {
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
   color: inherit;
   justify-content: space-between;
   align-items: center;
   margin-top: -1px;
-  padding: 0.75em 0em;
+  padding: 0.75rem 0rem;
   text-decoration: none;
   display: flex;
   position: relative;
@@ -41,10 +39,11 @@
 
 .direcitonal-list__p {
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 100%;
   mix-blend-mode: difference;
-  color: white;
+  color: rgb(255, 255, 255, 0.8);
+  letter-spacing: -0.01em;
 }
 
 .directional-list__border {

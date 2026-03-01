@@ -22,7 +22,7 @@ export default function HoverProjectSection() {
       className="pb-[15dvh] w-full "
     >
       <div className="mx-4 relative mb-8 md:mb-0">
-        <div className="uppercase items-center border-white py-4 white opacity-70 text-xs w-full grid grid-cols-2 md:grid-cols-4">
+        <div className="items-center border-white py-4 white opacity-70 text-xs w-full grid grid-cols-2 md:grid-cols-4">
           <span>Project</span>
           <span className="hidden md:block">Category</span>
           <span className="hidden md:block text-left ml-12">Client</span>

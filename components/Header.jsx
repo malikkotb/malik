@@ -55,9 +55,10 @@ export default function Header() {
       <div
         style={{
           mixBlendMode: "difference",
-          color: "#fff",
+          color: "rgb(255, 255, 255, 0.8)",
+          // letterSpacing: "-0.01em",
         }}
-        className={`header-footer-text uppercase z-[100] grid grid-cols-12 gap-[8px] justify-between w-full fixed top-0 left-0 right-0 p-[12px] transition-all ease-in-out duration-500 ${isVisible
+        className={`header-footer-text z-[100] grid grid-cols-12 gap-[8px] justify-between w-full fixed top-0 left-0 right-0 p-[12px] transition-all ease-in-out duration-500 ${isVisible
           ? "translate-y-0 opacity-100"
           : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
           }`}
@@ -88,7 +89,7 @@ export default function Header() {
               <ScrambleText text="Blog" underline />
             </TransitionLink> */}
             <button onClick={() => setShowBookingOverlay(true)}>
-              <ScrambleText text="CONTACT" underline />
+              <ScrambleText text="Contact" underline />
             </button>
           </div>
 
