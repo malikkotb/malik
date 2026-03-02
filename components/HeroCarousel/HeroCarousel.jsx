@@ -10,7 +10,6 @@ export default function HeroCarousel() {
   const [isDragging, setIsDragging] = useState(false);
   const isDraggingRef = useRef(false);
   const isHoveringRef = useRef(false);
-  const [hoveredKey, setHoveredKey] = useState(null);
 
   const scrollStateRef = useRef({
     scrollProgress: 0,
@@ -123,8 +122,8 @@ export default function HeroCarousel() {
               width: "calc((65vh - 12px) * 1.7778)",
               flexShrink: 0,
             }}
-            onPointerEnter={() => { isHoveringRef.current = true; setHoveredKey(item.key); }}
-            onPointerLeave={() => { isHoveringRef.current = false; setHoveredKey(null); }}
+            onPointerEnter={() => { isHoveringRef.current = true; }}
+            onPointerLeave={() => { isHoveringRef.current = false; }}
             onClick={() => {
               if (!isDraggingRef.current && item.link) {
                 window.open(item.link, "_blank", "noopener,noreferrer");
@@ -137,23 +136,6 @@ export default function HeroCarousel() {
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none", userSelect: "none" }}
               draggable={false}
             />
-            <div
-              style={{
-                position: "absolute",
-                bottom: "12px",
-                left: "12px",
-                zIndex: 1,
-                pointerEvents: "none",
-                color: "white",
-                letterSpacing: "0.01em",
-                mixBlendMode: "difference",
-                opacity: hoveredKey === item.key ? 1 : 0,
-                transform: hoveredKey === item.key ? "translateX(0)" : "translateX(-10px)",
-                transition: "opacity 0.4s ease, transform 0.4s ease",
-              }}
-            >
-              {item.title}
-            </div>
           </div>
         ))}
       </div>
