@@ -24,6 +24,7 @@ const demos = {
   "peeling-image-carousel": dynamic(() => import("@/app/lab/_demos/peeling-image-carousel")),
   "dark-cloud-ripple-shader": dynamic(() => import("@/app/lab/_demos/dark-cloud-ripple-shader")),
   "magazine-carousel-shader": dynamic(() => import("@/app/lab/_demos/magazine-carousel-shader")),
+  "husky-art-canvas": dynamic(() => import("@/app/lab/_demos/husky-art-canvas")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

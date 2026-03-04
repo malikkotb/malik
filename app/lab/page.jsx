@@ -28,6 +28,7 @@ const frameworks = [
   { value: "peeling-image-carousel", label: "Peeling Image Carousel" },
   { value: "dark-cloud-ripple-shader", label: "Dark Cloud Ripple Shader" },
   { value: "magazine-carousel-shader", label: "Magazine Carousel Shader" },
+  { value: "husky-art-canvas", label: "Husky Art Canvas" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 

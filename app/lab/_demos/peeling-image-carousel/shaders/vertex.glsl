@@ -1,9 +1,10 @@
 uniform float uPlaneHeight;
 uniform float uScrollProgress;  // -1 (entering from below) to +1 (leaving through top)
 uniform float uCurlRadius;
-uniform float uCurlMaxHeight;   // 0.35 = 35% max curl
+uniform float uCurlMaxHeight;   // 0.5 = 50% max curl
 
 varying vec2 vUv;
+varying float vCurlAmount;
 
 void main() {
     vUv = uv;
@@ -18,13 +19,13 @@ void main() {
 
     if (uScrollProgress < 0.0) {
         // Entering from below - curl top edge
-        // -1.0 = full curl, -0.2 = no curl
-        topCurlAmount = smoothstep(-0.2, -1.0, uScrollProgress);
+        topCurlAmount = smoothstep(-0.1, -0.9, uScrollProgress);
     } else if (uScrollProgress > 0.0) {
         // Leaving through top - curl bottom edge
-        // 0.2 = no curl, 1.0 = full curl
-        bottomCurlAmount = smoothstep(0.2, 1.0, uScrollProgress);
+        bottomCurlAmount = smoothstep(0.1, 0.9, uScrollProgress);
     }
+
+    vCurlAmount = topCurlAmount + bottomCurlAmount;
 
     // TOP EDGE CURL (entering)
     if (topCurlAmount > 0.001) {
@@ -35,9 +36,9 @@ void main() {
             float angle = distFromHinge / uCurlRadius;
             angle = min(angle, 4.71239);  // Limit to ~270°
 
-            // Cylindrical transformation - curl backward into screen
+            // Cylindrical transformation - curl forward toward camera
             pos.y = hingeY + uCurlRadius * sin(angle);
-            pos.z = -uCurlRadius * (1.0 - cos(angle));
+            pos.z = uCurlRadius * (1.0 - cos(angle));
         }
     }
 
@@ -51,12 +52,11 @@ void main() {
             angle = min(angle, 4.71239);
 
             pos.y = hingeY - uCurlRadius * sin(angle);
-            pos.z = -uCurlRadius * (1.0 - cos(angle));
+            pos.z = uCurlRadius * (1.0 - cos(angle));
         }
     }
 
     // Rotate on Z-axis based on curl amount to reveal the peel
-    // Opposite directions for entering vs leaving
     float zRotation = topCurlAmount * -0.3 + bottomCurlAmount * 0.3;
     float cosZ = cos(zRotation);
     float sinZ = sin(zRotation);

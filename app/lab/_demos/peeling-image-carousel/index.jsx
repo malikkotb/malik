@@ -11,6 +11,7 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import GUI from 'lil-gui';
 
 import vertexShader from './shaders/vertex.glsl';
 import fragmentShader from './shaders/fragment.glsl';
@@ -42,18 +43,11 @@ export default function PeelingImageCarousel() {
             height: window.innerHeight,
         };
 
-        // Camera - Orthographic for 2D layout
-        const frustumSize = sizes.height;
-        const aspect = sizes.width / sizes.height;
-        const camera = new THREE.OrthographicCamera(
-            (frustumSize * aspect) / -2,
-            (frustumSize * aspect) / 2,
-            frustumSize / 2,
-            frustumSize / -2,
-            0.1,
-            1000
-        );
-        camera.position.z = 5;
+        // Camera - Perspective so Z-depth changes create visible foreshortening
+        const fov = 45;
+        let cameraZ = (sizes.height / 2) / Math.tan((fov / 2) * (Math.PI / 180));
+        const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.1, cameraZ * 3);
+        camera.position.z = cameraZ;
 
         // Renderer
         const renderer = new THREE.WebGLRenderer({
@@ -79,20 +73,12 @@ export default function PeelingImageCarousel() {
         // Create planes for images (just enough to fill viewport + buffer)
         // We only need IMAGES.length planes and wrap them infinitely
         const planes = [];
-        const shadows = [];
-
-        // Shadow material - soft black gradient
-        const shadowMaterial = new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            transparent: true,
-            opacity: 0.15,
-        });
 
         for (let i = 0; i < IMAGES.length; i++) {
             const texture = textureLoader.load(IMAGES[i]);
             texture.colorSpace = THREE.SRGBColorSpace;
 
-            const geometry = new THREE.PlaneGeometry(planeSize, planeSize, 1, 64);
+            const geometry = new THREE.PlaneGeometry(planeSize, planeSize, 16, 64);
             const material = new THREE.ShaderMaterial({
                 vertexShader,
                 fragmentShader,
@@ -100,8 +86,8 @@ export default function PeelingImageCarousel() {
                     uTexture: { value: texture },
                     uPlaneHeight: { value: planeSize },
                     uScrollProgress: { value: 0.0 },
-                    uCurlRadius: { value: planeSize * 0.08 },
-                    uCurlMaxHeight: { value: 0.35 },
+                    uCurlRadius: { value: planeSize * 0.12 },
+                    uCurlMaxHeight: { value: 0.50 },
                 },
                 side: THREE.DoubleSide,
             });
@@ -109,16 +95,8 @@ export default function PeelingImageCarousel() {
             const mesh = new THREE.Mesh(geometry, material);
             mesh.userData.index = i;
 
-            // Create shadow plane
-            const shadowGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
-            const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial.clone());
-            shadow.position.z = -5; // Behind the image
-            shadow.userData.index = i;
-
-            scene.add(shadow);
             scene.add(mesh);
             planes.push(mesh);
-            shadows.push(shadow);
         }
 
         // Custom smooth scroll state
@@ -129,6 +107,47 @@ export default function PeelingImageCarousel() {
             target: 0,       // Target scroll position (where we want to go)
             ease: 0.08,      // Lerp factor for smooth scrolling
         };
+
+        // Debug GUI
+        const params = {
+            curlRadiusFactor: 0.12,   // multiplied by planeSize
+            curlMaxHeight: 0.50,
+            scrollEase: 0.08,
+            planeSizeFactor: 0.35,    // multiplied by window width
+        };
+
+        const gui = new GUI({ title: 'Peeling Carousel' });
+        gui.domElement.style.position = 'fixed';
+        gui.domElement.style.bottom = '16px';
+        gui.domElement.style.left = '16px';
+        gui.domElement.style.top = 'auto';
+        gui.domElement.style.right = 'auto';
+
+        gui.add(params, 'curlRadiusFactor', 0.01, 0.3, 0.001).name('Curl Radius').onChange((v) => {
+            planes.forEach((plane) => {
+                plane.material.uniforms.uCurlRadius.value = planeSize * v;
+            });
+        });
+
+        gui.add(params, 'curlMaxHeight', 0.0, 1.0, 0.01).name('Curl Max Height').onChange((v) => {
+            planes.forEach((plane) => {
+                plane.material.uniforms.uCurlMaxHeight.value = v;
+            });
+        });
+
+        gui.add(params, 'scrollEase', 0.01, 0.5, 0.01).name('Scroll Ease').onChange((v) => {
+            scrollState.ease = v;
+        });
+
+        gui.add(params, 'planeSizeFactor', 0.1, 0.9, 0.01).name('Plane Size').onChange((v) => {
+            planeSize = sizes.width * v;
+            planes.forEach((plane) => {
+                plane.geometry.dispose();
+                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 1, 64);
+                plane.material.uniforms.uPlaneHeight.value = planeSize;
+                plane.material.uniforms.uCurlRadius.value = planeSize * params.curlRadiusFactor;
+            });
+        });
 
         // Handle wheel events
         const handleWheel = (e) => {
@@ -161,12 +180,10 @@ export default function PeelingImageCarousel() {
             sizes.height = window.innerHeight;
 
             // Update camera
-            const frustumSize = sizes.height;
-            const aspect = sizes.width / sizes.height;
-            camera.left = (frustumSize * aspect) / -2;
-            camera.right = (frustumSize * aspect) / 2;
-            camera.top = frustumSize / 2;
-            camera.bottom = frustumSize / -2;
+            cameraZ = (sizes.height / 2) / Math.tan((fov / 2) * (Math.PI / 180));
+            camera.aspect = sizes.width / sizes.height;
+            camera.far = cameraZ * 3;
+            camera.position.z = cameraZ;
             camera.updateProjectionMatrix();
 
             // Update renderer
@@ -180,13 +197,10 @@ export default function PeelingImageCarousel() {
 
             planes.forEach((plane, index) => {
                 plane.geometry.dispose();
-                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 1, 64);
+                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 16, 64);
                 plane.material.uniforms.uPlaneHeight.value = planeSize;
-                plane.material.uniforms.uCurlRadius.value = planeSize * 0.08;
+                plane.material.uniforms.uCurlRadius.value = planeSize * params.curlRadiusFactor;
 
-                // Update shadow geometry
-                shadows[index].geometry.dispose();
-                shadows[index].geometry = new THREE.PlaneGeometry(planeSize, planeSize);
             });
         };
 
@@ -234,23 +248,6 @@ export default function PeelingImageCarousel() {
                 const scrollProgress = Math.max(-1.5, Math.min(1.5, y / viewportHalfHeight));
                 plane.material.uniforms.uScrollProgress.value = scrollProgress;
 
-                // Update shadow position and opacity based on curl
-                const shadow = shadows[index];
-                shadow.position.y = y;
-                shadow.position.x = plane.position.x;
-
-                // Calculate curl amount (same logic as shader)
-                let curlAmount = 0;
-                if (scrollProgress < 0) {
-                    curlAmount = Math.max(0, Math.min(1, (-scrollProgress - 0.2) / 0.8));
-                } else if (scrollProgress > 0) {
-                    curlAmount = Math.max(0, Math.min(1, (scrollProgress - 0.2) / 0.8));
-                }
-
-                // Shadow gets more visible and offset as curl increases
-                shadow.material.opacity = curlAmount * 0.2;
-                shadow.position.x = plane.position.x + curlAmount * planeSize * 0.05;
-                shadow.position.y = y - curlAmount * planeSize * 0.03;
             });
 
             renderer.render(scene, camera);
@@ -272,13 +269,10 @@ export default function PeelingImageCarousel() {
                 plane.material.dispose();
                 scene.remove(plane);
 
-                // Cleanup shadows
-                shadows[index].geometry.dispose();
-                shadows[index].material.dispose();
-                scene.remove(shadows[index]);
             });
 
             renderer.dispose();
+            gui.destroy();
         };
     }, []);
 

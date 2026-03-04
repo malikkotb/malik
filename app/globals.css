@@ -4,6 +4,11 @@
 
 
 @font-face {
+  font-family: "Good-Sans-Regular";
+  src: url("./fonts/GoodSans/GTFGoodSansTRIAL-Regular.otf") format("opentype");
+}
+
+@font-face {
   font-family: "PPNeueMontreal Medium";
   src: url("./fonts/PPNeueMontreal-Medium.otf") format("opentype");
 }
@@ -34,6 +39,7 @@ body {
   padding: 12px;
   /* font-family: "haas-grotesk", sans-serif; */
   font-family: "PPNeueMontreal Medium", sans-serif;
+  /* font-family: "Good-Sans-Regular", sans-serif; */
   /* background-color: #fafafa; */
   background-color: #fff;
 }
@@ -115,7 +121,7 @@ html {
 
 .header-footer-text {
   font-size: 0.75rem;
-  letter-spacing: 0em;
+  letter-spacing: 0.01em;
   line-height: 100%; 
 }
 
