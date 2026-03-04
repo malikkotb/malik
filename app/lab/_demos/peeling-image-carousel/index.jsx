@@ -61,8 +61,8 @@ export default function PeelingImageCarousel() {
         // Calculate plane size: 35vw in Three.js units
         let planeSize = sizes.width * 0.35;
 
-        // Spacing between planes (100vh)
-        let spacing = sizes.height;
+        // Spacing between planes (85vw)
+        let spacing = sizes.width * 0.85;
 
         // Content height for one full cycle
         let realContentHeight = IMAGES.length * spacing;
@@ -78,7 +78,7 @@ export default function PeelingImageCarousel() {
             const texture = textureLoader.load(IMAGES[i]);
             texture.colorSpace = THREE.SRGBColorSpace;
 
-            const geometry = new THREE.PlaneGeometry(planeSize, planeSize, 16, 64);
+            const geometry = new THREE.PlaneGeometry(planeSize, planeSize, 64, 64);
             const material = new THREE.ShaderMaterial({
                 vertexShader,
                 fragmentShader,
@@ -143,7 +143,7 @@ export default function PeelingImageCarousel() {
             planeSize = sizes.width * v;
             planes.forEach((plane) => {
                 plane.geometry.dispose();
-                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 1, 64);
+                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 64, 64);
                 plane.material.uniforms.uPlaneHeight.value = planeSize;
                 plane.material.uniforms.uCurlRadius.value = planeSize * params.curlRadiusFactor;
             });
@@ -192,12 +192,12 @@ export default function PeelingImageCarousel() {
 
             // Update plane size and spacing
             planeSize = sizes.width * 0.35;
-            spacing = sizes.height;
+            spacing = sizes.width * 0.75;
             realContentHeight = IMAGES.length * spacing;
 
             planes.forEach((plane, index) => {
                 plane.geometry.dispose();
-                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 16, 64);
+                plane.geometry = new THREE.PlaneGeometry(planeSize, planeSize, 64, 64);
                 plane.material.uniforms.uPlaneHeight.value = planeSize;
                 plane.material.uniforms.uCurlRadius.value = planeSize * params.curlRadiusFactor;
 
