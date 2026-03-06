@@ -54,47 +54,33 @@ export default function ProjectCard({ link, title, videoSrc }) {
   }, [videoSrc]);
 
   useEffect(() => {
-    // Ensure videos always play on mobile
-    if (isMobile && videoRef.current && videoSrc) {
-      const video = videoRef.current;
+    if (!videoRef.current || !videoSrc) return;
+    const video = videoRef.current;
 
-      const playVideo = async () => {
-        try {
-          await video.play();
-        } catch (error) {
-          // If autoplay fails, try again after a short delay
-          setTimeout(() => {
-            video.play().catch(() => {
-              // Ignore autoplay errors
-            });
-          }, 100);
-        }
+    if (isMobile) {
+      // On mobile, ensure video plays
+      const playVideo = () => {
+        video.play().catch(() => {});
       };
 
-      // Try to play when video is ready
       if (video.readyState >= 2) {
         playVideo();
       } else {
         video.addEventListener("canplay", playVideo, { once: true });
-        video.addEventListener("loadeddata", playVideo, {
-          once: true,
-        });
       }
 
-      // Monitor and restart if paused (except during user interaction pauses)
-      const checkPlaying = () => {
-        if (video.paused && !video.ended) {
-          playVideo();
-        }
-      };
-
-      const intervalId = setInterval(checkPlaying, 1000);
+      const intervalId = setInterval(() => {
+        if (video.paused && !video.ended) playVideo();
+      }, 1000);
 
       return () => {
         video.removeEventListener("canplay", playVideo);
-        video.removeEventListener("loadeddata", playVideo);
         clearInterval(intervalId);
       };
+    } else {
+      // On desktop, pause the video (autoPlay is always set for mobile compatibility)
+      video.pause();
+      video.currentTime = 0;
     }
   }, [isMobile, videoSrc]);
 
@@ -147,7 +133,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
             loop
             muted
             playsInline
-            autoPlay={isMobile}
+            autoPlay
             preload='auto'
           />
         )}
