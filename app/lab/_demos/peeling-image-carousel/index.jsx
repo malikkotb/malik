@@ -62,7 +62,7 @@ export default function PeelingImageCarousel() {
         let planeSize = sizes.width * 0.35;
 
         // Spacing between planes (85vw)
-        let spacing = sizes.width * 0.85;
+        let spacing = sizes.width * 0.5;
 
         // Content height for one full cycle
         let realContentHeight = IMAGES.length * spacing;
@@ -86,8 +86,8 @@ export default function PeelingImageCarousel() {
                     uTexture: { value: texture },
                     uPlaneHeight: { value: planeSize },
                     uScrollProgress: { value: 0.0 },
-                    uCurlRadius: { value: planeSize * 0.12 },
-                    uCurlMaxHeight: { value: 0.50 },
+                    uCurlRadius: { value: planeSize * 0.3 },
+                    uCurlMaxHeight: { value: 1.14 },
                 },
                 side: THREE.DoubleSide,
             });
@@ -110,7 +110,7 @@ export default function PeelingImageCarousel() {
 
         // Debug GUI
         const params = {
-            curlRadiusFactor: 0.12,   // multiplied by planeSize
+            curlRadiusFactor: 0.3,    // multiplied by planeSize
             curlMaxHeight: 0.50,
             scrollEase: 0.08,
             planeSizeFactor: 0.35,    // multiplied by window width
@@ -123,13 +123,13 @@ export default function PeelingImageCarousel() {
         gui.domElement.style.top = 'auto';
         gui.domElement.style.right = 'auto';
 
-        gui.add(params, 'curlRadiusFactor', 0.01, 0.3, 0.001).name('Curl Radius').onChange((v) => {
+        gui.add(params, 'curlRadiusFactor', 0.01, 0.5, 0.001).name('Curl Radius').onChange((v) => {
             planes.forEach((plane) => {
                 plane.material.uniforms.uCurlRadius.value = planeSize * v;
             });
         });
 
-        gui.add(params, 'curlMaxHeight', 0.0, 1.0, 0.01).name('Curl Max Height').onChange((v) => {
+        gui.add(params, 'curlMaxHeight', 0.0, 2.0, 0.01).name('Curl Max Height').onChange((v) => {
             planes.forEach((plane) => {
                 plane.material.uniforms.uCurlMaxHeight.value = v;
             });
