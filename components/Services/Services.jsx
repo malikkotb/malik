@@ -8,7 +8,6 @@ export default function Services() {
     "Nuxt.js / Vue.js",
     "WebGL, Three.js",
     "React Three Fiber",
-    "Creative Coding",
     "Headless CMS, Sanity",
     "Headless E-commerce, Shopify",
     "Webflow",
@@ -16,11 +15,11 @@ export default function Services() {
 
   const bio = (
     <>
-      Malik Kotb is a web designer and developer who loves design, motion, and pushing the boundaries of what&apos;s possible on the web.
-      <br /><br />
+      Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
+
+      {/* Malik Kotb is a web designer and developer who loves design, motion, and pushing the boundaries of what&apos;s possible on the web.
       He builds websites that look great and work smoothly, with a focus on beautiful execution and precise attention to detail.
-      <br /><br />
-      His expertise lies in elevating web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js.
+      His expertise lies in elevating web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js. */}
     </>
   );
 
@@ -33,17 +32,17 @@ export default function Services() {
   ];
 
   return (
-    <div className="flex flex-col w-full" id="services">
+    <div className="flex flex-col gap-8 max-w-[80vw]" id="services">
 
       {/* Bio */}
       <div className="flex flex-col">
-        <span className="hero-heading">About</span>
+        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">About</span>
         <p className="hero-heading normal-case leading-[130%]">{bio}</p>
       </div>
 
       {/* Services */}
       <div className="flex flex-col">
-        <span className="hero-heading">Services</span>
+        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">Services</span>
         <div className="flex flex-col">
           {services.map((service, index) => (
             <span key={index} className="hero-heading">{service}</span>
@@ -53,7 +52,7 @@ export default function Services() {
 
       {/* Contact */}
       <div className="flex flex-col">
-        <span className="hero-heading">Contact</span>
+        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">Contact</span>
         <div className="flex flex-col">
           {links.map((link) => (
             <a
