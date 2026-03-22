@@ -5,11 +5,13 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import ScrambleText from "./ScrambleText";
 import ActionCall from "@/components/ActionCall/ActionCall";
+import Services from "./Services/Services";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showBookingOverlay, setShowBookingOverlay] = useState(false);
+  const [showAboutOverlay, setShowAboutOverlay] = useState(false);
   const lenisRef = useRef(null);
   const pathname = usePathname();
 
@@ -71,50 +73,81 @@ export default function Header() {
 
 
         <div className="flex z-[101] gap-1.5">
+          <button className="header-btn" onClick={() => setShowAboutOverlay(true)}>Info</button>
           <TransitionLink href='/work'><button className="header-btn">Work</button></TransitionLink>
-          <TransitionLink href='/info'><button className="header-btn">Info</button></TransitionLink>
           <TransitionLink href='/lab' className='hidden md:block'><button className="header-btn">Lab</button></TransitionLink>
           <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Contact</button>
         </div>
 
-        {/* Booking Overlay */}
-        {showBookingOverlay && (
-          <div
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowBookingOverlay(false)}
-          >
-            <div
-              className="relative bg-white rounded-lg shadow-xl max-w-[95vw] max-h-[95vh] overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close button */}
-              <button
-                onClick={() => setShowBookingOverlay(false)}
-                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
-                aria-label="Close"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
-
-              {/* Cal.com booking component */}
-              <ActionCall overlayMode={true} />
-            </div>
-          </div>
-        )}
       </div >
+
+      {/* Booking Overlay */}
+      {showBookingOverlay && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-md bg-white/10"
+          onClick={() => setShowBookingOverlay(false)}
+        >
+          <div
+            className="relative bg-white rounded-lg shadow-xl max-w-[95vw] max-h-[95vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowBookingOverlay(false)}
+              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <ActionCall overlayMode={true} />
+          </div>
+        </div>
+      )}
+
+      {/* About Overlay */}
+      {showAboutOverlay && (
+        <div className="fixed inset-0 z-[200] flex items-start justify-start backdrop-blur-md bg-white/10 p-4">
+          <button
+            onClick={() => setShowAboutOverlay(false)}
+            className="header-btn absolute top-4 right-4"
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div className="flex flex-col [&_.hero-heading]:!text-[1.75rem]">
+            <h1 className="hero-heading max-w-[80vw] z-[50]">
+              Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what&apos;s thought possible.
+            </h1>
+
+            <Services />
+          </div>
+        </div>
+      )}
     </>
   );
 }

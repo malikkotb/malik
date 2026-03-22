@@ -68,9 +68,6 @@ export default function IndexClient() {
       <h1 className="hero-heading lg:max-w-[75vw] mt-[2rem] lg:mt-[3rem] z-[50]">
         Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
       </h1>
-      {/* <h1 className="hero-heading lg:max-w-[75vw] z-[50]" style={{ fontFamily: "haas-grotesk" }}>
-        Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
-      </h1> */}
       <div className="">
         <div className="hidden lg:block">
           {/* {showCarousel && <WebGLCarousel />} */}
