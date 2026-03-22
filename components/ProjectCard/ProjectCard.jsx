@@ -95,7 +95,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
       }
       // Set as currently playing and play
       currentlyPlayingVideo = videoRef.current;
-      videoRef.current.play();
+      videoRef.current.play().catch(() => {});
     }
   };
 
@@ -122,7 +122,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className='aspect-[5/3] overflow-hidden relative'>
+      <div className='aspect-[5/3] overflow-hidden relative rounded-[4px]'>
         {videoSrc && (
           <video
             ref={videoRef}
@@ -133,7 +133,6 @@ export default function ProjectCard({ link, title, videoSrc }) {
             loop
             muted
             playsInline
-            autoPlay
             preload='auto'
           />
         )}

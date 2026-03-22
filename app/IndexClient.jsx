@@ -64,17 +64,25 @@ export default function IndexClient() {
   // }, []);
 
   return (
-    <div className='h-full w-full' data-transition-content>
-      <div className="hidden lg:block">
-        {/* {showCarousel && <WebGLCarousel />} */}
-        {/* <WebGLCarouselImages /> */}
-        <HeroCarousel />
-      </div>
-      {/* <div className="text-center h-[30vh] flex items-center justify-center uppercase">
+    <div className='flex-1 w-full flex flex-col justify-between' data-transition-content>
+      <h1 className="hero-heading lg:max-w-[75vw] mt-[2rem] lg:mt-[3rem] z-[50]">
+        Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
+      </h1>
+      {/* <h1 className="hero-heading lg:max-w-[75vw] z-[50]" style={{ fontFamily: "haas-grotesk" }}>
+        Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
+      </h1> */}
+      <div className="">
+        <div className="hidden lg:block">
+          {/* {showCarousel && <WebGLCarousel />} */}
+          {/* <WebGLCarouselImages /> */}
+          <HeroCarousel />
+        </div>
+        {/* <div className="text-center h-[30vh] flex items-center justify-center uppercase">
         Creative Web Development
-      </div> */}
-      <div className="lg:hidden pt-[30vh]">
-        <Work />
+        </div> */}
+        <div className="lg:hidden bg-white">
+          <Work isHomePage />
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import "./HoverList.css";
-const HoverList = ({ projects }) => {
+const HoverList = ({ projects, isHomePage = false }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredVideo, setHoveredVideo] = useState(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -129,7 +129,7 @@ const HoverList = ({ projects }) => {
               <div className='directional-list__border is--item'></div>
               <div className='directional-list__col-award'>
                 <motion.p
-                  className='direcitonal-list__p'
+                  className={`direcitonal-list__p${isHomePage ? " direcitonal-list__p--home" : ""}`}
                   initial={{ x: 0 }}
                   animate={{ x: hoveredIndex === i ? 10 : 0 }}
                   transition={{ ease: "linear", duration: 0.1 }}
@@ -144,7 +144,7 @@ const HoverList = ({ projects }) => {
               </div>
               <div className='directional-list__col-year'>
                 <motion.p
-                  className='direcitonal-list__p text-right'
+                  className={`direcitonal-list__p text-right${isHomePage ? " direcitonal-list__p--home" : ""}`}
                   initial={{ x: 0 }}
                   animate={{ x: hoveredIndex === i ? -10 : 0 }}
                   transition={{ ease: "linear", duration: 0.1 }}

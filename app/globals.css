@@ -18,10 +18,10 @@
   src: url("./fonts/PPNeueMontreal-Regular.otf") format("opentype");
 }
 
-/* @font-face {
+@font-face {
   font-family: "haas-grotesk";
   src: url("fonts/grotesk/NeueHaasGrotText-55Roman-Trial.otf") format("opentype");
-} */
+}
 
 @theme inline {
   --font-neuemontreal-mono-regular: "PPNeueMontrealMono Regular",
@@ -36,7 +36,7 @@
 }
 
 body {
-  padding: 12px;
+  padding: 1rem;
   /* font-family: "haas-grotesk", sans-serif; */
   font-family: "PPNeueMontreal Medium", sans-serif;
   /* font-family: "Good-Sans-Regular", sans-serif; */
@@ -45,18 +45,15 @@ body {
 }
 
 html {
+  height: 100%;
   scroll-behavior: smooth;
 }
 
-/* ::selection {
-  background: black;
-  color: white;
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-
-::-moz-selection {
-  background: black;
-  color: white;
-} */
 
 .section-padding {
   padding: 80px 0px;
@@ -66,16 +63,9 @@ html {
   .section-padding {
     padding: 48px 0px;
   }
-}
 
-.h1 {
-  font-size: 32px;
-  line-height: 120%;
-}
-
-@media (max-width: 1023px) {
-  .h1 {
-    font-size: 24px;
+  .body {
+    width: 80vw;
   }
 }
 
@@ -87,42 +77,20 @@ html {
   line-height: 100%;
 }
 
-
-
 .eyebrow-light {
-  opacity: 0.5;
+  opacity: 0.33;
 }
 
 .eyebrow-footer {
-  opacity: 0.5;
+  opacity: 0.33;
   padding-bottom: 0px;
   padding-top: 0px;
-}
-
-
-.subheading {
-  font-size: 1.5rem; /* text-2xl: 24px */
-  line-height: 2rem; /* 32px */
-}
-
-@media (min-width: 1024px) {
-  .subheading {
-    font-size: 1.875rem; /* text-3xl: 30px */
-    line-height: 2.25rem; /* 36px */
-  }
-}
-
-@media (min-width: 1280px) {
-  .subheading {
-    font-size: 2.25rem; /* text-4xl: 36px */
-    line-height: 2.5rem; /* 40px */
-  }
 }
 
 .header-footer-text {
   font-size: 0.75rem;
   letter-spacing: 0.01em;
-  line-height: 100%; 
+  line-height: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -131,25 +99,54 @@ html {
   }
 }
 
-:root {
-  --radius: 0.5rem;
+@keyframes carouselEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.maiN {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  scroll-behavior: unset;
+.carousel-slide .carousel-overlay {
   opacity: 0;
+  transition: opacity 300ms;
+}
+
+.carousel-slide:hover .carousel-overlay {
+  opacity: 1;
+}
+
+.carousel-slide .carousel-caption {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.carousel-slide:hover .carousel-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.header-btn {
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: #c2c2c24c;
+  color: black;
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  line-height: 100%;
+  transition: background 280ms ease, transform 280ms ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.header-btn:hover {
+  background: #c2c2c27a;
+  transform: scale(0.98);
 }
 
 .introLine {
@@ -163,10 +160,6 @@ html {
 @media (max-width: 768px) {
   .introLine {
     font-size: 9vw;
-  }
-
-  .body {
-    width: 80vw;
   }
 }
 
@@ -184,28 +177,6 @@ html {
   position: relative;
 }
 
-.introLine p {
-  margin: 0px;
-}
-
-.loader {
-  height: calc(100vh + 200px);
-  width: 100%;
-  z-index: 10000;
-  position: fixed;
-}
-
-.loader svg {
-  height: 100%;
-  width: 100%;
-}
-
-.loader svg path {
-  stroke: white;
-  fill: white;
-  stroke-width: 1px;
-}
-
 .custom-cursor-container {
   position: relative;
 }
@@ -218,7 +189,7 @@ html {
   display: flex;
   width: 0; /* Start with 0 width */
   overflow: hidden; /* Hide the content when width is less than content */
-  white-space: nowrap; /* Ensure text doesn’t wrap */
+  white-space: nowrap; /* Ensure text doesn't wrap */
   gap: 4px;
   /* text-transform: uppercase; */
   background-color: black;
@@ -226,21 +197,6 @@ html {
   align-items: center;
   color: white;
   z-index: 9999;
-}
-
-/* .glass nav bar {
-  z-index: 100;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-} */
-
-.borderr {
-  border: 1px solid red;
 }
 
 .headerLink {
@@ -253,16 +209,16 @@ html {
   height: 1px;
   background-color: white;
   left: 0;
-  bottom: 0px; /* Adjust this value to move the line closer to the text */
-  width: 100%; /* Start with full width */
+  bottom: 0px;
+  width: 100%;
   position: absolute;
-  transform: scaleX(0); /* Initially scale the width to 0 */
-  transform-origin: right; /* Start from right so it transitions out to the right */
+  transform: scaleX(0);
+  transform-origin: right;
   transition: transform 0.5s ease-in-out;
 }
 .headerLink:hover::after {
-  transform: scaleX(1); /* Scale to full width on hover */
-  transform-origin: left; /* The line comes in from the left */
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* StickyFooter specific: ensure headerLink::after has black background */
@@ -305,88 +261,20 @@ html {
   }
 }
 
-.btn {
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  background-color: rgb(60, 60, 60);
+.hero-heading {
+  font-size: 1.375rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #00000033;
+}
+
+.hero-heading::selection {
   color: white;
-  visibility: hidden;
+  background-color: #00000033;
 }
 
-.btnFooter {
-  visibility: visible;
-}
-
-.btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  mix-blend-mode: difference;
-  width: 100%;
-  height: 0%;
-  z-index: 100;
-  transition: 0.5s ease-out;
-}
-
-.btn2::before {
-  background: rgb(32, 32, 32);
-}
-
-.btn1::before,
-.btn2::before {
-  bottom: 0;
-  border-radius: 50% 50% 0 0;
-}
-
-.btn1:hover::before,
-.btn2:hover::before {
-  height: 180%;
-}
-
-
-/* See my work button hover effect */
-.see-work-btn {
-  position: relative;
-  overflow: hidden;
-  background-color: white;
-}
-
-.see-work-btn-text {
-  position: relative;
-  z-index: 1;
-  color: white;
-  mix-blend-mode: difference;
-}
-
-.see-work-btn::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background-color: black;
-  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
-}
-
-.see-work-btn:hover::before {
-  height: 100%;
-}
-
-/* WebGL Carousel animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (min-width: 768px) {
+  .hero-heading {
+    font-size: 2.25rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
 }

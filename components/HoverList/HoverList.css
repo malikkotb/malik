@@ -76,3 +76,14 @@
   transform: translateY(-100%);
   will-change: transform;
 }
+
+@media (max-width: 768px) {
+  [data-directional-hover-tile] {
+    display: none;
+  }
+
+  .direcitonal-list__p--home {
+    mix-blend-mode: normal;
+    color: rgba(0, 0, 0, 0.8);
+  }
+}

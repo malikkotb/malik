@@ -55,9 +55,8 @@ export default function ActionCall({ overlayMode = false }) {
   return (
     <div className='pb-[48px] md:pb-[124px] relative w-full h-full flex items-center justify-center'>
       <div className='flex flex-col text-center'>
-        <div style={{ lineHeight: 1 }} className='text-[24px] my-8'>
-          <div>Get in touch today.</div>
-        </div>
+        <div className='hero-heading my-8'>
+          Get in touch today.</div>
 
         <div
           ref={containerRef}

@@ -2,32 +2,31 @@ import HoverList from "../HoverList/HoverList";
 import projects from "@/app/data";
 import { useState } from "react";
 import ProjectCard from "../ProjectCard/ProjectCard";
-export default function Work() {
-  const [view, setView] = useState("grid");
+export default function Work({ isHomePage = false }) {
+  const [view, setView] = useState(isHomePage ? "list" : "grid");
   return (
-    <div id='work' className='min-h-[60vh] h-full w-full'>
-      <div className='flex justify-between'>
+    <div id='work' className={`${isHomePage ? '' : 'min-h-[60vh]'} h-full w-full`}>
+      <div className={`flex justify-between ${isHomePage ? '' : 'pb-4'}`}>
         <div className='eyebrow eyebrow-light'>Selected Works</div>
-        <div className='flex gap-2 eyebrow'>
-          <div
-            onClick={() => setView("grid")}
-            style={{ color: "black" }}
-            className={`cursor-pointer text-black ${view === "grid" ? "opacity-100" : "opacity-60"
-              }`}
-          >
-            Grid
+        {!isHomePage && (
+          <div className='flex gap-1.5'>
+            <button
+              onClick={() => setView("grid")}
+              className={`header-btn ${view === "grid" ? "opacity-100" : "opacity-60"}`}
+            >
+              Grid
+            </button>
+            <button
+              onClick={() => setView("list")}
+              className={`header-btn ${view === "list" ? "opacity-100" : "opacity-60"}`}
+            >
+              List
+            </button>
           </div>
-          <div
-            onClick={() => setView("list")}
-            className={`cursor-pointer text-black ${view === "list" ? "opacity-100" : "opacity-60"
-              }`}
-          >
-            List
-          </div>
-        </div>
+        )}
       </div>
       {view === "list" ? (
-        <HoverList projects={projects} />
+        <HoverList projects={projects} isHomePage={isHomePage} />
       ) : (
         <div
           id='projects'
