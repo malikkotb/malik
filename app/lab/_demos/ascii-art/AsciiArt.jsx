@@ -46,6 +46,7 @@ export default function AsciiArt({
   const scaleRef = useRef({ x: 1, y: 1 });
   const fontColorRef = useRef({ r: 0, g: 0, b: 0 });
   const lastScrollY = useRef(0);
+  const cursorInfluenceRef = useRef(0);
 
   // Keep config ref in sync
   useEffect(() => {
@@ -194,7 +195,7 @@ export default function AsciiArt({
       clearTimeout(idleTimerRef.current);
       idleTimerRef.current = setTimeout(() => {
         mouseRef.current.active = false;
-      }, configRef.current.idleTimeout);
+      }, 80);
     };
 
     // Scroll listener — window scroll, not wheel
@@ -251,17 +252,23 @@ export default function AsciiArt({
     const frictionFactor = cfg.friction / 100;
     const returnFactor = cfg.returnSpeed / 100;
 
+    // Smoothly lerp cursor influence in/out instead of binary on/off
+    const targetInfluence = mouse.active ? 1 : 0;
+    const lerpSpeed = 0.08;
+    cursorInfluenceRef.current += (targetInfluence - cursorInfluenceRef.current) * lerpSpeed;
+    const cursorInfluence = cursorInfluenceRef.current;
+
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
 
-      // Cursor repulsion — atan2 angle, f² quadratic falloff
-      if (mouse.active) {
+      // Cursor repulsion — atan2 angle, f² quadratic falloff, scaled by smooth influence
+      if (cursorInfluence > 0.001) {
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < cfg.cursorRadius && dist > 0) {
           const f = (cfg.cursorRadius - dist) / cfg.cursorRadius;
-          const force = f * f * cfg.cursorForce;
+          const force = f * f * cfg.cursorForce * cursorInfluence;
           const angle = Math.atan2(dy, dx);
           p.vx += Math.cos(angle) * force;
           p.vy += Math.sin(angle) * force;
@@ -304,18 +311,12 @@ export default function AsciiArt({
   return (
     <div
       ref={containerRef}
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      className="w-full h-full flex items-center justify-center"
     >
       <canvas
         ref={canvasRef}
+        className="block"
         style={{
-          display: "block",
           color: color,
           fontFamily: "'JetBrains Mono', monospace",
         }}

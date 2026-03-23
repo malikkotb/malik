@@ -7,7 +7,7 @@ export const CFG = {
   invert: false,
   cursorRadius: 235,
   cursorForce: 3,
-  idleTimeout: 200,
+  idleTimeout: 600,
   scrollForce: 35,
   scrollDecay: 81,
   scrollMult: 3,
