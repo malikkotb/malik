@@ -12,6 +12,9 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showBookingOverlay, setShowBookingOverlay] = useState(false);
   const [showAboutOverlay, setShowAboutOverlay] = useState(false);
+
+  const openInfoOverlay = () => setShowAboutOverlay(true);
+  const closeInfoOverlay = () => setShowAboutOverlay(false);
   const lenisRef = useRef(null);
   const pathname = usePathname();
 
@@ -73,7 +76,7 @@ export default function Header() {
 
 
         <div className="flex z-[101] gap-1.5">
-          <button className="header-btn" onClick={() => setShowAboutOverlay(true)}>Info</button>
+          <button className="header-btn" onClick={openInfoOverlay}>Info</button>
           <TransitionLink href='/work'><button className="header-btn">Work</button></TransitionLink>
           <TransitionLink href='/lab' className='hidden md:block'><button className="header-btn">Lab</button></TransitionLink>
           <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Contact</button>
@@ -84,7 +87,7 @@ export default function Header() {
       {/* Booking Overlay */}
       {showBookingOverlay && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-md bg-white/10"
+          className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-xl bg-white/10"
           onClick={() => setShowBookingOverlay(false)}
         >
           <div
@@ -117,7 +120,7 @@ export default function Header() {
       )}
 
       {/* Info Overlay */}
-      {showAboutOverlay && <InfoOverlay onClose={() => setShowAboutOverlay(false)} />}
+      {showAboutOverlay && <InfoOverlay onClose={closeInfoOverlay} />}
     </>
   );
 }

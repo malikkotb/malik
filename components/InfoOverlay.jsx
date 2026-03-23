@@ -3,7 +3,7 @@ import Services from "./Services/Services";
 
 export default function InfoOverlay({ onClose }) {
   return (
-    <div className="fixed inset-0 z-[200] flex items-start justify-start backdrop-blur-md bg-white/10 p-4">
+    <div className="fixed inset-0 z-[200] flex items-start justify-start backdrop-blur-xl bg-white/10 p-4 will-change-transform" style={{ transform: "translateZ(0)" }}>
       <button
         onClick={onClose}
         className="header-btn absolute top-4 right-4"
@@ -24,7 +24,7 @@ export default function InfoOverlay({ onClose }) {
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <div className="flex flex-col mt-8 md:[&_.hero-heading]:!text-[1.75rem] [&_.hero-heading]:!text-black/50">
+      <div className="flex flex-col mt-8 [&_.hero-heading]:!text-[1rem] md:[&_.hero-heading]:!text-[1.5rem] [&_.hero-heading]:!text-black/50">
         <Services />
       </div>
     </div>

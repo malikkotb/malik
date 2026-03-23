@@ -1,30 +1,30 @@
 "use client";
-import ScrambleText from "../ScrambleText";
+import { useState } from "react";
 
 export default function Services() {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const services = [
     "Web Design, Figma",
-    "Next.js / React.js",
-    "Nuxt.js / Vue.js",
+    "Nuxt, Vue",
+    "Next, React",
+    "Creative Coding",
     "WebGL, Three.js",
-    "React Three Fiber",
     "Headless CMS, Sanity",
-    "Headless E-commerce, Shopify",
-    "Webflow",
+    "Headless E-commerce",
+    "Shopify",
+    "Webflow"
   ];
 
   const bio = (
     <>
-      Malik Kotb is a web designer and developer focused on beautiful execution, smooth animations, and immersive 3D to elevate web experiences beyond what's thought possible.
-
-      {/* Malik Kotb is a web designer and developer who loves design, motion, and pushing the boundaries of what&apos;s possible on the web.
-      He builds websites that look great and work smoothly, with a focus on beautiful execution and precise attention to detail.
-      His expertise lies in elevating web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js. */}
+      I'm a freelance web designer and developer who loves design, motion, and pushing the boundaries of what&apos;s possible on the web.
+      <br /><br />
+      My expertise lies in building web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js.
     </>
   );
 
   const links = [
-    { label: "E-mail", value: "hello@malikkotb.com", href: "mailto:hello@malikkotb.com" },
+    { label: "Email", value: "hello@malikkotb.com", href: "mailto:hello@malikkotb.com" },
     { label: "LinkedIn", value: "malik-kotb", href: "https://www.linkedin.com/in/malik-kotb/" },
     { label: "Instagram", value: "malikkotbb", href: "https://instagram.com/malikkotbb" },
     { label: "TikTok", value: "malikruns", href: "https://www.tiktok.com/@malikruns" },
@@ -34,15 +34,20 @@ export default function Services() {
   return (
     <div className="flex flex-col gap-8 max-w-[80vw]" id="services">
 
+      <div className="flex flex-col">
+        <p className="hero-heading normal-case leading-[130%]">Malik Kotb</p>
+        <p className="hero-heading normal-case leading-[130%]">Creative Web Development</p>
+      </div>
+
       {/* Bio */}
       <div className="flex flex-col">
-        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">About</span>
+        <span className="text-[0.875rem] md:text-[1.125rem] leading-[1.1] tracking-[-0.02em] text-black/50 pb-1">Info</span>
         <p className="hero-heading normal-case leading-[130%]">{bio}</p>
       </div>
 
       {/* Services */}
       <div className="flex flex-col">
-        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">Services</span>
+        <span className="text-[0.875rem] md:text-[1.125rem] leading-[1.1] tracking-[-0.02em] text-black/50 pb-1">Services</span>
         <div className="flex flex-col">
           {services.map((service, index) => (
             <span key={index} className="hero-heading">{service}</span>
@@ -52,17 +57,18 @@ export default function Services() {
 
       {/* Contact */}
       <div className="flex flex-col">
-        <span className="text-[1rem] md:text-[1.375rem] leading-[1.1] tracking-[-0.02em] text-black/30">Contact</span>
-        <div className="flex flex-col">
-          {links.map((link) => (
+        <span className="text-[0.875rem] md:text-[1.125rem] leading-[1.1] tracking-[-0.02em] text-black/50 pb-1">Contact</span>
+        <div className="flex flex-col" onMouseLeave={() => setHoveredIndex(null)}>
+          {links.map((link, index) => (
             <a
               key={link.label}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-heading cursor-pointer"
+              className={`hero-heading cursor-pointer w-fit transition-opacity duration-200 ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-30" : ""}`}
+              onMouseEnter={() => setHoveredIndex(index)}
             >
-              <ScrambleText text={link.value} />
+              {link.label}
             </a>
           ))}
         </div>
