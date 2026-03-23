@@ -59,6 +59,7 @@ export default function DemosPage() {
     "infinity-scale-carousel": "https://malik-portfolio.b-cdn.net/Lab/infinity-scale-carousel.mp4",
     "snake-image-trail": "https://malik-portfolio.b-cdn.net/Lab/snake-image-trail.mp4",
     "peeling-image-carousel": "https://malik-portfolio.b-cdn.net/Lab/peeling-image-carousel.mp4",
+    "ascii-art": "https://malik-portfolio.b-cdn.net/Lab/ascii-art.mp4",
   };
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid

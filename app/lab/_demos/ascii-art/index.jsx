@@ -40,12 +40,13 @@ export default function HuskyArtCanvas() {
             key={src}
             src={src}
             alt={src}
-            onMouseEnter={() => setImageSrc(src)}
+            onClick={() => setImageSrc(src)}
             style={{
               height: 100,
               width: 80,
               objectFit: "cover",
               cursor: "pointer",
+              outline: imageSrc === src ? "1px solid #000" : "1px solid transparent",
             }}
           />
         ))}
