@@ -7,27 +7,27 @@ import InfiniteDraggableGrid from "@/app/lab/_demos/infinite-draggable-grid/page
 // import LoadingScreen from "@/components/LoadingScreen";
 
 const frameworks = [
+  { value: "3d-image-universe", label: "3D Image Universe" },
+  { value: "ripple-shader", label: "Ripple Shader" },
+  { value: "zoom-carousel", label: "Zoom Carousel" },
+  { value: "peeling-image-carousel", label: "Peeling Image Carousel" },
+  { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   { value: "mouse-image-distorter", label: "Mouse Image Distorter" },
-  { value: "bulge-distortion-shader", label: "Bulge Distortion Shader" },
   // { value: "particle-distorter", label: "Particle Distorter" },
   { value: "threedwave", label: "3D Wave on Scroll" },
-  { value: "3d-image-universe", label: "3D Image Universe" },
   { value: "tile-hover-distortion", label: "Tile Hover Distortion" },
-  { value: "ripple-shader", label: "Ripple Shader" },
   // { value: "infinite-draggable-grid", label: "Infinite Draggable Grid" },
   // { value: "particle-morphing-canvas", label: "Particle Morphing Canvas" },
   { value: "svgMaskScroll", label: "SVG Mask Scroll" },
+  { value: "bulge-distortion-shader", label: "Bulge Distortion Shader" },
   { value: "textScrolly", label: "Text Scrolly" },
   { value: "imageTrailEffect", label: "Image Trail Effect" },
   { value: "pixelated-infinite-scroll", label: "Pixelated Infinite Scroll" },
-  { value: "zoom-carousel", label: "Zoom Carousel" },
   { value: "3d-dna-carousel", label: "3D DNA Carousel" },
   { value: "infinite-scroll-bulge-vertical", label: "Infinite Scroll Bulge Vertical" },
   { value: "infinity-scale-carousel", label: "Infinity Scale Carousel" },
-  { value: "infinite-scroll-bulge-horizontal", label: "Infinite Scroll Bulge Horizontal" },
   { value: "circular-infinite-carousel", label: "Circular Infinite Carousel" },
   { value: "snake-image-trail", label: "Snake Image Trail" },
-  { value: "peeling-image-carousel", label: "Peeling Image Carousel" },
   { value: "dark-cloud-ripple-shader", label: "Dark Cloud Ripple Shader" },
   { value: "magazine-carousel-shader", label: "Magazine Carousel Shader" },
   { value: "ascii-art", label: "ASCII Art" },
@@ -44,16 +44,11 @@ function SplitTextReveal({ text, className, style }) {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Wait for sibling video to load so layout is stable before measuring
-    const video = el.parentElement?.querySelector("video");
     const setup = () => {
       ScrollTrigger.refresh();
 
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.9) {
-        gsap.set(chars, { opacity: 1 });
-        return;
-      }
+      const alreadyInView = rect.top < window.innerHeight * 0.9;
 
       gsap.fromTo(
         chars,
@@ -63,21 +58,19 @@ function SplitTextReveal({ text, className, style }) {
           duration: 0.2,
           stagger: 0.2 / chars.length,
           ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-          },
+          ...(!alreadyInView && {
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+            },
+          }),
         }
       );
     };
 
-    if (video && !video.videoHeight) {
-      video.addEventListener("loadedmetadata", setup, { once: true });
-      return () => video.removeEventListener("loadedmetadata", setup);
-    }
-
-    const ctx = gsap.context(setup, containerRef);
-    return () => ctx.revert();
+    // Wait for layout to settle before measuring positions
+    const timeout = setTimeout(setup, 300);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -92,16 +85,83 @@ function SplitTextReveal({ text, className, style }) {
 }
 
 function DemoCard({ demo, onNavigate }) {
+  const cardRef = useRef(null);
+  const videoRef = useRef(null);
+  const isVisible = useRef(false);
+  const [loadSrc, setLoadSrc] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    // Preload observer — load src when nearby
+    const loadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadSrc(true);
+          loadObserver.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    // Play/pause observer — exact viewport only
+    const playObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+        const video = videoRef.current;
+        if (!video) return;
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            if (isVisible.current) video.play().catch(() => { });
+          }, 300);
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "0px" }
+    );
+
+    loadObserver.observe(el);
+    playObserver.observe(el);
+    return () => {
+      loadObserver.disconnect();
+      playObserver.disconnect();
+    };
+  }, []);
+
+  // Play video when it first mounts if already visible
+  useEffect(() => {
+    if (loadSrc && isVisible.current) {
+      const raf = requestAnimationFrame(() => {
+        const video = videoRef.current;
+        if (video && isVisible.current) {
+          setTimeout(() => {
+            if (isVisible.current) video.play().catch(() => { });
+          }, 300);
+        }
+      });
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [loadSrc]);
+
   return (
-    <div className="w-full cursor-pointer" onClick={onNavigate}>
-      <video
-        src={demo.src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full rounded-[4px] object-cover"
-      />
+    <div ref={cardRef} className="w-full cursor-pointer" onClick={onNavigate}>
+      {loadSrc ? (
+        <video
+          ref={videoRef}
+          src={demo.src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          disableRemotePlayback
+          disablePictureInPicture
+          className="w-full rounded-[4px] object-cover"
+        />
+      ) : (
+        <div className="w-full rounded-[4px] aspect-video" />
+      )}
       <SplitTextReveal text={demo.label} className="mt-2" style={{ fontSize: "0.875rem" }} />
     </div>
   );
@@ -159,7 +219,7 @@ export default function DemosPage() {
         <main className="w-full min-h-screen mt-32 pb-24" data-transition-content>
           <div className="flex flex-col gap-8">
             {demoVideos.filter((demo) => demo.isVideo).map((demo) => (
-              <DemoCard key={demo.value} demo={demo} onNavigate={() => router.push(`/lab/${demo.value}`)} />
+              <DemoCard key={demo.value} demo={demo} onNavigate={() => window.open(`/lab/${demo.value}`, "_blank")} />
             ))}
           </div>
         </main>

@@ -1,99 +1,162 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Global tracker to ensure only one video plays at a time
 let currentlyPlayingVideo = null;
-// Store reference to reset function for the currently playing card
-let resetPreviousCard = null;
+
+function SplitTextReveal({ text, className, style }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    const chars = el?.querySelectorAll(".split-char");
+    if (!chars?.length) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const setup = () => {
+      ScrollTrigger.refresh();
+
+      const rect = el.getBoundingClientRect();
+      const alreadyInView = rect.top < window.innerHeight * 0.9;
+
+      gsap.fromTo(
+        chars,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.2,
+          stagger: 0.2 / chars.length,
+          ease: "power2.out",
+          ...(!alreadyInView && {
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+            },
+          }),
+        }
+      );
+    };
+
+    const timeout = setTimeout(setup, 300);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <span ref={containerRef} className={className} style={style}>
+      {text.split("").map((char, i) => (
+        <span key={i} className="split-char inline-block" style={{ opacity: 0 }}>
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function ProjectCard({ link, title, videoSrc }) {
+  const cardRef = useRef(null);
   const videoRef = useRef(null);
-  // Mobile detection determines behavior differences
-  const [isMobile, setIsMobile] = useState(false);
+  const isVisible = useRef(false);
+  const [isMobile, setIsMobile] = useState(null);
+  const [loadSrc, setLoadSrc] = useState(false);
   const [posterSrc, setPosterSrc] = useState(null);
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Mobile: lazy load + play/pause with IntersectionObserver
   useEffect(() => {
-    // Generate poster from first frame of video
-    if (videoSrc && videoRef.current) {
-      const video = videoRef.current;
+    if (!isMobile || isMobile === null) return;
+    const el = cardRef.current;
+    if (!el) return;
 
-      const generatePoster = () => {
-        if (video.readyState >= 2) {
-          const canvas = document.createElement("canvas");
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          const ctx = canvas.getContext("2d");
-          try {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-            setPosterSrc(dataUrl);
-          } catch (error) {
-            console.warn("Unable to generate poster frame", error);
-            setPosterSrc(null);
-          }
+    const loadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadSrc(true);
+          loadObserver.disconnect();
         }
-      };
+      },
+      { rootMargin: "200px" }
+    );
 
-      video.addEventListener("loadeddata", generatePoster);
+    const playObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+        const video = videoRef.current;
+        if (!video) return;
+        if (entry.isIntersecting) {
+          setTimeout(() => video.play().catch(() => {}), 300);
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "0px" }
+    );
 
-      return () => {
-        video.removeEventListener("loadeddata", generatePoster);
-      };
-    }
-  }, [videoSrc]);
+    loadObserver.observe(el);
+    playObserver.observe(el);
+    return () => {
+      loadObserver.disconnect();
+      playObserver.disconnect();
+    };
+  }, [isMobile]);
+
+  // Mobile: play video when it first mounts if already visible
+  useEffect(() => {
+    if (!isMobile || !loadSrc || !isVisible.current) return;
+    const raf = requestAnimationFrame(() => {
+      const video = videoRef.current;
+      if (video && isVisible.current) {
+        setTimeout(() => video.play().catch(() => {}), 300);
+      }
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [loadSrc, isMobile]);
+
+  // Desktop: load immediately, generate poster
+  useEffect(() => {
+    if (isMobile === null || isMobile) return;
+    setLoadSrc(true);
+  }, [isMobile]);
 
   useEffect(() => {
-    if (!videoRef.current || !videoSrc) return;
+    if (!videoSrc || !videoRef.current || isMobile) return;
     const video = videoRef.current;
 
-    if (isMobile) {
-      // On mobile, ensure video plays
-      const playVideo = () => {
-        video.play().catch(() => {});
-      };
-
+    const generatePoster = () => {
       if (video.readyState >= 2) {
-        playVideo();
-      } else {
-        video.addEventListener("canplay", playVideo, { once: true });
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        try {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          setPosterSrc(canvas.toDataURL("image/jpeg", 0.8));
+        } catch (error) {
+          console.warn("Unable to generate poster frame", error);
+        }
       }
+    };
 
-      const intervalId = setInterval(() => {
-        if (video.paused && !video.ended) playVideo();
-      }, 1000);
-
-      return () => {
-        video.removeEventListener("canplay", playVideo);
-        clearInterval(intervalId);
-      };
-    } else {
-      // On desktop, pause the video (autoPlay is always set for mobile compatibility)
-      video.pause();
-      video.currentTime = 0;
-    }
-  }, [isMobile, videoSrc]);
+    video.addEventListener("loadeddata", generatePoster);
+    video.pause();
+    video.currentTime = 0;
+    return () => video.removeEventListener("loadeddata", generatePoster);
+  }, [videoSrc, isMobile, loadSrc]);
 
   const handleMouseEnter = () => {
     if (videoRef.current && !isMobile) {
-      // Pause any currently playing video
-      if (
-        currentlyPlayingVideo &&
-        currentlyPlayingVideo !== videoRef.current
-      ) {
+      if (currentlyPlayingVideo && currentlyPlayingVideo !== videoRef.current) {
         currentlyPlayingVideo.pause();
       }
-      // Set as currently playing and play
       currentlyPlayingVideo = videoRef.current;
       videoRef.current.play().catch(() => {});
     }
@@ -101,7 +164,6 @@ export default function ProjectCard({ link, title, videoSrc }) {
 
   const handleMouseLeave = () => {
     if (videoRef.current && !isMobile) {
-      // Clear the currently playing video when mouse leaves
       if (currentlyPlayingVideo === videoRef.current) {
         currentlyPlayingVideo = null;
       }
@@ -111,19 +173,19 @@ export default function ProjectCard({ link, title, videoSrc }) {
   };
 
   const handleClick = () => {
-    // Open link on both mobile and desktop
     window.open(link, "_blank");
   };
 
   return (
     <div
+      ref={cardRef}
       onClick={handleClick}
       className='group cursor-pointer'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className='aspect-[5/3] overflow-hidden relative rounded-[4px]'>
-        {videoSrc && (
+        {videoSrc && loadSrc ? (
           <video
             ref={videoRef}
             src={videoSrc}
@@ -133,8 +195,12 @@ export default function ProjectCard({ link, title, videoSrc }) {
             loop
             muted
             playsInline
-            preload='auto'
+            preload={isMobile ? "metadata" : "auto"}
+            disableRemotePlayback
+            disablePictureInPicture
           />
+        ) : (
+          <div className='w-full h-full' />
         )}
       </div>
       <h3
@@ -143,10 +209,15 @@ export default function ProjectCard({ link, title, videoSrc }) {
           lineHeight: "120%",
           letterSpacing: "0.01em",
           marginTop: "0.5rem",
+          fontSize: "0.875rem",
         }}
-        className='text-[12px] w-fit projectLink'
+        className='w-fit projectLink'
       >
-        {title}
+        {isMobile ? (
+          <SplitTextReveal text={title} />
+        ) : (
+          title
+        )}
       </h3>
     </div>
   );

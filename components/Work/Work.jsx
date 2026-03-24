@@ -30,7 +30,7 @@ export default function Work({ isHomePage = false }) {
       ) : (
         <div
           id='projects'
-          className='relative w-full grid gap-[12px] gap-y-8 grid-cols-1 lg:grid-cols-2'
+          className='relative w-full grid gap-[12px] gap-y-8 grid-cols-1 lg:grid-cols-2 pb-8 lg:pb-0'
         >
           {projects.map((project, i) => {
             return (
