@@ -12,6 +12,20 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showBookingOverlay, setShowBookingOverlay] = useState(false);
   const [showAboutOverlay, setShowAboutOverlay] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const openMobileMenu = () => {
+    setShowMobileMenu(true);
+    requestAnimationFrame(() => requestAnimationFrame(() => setMenuVisible(true)));
+  };
+  const closeMobileMenu = (cb) => {
+    setMenuVisible(false);
+    setTimeout(() => {
+      setShowMobileMenu(false);
+      cb?.();
+    }, 700);
+  };
 
   const openInfoOverlay = () => setShowAboutOverlay(true);
   const closeInfoOverlay = () => setShowAboutOverlay(false);
@@ -32,57 +46,92 @@ export default function Header() {
     return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollY = window.scrollY;
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-  //     if (currentScrollY > lastScrollY && currentScrollY > 100) {
-  //       // Scrolling down
-  //       setIsVisible(false);
-  //     } else if (currentScrollY < lastScrollY) {
-  //       // Scrolling up
-  //       setIsVisible(true);
-  //     }
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
 
-  //     setLastScrollY(currentScrollY);
-  //   };
+      setLastScrollY(currentScrollY);
+    };
 
-  //   window.addEventListener("scroll", handleScroll, {
-  //     passive: true,
-  //   });
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [lastScrollY]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const isOnDemosRoute = pathname?.startsWith("/demos");
 
   return (
     <>
       <div
-        className={`header-footer-text z-[100] flex justify-between w-full transition-all ease-in-out duration-500 ${isVisible
-          ? "translate-y-0 opacity-100"
-          : "-translate-y-[150%] opacity-0 lg:-translate-y-full lg:opacity-100"
+        className={`header-footer-text z-[100] w-full fixed md:relative top-0 left-0 p-4 md:p-0 transition-transform duration-500 ease-in-out ${isVisible
+          ? "translate-y-0"
+          : "-translate-y-full"
           }`}
       >
-        <TransitionLink href='/'>
-          <button className="header-btn">Malik Kotb</button>
-        </TransitionLink>
+        {/* Top row */}
+        <div className="flex justify-between w-full">
+          <TransitionLink href='/'>
+            <button className="header-btn">Malik Kotb</button>
+          </TransitionLink>
 
-        {/* Show Combobox in the center when on /demos route - hidden on mobile */}
-        {/* {isOnDemosRoute && (
-          <div className='hidden sm:flex absolute top-[12px] left-1/2 -translate-x-1/2 items-center justify-center'>
-            <Combobox />
+          {/* Desktop nav */}
+          <div className="hidden md:flex z-[101] gap-1.5">
+            <button className="header-btn" onClick={openInfoOverlay}>Info</button>
+            <TransitionLink href='/work'><button className="header-btn">Work</button></TransitionLink>
+            <TransitionLink href='/lab'><button className="header-btn">Lab</button></TransitionLink>
+            <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Contact</button>
           </div>
-        )} */}
 
+          {/* Mobile menu toggle */}
+          <div className="relative flex md:hidden z-[101]">
+            <button className="header-btn" onClick={() => menuVisible ? closeMobileMenu() : openMobileMenu()}>
+              {showMobileMenu ? "Close" : "Menu"}
+            </button>
 
-        <div className="flex z-[101] gap-1.5">
-          <button className="header-btn" onClick={openInfoOverlay}>Info</button>
-          <TransitionLink href='/work'><button className="header-btn">Work</button></TransitionLink>
-          <TransitionLink href='/lab' className='hidden md:block'><button className="header-btn">Lab</button></TransitionLink>
-          <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Contact</button>
+            {/* Mobile nav dropdown */}
+            {showMobileMenu && (
+              <div className="absolute top-full right-0 flex flex-col mt-1.5 items-end z-[101] max-w-[160px] w-screen overflow-hidden">
+            {[
+              { label: "Info",    onClick: () => closeMobileMenu(openInfoOverlay) },
+              { label: "Work",    href: "/work" },
+              { label: "Lab",     href: "/lab" },
+              { label: "Contact", onClick: () => closeMobileMenu(() => setShowBookingOverlay(true)) },
+            ].map((item, i) => {
+              const slot = 40;
+              const fromY = -(slot + i * slot);
+              const delay = menuVisible ? i * 0.1 : (3 - i) * 0.1;
+              const wrapStyle = {
+                transform: menuVisible ? "translateY(0)" : `translateY(${fromY}px)`,
+                transition: `transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+                position: "relative",
+                zIndex: 4 - i,
+                marginBottom: i < 3 ? "6px" : 0,
+              };
+              const btn = (
+                <button className="header-btn w-full text-left" onClick={item.onClick}>
+                  {item.label}
+                </button>
+              );
+              return (
+                <div key={item.label} className="w-full" style={wrapStyle}>
+                  {item.href ? (
+                    <TransitionLink href={item.href} className="w-full block" onClick={() => closeMobileMenu()}>
+                      {btn}
+                    </TransitionLink>
+                  ) : btn}
+                </div>
+              );
+            })}
+              </div>
+            )}
+          </div>
         </div>
-
-      </div >
+      </div>
 
       {/* Booking Overlay */}
       {showBookingOverlay && (
