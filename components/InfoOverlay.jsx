@@ -24,7 +24,7 @@ export default function InfoOverlay({ onClose }) {
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <div className="flex flex-col mt-8 [&_.hero-heading]:!text-[1rem] md:[&_.hero-heading]:!text-[1.5rem] [&_.hero-heading]:!text-black/50">
+      <div className="flex flex-col mt-8 [&_.hero-heading]:!text-[1rem] md:[&_.hero-heading]:!text-[1.5rem] [&_.hero-heading]:!text-black/70">
         <Services />
       </div>
     </div>

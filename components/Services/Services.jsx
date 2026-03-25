@@ -18,7 +18,6 @@ export default function Services() {
   const bio = (
     <>
       I'm a freelance web designer and developer who loves design, motion, and pushing the boundaries of what&apos;s possible on the web.
-      <br /><br />
       My expertise lies in building web experiences through eye-catching design, smooth animations, and immersive 3D elements using WebGL and Three.js.
     </>
   );
