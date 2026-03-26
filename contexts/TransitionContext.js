@@ -58,6 +58,7 @@ export function RouterTransition({ children, leave, enter }) {
     setStage("entering");
     startTransition(async () => {
       await enter().then((cleanup) => cleanup?.());
+      document.body.classList.remove("is-transitioning");
       setStage(undefined);
       setShouldEnter(false);
       setPendingPath(null); // Clear pending path after transition completes
@@ -76,6 +77,8 @@ export function RouterTransition({ children, leave, enter }) {
     // Prevent starting a new transition if one is already active
     if (stage) return;
 
+    // Hide incoming content via CSS before navigation so new DOM renders invisible
+    document.body.classList.add("is-transitioning");
     setStage("leaving");
     setPendingPath(targetPath); // Set immediately for instant UI feedback
     startTransition(async () => {

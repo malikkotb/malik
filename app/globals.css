@@ -104,6 +104,11 @@ body {
   }
 }
 
+/* Hide incoming page content during transitions so new DOM renders invisible before GSAP takes over */
+body.is-transitioning [data-transition-content] {
+  opacity: 0;
+}
+
 @keyframes carouselEntrance {
   from {
     opacity: 0;

@@ -92,13 +92,16 @@ const HoverList = ({ projects, isHomePage = false }) => {
       <div className='directional-list__collection'>
         <div className='directional-list__list'>
           {projects.map((project, i) => (
-            <a
+            <motion.a
               key={i}
               data-directional-hover-item
               href={project.link}
               target='_blank'
               rel='noreferrer'
               className='directional-list__item relative'
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.06 }}
               onMouseEnter={(e) => {
                 setHoveredIndex(i);
                 setHoveredVideo(project.videoSrc || null);
@@ -152,12 +155,17 @@ const HoverList = ({ projects, isHomePage = false }) => {
                   {project.year}
                 </motion.p>
               </div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>
 
-      <div className='directional-list__border'></div>
+      <motion.div
+        className='directional-list__border'
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 0.3, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: projects.length * 0.06 }}
+      />
       {hoveredVideo && (
         <div
           className='pointer-events-none hidden sm:block fixed z-[9999] w-[250px]'
