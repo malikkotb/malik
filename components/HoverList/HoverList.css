@@ -57,6 +57,10 @@
   left: 0;
 }
 
+.directional-list__item:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
 .directional-list__border.is--item {
   top: 0;
   bottom: auto;

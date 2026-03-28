@@ -2,6 +2,26 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import "./HoverList.css";
+
+const containerVariants = {
+  initial: {},
+  whileInView: {
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
+
 const HoverList = ({ projects, isHomePage = false }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredVideo, setHoveredVideo] = useState(null);
@@ -90,7 +110,13 @@ const HoverList = ({ projects, isHomePage = false }) => {
       className='directional-list'
     >
       <div className='directional-list__collection'>
-        <div className='directional-list__list'>
+        <motion.div
+          className='directional-list__list'
+          variants={containerVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {projects.map((project, i) => (
             <motion.a
               key={i}
@@ -99,9 +125,7 @@ const HoverList = ({ projects, isHomePage = false }) => {
               target='_blank'
               rel='noreferrer'
               className='directional-list__item relative'
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.06 }}
+              variants={itemVariants}
               onMouseEnter={(e) => {
                 setHoveredIndex(i);
                 setHoveredVideo(project.videoSrc || null);
@@ -157,15 +181,9 @@ const HoverList = ({ projects, isHomePage = false }) => {
               </div>
             </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      <motion.div
-        className='directional-list__border'
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 0.3, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut", delay: projects.length * 0.06 }}
-      />
       {hoveredVideo && (
         <div
           className='pointer-events-none hidden sm:block fixed z-[9999] w-[250px]'
