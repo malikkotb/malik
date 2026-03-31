@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import ScrambleText from "./ScrambleText";
 import ActionCall from "@/components/ActionCall/ActionCall";
 import InfoOverlay from "./InfoOverlay";
+import { applyBtnHover } from "@/lib/btnHover";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
@@ -16,6 +17,7 @@ export default function Header() {
 
   const lastScrollY = useRef(0);
   const lenisRef = useRef(null);
+  const headerRef = useRef(null);
   const pathname = usePathname();
 
   const openMobileMenu = () => {
@@ -66,11 +68,21 @@ export default function Header() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [showBookingOverlay]);
 
+  // Set up slide-text hover on always-mounted buttons
+  useEffect(() => applyBtnHover(headerRef.current), []);
+
+  // Re-run when mobile menu opens so dropdown items are included
+  useEffect(() => {
+    if (!showMobileMenu) return;
+    return applyBtnHover(headerRef.current);
+  }, [showMobileMenu]);
+
   const isOnDemosRoute = pathname?.startsWith("/demos");
 
   return (
     <>
       <div
+        ref={headerRef}
         className={`header-footer-text z-[100] w-full fixed md:relative top-0 left-0 p-4 md:p-0 transition-transform duration-500 ease-in-out ${isVisible
           ? "translate-y-0"
           : "-translate-y-full"
@@ -78,15 +90,15 @@ export default function Header() {
       >
         {/* Top row */}
         <div className="flex justify-between w-full">
-          <TransitionLink href='/' className="header-btn">Malik Kotb</TransitionLink>
+          <TransitionLink href='/' className="header-btn header-btn--logo"><span className="btn-text">Malik Kotb</span></TransitionLink>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex gap-1.5" aria-label="Main navigation">
-            <button className="header-btn" onClick={openInfoOverlay}>Info</button>
-            <TransitionLink href='/work' className="header-btn">Work</TransitionLink>
-            <TransitionLink href='/lab' className="header-btn">Lab</TransitionLink>
-            <TransitionLink href='/contact' className="header-btn">Contact</TransitionLink>
-            <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Let's Talk</button>
+            <button className="header-btn" onClick={openInfoOverlay}><span className="btn-text">Info</span></button>
+            <TransitionLink href='/work' className="header-btn"><span className="btn-text">Work</span></TransitionLink>
+            <TransitionLink href='/lab' className="header-btn"><span className="btn-text">Lab</span></TransitionLink>
+            <TransitionLink href='/contact' className="header-btn"><span className="btn-text">Contact</span></TransitionLink>
+            <button className="header-btn" onClick={() => setShowBookingOverlay(true)}><span className="btn-text">Book a Call</span></button>
           </nav>
 
           {/* Mobile menu toggle */}
@@ -97,7 +109,7 @@ export default function Header() {
               aria-controls="mobile-nav"
               onClick={() => menuVisible ? closeMobileMenu() : openMobileMenu()}
             >
-              {showMobileMenu ? "Close" : "Menu"}
+              <span className="btn-text">{showMobileMenu ? "Close" : "Menu"}</span>
             </button>
 
             {/* Mobile nav dropdown */}
@@ -112,7 +124,7 @@ export default function Header() {
                   { label: "Work",    href: "/work" },
                   { label: "Lab",     href: "/lab" },
                   { label: "Contact",    href: "/contact" },
-                  { label: "Let's Talk", onClick: () => closeMobileMenu(() => setShowBookingOverlay(true)) },
+                  { label: "Book a Call", onClick: () => closeMobileMenu(() => setShowBookingOverlay(true)) },
                 ].map((item, i) => {
                   const slot = 40;
                   const fromY = -(slot + i * slot);

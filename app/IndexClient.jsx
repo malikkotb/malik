@@ -41,12 +41,12 @@ export default function IndexClient() {
           {words.map((word, wi) => (
             <span key={wi} className="inline-block" style={{ whiteSpace: "nowrap" }}>
               {word.split("").map((char, ci) => (
-                <span key={ci} className="char inline-block">
+                <span key={ci} className="char inline-block" style={{ opacity: 0 }}>
                   {char}
                 </span>
               ))}
               {wi < words.length - 1 && (
-                <span className="char inline-block">&nbsp;</span>
+                <span className="char inline-block" style={{ opacity: 0 }}>&nbsp;</span>
               )}
             </span>
           ))}

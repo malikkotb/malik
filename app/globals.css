@@ -40,8 +40,8 @@ body {
   /* font-family: "haas-grotesk", sans-serif; */
   font-family: "PPNeueMontreal Medium", sans-serif;
   /* font-family: "Good-Sans-Regular", sans-serif; */
-  /* background-color: #fafafa; */
-  background-color: #fff;
+  background-color: #FAFAFA;
+  color: #1A1A1A;
 }
 
 html {
@@ -155,16 +155,21 @@ body.is-transitioning [data-transition-content] {
   transform: translateY(0);
 }
 
+.header-btn--logo {
+  cursor: pointer;
+}
+
 .header-btn {
   padding: 10px 12px;
   border-radius: 4px;
   background: #e0e0e0;
-  color: black;
+  color: #1A1A1A;
   font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   letter-spacing: 0.01em;
   line-height: 100%;
   touch-action: manipulation;
-  transition: background 280ms ease, transform 280ms ease;
+  transition: background 200ms ease, transform 200ms ease;
+  will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -172,8 +177,13 @@ body.is-transitioning [data-transition-content] {
 @media (hover: hover) and (pointer: fine) {
   .header-btn:hover {
     background: #cecece;
-    transform: scale(0.97);
-    will-change: transform;
+    transform: scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-btn .btn-text {
+    transition: none;
   }
 }
 

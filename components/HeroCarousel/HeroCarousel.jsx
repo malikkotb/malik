@@ -48,7 +48,7 @@ function CarouselSlide({ item, carouselHeight, aspectRatio, isDraggingRef }) {
           right: 0,
           bottom: 0,
           height: "20%",
-          background: "linear-gradient(to top, rgba(26,26,24,0.50) 0%, rgba(26,26,24,0.37) 22%, rgba(26,26,24,0.20) 45%, rgba(26,26,24,0.07) 70%, transparent 100%)",
+          background: "linear-gradient(to top, rgba(26,26,24,0.28) 0%, rgba(26,26,24,0.18) 22%, rgba(26,26,24,0.09) 45%, rgba(26,26,24,0.03) 70%, transparent 100%)",
           pointerEvents: "none",
         }}
       />
@@ -62,7 +62,7 @@ function CarouselSlide({ item, carouselHeight, aspectRatio, isDraggingRef }) {
           left: "1rem",
           pointerEvents: "none",
           color: "#fff",
-          fontSize: "0.75rem",
+          fontSize: "clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem)",
           lineHeight: "100%",
           letterSpacing: "0.01em",
         }}
