@@ -8,7 +8,7 @@ import InfoPageScene from "@/components/InfoPageScene/InfoPageScene";
 import Link from "next/link";
 import Services from "@/components/Services/Services";
 
-const bioText = `Malik Kotb is a web designer and developer who loves design, motion, and pushing the boundaries of what's possible on the web.
+const bioText = `Malik Kotb is a design engineer who loves design, motion, and pushing the boundaries of what's possible on the web.
 
 He builds websites that look great and work smoothly, with a focus on beautiful execution and precise attention to detail.
 

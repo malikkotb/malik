@@ -55,6 +55,27 @@ body {
   flex-direction: column;
 }
 
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-overlay-enter {
+  animation: overlayIn 220ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-overlay-enter {
+    animation: none;
+  }
+}
+
 .borderr {
   border: 1px solid red;
 }
@@ -78,7 +99,7 @@ body {
   /* text-transform: uppercase; */
   padding-bottom: 12px;
   padding-top: 12px;
-  font-size: 12px;
+  font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   line-height: 100%;
 }
 
@@ -93,15 +114,9 @@ body {
 }
 
 .header-footer-text {
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   letter-spacing: 0.01em;
   line-height: 100%;
-}
-
-@media (min-width: 1024px) {
-  .header-footer-text {
-    font-size: 0.75rem;
-  }
 }
 
 /* Hide incoming page content during transitions so new DOM renders invisible before GSAP takes over */
@@ -145,18 +160,27 @@ body.is-transitioning [data-transition-content] {
   border-radius: 4px;
   background: #e0e0e0;
   color: black;
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   letter-spacing: 0.01em;
   line-height: 100%;
+  touch-action: manipulation;
   transition: background 280ms ease, transform 280ms ease;
-  will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-.header-btn:hover {
-  background: #cecece;
-  transform: scale(0.97);
+@media (hover: hover) and (pointer: fine) {
+  .header-btn:hover {
+    background: #cecece;
+    transform: scale(0.97);
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-footer-text {
+    transition: none;
+  }
 }
 
 
@@ -273,7 +297,7 @@ body.is-transitioning [data-transition-content] {
 }
 
 .hero-heading {
-  font-size: 1.375rem;
+  font-size: clamp(1.375rem, 1.05rem + 1.625vw, 3rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: #00000033;
@@ -282,10 +306,4 @@ body.is-transitioning [data-transition-content] {
 .hero-heading::selection {
   color: white;
   background-color: #00000033;
-}
-
-@media (min-width: 768px) {
-  .hero-heading {
-    font-size: 2.25rem;
-  }
 }

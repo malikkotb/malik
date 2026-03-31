@@ -9,11 +9,14 @@ import InfoOverlay from "./InfoOverlay";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [showBookingOverlay, setShowBookingOverlay] = useState(false);
   const [showAboutOverlay, setShowAboutOverlay] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+
+  const lastScrollY = useRef(0);
+  const lenisRef = useRef(null);
+  const pathname = usePathname();
 
   const openMobileMenu = () => {
     setShowMobileMenu(true);
@@ -24,24 +27,19 @@ export default function Header() {
     setTimeout(() => {
       setShowMobileMenu(false);
       cb?.();
-    }, 700);
+    }, 420);
   };
 
   const openInfoOverlay = () => setShowAboutOverlay(true);
   const closeInfoOverlay = () => setShowAboutOverlay(false);
-  const lenisRef = useRef(null);
-  const pathname = usePathname();
 
   useEffect(() => {
-    // Get Lenis instance from window if available
     const getLenis = () => {
       if (typeof window !== "undefined" && window.lenis) {
         lenisRef.current = window.lenis;
       }
     };
     getLenis();
-
-    // Try to get Lenis after a short delay to ensure it's initialized
     const timer = setTimeout(getLenis, 100);
     return () => clearTimeout(timer);
   }, []);
@@ -49,19 +47,24 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollY.current) {
         setIsVisible(true);
       }
-
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
+
+  // Escape key to close booking overlay
+  useEffect(() => {
+    if (!showBookingOverlay) return;
+    const handleKey = (e) => { if (e.key === "Escape") setShowBookingOverlay(false); };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [showBookingOverlay]);
 
   const isOnDemosRoute = pathname?.startsWith("/demos");
 
@@ -75,59 +78,71 @@ export default function Header() {
       >
         {/* Top row */}
         <div className="flex justify-between w-full">
-          <TransitionLink href='/'>
-            <button className="header-btn">Malik Kotb</button>
-          </TransitionLink>
+          <TransitionLink href='/' className="header-btn">Malik Kotb</TransitionLink>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex z-[101] gap-1.5">
+          <nav className="hidden md:flex gap-1.5" aria-label="Main navigation">
             <button className="header-btn" onClick={openInfoOverlay}>Info</button>
-            <TransitionLink href='/work'><button className="header-btn">Work</button></TransitionLink>
-            <TransitionLink href='/lab'><button className="header-btn">Lab</button></TransitionLink>
-            <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Contact</button>
-          </div>
+            <TransitionLink href='/work' className="header-btn">Work</TransitionLink>
+            <TransitionLink href='/lab' className="header-btn">Lab</TransitionLink>
+            <TransitionLink href='/contact' className="header-btn">Contact</TransitionLink>
+            <button className="header-btn" onClick={() => setShowBookingOverlay(true)}>Let's Talk</button>
+          </nav>
 
           {/* Mobile menu toggle */}
-          <div className="relative flex md:hidden z-[101]">
-            <button className="header-btn" onClick={() => menuVisible ? closeMobileMenu() : openMobileMenu()}>
+          <div className="relative flex md:hidden">
+            <button
+              className="header-btn"
+              aria-expanded={showMobileMenu}
+              aria-controls="mobile-nav"
+              onClick={() => menuVisible ? closeMobileMenu() : openMobileMenu()}
+            >
               {showMobileMenu ? "Close" : "Menu"}
             </button>
 
             {/* Mobile nav dropdown */}
             {showMobileMenu && (
-              <div className="absolute top-full right-0 flex flex-col mt-1.5 items-end z-[101] max-w-[160px] w-screen overflow-hidden">
-            {[
-              { label: "Info",    onClick: () => closeMobileMenu(openInfoOverlay) },
-              { label: "Work",    href: "/work" },
-              { label: "Lab",     href: "/lab" },
-              { label: "Contact", onClick: () => closeMobileMenu(() => setShowBookingOverlay(true)) },
-            ].map((item, i) => {
-              const slot = 40;
-              const fromY = -(slot + i * slot);
-              const delay = menuVisible ? i * 0.1 : (3 - i) * 0.1;
-              const wrapStyle = {
-                transform: menuVisible ? "translateY(0)" : `translateY(${fromY}px)`,
-                transition: `transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
-                position: "relative",
-                zIndex: 4 - i,
-                marginBottom: i < 3 ? "6px" : 0,
-              };
-              const btn = (
-                <button className="header-btn w-full text-left" onClick={item.onClick}>
-                  {item.label}
-                </button>
-              );
-              return (
-                <div key={item.label} className="w-full" style={wrapStyle}>
-                  {item.href ? (
-                    <TransitionLink href={item.href} className="w-full block" onClick={() => closeMobileMenu()}>
-                      {btn}
-                    </TransitionLink>
-                  ) : btn}
-                </div>
-              );
-            })}
-              </div>
+              <nav
+                id="mobile-nav"
+                aria-label="Mobile navigation"
+                className="absolute top-full right-0 flex flex-col mt-1.5 items-end z-10 max-w-[160px] w-screen overflow-hidden"
+              >
+                {[
+                  { label: "Info",    onClick: () => closeMobileMenu(openInfoOverlay) },
+                  { label: "Work",    href: "/work" },
+                  { label: "Lab",     href: "/lab" },
+                  { label: "Contact",    href: "/contact" },
+                  { label: "Let's Talk", onClick: () => closeMobileMenu(() => setShowBookingOverlay(true)) },
+                ].map((item, i) => {
+                  const slot = 40;
+                  const fromY = -(slot + i * slot);
+                  const delay = menuVisible ? i * 0.1 : (4 - i) * 0.1;
+                  const wrapStyle = {
+                    transform: menuVisible ? "translateY(0)" : `translateY(${fromY}px)`,
+                    transition: `transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+                    position: "relative",
+                    zIndex: 5 - i,
+                    marginBottom: i < 4 ? "6px" : 0,
+                  };
+                  return (
+                    <div key={item.label} className="w-full" style={wrapStyle}>
+                      {item.href ? (
+                        <TransitionLink
+                          href={item.href}
+                          className="header-btn w-full block text-left"
+                          onClick={() => closeMobileMenu()}
+                        >
+                          {item.label}
+                        </TransitionLink>
+                      ) : (
+                        <button className="header-btn w-full text-left" onClick={item.onClick}>
+                          {item.label}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </nav>
             )}
           </div>
         </div>
@@ -136,7 +151,7 @@ export default function Header() {
       {/* Booking Overlay */}
       {showBookingOverlay && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-xl bg-white/10"
+          className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-md bg-white/30 border border-white/20"
           onClick={() => setShowBookingOverlay(false)}
         >
           <div
@@ -145,7 +160,7 @@ export default function Header() {
           >
             <button
               onClick={() => setShowBookingOverlay(false)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg transition-colors"
               aria-label="Close"
             >
               <svg

@@ -15,6 +15,15 @@ function SplitTextReveal({ text, className, style }) {
     const chars = el?.querySelectorAll(".split-char");
     if (!chars?.length) return;
 
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) {
+      return;
+    }
+
+    // Hide chars now (in JS, not JSX) so they're visible if JS never runs
+    gsap.set(chars, { opacity: 0 });
+
     gsap.registerPlugin(ScrollTrigger);
 
     const setup = () => {
@@ -48,7 +57,7 @@ function SplitTextReveal({ text, className, style }) {
   return (
     <span ref={containerRef} className={className} style={style}>
       {text.split("").map((char, i) => (
-        <span key={i} className="split-char inline-block" style={{ opacity: 0 }}>
+        <span key={i} className="split-char inline-block">
           {char === " " ? "\u00A0" : char}
         </span>
       ))}
@@ -172,14 +181,12 @@ export default function ProjectCard({ link, title, videoSrc }) {
     }
   };
 
-  const handleClick = () => {
-    window.open(link, "_blank");
-  };
-
   return (
-    <div
+    <a
       ref={cardRef}
-      onClick={handleClick}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
       className='group cursor-pointer'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -200,7 +207,7 @@ export default function ProjectCard({ link, title, videoSrc }) {
             disablePictureInPicture
           />
         ) : (
-          <div className='w-full h-full' />
+          <div className='w-full h-full bg-neutral-100' />
         )}
       </div>
       <h3
@@ -219,6 +226,6 @@ export default function ProjectCard({ link, title, videoSrc }) {
           title
         )}
       </h3>
-    </div>
+    </a>
   );
 }

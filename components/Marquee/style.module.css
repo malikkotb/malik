@@ -28,7 +28,7 @@
 .slider p {
   position: relative;
   margin: 0px;
-  font-size: 12px;
+  font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   font-weight: 400;
   padding-right: 2px;
 }

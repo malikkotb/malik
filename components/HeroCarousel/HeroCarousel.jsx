@@ -5,10 +5,13 @@ import projects from "@/app/carouselData";
 const AUTO_SCROLL_SPEED = 0.00022;
 
 function CarouselSlide({ item, carouselHeight, aspectRatio, isDraggingRef }) {
-
   return (
-    <div
+    <a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="carousel-slide"
+      onClick={(e) => { if (isDraggingRef.current) e.preventDefault(); }}
       style={{
         position: "relative",
         height: `calc(${carouselHeight} - 12px)`,
@@ -16,11 +19,8 @@ function CarouselSlide({ item, carouselHeight, aspectRatio, isDraggingRef }) {
         flexShrink: 0,
         overflow: "hidden",
         borderRadius: "4px",
-      }}
-      onClick={() => {
-        if (!isDraggingRef.current && item.link) {
-          window.open(item.link, "_blank", "noopener,noreferrer");
-        }
+        cursor: "inherit",
+        display: "block",
       }}
     >
       <img
@@ -69,7 +69,7 @@ function CarouselSlide({ item, carouselHeight, aspectRatio, isDraggingRef }) {
       >
         {item.title}
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -78,6 +78,8 @@ export default function HeroCarousel() {
   const stripRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
   const isDraggingRef = useRef(false);
+  const animationFrameRef = useRef(null);
+  const prefersReducedRef = useRef(false);
 
   const scrollStateRef = useRef({
     scrollProgress: 0,
@@ -86,7 +88,6 @@ export default function HeroCarousel() {
 
   const layoutRef = useRef({ totalWidth: 0 });
   const lastPointerX = useRef(0);
-  const animationFrameRef = useRef(null);
   const aspectRatioRef = useRef(1.7778);
 
   const calculateLayout = useCallback(() => {
@@ -98,6 +99,10 @@ export default function HeroCarousel() {
   }, []);
 
   useEffect(() => {
+    prefersReducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
+  useEffect(() => {
     calculateLayout();
     const resizeObserver = new ResizeObserver(calculateLayout);
     if (containerRef.current) resizeObserver.observe(containerRef.current);
@@ -106,7 +111,9 @@ export default function HeroCarousel() {
       const state = scrollStateRef.current;
       const { totalWidth } = layoutRef.current;
 
-      state.targetProgress += AUTO_SCROLL_SPEED;
+      if (!prefersReducedRef.current) {
+        state.targetProgress += AUTO_SCROLL_SPEED;
+      }
 
       state.scrollProgress += (state.targetProgress - state.scrollProgress) * 0.07;
 
@@ -126,19 +133,32 @@ export default function HeroCarousel() {
     };
 
     animationFrameRef.current = requestAnimationFrame(animate);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      } else {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       resizeObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [calculateLayout]);
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
     const handleWheel = (e) => {
       e.preventDefault();
       scrollStateRef.current.targetProgress += e.deltaY * 0.0003;
     };
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
   }, []);
 
   const handlePointerDown = useCallback((e) => {
@@ -169,9 +189,12 @@ export default function HeroCarousel() {
   );
 
   useEffect(() => {
+    aspectRatioRef.current = responsive.aspectRatio;
+  }, [responsive.aspectRatio]);
+
+  useEffect(() => {
     const handleResize = () => {
       const values = getResponsiveValues();
-      aspectRatioRef.current = values.aspectRatio;
       setResponsive(values);
       calculateLayout();
     };
@@ -180,7 +203,6 @@ export default function HeroCarousel() {
   }, [calculateLayout]);
 
   const { height: carouselHeight, aspectRatio } = responsive;
-  aspectRatioRef.current = aspectRatio;
 
   const allItems = [];
   for (let setIndex = -1; setIndex <= 1; setIndex++) {
@@ -192,8 +214,15 @@ export default function HeroCarousel() {
   return (
     <div
       ref={containerRef}
+      role="region"
+      aria-label="Projects carousel"
       className="fixed bottom-0 left-0 w-full overflow-hidden"
-      style={{ height: carouselHeight, cursor: isDragging ? "grabbing" : "grab", touchAction: "none" }}
+      style={{
+        height: carouselHeight,
+        cursor: isDragging ? "grabbing" : "grab",
+        touchAction: "none",
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

@@ -1,110 +1,107 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import "./HoverList.css";
-
-const containerVariants = {
-  initial: {},
-  whileInView: {
-    transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: "easeOut" },
-  },
-};
 
 const HoverList = ({ projects, isHomePage = false }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredVideo, setHoveredVideo] = useState(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const audioRef = useRef(null);
+  const containerRef = useRef(null);
+  const videoFollowerRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = useMemo(() => ({
+    initial: {},
+    whileInView: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.07,
+        delayChildren: shouldReduceMotion ? 0 : 0.1,
+      },
+    },
+  }), [shouldReduceMotion]);
+
+  const itemVariants = useMemo(() => ({
+    initial: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 },
+    whileInView: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.4, ease: "easeOut" },
+    },
+  }), [shouldReduceMotion]);
 
   useEffect(() => {
     audioRef.current = new Audio("/tap_01.wav");
     audioRef.current.volume = 0.5;
   }, []);
+
   useEffect(() => {
-    function initDirectionalListHover() {
-      const directionMap = {
-        top: "translateY(-100%)",
-        bottom: "translateY(100%)",
-        left: "translateX(-100%)",
-        right: "translateX(100%)",
+    const container = containerRef.current;
+    if (!container) return;
+
+    const directionMap = {
+      top: "translateY(-100%)",
+      bottom: "translateY(100%)",
+      left: "translateX(-100%)",
+      right: "translateX(100%)",
+    };
+
+    const type = container.getAttribute("data-type") || "all";
+    const cleanups = [];
+
+    container.querySelectorAll("[data-directional-hover-item]").forEach((item) => {
+      const tile = item.querySelector("[data-directional-hover-tile]");
+      if (!tile) return;
+
+      const handleMouseEnter = (e) => {
+        const dir = getDirection(e, item, type);
+        tile.style.transition = "none";
+        tile.style.transform = directionMap[dir] || "translate(0, 0)";
+        void tile.offsetHeight; // force reflow
+        tile.style.transition = "";
+        tile.style.transform = "translate(0%, 0%)";
+        item.setAttribute("data-status", `enter-${dir}`);
       };
 
-      document
-        .querySelectorAll("[data-directional-hover]")
-        .forEach((container) => {
-          const type = container.getAttribute("data-type") || "all";
+      const handleMouseLeave = (e) => {
+        const dir = getDirection(e, item, type);
+        item.setAttribute("data-status", `leave-${dir}`);
+        tile.style.transform = directionMap[dir] || "translate(0, 0)";
+      };
 
-          container
-            .querySelectorAll("[data-directional-hover-item]")
-            .forEach((item) => {
-              const tile = item.querySelector(
-                "[data-directional-hover-tile]"
-              );
-              if (!tile) return;
+      item.addEventListener("mouseenter", handleMouseEnter);
+      item.addEventListener("mouseleave", handleMouseLeave);
+      cleanups.push(() => {
+        item.removeEventListener("mouseenter", handleMouseEnter);
+        item.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    });
 
-              item.addEventListener("mouseenter", (e) => {
-                const dir = getDirection(e, item, type);
-                tile.style.transition = "none";
-                tile.style.transform =
-                  directionMap[dir] || "translate(0, 0)";
-                void tile.offsetHeight; // force reflow
-                tile.style.transition = "";
-                tile.style.transform = "translate(0%, 0%)";
-                item.setAttribute("data-status", `enter-${dir}`);
-              });
-
-              item.addEventListener("mouseleave", (e) => {
-                const dir = getDirection(e, item, type);
-                item.setAttribute("data-status", `leave-${dir}`);
-                tile.style.transform =
-                  directionMap[dir] || "translate(0, 0)";
-              });
-            });
-
-          function getDirection(event, el, type) {
-            const {
-              left,
-              top,
-              width: w,
-              height: h,
-            } = el.getBoundingClientRect();
-            const x = event.clientX - left;
-            const y = event.clientY - top;
-
-            if (type === "y") return y < h / 2 ? "top" : "bottom";
-            if (type === "x") return x < w / 2 ? "left" : "right";
-
-            const distances = {
-              top: y,
-              right: w - x,
-              bottom: h - y,
-              left: x,
-            };
-
-            return Object.entries(distances).reduce((a, b) =>
-              a[1] < b[1] ? a : b
-            )[0];
-          }
-        });
-    }
-
-    initDirectionalListHover();
+    return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
+
+  function getDirection(event, el, type) {
+    const { left, top, width: w, height: h } = el.getBoundingClientRect();
+    const x = event.clientX - left;
+    const y = event.clientY - top;
+
+    if (type === "y") return y < h / 2 ? "top" : "bottom";
+    if (type === "x") return x < w / 2 ? "left" : "right";
+
+    const distances = { top: y, right: w - x, bottom: h - y, left: x };
+    return Object.entries(distances).reduce((a, b) => (a[1] < b[1] ? a : b))[0];
+  }
+
+  const updateFollowerPos = (clientX, clientY) => {
+    if (videoFollowerRef.current) {
+      videoFollowerRef.current.style.top = `${clientY - 125}px`;
+      videoFollowerRef.current.style.left = `${clientX + 20}px`;
+    }
+  };
 
   return (
     <div
+      ref={containerRef}
       data-directional-hover
       data-type='y'
       className='directional-list'
@@ -129,21 +126,13 @@ const HoverList = ({ projects, isHomePage = false }) => {
               onMouseEnter={(e) => {
                 setHoveredIndex(i);
                 setHoveredVideo(project.videoSrc || null);
-                setCursorPos({
-                  x: e.clientX + 20,
-                  y: e.clientY - 125,
-                });
-                if (audioRef.current) {
+                updateFollowerPos(e.clientX, e.clientY);
+                if (audioRef.current && window.matchMedia("(hover: hover)").matches) {
                   audioRef.current.currentTime = 0;
                   audioRef.current.play().catch(() => { });
                 }
               }}
-              onMouseMove={(e) =>
-                setCursorPos({
-                  x: e.clientX + 20,
-                  y: e.clientY - 125,
-                })
-              }
+              onMouseMove={(e) => updateFollowerPos(e.clientX, e.clientY)}
               onMouseLeave={() => {
                 setHoveredIndex(null);
                 setHoveredVideo(null);
@@ -159,7 +148,7 @@ const HoverList = ({ projects, isHomePage = false }) => {
                   className={`direcitonal-list__p${isHomePage ? " direcitonal-list__p--home" : ""}`}
                   initial={{ x: 0 }}
                   animate={{ x: hoveredIndex === i ? 10 : 0 }}
-                  transition={{ ease: "linear", duration: 0.1 }}
+                  transition={{ ease: "easeOut", duration: 0.12 }}
                 >
                   {project.projectTitle}
                 </motion.p>
@@ -174,7 +163,7 @@ const HoverList = ({ projects, isHomePage = false }) => {
                   className={`direcitonal-list__p text-right${isHomePage ? " direcitonal-list__p--home" : ""}`}
                   initial={{ x: 0 }}
                   animate={{ x: hoveredIndex === i ? -10 : 0 }}
-                  transition={{ ease: "linear", duration: 0.1 }}
+                  transition={{ ease: "easeOut", duration: 0.12 }}
                 >
                   {project.year}
                 </motion.p>
@@ -184,22 +173,22 @@ const HoverList = ({ projects, isHomePage = false }) => {
         </motion.div>
       </div>
 
-      {hoveredVideo && (
+      {!shouldReduceMotion && (
         <div
-          className='pointer-events-none hidden sm:block fixed z-[9999] w-[250px]'
-          style={{
-            top: `${cursorPos.y}px`,
-            left: `${cursorPos.x}px`,
-          }}
+          ref={videoFollowerRef}
+          className='pointer-events-none hidden sm:block fixed z-50 w-[250px]'
+          style={{ visibility: hoveredVideo ? "visible" : "hidden" }}
         >
-          <video
-            src={hoveredVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className='w-full h-auto object-cover'
-          />
+          {hoveredVideo && (
+            <video
+              src={hoveredVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className='w-full aspect-video object-cover'
+            />
+          )}
         </div>
       )}
     </div>

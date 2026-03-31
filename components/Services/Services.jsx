@@ -64,8 +64,10 @@ export default function Services() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hero-heading cursor-pointer w-fit transition-opacity duration-200 ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-30" : ""}`}
-              onMouseEnter={() => setHoveredIndex(index)}
+              className={`hero-heading cursor-pointer w-fit transition-opacity duration-200 motion-reduce:transition-none ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-30" : ""}`}
+              onMouseEnter={() => {
+                if (window.matchMedia("(hover: hover)").matches) setHoveredIndex(index);
+              }}
             >
               {link.label}
             </a>

@@ -39,7 +39,7 @@
 
 .direcitonal-list__p {
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
   line-height: 100%;
   mix-blend-mode: difference;
   color: rgb(255, 255, 255, 0.8);
@@ -79,6 +79,12 @@
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   transform: translateY(-100%);
   will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-directional-hover-tile] {
+    transition: none;
+  }
 }
 
 @media (max-width: 768px) {

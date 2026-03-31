@@ -42,6 +42,13 @@ function SplitTextReveal({ text, className, style }) {
     const chars = el?.querySelectorAll(".split-char");
     if (!chars?.length) return;
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      chars.forEach((c) => (c.style.opacity = "1"));
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const setup = () => {
@@ -112,9 +119,7 @@ function DemoCard({ demo, onNavigate }) {
         const video = videoRef.current;
         if (!video) return;
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            if (isVisible.current) video.play().catch(() => { });
-          }, 300);
+          video.play().catch(() => {});
         } else {
           video.pause();
         }
@@ -130,23 +135,29 @@ function DemoCard({ demo, onNavigate }) {
     };
   }, []);
 
-  // Play video when it first mounts if already visible
-  useEffect(() => {
-    if (loadSrc && isVisible.current) {
-      const raf = requestAnimationFrame(() => {
-        const video = videoRef.current;
-        if (video && isVisible.current) {
-          setTimeout(() => {
-            if (isVisible.current) video.play().catch(() => { });
-          }, 300);
-        }
-      });
-      return () => cancelAnimationFrame(raf);
+  const handleVideoReady = () => {
+    if (isVisible.current) {
+      videoRef.current?.play().catch(() => {});
     }
-  }, [loadSrc]);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onNavigate();
+    }
+  };
 
   return (
-    <div ref={cardRef} className="w-full cursor-pointer" onClick={onNavigate}>
+    <div
+      ref={cardRef}
+      className="w-full cursor-pointer"
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${demo.label} demo`}
+      onClick={onNavigate}
+      onKeyDown={handleKeyDown}
+    >
       {loadSrc ? (
         <video
           ref={videoRef}
@@ -157,7 +168,8 @@ function DemoCard({ demo, onNavigate }) {
           preload="metadata"
           disableRemotePlayback
           disablePictureInPicture
-          className="w-full rounded-[4px] object-cover"
+          onCanPlay={handleVideoReady}
+          className="w-full rounded-[4px] object-cover aspect-video"
         />
       ) : (
         <div className="w-full rounded-[4px] aspect-video" />
@@ -169,10 +181,10 @@ function DemoCard({ demo, onNavigate }) {
 
 export default function DemosPage() {
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(null);
+  // Default to false (desktop) to avoid blank flash on SSR/hydration
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    document.title = "Lab";
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
@@ -215,11 +227,11 @@ export default function DemosPage() {
   return (
     <>
       {/* <LoadingScreen /> */}
-      {isMobile === null ? null : isMobile ? (
+      {isMobile ? (
         <main className="w-full min-h-screen mt-32 pb-24" data-transition-content>
           <div className="flex flex-col gap-8">
             {demoVideos.filter((demo) => demo.isVideo).map((demo) => (
-              <DemoCard key={demo.value} demo={demo} onNavigate={() => window.open(`/lab/${demo.value}`, "_blank")} />
+              <DemoCard key={demo.value} demo={demo} onNavigate={() => router.push(`/lab/${demo.value}`)} />
             ))}
           </div>
         </main>
