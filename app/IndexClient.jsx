@@ -56,7 +56,7 @@ export default function IndexClient() {
         <div className="hidden lg:block">
           <HeroCarousel />
         </div>
-        <div className="lg:hidden bg-white">
+        <div className="lg:hidden">
           <Work isHomePage />
         </div>
       </div>
