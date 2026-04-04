@@ -1,19 +1,24 @@
 uniform sampler2D uTexture;
-uniform sampler2D uDisplacement;
+uniform sampler2D uDataTexture;
 uniform vec2 uResolution;
 uniform float uStrength;
 
 varying vec2 vUv;
 
 void main() {
-    vec4 disp = texture2D(uDisplacement, vUv);
+    // Sample the velocity field
+    vec3 disp = texture2D(uDataTexture, vUv).rgb;
 
-    // RG channels encode velocity direction: 0.5 = neutral, 0 = negative, 1 = positive
-    vec2 offset = (disp.rg - 0.5) * 2.0 * uStrength;
+    float aspect = uResolution.x / uResolution.y;
 
-    vec2 distortedUv = clamp(vUv + offset, 0.0, 1.0);
+    // RG channels store velocity direction, apply strength
+    vec2 distortion = disp.xy * uStrength;
+    distortion.x /= aspect;
 
-    gl_FragColor = texture2D(uTexture, distortedUv);
+    vec2 distortedUv = vUv + distortion;
+
+    vec4 color = texture2D(uTexture, distortedUv);
+    gl_FragColor = color;
 
     #include <colorspace_fragment>
 }

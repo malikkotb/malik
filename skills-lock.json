@@ -5,6 +5,11 @@
       "source": "cloudai-x/threejs-skills",
       "sourceType": "github",
       "computedHash": "649ceb058edfb5cfd51e80fb3a6c57aca9bab4a9d3a03f6077aa9502be0c0771"
+    },
+    "video-to-gif": {
+      "source": "dkyazzentwatwa/chatgpt-skills",
+      "sourceType": "github",
+      "computedHash": "084ad77dc8f108ce79936b4ec5d861e356779a66736660f6b1ca2f85c8fcf54e"
     }
   }
 }

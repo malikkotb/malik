@@ -1,9 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import styles from './page.module.scss'
+import { useEffect, useRef, useCallback } from 'react';
+import styles from './page.module.scss';
 import Image from 'next/image';
-import Lenis from 'lenis'
-import { useTransform, useScroll, motion } from 'framer-motion';
 
 const images = [
   "1.jpg",
@@ -18,76 +16,153 @@ const images = [
   "10.jpg",
   "11.jpg",
   "12.jpg",
-]
+];
 
-export default function Home() {
+// Each column gets 3 images and a different scroll speed
+const columns = [
+  { images: [images[0], images[1], images[2]], speed: 1 },
+  { images: [images[3], images[4], images[5]], speed: 1.6 },
+  { images: [images[6], images[7], images[8]], speed: 0.8 },
+  { images: [images[9], images[10], images[11]], speed: 1.4 },
+];
 
-  const gallery = useRef(null);
-  const [dimension, setDimension] = useState({width:0, height:0});
+const LERP_FACTOR = 0.05;
+const LERP_THRESHOLD = 0.01;
+const LINE_HEIGHT = 100 / 6;
+const WHEEL_MULTIPLIER = 1;
+const TOUCH_MULTIPLIER = 2;
 
-  const { scrollYProgress } = useScroll({
-    target: gallery,
-    offset: ['start end', 'end start']
-  })
-  const { height } = dimension;
-  const y = useTransform(scrollYProgress, [0, 1], [0, height * 2])
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, height * 3.3])
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, height * 1.25])
-  const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 3])
+export default function SmoothParallaxScroll() {
+  const containerRef = useRef(null);
+  const columnInnerRefs = useRef([]);
+  // Measured cycle height per column (offsetTop of second set)
+  const cycleHeights = useRef([]);
+  const targetScrollRef = useRef(0);
+  const animatedScrollRef = useRef(0);
+  const touchStartRef = useRef({ x: 0, y: 0 });
+  const rafRef = useRef(null);
 
-  useEffect( () => {
-    const lenis = new Lenis()
+  // Measure each column's true cycle height after layout
+  const measureCycles = useCallback(() => {
+    columns.forEach((_, i) => {
+      const innerEl = columnInnerRefs.current[i];
+      if (!innerEl) return;
+      // The second set wrapper is the child at index 1
+      const secondSet = innerEl.children[1];
+      if (secondSet) {
+        cycleHeights.current[i] = secondSet.offsetTop;
+      }
+    });
+  }, []);
 
-    const raf = (time) => {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
+  const animate = useCallback(() => {
+    const target = targetScrollRef.current;
+    const current = animatedScrollRef.current;
+    const distance = Math.abs(target - current);
+    const next =
+      distance < LERP_THRESHOLD
+        ? target
+        : current + (target - current) * LERP_FACTOR;
 
-    const resize = () => {
-      setDimension({width: window.innerWidth, height: window.innerHeight})
-    }
+    animatedScrollRef.current = next;
 
-    window.addEventListener("resize", resize)
-    requestAnimationFrame(raf);
-    resize();
+    columns.forEach((col, i) => {
+      const innerEl = columnInnerRefs.current[i];
+      const cycleH = cycleHeights.current[i];
+      if (!innerEl || !cycleH) return;
+
+      const offset = next * col.speed;
+      const wrapped = -(((offset % cycleH) + cycleH) % cycleH);
+
+      innerEl.style.transform = `translate3d(0,${wrapped}px,0)`;
+    });
+
+    rafRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  useEffect(() => {
+    measureCycles();
+    rafRef.current = requestAnimationFrame(animate);
+
+    const observer = new ResizeObserver(measureCycles);
+    columnInnerRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
 
     return () => {
-      window.removeEventListener("resize", resize);
-      lenis.destroy();
-    }
-  }, [])
+      observer.disconnect();
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [animate, measureCycles]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleWheel = (e) => {
+      e.preventDefault();
+      const { deltaY, deltaMode } = e;
+      const multiplier =
+        deltaMode === 1
+          ? LINE_HEIGHT
+          : deltaMode === 2
+            ? window.innerHeight
+            : 1;
+      targetScrollRef.current += deltaY * multiplier * WHEEL_MULTIPLIER;
+    };
+
+    const handleTouchStart = (e) => {
+      const touch = e.targetTouches?.[0] ?? e.changedTouches?.[0];
+      if (!touch) return;
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    };
+
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+      const touch = e.targetTouches?.[0] ?? e.changedTouches?.[0];
+      if (!touch) return;
+      const deltaY = -(touch.clientY - touchStartRef.current.y) * TOUCH_MULTIPLIER;
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+      targetScrollRef.current += deltaY;
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    el.addEventListener('touchstart', handleTouchStart, { passive: false });
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      el.removeEventListener('wheel', handleWheel);
+      el.removeEventListener('touchstart', handleTouchStart);
+      el.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+
+  const renderSet = (colImages, setIndex) => (
+    <div key={setIndex} className={styles.set}>
+      {colImages.map((src, j) => (
+        <div key={`${setIndex}-${j}`} className={styles.imageContainer}>
+          <Image
+            src={`/images/smooth-parallax-scroll/${src}`}
+            alt="image"
+            fill
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <main className={styles.main}>
-      <div className={styles.spacer}></div>
-      <div ref={gallery} className={styles.gallery}>
-        <Column images={[images[0], images[1], images[2]]} y={y}/>
-        <Column images={[images[3], images[4], images[5]]} y={y2}/>
-        <Column images={[images[6], images[7], images[8]]} y={y3}/>
-        <Column images={[images[9], images[10], images[11]]} y={y4}/>
-      </div>
-      <div className={styles.spacer}></div>
-    </main>
-  )
-}
-
-const Column = ({images, y}) => {
-  return (
-    <motion.div
-      className={styles.column}
-      style={{y}}
-      >
-      {
-        images.map( (src, i) => {
-          return <div key={i} className={styles.imageContainer}>
-            <Image
-              src={`/images/smooth-parallax-scroll/${src}`}
-              alt='image'
-              fill
-            />
+    <main ref={containerRef} className={styles.gallery}>
+      {columns.map((col, i) => (
+        <div key={i} className={styles.column}>
+          <div ref={(el) => (columnInnerRefs.current[i] = el)} className={styles.columnInner}>
+            {/* 3 copies: enough buffer so the seam is never visible */}
+            {renderSet(col.images, 0)}
+            {renderSet(col.images, 1)}
+            {renderSet(col.images, 2)}
           </div>
-        })
-      }
-    </motion.div>
-  )
+        </div>
+      ))}
+    </main>
+  );
 }

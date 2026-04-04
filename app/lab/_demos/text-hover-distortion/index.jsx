@@ -59,6 +59,7 @@ export default function TextHoverDistortion() {
       strength: 15.0,
       radius: 0.25,
       ease: 0.08,
+      releaseEase: 0.015,
     };
 
     const scene = new THREE.Scene();
@@ -107,6 +108,7 @@ export default function TextHoverDistortion() {
     const mouse = { x: 0, y: 0 };
     const smoothMouse = { x: 0, y: 0 };
     const prevSmooth = { x: 0, y: 0 };
+    const smoothVelocity = { x: 0, y: 0 };
 
     const handleMouseMove = (e) => {
       mouse.x = e.clientX;
@@ -135,6 +137,7 @@ export default function TextHoverDistortion() {
     gui.add(settings, "strength", 1.0, 40.0, 0.5).name("Strength");
     gui.add(settings, "radius", 0.05, 0.6, 0.01).name("Radius");
     gui.add(settings, "ease", 0.01, 0.2, 0.005).name("Ease");
+    gui.add(settings, "releaseEase", 0.005, 0.1, 0.005).name("Release Ease");
 
     // Animation loop
     const animate = () => {
@@ -152,11 +155,16 @@ export default function TextHoverDistortion() {
       // Pass mouse in pixel coords (fragment shader converts to UV)
       textMaterial.uniforms.uMouse.value.set(smoothMouse.x, smoothMouse.y);
 
-      // Pass velocity in UV space (pixels / resolution), flip Y for GL coords
-      textMaterial.uniforms.uVelocity.value.set(
-        vx / sizes.width,
-        -vy / sizes.height
-      );
+      // Raw velocity in UV space
+      const rawVx = vx / sizes.width;
+      const rawVy = -vy / sizes.height;
+
+      // Ease velocity toward raw value (fast follow), but ease toward zero slowly (slow release)
+      const releaseEase = settings.releaseEase;
+      smoothVelocity.x += (rawVx - smoothVelocity.x) * (Math.abs(rawVx) > Math.abs(smoothVelocity.x) ? settings.ease : releaseEase);
+      smoothVelocity.y += (rawVy - smoothVelocity.y) * (Math.abs(rawVy) > Math.abs(smoothVelocity.y) ? settings.ease : releaseEase);
+
+      textMaterial.uniforms.uVelocity.value.set(smoothVelocity.x, smoothVelocity.y);
 
       textMaterial.uniforms.uStrength.value = settings.strength;
       textMaterial.uniforms.uRadius.value = settings.radius;

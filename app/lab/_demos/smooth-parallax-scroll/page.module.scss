@@ -1,44 +1,51 @@
-.gallery{
-    height: 175vh;
-    background: rgb(45, 45, 45);
+.gallery {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 1rem;
+
+  display: flex;
+  gap: 2vw;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .column {
     position: relative;
-    display: flex;
-    gap: 2vw;
-    padding: 2vw;
-    box-sizing: border-box;
+    height: 100%;
+    width: 25%;
+    min-width: 250px;
     overflow: hidden;
-    .column{
-        position: relative;
-        height: 100%;
-        width: 25%;
-        min-width: 250px;
+
+    .columnInner {
+      will-change: transform;
+
+      .set {
         display: flex;
         flex-direction: column;
         gap: 2vw;
-        .imageContainer{
-            height: 100%;
-            width: 100%;
-            position: relative;
-            border-radius: 1vw;
-            overflow: hidden;
-            img{
-                object-fit: cover;
-            }
+
+        // Gap between sets — matches inner gap for seamless wrap
+        &:not(:first-child) {
+          margin-top: 2vw;
         }
-        &:nth-of-type(1){
-            top: -45%;
-        }
-        &:nth-of-type(2){
-            top: -95%;
-        }
-        &:nth-of-type(3){
-            top: -45%;
-        }
-        &:nth-of-type(4){
-            top: -75%;
-        }
+      }
     }
-}
-.spacer{
-    height: 100vh;
+
+    .imageContainer {
+      width: 100%;
+      position: relative;
+      border-radius: 1vw;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      flex-shrink: 0;
+
+      img {
+        object-fit: cover;
+      }
+    }
+  }
 }
