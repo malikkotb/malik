@@ -25,6 +25,9 @@ const demos = {
   "dark-cloud-ripple-shader": dynamic(() => import("@/app/lab/_demos/dark-cloud-ripple-shader")),
   "magazine-carousel-shader": dynamic(() => import("@/app/lab/_demos/magazine-carousel-shader")),
   "ascii-art": dynamic(() => import("@/app/lab/_demos/ascii-art")),
+  "text-distortion-shader": dynamic(() => import("@/app/lab/_demos/text-distortion-shader")),
+  "text-hover-distortion": dynamic(() => import("@/app/lab/_demos/text-hover-distortion")),
+  "smooth-parallax-scroll": dynamic(() => import("@/app/lab/_demos/smooth-parallax-scroll")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

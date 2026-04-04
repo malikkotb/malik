@@ -31,6 +31,9 @@ const frameworks = [
   { value: "dark-cloud-ripple-shader", label: "Dark Cloud Ripple Shader" },
   { value: "magazine-carousel-shader", label: "Magazine Carousel Shader" },
   { value: "ascii-art", label: "ASCII Art" },
+  { value: "text-distortion-shader", label: "Text Distortion Shader" },
+  { value: "text-hover-distortion", label: "Text Hover Distortion" },
+  { value: "smooth-parallax-scroll", label: "Smooth Parallax Scroll" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 
