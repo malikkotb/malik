@@ -15,7 +15,7 @@ void main() {
     vec2 distortion = disp.xy * uStrength;
     distortion.x /= aspect;
 
-    vec2 distortedUv = vUv + distortion;
+    vec2 distortedUv = vUv - distortion;
 
     vec4 color = texture2D(uTexture, distortedUv);
     gl_FragColor = color;
