@@ -4,18 +4,18 @@ import styles from './page.module.scss';
 import Image from 'next/image';
 
 const images = [
-  "1.jpg",
-  "2.jpg",
-  "3.jpg",
-  "4.jpg",
-  "5.jpg",
-  "6.jpg",
-  "7.jpg",
-  "8.jpg",
-  "9.jpg",
-  "10.jpg",
-  "11.jpg",
-  "12.jpg",
+  "1.avif",
+  "2.avif",
+  "3.avif",
+  "5.avif",
+  "6.avif",
+  "7.avif",
+  "9.avif",
+  "10.jpeg",
+  "11.jpeg",
+  "12.jpeg",
+  "14.jpeg",
+  "15.jpeg",
 ];
 
 // Each column gets 3 images and a different scroll speed
@@ -142,7 +142,7 @@ export default function SmoothParallaxScroll() {
       {colImages.map((src, j) => (
         <div key={`${setIndex}-${j}`} className={styles.imageContainer}>
           <Image
-            src={`/images/smooth-parallax-scroll/${src}`}
+            src={`/parallax-scroll/${src}`}
             alt="image"
             fill
           />
