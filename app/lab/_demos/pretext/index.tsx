@@ -266,7 +266,8 @@ function layoutWithDrawing(
   columnGap: number,
   imageData: ImageData | null,
   canvasWidth: number,
-  stickerData: StickerData[]
+  stickerData: StickerData[],
+  uiRects: { x: number; y: number; width: number; height: number }[]
 ): PositionedLine[] {
   const lines: PositionedLine[] = [];
   let cursor: LayoutCursor = { segmentIndex: 0, graphemeIndex: 0 };
@@ -296,6 +297,13 @@ function layoutWithDrawing(
         stickerData, bandTop, bandBottom, WRAP_PADDING_H, WRAP_PADDING_V
       );
       for (const b of stickerBlocked) blocked.push(b);
+
+      // UI element obstacles (toolbar, hint)
+      for (const rect of uiRects) {
+        if (bandBottom <= rect.y - WRAP_PADDING_V || bandTop >= rect.y + rect.height + WRAP_PADDING_V)
+          continue;
+        blocked.push({ left: rect.x - WRAP_PADDING_H, right: rect.x + rect.width + WRAP_PADDING_H });
+      }
 
       const slots = carveTextLineSlots(
         { left: colX, right: colX + colWidth },
@@ -374,6 +382,8 @@ export default function PretextDemo() {
   const isDrawingRef = useRef(false);
   const lastPointRef = useRef<{ x: number; y: number } | null>(null);
   const draggablesRef = useRef<Map<number, Draggable[]>>(new Map());
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
 
   const [toolMode, setToolMode] = useState<ToolMode>("draw");
   const [brushColor, setBrushColor] = useState(COLORS[0]!);
@@ -402,6 +412,17 @@ export default function PretextDemo() {
     const ctx = drawCanvas.getContext("2d", { willReadFrequently: true })!;
     const imageData = ctx.getImageData(0, 0, drawCanvas.width, drawCanvas.height);
 
+    // Gather UI element rects
+    const uiRects: { x: number; y: number; width: number; height: number }[] = [];
+    if (toolbarRef.current) {
+      const r = toolbarRef.current.getBoundingClientRect();
+      uiRects.push({ x: r.left, y: r.top, width: r.width, height: r.height });
+    }
+    if (hintRef.current) {
+      const r = hintRef.current.getBoundingClientRect();
+      uiRects.push({ x: r.left, y: r.top, width: r.width, height: r.height });
+    }
+
     const lines = layoutWithDrawing(
       prepared,
       PADDING,
@@ -413,7 +434,8 @@ export default function PretextDemo() {
       COLUMN_GAP,
       imageData,
       drawCanvas.width,
-      stickersRef.current
+      stickersRef.current,
+      uiRects
     );
 
     const pool = linePoolRef.current;
@@ -705,6 +727,7 @@ export default function PretextDemo() {
 
       {/* Toolbar */}
       <div
+        ref={toolbarRef}
         style={{
           position: "fixed",
           bottom: 24,
@@ -878,6 +901,7 @@ export default function PretextDemo() {
       {/* Hint */}
       {stickers.length > 0 && toolMode === "sticker" && (
         <div
+          ref={hintRef}
           style={{
             position: "fixed",
             bottom: 78,
