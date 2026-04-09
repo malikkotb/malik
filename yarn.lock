@@ -32,6 +32,11 @@
   dependencies:
     "@calcom/embed-core" "1.5.3"
 
+"@chenglou/pretext@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npmjs.org/@chenglou/pretext/-/pretext-0.0.4.tgz"
+  integrity sha512-FnPAFMid1/p1j2V2gRPUVBarGUIb2PhkkC9YNnTOfPtTDgHKh8siO8PP9pCxpFfYlcodWPJpE1UbSHGQqt8pQQ==
+
 "@dimforge/rapier3d-compat@~0.12.0":
   version "0.12.0"
   resolved "https://registry.npmjs.org/@dimforge/rapier3d-compat/-/rapier3d-compat-0.12.0.tgz"
@@ -971,36 +976,6 @@
     scroll-into-view-if-needed "^3.1.0"
     xstate "^5.25.0"
 
-"@studio-freight/hamo@^0.6.24":
-  version "0.6.33"
-  resolved "https://registry.npmjs.org/@studio-freight/hamo/-/hamo-0.6.33.tgz"
-  integrity sha512-U3Nvw5wDvB/jps2/ZbGL2TFL+CcZvJF/tkjL7S7ajuzDi9T5VkqCguws6tuWHttZ74Z6DfXxV1b8F1EB30AyJg==
-  dependencies:
-    "@studio-freight/tempus" "^0.0.38"
-    just-debounce-it "^3.2.0"
-    nanoevents "^9.0.0"
-
-"@studio-freight/lenis@^1.0.33":
-  version "1.0.42"
-  resolved "https://registry.npmjs.org/@studio-freight/lenis/-/lenis-1.0.42.tgz"
-  integrity sha512-HJAGf2DeM+BTvKzHv752z6Z7zy6bA643nZM7W88Ft9tnw2GsJSp6iJ+3cekjyMIWH+cloL2U9X82dKXgdU8kPg==
-
-"@studio-freight/react-lenis@^0.0.43":
-  version "0.0.43"
-  resolved "https://registry.npmjs.org/@studio-freight/react-lenis/-/react-lenis-0.0.43.tgz"
-  integrity sha512-kgRif4MGcmPWuyIWLBc9ghOIQ/ql7lO2YTIZMv2UCohz37G4fCR8+PLCzJl9/q5iP7481pWdAuFJVYf3xJ/rpg==
-  dependencies:
-    "@studio-freight/hamo" "^0.6.24"
-    "@studio-freight/lenis" "^1.0.33"
-    clsx "^2.0.0"
-    prop-types "^15.8.1"
-    zustand "^4.4.7"
-
-"@studio-freight/tempus@^0.0.38":
-  version "0.0.38"
-  resolved "https://registry.npmjs.org/@studio-freight/tempus/-/tempus-0.0.38.tgz"
-  integrity sha512-AO1O2fEmfUqWGjEofmPNMQRlwgZ96eB5OFsVJjeH8/RKd1/Yf4zbPnXO+r2TD4aueA6X9JRCJU2GUprI9+m8uQ==
-
 "@swc/helpers@0.5.15":
   version "0.5.15"
   resolved "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.15.tgz"
@@ -1676,7 +1651,7 @@ client-only@0.0.1:
   resolved "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
   integrity sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==
 
-clsx@^2.0.0, clsx@^2.1.1:
+clsx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
@@ -3143,11 +3118,6 @@ json5@^2.1.2:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-just-debounce-it@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/just-debounce-it/-/just-debounce-it-3.2.0.tgz"
-  integrity sha512-WXzwLL0745uNuedrCsCs3rpmfD6DBaf7uuVwaq98/8dafURfgQaBsSpjiPp5+CW6Vjltwy9cOGI6qE71b3T8iQ==
-
 keyv@^4.5.3:
   version "4.5.4"
   resolved "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz"
@@ -3386,11 +3356,6 @@ n8ao@^1.9.4:
   version "1.10.1"
   resolved "https://registry.npmjs.org/n8ao/-/n8ao-1.10.1.tgz"
   integrity sha512-hhI1pC+BfOZBV1KMwynBrVlIm8wqLxj/abAWhF2nZ0qQKyzTSQa1QtLVS2veRiuoBQXojxobcnp0oe+PUoxf/w==
-
-nanoevents@^9.0.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/nanoevents/-/nanoevents-9.1.0.tgz"
-  integrity sha512-Jd0fILWG44a9luj8v5kED4WI+zfkkgwKyRQKItTtlPfEsh7Lznfi1kr8/iZ+XAIss4Qq5GqRB0qtWbaz9ceO/A==
 
 nanoid@^3.3.11, nanoid@^3.3.6:
   version "3.3.11"
@@ -4941,13 +4906,6 @@ yocto-queue@^0.1.0:
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 zustand@^4.3.2:
-  version "4.5.7"
-  resolved "https://registry.npmjs.org/zustand/-/zustand-4.5.7.tgz"
-  integrity sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw==
-  dependencies:
-    use-sync-external-store "^1.2.2"
-
-zustand@^4.4.7:
   version "4.5.7"
   resolved "https://registry.npmjs.org/zustand/-/zustand-4.5.7.tgz"
   integrity sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw==

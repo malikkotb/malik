@@ -28,6 +28,7 @@ const demos = {
   "text-distortion-shader": dynamic(() => import("@/app/lab/_demos/text-distortion-shader")),
   "text-hover-distortion": dynamic(() => import("@/app/lab/_demos/text-hover-distortion")),
   "smooth-parallax-scroll": dynamic(() => import("@/app/lab/_demos/smooth-parallax-scroll")),
+  "pretext": dynamic(() => import("@/app/lab/_demos/pretext")),
   // "rubiks-cube": dynamic(() => import("@/app/lab/_demos/rubiks-cube")),
 };
 

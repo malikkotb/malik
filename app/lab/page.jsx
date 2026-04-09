@@ -34,6 +34,7 @@ const frameworks = [
   { value: "text-distortion-shader", label: "Text Distortion Shader" },
   { value: "text-hover-distortion", label: "Text Hover Distortion" },
   { value: "smooth-parallax-scroll", label: "Smooth Parallax Scroll" },
+  { value: "pretext", label: "Pretext" },
   // { value: "rubiks-cube", label: "Rubik's Cube" },
 ];
 
