@@ -1,10 +1,11 @@
-// Page textures for the magazine (8 pages = 4 spreads)
-// Each spread shows left page (back of previous) and right page (front of current)
+// 12 images from parallax-scroll, 6 spreads (2 images per spread)
 export const pages = [
-  { front: '/demos/textures/image1.png', back: '/demos/textures/image2.png' },
-  { front: '/demos/textures/image3.png', back: '/demos/textures/image4.png' },
-  { front: '/demos/textures/image5.png', back: '/demos/textures/image6.png' },
-  { front: '/demos/textures/image1.png', back: '/demos/textures/image2.png' },
+  { front: '/parallax-scroll/1.avif',  back: '/parallax-scroll/2.avif'  },
+  { front: '/parallax-scroll/3.avif',  back: '/parallax-scroll/5.avif'  },
+  { front: '/parallax-scroll/6.avif',  back: '/parallax-scroll/7.avif'  },
+  { front: '/parallax-scroll/9.avif',  back: '/parallax-scroll/10.jpeg' },
+  { front: '/parallax-scroll/11.jpeg', back: '/parallax-scroll/12.jpeg' },
+  { front: '/parallax-scroll/14.jpeg', back: '/parallax-scroll/15.jpeg' },
 ];
 
 export default pages;

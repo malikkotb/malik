@@ -4,93 +4,65 @@ import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { config } from './config';
 
-// Vertex shader - simple plane
+// Shadow cast on the page underneath the flipping page.
+// The spine-based fold creates a vertical shadow that spreads outward
+// from the spine as the page lifts up, then fades as the page passes over.
 const vertexShader = `
   varying vec2 vUv;
-
   void main() {
     vUv = uv;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `;
 
-// Fragment shader - diagonal shadow following corner lift
 const fragmentShader = `
   uniform float uFlipProgress;
   uniform float uPeekProgress;
   uniform float uShadowIntensity;
   uniform float uShadowSpread;
   uniform float uShadowSoftness;
-  uniform float uPageWidth;
-  uniform float uPageHeight;
 
   varying vec2 vUv;
+
+  const float PI = 3.14159265359;
 
   void main() {
     float totalProgress = uFlipProgress + uPeekProgress;
 
-    // Bottom-right corner (in UV space: 1.0, 0.0)
-    vec2 cornerBR = vec2(1.0, 0.0);
+    // UV: (0,0) = bottom-left, (1,1) = top-right of the page this shadow is on
+    // Shadow comes from the spine side (left edge, u=0 for right page or u=1 for left page)
 
-    // Calculate diagonal fold line position
-    // The fold moves from corner toward opposite corner
-    float foldProgress = totalProgress * 1.4; // Scale to cover full diagonal
+    // Distance from spine edge (left edge of right page = u=0)
+    float distFromSpine = vUv.x;
 
-    // Diagonal direction (bottom-right to top-left)
-    vec2 diagonalDir = normalize(vec2(-1.0, 1.0));
+    // Shadow spreads outward from spine as page lifts
+    // Peak at mid-flip, symmetrical rise/fall
+    float liftFactor = sin(totalProgress * PI);
 
-    // Shadow origin moves along the diagonal
-    vec2 shadowOrigin = cornerBR + diagonalDir * foldProgress * 0.7;
+    float dynamicSpread = uShadowSpread * (0.5 + liftFactor * 1.5);
 
-    // Distance from current UV to shadow origin
-    float distFromOrigin = distance(vUv, shadowOrigin);
+    // Shadow falloff from spine
+    float spineShadow = 1.0 - smoothstep(0.0, dynamicSpread, distFromSpine);
 
-    // Distance from diagonal fold line
-    vec2 toPoint = vUv - cornerBR;
-    float foldLinePos = dot(toPoint, diagonalDir);
-    float distFromFold = abs(foldLinePos - foldProgress * 0.5);
+    // Also add a broad ambient darkening that peaks at mid-flip
+    float broadDark = (1.0 - smoothstep(0.0, 0.8, distFromSpine)) * liftFactor * 0.4;
 
-    // Shadow spread increases with lift
-    float dynamicSpread = uShadowSpread * (1.0 + totalProgress * 1.5);
+    float combined = max(spineShadow, broadDark);
 
-    // Softness increases with lift height
-    float dynamicSoftness = uShadowSoftness * (1.0 + totalProgress * 2.0);
+    // Fade entirely when not flipping
+    float intensity = combined * uShadowIntensity * liftFactor;
 
-    // Create diagonal shadow gradient
-    float foldShadow = 1.0 - smoothstep(0.0, dynamicSpread, distFromFold);
-
-    // Add radial shadow from corner
-    float cornerShadow = 1.0 - smoothstep(0.0, dynamicSpread * 1.5, distFromOrigin);
-
-    // Combine fold and corner shadows
-    float combinedShadow = max(foldShadow * 0.6, cornerShadow * 0.4);
-
-    // Shadow is stronger when page is partially flipped (peaks at mid-flip)
-    float flipFactor = sin(totalProgress * 3.14159);
-    combinedShadow *= flipFactor;
-
-    // Apply softness blur effect (simulate with gradient falloff)
-    combinedShadow = smoothstep(0.0, dynamicSoftness, combinedShadow);
-
-    // Apply intensity
-    float alpha = combinedShadow * uShadowIntensity;
-
-    // Slight color variation for depth
-    vec3 shadowColor = vec3(0.0, 0.0, 0.02);
-
-    gl_FragColor = vec4(shadowColor, alpha);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, intensity);
   }
 `;
 
 export default function ShadowMesh({ flipProgress, peekProgress = 0, position }) {
   const materialRef = useRef();
 
-  // Create geometry
   const geometry = useMemo(() => {
     return new THREE.PlaneGeometry(config.pageWidth, config.pageHeight, 1, 1);
   }, []);
 
-  // Create shader material
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       vertexShader,
@@ -101,24 +73,20 @@ export default function ShadowMesh({ flipProgress, peekProgress = 0, position })
         uShadowIntensity: { value: config.shadowIntensity },
         uShadowSpread: { value: config.shadowSpread },
         uShadowSoftness: { value: config.shadowSoftness },
-        uPageWidth: { value: config.pageWidth },
-        uPageHeight: { value: config.pageHeight },
       },
       transparent: true,
       depthWrite: false,
     });
   }, []);
 
-  // Update uniforms
   useEffect(() => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uFlipProgress.value = flipProgress;
-      materialRef.current.uniforms.uPeekProgress.value = peekProgress;
-    }
+    if (!materialRef.current) return;
+    materialRef.current.uniforms.uFlipProgress.value = flipProgress;
+    materialRef.current.uniforms.uPeekProgress.value = peekProgress;
   }, [flipProgress, peekProgress]);
 
   return (
-    <mesh position={position} renderOrder={-1} geometry={geometry}>
+    <mesh position={position} renderOrder={5} geometry={geometry}>
       <primitive object={shaderMaterial} ref={materialRef} attach="material" />
     </mesh>
   );

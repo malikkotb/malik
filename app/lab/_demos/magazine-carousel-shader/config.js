@@ -3,42 +3,47 @@ export const config = {
   pageWidth: 1.5,
   pageHeight: 2.0,
 
-  // Curl parameters
-  curlRadius: 0.3, // Loose/gentle curl
-  curlMaxAngle: Math.PI, // Maximum curl angle
+  // Curl mode: 'tight' | 'loose' | 'dynamic'
+  curlMode: 'dynamic',
+  curlRadiusTight: 0.12,
+  curlRadiusLoose: 0.6,
 
   // Geometry segments for smooth curl
   segmentsX: 64,
   segmentsY: 32,
 
   // Interaction
-  dragThreshold: 0.5, // 50% threshold for completing flip
-  dragSensitivity: 2.0, // How much drag maps to flip progress
+  dragThreshold: 0.5,
+  dragSensitivity: 2.0,
 
-  // Timing - slow & elegant
-  flipDuration: 0.9,
+  // Peek (hover) - lifts corner ~8%
+  peekAmount: 0.08,
+  peekZoneThreshold: 0.7,
 
-  // Peek (hover) - lifts corner ~10%
-  peekAmount: 0.10,
-  peekZoneThreshold: 0.7, // Bottom-right 30% of page triggers peek
-
-  // Spring physics for animation
+  // Spring physics
   springStiffness: 8.0,
   springDamping: 0.8,
 
   // Bounce landing
-  bounceStrength: 0.08, // Overshoot amount
-  bounceDamping: 0.85, // Decay rate
-
-  // Diagonal fold physics
-  cornerLagFactor: 0.3, // How much top corner lags behind bottom
-  sCurveIntensity: 0.4, // S-curve bend amount at mid-flip
+  bounceStrength: 0.08,
+  bounceDamping: 0.85,
 
   // Shadow
-  shadowIntensity: 0.4,
-  shadowSpread: 0.15,
-  shadowSoftness: 0.3, // Blur amount that increases with lift
+  shadowIntensity: 0.12,
+  shadowSpread: 0.18,
+  shadowSoftness: 0.3,
 
-  // Total spreads (each spread shows 2 pages)
-  totalSpreads: 4,
+  // Spine groove
+  spineDepth: 0.04,
+  spineWidth: 0.08,
+
+  // Page thickness (stacked paper look)
+  pageThickness: 0.004,
+  pageStackCount: 3,
+
+  // Swipe gesture
+  swipeVelocityThreshold: 0.4,
+
+  // Total spreads
+  totalSpreads: 6,
 };
