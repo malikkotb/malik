@@ -605,8 +605,8 @@ export default function PretextDemo() {
         )
       );
 
-      // Sync GSAP Draggable position when x/y changed (left-side corners)
-      if (corner === "tl" || corner === "bl" || corner === "tl" || corner === "tr") {
+      // Sync GSAP Draggable position when x/y changed
+      if (corner === "tl" || corner === "bl" || corner === "tr") {
         const container = imagesContainerRef.current;
         if (container) {
           const el = container.querySelector(`[data-image-id="${img.id}"]`) as HTMLElement;
@@ -951,13 +951,13 @@ export default function PretextDemo() {
             <img
               src={img.src}
               alt=""
+              draggable={false}
               style={{
                 display: "block",
                 width: img.height > 0 ? img.width : IMAGE_MAX_WIDTH,
                 height: "auto",
                 pointerEvents: "none",
                 userSelect: "none",
-                draggable: false,
               }}
               onLoad={(e) => {
                 const el = e.currentTarget;
