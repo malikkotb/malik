@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "script-writer": {
+      "source": "ailabs-393/ai-labs-claude-skills",
+      "sourceType": "github",
+      "computedHash": "97f0cdcd52c188a879aabe0a4d2f00e3666cec270c499ad42f744ebe6f73ba3f"
+    },
     "threejs-shaders": {
       "source": "cloudai-x/threejs-skills",
       "sourceType": "github",

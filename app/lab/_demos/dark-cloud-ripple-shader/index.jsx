@@ -198,7 +198,7 @@ export default function DarkCloudRippleShader() {
 
     // ── Debug config (lil-gui tweaks write into this object every frame) ──────
     const config = {
-      splatRadius:      0.0005, // Gaussian brush radius in UV² space
+      splatRadius:      0.0015, // Gaussian brush radius in UV² space
       forceScale:       6.0,    // mouse delta → fluid force multiplier
       velDissipation:   0.98,   // velocity decay per frame (1 = stays forever)
       dyeDissipation:   0.945,  // ink decay per frame (lower = fades faster)
@@ -334,7 +334,7 @@ export default function DarkCloudRippleShader() {
         u_input_texture: { value: null },
         u_point:  { value: new THREE.Vector2(0.5, 0.5) },
         u_color:  { value: new THREE.Vector3() },
-        u_radius: { value: config.splatRadius },
+        u_radius: { value: 0.0015 },
         u_aspect: { value: W / H },
       },
     });
