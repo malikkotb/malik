@@ -123,7 +123,7 @@ function DemoCard({ demo, onNavigate }) {
         const video = videoRef.current;
         if (!video) return;
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          video.play().catch(() => { });
         } else {
           video.pause();
         }
@@ -141,7 +141,7 @@ function DemoCard({ demo, onNavigate }) {
 
   const handleVideoReady = () => {
     if (isVisible.current) {
-      videoRef.current?.play().catch(() => {});
+      videoRef.current?.play().catch(() => { });
     }
   };
 
@@ -218,6 +218,7 @@ export default function DemosPage() {
     "ascii-art": "https://malik-portfolio.b-cdn.net/Lab/ascii-art.mp4",
     "smooth-parallax-scroll": "https://malik-portfolio.b-cdn.net/Lab/parallax.mp4",
     "pretext": "https://malik-portfolio.b-cdn.net/Lab/pretext.mp4",
+    "text-distortion-shader": "https://malik-portfolio.b-cdn.net/Lab/text-distortion-shader.mp4",
   };
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid

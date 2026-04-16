@@ -23,20 +23,6 @@ const WRAP_PADDING_H = 14;
 const WRAP_PADDING_V = 2;
 const IMAGE_MAX_WIDTH = 250;
 
-const PARALLAX_IMAGES = [
-  "/parallax-scroll/1.avif",
-  "/parallax-scroll/2.avif",
-  "/parallax-scroll/3.avif",
-  "/parallax-scroll/5.avif",
-  "/parallax-scroll/6.avif",
-  "/parallax-scroll/7.avif",
-  "/parallax-scroll/9.avif",
-  "/parallax-scroll/10.jpeg",
-  "/parallax-scroll/11.jpeg",
-  "/parallax-scroll/12.jpeg",
-  "/parallax-scroll/14.jpeg",
-  "/parallax-scroll/15.jpeg",
-];
 
 const COLORS = [
   "#22c55e",
@@ -424,6 +410,8 @@ export default function PretextDemo() {
   const imageDraggablesRef = useRef<Map<number, Draggable[]>>(new Map());
   const toolbarRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const objectUrlsRef = useRef<Map<number, string>>(new Map());
 
   const [toolMode, setToolMode] = useState<ToolMode>("draw");
   const [brushColor, setBrushColor] = useState(COLORS[0]!);
@@ -434,6 +422,9 @@ export default function PretextDemo() {
   const [stickers, setStickers] = useState<StickerData[]>([]);
   const [imageItems, setImageItems] = useState<ImageItem[]>([]);
   const [hoveredImageId, setHoveredImageId] = useState<number | null>(null);
+  const [customText, setCustomText] = useState(TEXT);
+  const [showTextEditor, setShowTextEditor] = useState(false);
+  const [editorDraft, setEditorDraft] = useState(TEXT);
 
   const brushColorRef = useRef(brushColor);
   brushColorRef.current = brushColor;
@@ -551,12 +542,17 @@ export default function PretextDemo() {
     needsLayoutRef.current = true;
   }, [stickerShape, stickerSize, stickerColor]);
 
-  const addImage = useCallback((src: string) => {
-    const id = nextId++;
-    const cx = window.innerWidth / 2 - IMAGE_MAX_WIDTH / 2 + Math.random() * 60 - 30;
-    const cy = window.innerHeight / 2 - 100 + Math.random() * 60 - 30;
-    setImageItems((prev) => [...prev, { id, src, x: cx, y: cy, width: IMAGE_MAX_WIDTH, height: 0, naturalAspect: 1 }]);
-    needsLayoutRef.current = true;
+  const handleImageUpload = useCallback((files: FileList | File[]) => {
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) return;
+      const url = URL.createObjectURL(file);
+      const id = nextId++;
+      const cx = window.innerWidth / 2 - IMAGE_MAX_WIDTH / 2 + Math.random() * 60 - 30;
+      const cy = window.innerHeight / 2 - 100 + Math.random() * 60 - 30;
+      objectUrlsRef.current.set(id, url);
+      setImageItems((prev) => [...prev, { id, src: url, x: cx, y: cy, width: IMAGE_MAX_WIDTH, height: 0, naturalAspect: 1 }]);
+      needsLayoutRef.current = true;
+    });
   }, []);
 
   const onResizeStart = useCallback((
@@ -647,6 +643,11 @@ export default function PretextDemo() {
       drags.forEach((d) => d.kill());
       imageDraggablesRef.current.delete(id);
     }
+    const url = objectUrlsRef.current.get(id);
+    if (url) {
+      URL.revokeObjectURL(url);
+      objectUrlsRef.current.delete(id);
+    }
     setImageItems((prev) => prev.filter((img) => img.id !== id));
     needsLayoutRef.current = true;
   }, []);
@@ -713,15 +714,11 @@ export default function PretextDemo() {
   }, [imageItems]);
 
   useEffect(() => {
-    const estimatedChars = Math.ceil(
-      ((window.innerWidth * window.innerHeight) / (FONT_SIZE * 0.6)) * 1.5
-    );
-    let fullText = TEXT;
-    while (fullText.length < estimatedChars) {
-      fullText += " " + TEXT;
-    }
-    preparedRef.current = prepareWithSegments(fullText, FONT);
+    preparedRef.current = prepareWithSegments(customText, FONT);
+    needsLayoutRef.current = true;
+  }, [customText]);
 
+  useEffect(() => {
     const canvas = drawCanvasRef.current!;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -747,11 +744,24 @@ export default function PretextDemo() {
     };
     window.addEventListener("resize", onResize);
 
+    const onPaste = (e: ClipboardEvent) => {
+      const files: File[] = [];
+      for (const item of Array.from(e.clipboardData?.items ?? [])) {
+        if (item.type.startsWith("image/")) {
+          const file = item.getAsFile();
+          if (file) files.push(file);
+        }
+      }
+      if (files.length > 0) handleImageUpload(files);
+    };
+    window.addEventListener("paste", onPaste);
+
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("paste", onPaste);
     };
-  }, [doLayout]);
+  }, [doLayout, handleImageUpload]);
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
@@ -792,6 +802,8 @@ export default function PretextDemo() {
     setStickers([]);
     imageDraggablesRef.current.forEach((drags) => drags.forEach((d) => d.kill()));
     imageDraggablesRef.current.clear();
+    objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    objectUrlsRef.current.clear();
     setImageItems([]);
     needsLayoutRef.current = true;
   }, [clearCanvas]);
@@ -1129,36 +1141,37 @@ export default function PretextDemo() {
           </>
         )}
 
-        {/* Image-mode options: thumbnail grid */}
+        {/* Image-mode options: upload */}
         {toolMode === "image" && (
           <>
-            {PARALLAX_IMAGES.map((src) => (
-              <button
-                key={src}
-                onClick={() => addImage(src)}
-                style={{
-                  width: 36,
-                  height: 36,
-                  padding: 0,
-                  border: "1.5px solid rgba(0,0,0,0.1)",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  overflow: "hidden",
-                  flexShrink: 0,
-                  background: "none",
-                }}
-                title={src.split("/").pop()}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt=""
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
-                />
-              </button>
-            ))}
+            <button onClick={() => fileInputRef.current?.click()} style={btnStyle}>
+              Upload Image
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              style={{ display: "none" }}
+              onChange={(e) => {
+                if (e.target.files) handleImageUpload(e.target.files);
+                e.target.value = "";
+              }}
+            />
           </>
         )}
+
+        {divider}
+
+        <button
+          onClick={() => {
+            setEditorDraft(customText);
+            setShowTextEditor((v) => !v);
+          }}
+          style={showTextEditor ? btnActiveStyle : btnStyle}
+        >
+          Text
+        </button>
 
         {divider}
 
@@ -1179,6 +1192,61 @@ export default function PretextDemo() {
           Clear All
         </button>
       </div>
+
+      {/* Text editor panel */}
+      {showTextEditor && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 88,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 20,
+            background: "rgba(240, 240, 240, 0.95)",
+            backdropFilter: "blur(12px)",
+            borderRadius: 14,
+            padding: 16,
+            border: "1px solid rgba(0,0,0,0.08)",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.1)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            width: 420,
+          }}
+        >
+          <textarea
+            value={editorDraft}
+            onChange={(e) => setEditorDraft(e.target.value)}
+            rows={6}
+            style={{
+              width: "100%",
+              resize: "vertical",
+              border: "1px solid rgba(0,0,0,0.15)",
+              borderRadius: 8,
+              padding: "8px 10px",
+              fontSize: 13,
+              fontFamily: "inherit",
+              background: "rgba(255,255,255,0.8)",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
+          <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+            <button onClick={() => setShowTextEditor(false)} style={btnStyle}>
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                if (editorDraft.trim()) setCustomText(editorDraft);
+                setShowTextEditor(false);
+              }}
+              style={{ ...btnStyle, background: "rgba(0,0,0,0.12)", fontWeight: 600 }}
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Hint */}
       {(stickers.length > 0 && toolMode === "sticker") || (imageItems.length > 0 && toolMode === "image") ? (

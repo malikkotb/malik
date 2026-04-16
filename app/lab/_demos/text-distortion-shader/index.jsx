@@ -2,14 +2,35 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { InfiniteScroll } from "@/components/Infinite-Scroll/infinite-scroll";
 // import GUI from "lil-gui";
 import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
 
+const IMAGES = [
+  "/parallax-scroll/1.avif",
+  "/tete-substack/tete-substack1.jpeg",
+  "/tete-substack/tete-substack2.jpeg",
+  "/tete-substack/tete-substack3.jpeg",
+  "/tete-substack/tete-substack4.jpeg",
+  "/tete-substack/tete-substack5.jpeg",
+  "/tete-substack/tete-substack6.jpg",
+];
+
+const IMAGE_TITLES = [
+  "Alfresco Picknick",
+  "Alfresco Picknick",
+  "Oil Garnish Desert",
+  "Creative Cocktails",
+  "Year of the Horse",
+  "Bread & Butter",
+  "Whipped Brown Butter",
+];
+
 async function createTextCanvasTexture(text, width, height, textColor, bgColor) {
   const font = new FontFace(
-    "PPPangramSansRounded",
-    "url(/fonts/sans-rounded/PPPangramSansRounded-CondensedBold.otf)"
+    "NeueHaasGrot",
+    "url(/demos/fonts/NeueHaasGrotText-65Medium-Trial.otf)"
   );
   await font.load();
   document.fonts.add(font);
@@ -25,7 +46,8 @@ async function createTextCanvasTexture(text, width, height, textColor, bgColor) 
   ctx.fillRect(0, 0, width, height);
 
   let fontSize = Math.min(width * 0.12, 200);
-  ctx.font = `${fontSize}px PPPangramSansRounded, sans-serif`;
+  ctx.font = `${fontSize}px NeueHaasGrot, sans-serif`;
+  ctx.letterSpacing = `${fontSize * -0.02}px`;
   ctx.fillStyle = textColor;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -33,7 +55,8 @@ async function createTextCanvasTexture(text, width, height, textColor, bgColor) 
   let metrics = ctx.measureText(text);
   while (metrics.width > width * 0.85 && fontSize > 20) {
     fontSize -= 2;
-    ctx.font = `${fontSize}px PPPangramSansRounded, sans-serif`;
+    ctx.font = `${fontSize}px NeueHaasGrot, sans-serif`;
+    ctx.letterSpacing = `${fontSize * -0.02}px`;
     metrics = ctx.measureText(text);
   }
 
@@ -51,16 +74,17 @@ async function createTextCanvasTexture(text, width, height, textColor, bgColor) 
 export default function TextDistortionShader() {
   const containerRef = useRef(null);
   const sceneRef = useRef(null); // holds { updateTexture, updateBg, sizes }
+  const activeIndexRef = useRef(0);
 
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState("Biscotti Strudel Cannoli");
-  const [textColor, setTextColor] = useState("#F5AAB0");
-  const [bgColor, setBgColor] = useState("#072FE4");
+  const [text, setText] = useState(IMAGE_TITLES[0]);
+  const [textColor, setTextColor] = useState("#939393");
+  const [bgColor, setBgColor] = useState("#ffffff");
 
   // draft state inside the panel (only applied on Apply)
   const [draftText, setDraftText] = useState(text);
-  const [draftTextColor, setDraftTextColor] = useState(textColor);
-  const [draftBgColor, setDraftBgColor] = useState(bgColor);
+  const [draftTextColor, setDraftTextColor] = useState("#939393");
+  const [draftBgColor, setDraftBgColor] = useState("#ffffff");
 
   const handleOpen = () => {
     setDraftText(text);
@@ -92,6 +116,20 @@ export default function TextDistortionShader() {
     scene.updateBg(bgColor);
   }, [text, textColor, bgColor]);
 
+  const handleScroll = (e) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    const itemHeight = window.innerHeight * 0.80;
+    const totalHeight = IMAGES.length * itemHeight;
+    const centerY = scrollTop + window.innerHeight * 0.5;
+    const posInCycle = ((centerY % totalHeight) + totalHeight) % totalHeight;
+    const shifted = ((posInCycle - itemHeight * 0.08) + totalHeight) % totalHeight;
+    const index = Math.floor(shifted / itemHeight);
+    if (index !== activeIndexRef.current) {
+      activeIndexRef.current = index;
+      setText(IMAGE_TITLES[index]);
+    }
+  };
+
   async function init() {
     if (!containerRef.current) return;
 
@@ -117,14 +155,14 @@ export default function TextDistortionShader() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x072fe4, 1);
+    renderer.setClearColor(0xffffff, 1);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     containerRef.current.appendChild(renderer.domElement);
 
     // read initial values from state refs so init captures them
-    let currentText = "Biscotti Strudel Cannoli";
-    let currentTextColor = "#F5AAB0";
-    let currentBgColor = "#072FE4";
+    let currentText = IMAGE_TITLES[0];
+    let currentTextColor = "#939393";
+    let currentBgColor = "#ffffff";
 
     let textTexture = await createTextCanvasTexture(currentText, sizes.width, sizes.height, currentTextColor, currentBgColor);
 
@@ -285,36 +323,51 @@ export default function TextDistortionShader() {
     <div className="fixed top-0 left-0 w-full h-full">
       <div ref={containerRef} className="w-full h-full" />
 
+      {/* Infinite scroll image overlay */}
+      <InfiniteScroll
+        className="absolute inset-0"
+        style={{ height: "100%" }}
+        onScroll={handleScroll}
+      >
+        {IMAGES.map((src, i) => (
+          <div key={src} className="w-full flex items-center justify-center" style={{ height: "80vh", padding: "8vh 0" }}>
+            <img
+              src={src}
+              alt=""
+              className="object-cover"
+              style={{ maxHeight: "100%", maxWidth: "100%", width: "auto", height: "auto", opacity: i === 0 ? 0 : 1 }}
+            />
+          </div>
+        ))}
+      </InfiniteScroll>
+
       {/* Plus button */}
-      {!open && (
+      {/* {!open && (
         <button
           onClick={handleOpen}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/40 text-white text-2xl flex items-center justify-center hover:bg-white/20 transition-all shadow-[0_2px_8px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.2)]"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-black/10 backdrop-blur-md border border-black/20 text-black text-2xl flex items-center justify-center hover:bg-black/20 transition-all shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
           style={{ lineHeight: 1 }}
         >
           +
         </button>
-      )}
+      )} */}
 
       {/* Expanded panel */}
-      {open && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md border border-white/40 rounded-xl p-6 flex flex-col gap-4 w-80 shadow-[0_2px_8px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.2)]">
-          {/* Text input */}
+      {/* {open && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/5 backdrop-blur-md border border-black/15 rounded-xl p-6 flex flex-col gap-4 w-80 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
           <div className="flex flex-col gap-1">
-            <label className="text-white/60 text-xs uppercase tracking-widest">Text</label>
+            <label className="text-black/50 text-xs uppercase tracking-widest">Text</label>
             <input
               type="text"
               value={draftText}
               onChange={(e) => setDraftText(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleApply()}
-              className="bg-white/10 border border-white/30 rounded-xl px-3 py-2 text-white text-sm outline-none focus:border-white/60 transition-colors placeholder-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+              className="bg-black/5 border border-black/15 rounded-xl px-3 py-2 text-black text-sm outline-none focus:border-black/40 transition-colors placeholder-black/30"
             />
           </div>
-
-          {/* Color pickers */}
           <div className="flex gap-3 h-14">
             <div className="flex flex-col gap-1 flex-1">
-              <label className="text-white/60 text-xs uppercase tracking-widest shrink-0">Text Color</label>
+              <label className="text-black/50 text-xs uppercase tracking-widest shrink-0">Text Color</label>
               <input
                 type="color"
                 value={draftTextColor}
@@ -323,7 +376,7 @@ export default function TextDistortionShader() {
               />
             </div>
             <div className="flex flex-col gap-1 flex-1">
-              <label className="text-white/60 text-xs uppercase tracking-widest shrink-0">BG Color</label>
+              <label className="text-black/50 text-xs uppercase tracking-widest shrink-0">BG Color</label>
               <input
                 type="color"
                 value={draftBgColor}
@@ -332,24 +385,12 @@ export default function TextDistortionShader() {
               />
             </div>
           </div>
-
-          {/* Actions */}
           <div className="flex gap-2">
-            <button
-              onClick={() => setOpen(false)}
-              className="flex-1 py-2 rounded-xl bg-white/10 border border-white/30 text-white/70 text-sm hover:bg-white/20 hover:text-white transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleApply}
-              className="flex-1 py-2 rounded-xl bg-white/90 text-black text-sm font-medium hover:bg-white transition-all shadow-[0_2px_8px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.4)]"
-            >
-              Apply
-            </button>
+            <button onClick={() => setOpen(false)} className="flex-1 py-2 rounded-xl bg-black/5 border border-black/15 text-black/60 text-sm hover:bg-black/10 hover:text-black transition-all">Cancel</button>
+            <button onClick={handleApply} className="flex-1 py-2 rounded-xl bg-white/90 text-black text-sm font-medium hover:bg-white transition-all shadow-[0_2px_8px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.4)]">Apply</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
