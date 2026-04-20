@@ -57,9 +57,10 @@ export default function TextHoverDistortion() {
 
     const settings = {
       strength: 15.0,
-      radius: 0.25,
+      radius: 0.1,
       ease: 0.08,
       releaseEase: 0.015,
+      chromaStrength: 0.4,
     };
 
     const scene = new THREE.Scene();
@@ -95,6 +96,7 @@ export default function TextHoverDistortion() {
         uResolution: { value: new THREE.Vector2(sizes.width, sizes.height) },
         uStrength: { value: settings.strength },
         uRadius: { value: settings.radius },
+        uChromaStrength: { value: settings.chromaStrength },
       },
     });
 
@@ -138,6 +140,7 @@ export default function TextHoverDistortion() {
     gui.add(settings, "radius", 0.05, 0.6, 0.01).name("Radius");
     gui.add(settings, "ease", 0.01, 0.2, 0.005).name("Ease");
     gui.add(settings, "releaseEase", 0.005, 0.1, 0.005).name("Release Ease");
+    gui.add(settings, "chromaStrength", 0.0, 2.0, 0.05).name("Chroma Strength");
 
     // Animation loop
     const animate = () => {
@@ -168,6 +171,7 @@ export default function TextHoverDistortion() {
 
       textMaterial.uniforms.uStrength.value = settings.strength;
       textMaterial.uniforms.uRadius.value = settings.radius;
+      textMaterial.uniforms.uChromaStrength.value = settings.chromaStrength;
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
