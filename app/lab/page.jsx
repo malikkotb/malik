@@ -219,6 +219,7 @@ export default function DemosPage() {
     "smooth-parallax-scroll": "https://malik-portfolio.b-cdn.net/Lab/parallax.mp4",
     "pretext": "https://malik-portfolio.b-cdn.net/Lab/pretext.mp4",
     "text-distortion-shader": "https://malik-portfolio.b-cdn.net/Lab/text-distortion-shader.mp4",
+    "text-hover-distortion": "https://malik-portfolio.b-cdn.net/Lab/text-hover-distortion-rgb.mp4",
   };
 
   // Transform frameworks into the format expected by InfiniteDraggableGrid
