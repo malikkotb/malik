@@ -17,25 +17,18 @@ const LINE_HEIGHT = 22;
 const FONT = `${FONT_SIZE}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
 const PADDING = 40;
 const TOP_PADDING = 60;
-const COLUMNS = 4;
+function getColumns(width: number) {
+  if (width < 640) return 1;
+  if (width < 768) return 2;
+  if (width < 991) return 3;
+  return 4;
+}
 const COLUMN_GAP = 24;
-const WRAP_PADDING_H = 14;
-const WRAP_PADDING_V = 2;
+const WRAP_PADDING_H = 6;
+const WRAP_PADDING_V = 1;
 const IMAGE_MAX_WIDTH = 250;
 
 
-const COLORS = [
-  "#22c55e",
-  "#ef4444",
-  "#3b82f6",
-  "#f59e0b",
-  "#ec4899",
-  "#8b5cf6",
-  "#000000",
-  "#ffffff",
-];
-
-const BRUSH_SIZES = [4, 8, 14, 24, 40];
 
 type StickerShape = "circle" | "square" | "diamond" | "triangle" | "star";
 
@@ -47,11 +40,6 @@ const STICKER_SHAPES: { shape: StickerShape; label: string }[] = [
   { shape: "star", label: "Star" },
 ];
 
-const STICKER_SIZES = [
-  { label: "S", size: 80 },
-  { label: "M", size: 140 },
-  { label: "L", size: 220 },
-];
 
 type StickerData = {
   id: number;
@@ -73,6 +61,7 @@ type ImageItem = {
 };
 
 type ToolMode = "draw" | "sticker" | "image";
+type BrushType = "round" | "pixel";
 
 type Interval = { left: number; right: number };
 type PositionedLine = { x: number; y: number; text: string };
@@ -236,18 +225,101 @@ function getStickerIntervalsForBand(
   return intervals;
 }
 
-function getImageIntervalsForBand(
-  images: ImageItem[],
+function getAlphaShapeIntervalsForBand(
+  img: ImageItem,
+  alphaData: ImageData,
   bandTop: number,
   bandBottom: number,
   hPad: number,
-  vPad: number
+  vPad: number,
+  threshold: number
+): Interval[] {
+  const { x: imgX, y: imgY, width: imgW, height: imgH } = img;
+  const naturalW = alphaData.width;
+  const naturalH = alphaData.height;
+  const scaleX = naturalW / imgW;
+  const scaleY = naturalH / imgH;
+
+  const startY = Math.max(0, Math.floor((bandTop - vPad - imgY) * scaleY));
+  const endY = Math.min(naturalH - 1, Math.ceil((bandBottom + vPad - imgY) * scaleY));
+
+  if (startY > endY) return [];
+
+  const thresholdAlpha = threshold * 255;
+  const opaque = new Uint8Array(naturalW);
+  const data = alphaData.data;
+
+  for (let py = startY; py <= endY; py++) {
+    const rowOffset = py * naturalW * 4;
+    for (let px = 0; px < naturalW; px++) {
+      if (data[rowOffset + px * 4 + 3]! > thresholdAlpha) {
+        opaque[px] = 1;
+      }
+    }
+  }
+
+  const intervals: Interval[] = [];
+  let runLeft = -1;
+  let runRight = -1;
+
+  for (let px = 0; px < naturalW; px++) {
+    if (opaque[px]) {
+      if (runLeft === -1) runLeft = px;
+      runRight = px;
+    } else {
+      if (runLeft !== -1) {
+        intervals.push({
+          left: imgX + runLeft / scaleX - hPad,
+          right: imgX + (runRight + 1) / scaleX + hPad,
+        });
+        runLeft = -1;
+      }
+    }
+  }
+  if (runLeft !== -1) {
+    intervals.push({
+      left: imgX + runLeft / scaleX - hPad,
+      right: imgX + (runRight + 1) / scaleX + hPad,
+    });
+  }
+
+  if (intervals.length <= 1) return intervals;
+  intervals.sort((a, b) => a.left - b.left);
+  const merged: Interval[] = [intervals[0]!];
+  for (let i = 1; i < intervals.length; i++) {
+    const curr = intervals[i]!;
+    const prev = merged[merged.length - 1]!;
+    if (curr.left <= prev.right) {
+      prev.right = Math.max(prev.right, curr.right);
+    } else {
+      merged.push(curr);
+    }
+  }
+  return merged;
+}
+
+function getImageIntervalsForBand(
+  images: ImageItem[],
+  alphaDataMap: Map<number, ImageData>,
+  bandTop: number,
+  bandBottom: number,
+  hPad: number,
+  vPad: number,
+  threshold: number
 ): Interval[] {
   const intervals: Interval[] = [];
   for (const img of images) {
     if (img.height === 0) continue;
     if (bandBottom <= img.y - vPad || bandTop >= img.y + img.height + vPad) continue;
-    intervals.push({ left: img.x - hPad, right: img.x + img.width + hPad });
+    const alphaData = alphaDataMap.get(img.id);
+    if (alphaData) {
+      const alphaIntervals = getAlphaShapeIntervalsForBand(
+        img, alphaData, bandTop, bandBottom, hPad, vPad, threshold
+      );
+      for (const interval of alphaIntervals) intervals.push(interval);
+    } else {
+      intervals.push({ left: img.x - hPad, right: img.x + img.width + hPad });
+    }
   }
   return intervals;
 }
@@ -287,7 +359,9 @@ function layoutWithDrawing(
   canvasWidth: number,
   stickerData: StickerData[],
   imageItems: ImageItem[],
-  uiRects: { x: number; y: number; width: number; height: number }[]
+  uiRects: { x: number; y: number; width: number; height: number }[],
+  alphaDataMap: Map<number, ImageData>,
+  shapeImageThreshold: number
 ): PositionedLine[] {
   const lines: PositionedLine[] = [];
   let cursor: LayoutCursor = { segmentIndex: 0, graphemeIndex: 0 };
@@ -317,7 +391,7 @@ function layoutWithDrawing(
       for (const b of stickerBlocked) blocked.push(b);
 
       const imageBlocked = getImageIntervalsForBand(
-        imageItems, bandTop, bandBottom, WRAP_PADDING_H, WRAP_PADDING_V
+        imageItems, alphaDataMap, bandTop, bandBottom, WRAP_PADDING_H, WRAP_PADDING_V, shapeImageThreshold
       );
       for (const b of imageBlocked) blocked.push(b);
 
@@ -390,10 +464,9 @@ function renderStickerShape(shape: StickerShape, color: string, size: number) {
   );
 }
 
-let nextId = 0;
-
 const TEXT = `The machine does not isolate man from the great problems of nature but plunges him more deeply into them. Technology is the campfire around which we tell our stories. We shape our tools and thereafter our tools shape us. The real problem is not whether machines think but whether men do. Any sufficiently advanced technology is indistinguishable from magic. The art challenges the technology and the technology inspires the art. Man is a slow sloppy and brilliant thinker the machine is fast accurate and stupid. Once a new technology rolls over you if you're not part of the steamroller you're part of the road. Computers are useless they can only give you answers. The human spirit must prevail over technology. It has become appallingly obvious that our technology has exceeded our humanity. The advance of technology is based on making it fit in so that you don't really even notice it so it's part of everyday life. Technology is a useful servant but a dangerous master. The great myth of our times is that technology is communication. We are stuck with technology when what we really want is just stuff that works. Programs must be written for people to read and only incidentally for machines to execute. The most technologically efficient machine that man has ever invented is the book. The science of today is the technology of tomorrow. First we thought the PC was a calculator then we found out how to turn numbers into letters and we thought it was a typewriter then we discovered graphics and we thought it was a television. With all the abundance we have of computers and computing technology it seems like everybody ought to be able to design and create wonderful things. The Web as I envisaged it we have not seen it yet. The future is already here it is just not evenly distributed. Technological progress has merely provided us with more efficient means for going backwards. Science and technology revolutionize our lives but memory tradition and myth frame our response. The Internet is becoming the town square for the global village of tomorrow. Even the technology that promises to unite us divides us. Each of us is now electronically connected to the globe and yet we feel utterly alone. Technology is nothing. What's important is that you have a faith in people that they're basically good and smart and if you give them tools they'll do wonderful things with them. The greatest enemy of knowledge is not ignorance it is the illusion of knowledge. Innovation distinguishes between a leader and a follower. Technology like art is a soaring exercise of the human imagination. The real danger is not that computers will begin to think like men but that men will begin to think like computers. What new technology does is create new opportunities to do a job that customers want done. People who are really serious about software should make their own hardware. The factory of the future will have only two employees a man and a dog. The man will be there to feed the dog. The dog will be there to keep the man from touching the equipment. In the long run we shape our buildings and afterwards our buildings shape us. The production of too many useful things results in too many useless people. Humanity is acquiring all the right technology for all the wrong reasons. It's supposed to be automatic but actually you have to push this button. Technology is the knack of so arranging the world that we don't have to experience it. All of the biggest technological inventions created by man say little about his intelligence but speak volumes about his laziness. We are all now connected by the Internet like neurons in a giant brain. Technology made large populations possible large populations now make technology indispensable. The human condition used to be about birth school work death. Now it seems to be about birth school work retire and fight the algorithms. Soon we will not only be producing knowledge faster than we can comprehend it we will be producing knowledge faster than we can store it. Looking at the proliferation of personal web pages on the net it looks like very soon everyone on earth will have fifteen megabytes of fame. Getting information off the Internet is like taking a drink from a fire hydrant.`;
 
+// Demo: Digital Scrapbook — drag images/stickers/drawings, text wraps around shapes
 export default function PretextDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const drawCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -412,24 +485,38 @@ export default function PretextDemo() {
   const hintRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const objectUrlsRef = useRef<Map<number, string>>(new Map());
+  const imageAlphaDataRef = useRef<Map<number, ImageData>>(new Map());
+  const nextIdRef = useRef(0);
 
   const [toolMode, setToolMode] = useState<ToolMode>("draw");
-  const [brushColor, setBrushColor] = useState(COLORS[0]!);
-  const [brushSize, setBrushSize] = useState(BRUSH_SIZES[2]!);
+  const [brushColor, setBrushColor] = useState("#22c55e");
+  const [brushHexDraft, setBrushHexDraft] = useState("#22c55e");
+  const [brushSize, setBrushSize] = useState(14);
+  const [brushType, setBrushType] = useState<BrushType>("round");
+  const [isEraser, setIsEraser] = useState(false);
   const [stickerShape, setStickerShape] = useState<StickerShape>("circle");
-  const [stickerSize, setStickerSize] = useState(STICKER_SIZES[1]!.size);
-  const [stickerColor, setStickerColor] = useState(COLORS[0]!);
+  const [stickerSize, setStickerSize] = useState(140);
+  const [stickerColor, setStickerColor] = useState("#22c55e");
+  const [stickerHexDraft, setStickerHexDraft] = useState("#22c55e");
   const [stickers, setStickers] = useState<StickerData[]>([]);
   const [imageItems, setImageItems] = useState<ImageItem[]>([]);
   const [hoveredImageId, setHoveredImageId] = useState<number | null>(null);
+  const [shapeImageThreshold, setShapeImageThreshold] = useState(0.5);
   const [customText, setCustomText] = useState(TEXT);
   const [showTextEditor, setShowTextEditor] = useState(false);
   const [editorDraft, setEditorDraft] = useState(TEXT);
+
+  const shapeImageThresholdRef = useRef(shapeImageThreshold);
+  shapeImageThresholdRef.current = shapeImageThreshold;
 
   const brushColorRef = useRef(brushColor);
   brushColorRef.current = brushColor;
   const brushSizeRef = useRef(brushSize);
   brushSizeRef.current = brushSize;
+  const brushTypeRef = useRef(brushType);
+  brushTypeRef.current = brushType;
+  const isEraserRef = useRef(isEraser);
+  isEraserRef.current = isEraser;
   const stickersRef = useRef(stickers);
   stickersRef.current = stickers;
   const imageItemsRef = useRef(imageItems);
@@ -464,13 +551,15 @@ export default function PretextDemo() {
       w - PADDING * 2,
       h - TOP_PADDING - PADDING,
       LINE_HEIGHT,
-      COLUMNS,
+      getColumns(w),
       COLUMN_GAP,
       imageData,
       drawCanvas.width,
       stickersRef.current,
       imageItemsRef.current,
-      uiRects
+      uiRects,
+      imageAlphaDataRef.current,
+      shapeImageThresholdRef.current
     );
 
     const pool = linePoolRef.current;
@@ -498,36 +587,73 @@ export default function PretextDemo() {
     }
   }, []);
 
+  const pixelVisitedRef = useRef<Set<string>>(new Set());
+
   const drawStroke = useCallback((x: number, y: number) => {
     const canvas = drawCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
     const last = lastPointRef.current;
     const r = brushSizeRef.current;
+    const type = brushTypeRef.current;
+    const erasing = isEraserRef.current;
+
+    if (erasing) {
+      ctx.globalCompositeOperation = "destination-out";
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+    }
 
     ctx.strokeStyle = brushColorRef.current;
     ctx.fillStyle = brushColorRef.current;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.lineWidth = r * 2;
 
-    if (last) {
-      ctx.beginPath();
-      ctx.moveTo(last.x, last.y);
-      ctx.lineTo(x, y);
-      ctx.stroke();
+    if (type === "pixel") {
+      const size = r * 2;
+      const stampPixel = (px: number, py: number) => {
+        const sx = Math.floor(px / size) * size;
+        const sy = Math.floor(py / size) * size;
+        const key = `${sx},${sy}`;
+        if (pixelVisitedRef.current.has(key)) return;
+        pixelVisitedRef.current.add(key);
+        ctx.fillRect(sx, sy, size, size);
+      };
+
+      if (last) {
+        const dx = x - last.x;
+        const dy = y - last.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const steps = Math.max(1, Math.ceil(dist / (size * 0.5)));
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          stampPixel(last.x + dx * t, last.y + dy * t);
+        }
+      } else {
+        stampPixel(x, y);
+      }
     } else {
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = r * 2;
+
+      if (last) {
+        ctx.beginPath();
+        ctx.moveTo(last.x, last.y);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
+    ctx.globalCompositeOperation = "source-over";
     lastPointRef.current = { x, y };
     needsLayoutRef.current = true;
   }, []);
 
   const addSticker = useCallback(() => {
-    const id = nextId++;
+    const id = nextIdRef.current++;
     const cx = window.innerWidth / 2 - stickerSize / 2 + Math.random() * 100 - 50;
     const cy = window.innerHeight / 2 - stickerSize / 2 + Math.random() * 100 - 50;
     const newSticker: StickerData = {
@@ -546,7 +672,7 @@ export default function PretextDemo() {
     Array.from(files).forEach((file) => {
       if (!file.type.startsWith("image/")) return;
       const url = URL.createObjectURL(file);
-      const id = nextId++;
+      const id = nextIdRef.current++;
       const cx = window.innerWidth / 2 - IMAGE_MAX_WIDTH / 2 + Math.random() * 60 - 30;
       const cy = window.innerHeight / 2 - 100 + Math.random() * 60 - 30;
       objectUrlsRef.current.set(id, url);
@@ -648,6 +774,7 @@ export default function PretextDemo() {
       URL.revokeObjectURL(url);
       objectUrlsRef.current.delete(id);
     }
+    imageAlphaDataRef.current.delete(id);
     setImageItems((prev) => prev.filter((img) => img.id !== id));
     needsLayoutRef.current = true;
   }, []);
@@ -719,6 +846,10 @@ export default function PretextDemo() {
   }, [customText]);
 
   useEffect(() => {
+    needsLayoutRef.current = true;
+  }, [shapeImageThreshold]);
+
+  useEffect(() => {
     const canvas = drawCanvasRef.current!;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -768,6 +899,7 @@ export default function PretextDemo() {
       if (toolMode !== "draw") return;
       isDrawingRef.current = true;
       lastPointRef.current = null;
+      pixelVisitedRef.current.clear();
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
       drawStroke(e.clientX, e.clientY);
     },
@@ -804,6 +936,7 @@ export default function PretextDemo() {
     imageDraggablesRef.current.clear();
     objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     objectUrlsRef.current.clear();
+    imageAlphaDataRef.current.clear();
     setImageItems([]);
     needsLayoutRef.current = true;
   }, [clearCanvas]);
@@ -975,6 +1108,18 @@ export default function PretextDemo() {
                 const el = e.currentTarget;
                 const aspect = el.naturalWidth / el.naturalHeight;
                 const h = IMAGE_MAX_WIDTH / aspect;
+                // Extract alpha channel for shape-outside-style wrapping
+                try {
+                  const offscreen = document.createElement("canvas");
+                  offscreen.width = el.naturalWidth;
+                  offscreen.height = el.naturalHeight;
+                  const ctx2d = offscreen.getContext("2d")!;
+                  ctx2d.drawImage(el, 0, 0);
+                  const alphaData = ctx2d.getImageData(0, 0, el.naturalWidth, el.naturalHeight);
+                  imageAlphaDataRef.current.set(img.id, alphaData);
+                } catch {
+                  // Cross-origin or tainted canvas — fall back to rect wrapping
+                }
                 setImageItems((prev) =>
                   prev.map((item) =>
                     item.id === img.id
@@ -1000,7 +1145,11 @@ export default function PretextDemo() {
           zIndex: 20,
           display: "flex",
           alignItems: "center",
+          flexWrap: "wrap",
+          justifyContent: "center",
           gap: 8,
+          width: "calc(100vw - 48px)",
+          maxWidth: 1000,
           background: "rgba(240, 240, 240, 0.9)",
           backdropFilter: "blur(12px)",
           borderRadius: 14,
@@ -1022,106 +1171,151 @@ export default function PretextDemo() {
 
         {divider}
 
-        {/* Color palette — only for draw/sticker modes */}
-        {toolMode !== "image" && (
-          <>
-            {COLORS.map((color) => (
-              <button
-                key={color}
-                onClick={() => {
-                  if (toolMode === "draw") setBrushColor(color);
-                  else setStickerColor(color);
-                }}
-                style={{
-                  width: 22,
-                  height: 22,
+        {/* Color picker — only for draw/sticker modes, hidden when eraser active */}
+        {toolMode !== "image" && !(toolMode === "draw" && isEraser) && (() => {
+          const activeColor = toolMode === "draw" ? brushColor : stickerColor;
+          const hexDraft = toolMode === "draw" ? brushHexDraft : stickerHexDraft;
+          const setColor = (c: string) => {
+            if (toolMode === "draw") { setBrushColor(c); setBrushHexDraft(c); }
+            else { setStickerColor(c); setStickerHexDraft(c); }
+          };
+          const setDraft = (v: string) => {
+            if (toolMode === "draw") setBrushHexDraft(v);
+            else setStickerHexDraft(v);
+          };
+          return (
+            <>
+              {/* Color wheel swatch */}
+              <label style={{ position: "relative", width: 26, height: 26, flexShrink: 0, cursor: "pointer" }}>
+                <div style={{
+                  width: 26,
+                  height: 26,
                   borderRadius: "50%",
-                  background: color,
-                  border:
-                    (toolMode === "draw" ? brushColor : stickerColor) === color
-                      ? "2.5px solid #000"
-                      : color === "#000000"
-                        ? "1.5px solid rgba(0,0,0,0.2)"
-                        : "1.5px solid transparent",
-                  cursor: "pointer",
-                  padding: 0,
+                  background: activeColor,
+                  border: "2px solid rgba(0,0,0,0.2)",
+                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.2)",
+                  pointerEvents: "none",
+                }} />
+                <input
+                  type="color"
+                  value={activeColor}
+                  onChange={(e) => setColor(e.target.value)}
+                  style={{ position: "absolute", opacity: 0, width: "100%", height: "100%", top: 0, left: 0, cursor: "pointer" }}
+                />
+              </label>
+              {/* Hex input */}
+              <input
+                type="text"
+                value={hexDraft}
+                onChange={(e) => {
+                  setDraft(e.target.value);
+                  if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) setColor(e.target.value);
+                }}
+                onBlur={() => setDraft(activeColor)}
+                maxLength={7}
+                style={{
+                  width: 72,
+                  fontSize: 12,
+                  fontFamily: "monospace",
+                  border: "1px solid rgba(0,0,0,0.15)",
+                  borderRadius: 6,
+                  padding: "3px 6px",
+                  background: "rgba(255,255,255,0.6)",
                   outline: "none",
-                  transition: "border-color 0.15s",
-                  flexShrink: 0,
-                  boxShadow: color === "#ffffff" ? "inset 0 0 0 1px rgba(0,0,0,0.1)" : "none",
+                  color: "#000",
                 }}
               />
-            ))}
-            {divider}
-          </>
-        )}
+              {divider}
+            </>
+          );
+        })()}
 
-        {/* Draw-mode options: brush size */}
+        {/* Draw-mode options: brush type, sizes, eraser */}
         {toolMode === "draw" && (
           <>
-            {BRUSH_SIZES.map((size) => (
-              <button
-                key={size}
-                onClick={() => setBrushSize(size)}
-                style={{
-                  ...btnStyle,
-                  width: 32,
-                  height: 32,
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: brushSize === size ? "rgba(0,0,0,0.14)" : "rgba(0,0,0,0.04)",
-                }}
-              >
-                <div
-                  style={{
-                    width: Math.max(4, size),
-                    height: Math.max(4, size),
-                    borderRadius: "50%",
-                    background: "#000",
-                  }}
-                />
-              </button>
-            ))}
+            <button
+              onClick={() => setBrushType("round")}
+              style={brushType === "round" && !isEraser ? btnActiveStyle : btnStyle}
+            >
+              Round
+            </button>
+            <button
+              onClick={() => setBrushType("pixel")}
+              style={brushType === "pixel" && !isEraser ? btnActiveStyle : btnStyle}
+            >
+              Pixel
+            </button>
+
+            {divider}
+
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <input
+                type="range"
+                min={2}
+                max={40}
+                step={1}
+                value={brushSize}
+                onChange={(e) => setBrushSize(Number(e.target.value))}
+                style={{ width: 80, cursor: "pointer" }}
+              />
+              <div style={{ width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <div style={{
+                  width: Math.max(4, brushSize),
+                  height: Math.max(4, brushSize),
+                  borderRadius: brushType === "pixel" ? 0 : "50%",
+                  background: isEraser ? "transparent" : "#000",
+                  border: isEraser ? "2px solid #000" : "none",
+                  boxSizing: "border-box",
+                }} />
+              </div>
+            </div>
+
+            {divider}
+
+            <button
+              onClick={() => setIsEraser((v) => !v)}
+              style={isEraser ? btnActiveStyle : btnStyle}
+            >
+              Eraser
+            </button>
           </>
         )}
 
         {/* Sticker-mode options */}
         {toolMode === "sticker" && (
           <>
-            {STICKER_SHAPES.map(({ shape, label }) => (
-              <button
-                key={shape}
-                onClick={() => setStickerShape(shape)}
-                style={{
-                  ...(stickerShape === shape ? btnActiveStyle : btnStyle),
-                  width: 32,
-                  height: 32,
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                title={label}
-              >
-                <div style={{ width: 18, height: 18 }}>
-                  {renderStickerShape(shape, "#000", 18)}
-                </div>
-              </button>
-            ))}
+            <select
+              value={stickerShape}
+              onChange={(e) => setStickerShape(e.target.value as StickerShape)}
+              style={{
+                fontSize: 13,
+                fontFamily: "inherit",
+                border: "1px solid rgba(0,0,0,0.12)",
+                borderRadius: 8,
+                padding: "5px 8px",
+                background: "rgba(0,0,0,0.06)",
+                cursor: "pointer",
+                outline: "none",
+              }}
+            >
+              {STICKER_SHAPES.map(({ shape, label }) => (
+                <option key={shape} value={shape}>{label}</option>
+              ))}
+            </select>
 
             {divider}
 
-            {STICKER_SIZES.map(({ label, size }) => (
-              <button
-                key={label}
-                onClick={() => setStickerSize(size)}
-                style={stickerSize === size ? btnActiveStyle : btnStyle}
-              >
-                {label}
-              </button>
-            ))}
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <input
+                type="range"
+                min={40}
+                max={280}
+                step={1}
+                value={stickerSize}
+                onChange={(e) => setStickerSize(Number(e.target.value))}
+                style={{ width: 80, cursor: "pointer" }}
+              />
+            </div>
 
             {divider}
 
@@ -1130,18 +1324,22 @@ export default function PretextDemo() {
               style={{
                 ...btnStyle,
                 background: stickerColor,
-                color: ["#000000", "#8b5cf6", "#3b82f6", "#ef4444"].includes(stickerColor)
-                  ? "#fff"
-                  : "#000",
+                color: (() => {
+                  const r = parseInt(stickerColor.slice(1, 3), 16);
+                  const g = parseInt(stickerColor.slice(3, 5), 16);
+                  const b = parseInt(stickerColor.slice(5, 7), 16);
+                  return (r * 299 + g * 587 + b * 114) / 1000 < 128 ? "#fff" : "#000";
+                })(),
                 fontWeight: 600,
+                whiteSpace: "nowrap",
               }}
             >
-              + Add
+              Add +
             </button>
           </>
         )}
 
-        {/* Image-mode options: upload */}
+        {/* Image-mode options: upload + threshold */}
         {toolMode === "image" && (
           <>
             <button onClick={() => fileInputRef.current?.click()} style={btnStyle}>
@@ -1158,6 +1356,28 @@ export default function PretextDemo() {
                 e.target.value = "";
               }}
             />
+            {/* {imageItems.length > 0 && (
+              <>
+                {divider}
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: 12, color: "rgba(0,0,0,0.45)", whiteSpace: "nowrap" }}>
+                    Wrap
+                  </span>
+                  <input
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    value={shapeImageThreshold}
+                    onChange={(e) => setShapeImageThreshold(parseFloat(e.target.value))}
+                    style={{ width: 72, cursor: "pointer" }}
+                  />
+                  <span style={{ fontSize: 12, color: "rgba(0,0,0,0.45)", minWidth: 28, textAlign: "right" }}>
+                    {shapeImageThreshold.toFixed(2)}
+                  </span>
+                </div>
+              </>
+            )} */}
           </>
         )}
 
@@ -1177,7 +1397,7 @@ export default function PretextDemo() {
 
         <button
           onClick={clearCanvas}
-          style={btnStyle}
+          style={{ ...btnStyle, whiteSpace: "nowrap" }}
           onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.1)")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.06)")}
         >
@@ -1185,7 +1405,7 @@ export default function PretextDemo() {
         </button>
         <button
           onClick={clearAll}
-          style={btnStyle}
+          style={{ ...btnStyle, whiteSpace: "nowrap" }}
           onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.1)")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.06)")}
         >
@@ -1211,7 +1431,7 @@ export default function PretextDemo() {
             display: "flex",
             flexDirection: "column",
             gap: 10,
-            width: 420,
+            width: "min(420px, calc(100vw - 32px))",
           }}
         >
           <textarea
@@ -1254,7 +1474,7 @@ export default function PretextDemo() {
           ref={hintRef}
           style={{
             position: "fixed",
-            bottom: 78,
+            bottom: 90,
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: 20,
